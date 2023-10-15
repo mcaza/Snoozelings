@@ -1,0 +1,20 @@
+/* Universal Styles */
+
+html {
+    font-size: 16px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    background-image: url(resources/PurpleSquares.png);
+    background-repeat: repeat;
+    background-size: 290px;
+    background-attachment: fixed;
+}
+
+.body-container {
+    width: 70%;;
+    height: 100rem;
+    background-color: #eff7fa;
+}
