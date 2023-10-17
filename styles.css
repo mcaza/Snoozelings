@@ -89,6 +89,7 @@ body {
     background-attachment: fixed;
     text-align: center;
     margin-top: 11.4rem;
+    
 }
 
 .body-container {
@@ -110,9 +111,9 @@ body {
 }
 
 .bar-container {
-    background-color: #eff7fa;
+    background-color: #FAFCFF ;
     border-radius: 10px;
-    border: white 2px dashed;
+    border: #827188  2px dashed;
 }
 
 .bar-container img {
@@ -138,14 +139,14 @@ body {
 }
 
 .main-container {
-    background-color: #eff7fa;
+    background-color: #FFFDFF ;
     width: 70%
 }
 
 .art-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     
 }
 
@@ -268,7 +269,7 @@ nav a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #000000;
+    background-color: #1C161D;
     margin-top: 0;
     border-bottom: 2px white dashed;
     z-index: 2;
@@ -299,3 +300,4 @@ filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%
     color: #ABCCD4 ;
     margin-left: 1.5rem;
 }
+

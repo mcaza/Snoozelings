@@ -171,6 +171,7 @@ function snoozelingGenerate(number) {
         document.getElementById('TopWing' + number).src = "";
         document.getElementById('BottomWing' + number).src = "";
     }
+    document.getElementById('Transparent' + number).src = "Layers/transparentSquare.png";
 /*  
     setOutfit(bottom, 'ClothesBottom', color);
     setOutfit(hat, 'ClothesTop', color);
@@ -183,9 +184,6 @@ function snoozelingGenerate(number) {
 
 function runCode() {
     snoozelingGenerate('one');
-    snoozelingGenerate('two');
-    snoozelingGenerate('three');
-    snoozelingGenerate('four');
 }
 
 function getDate() {
