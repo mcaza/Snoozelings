@@ -9,12 +9,35 @@
 </head>
 
 <body>
+    <nav>
+        <ul>
+            <li><a href="#meetArtist">Slothie's Nests</a></li>
+            <li id="snooze"><a href="#assignments" >Snooze Land</a></li>
+            <ul id="test">
+                <li><a href="#">Services-1</a></li>
+                <li><a href="#">Services-2</a></li>
+            </ul>
+            <li><a href="#snoozelings">Mini Games</a></li>
+            <li><a href="#contact">Social Web</a></li>
+            <li><a href="#contact">Log Out</a></li>
+        </ul>
+    </nav>
+
     <div class="body-container">
         <h1>Snoozelings</h1>
         <p>Test Test</p>
         <a href="tester.html">Spawn Snoozelings</a>
     </div>
     <script src=""></script>
+    <script>
+    document.getElementById("snooze").addEventListener("mouseover", function () {
+    document.getElementById('test').style.display = 'inline-block';
+    console.log('attempt');
+        document.getElementById("snooze").addEventListener("mouseout", function () {
+    document.getElementById('test').style.display = 'none';
+})
+})
+</script>
 </body>
 
 </html>
