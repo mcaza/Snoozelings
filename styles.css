@@ -62,6 +62,15 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  font-family: 'Lilita One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/lilitaone/v15/i7dPIFZ9Zz-WBtRtedDbYEF8RQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 
 /* Universal Styles */
 
@@ -79,22 +88,61 @@ body {
     background-size: 290px;
     background-attachment: fixed;
     text-align: center;
-    margin-top: 6rem;
+    margin-top: 11.4rem;
 }
 
 .body-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     width: 70%;
     height: 100rem;
+    column-gap: 3rem;
+    align-items: flex-start;
+}
+
+.left-container {
+    width: 30%;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    row-gap:2rem;
+}
+
+.bar-container {
     background-color: #eff7fa;
+    border-radius: 10px;
+    border: white 2px dashed;
+}
+
+.bar-container img {
+    -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.bar-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: .5rem;
+}
+
+.bar-container p {
+    font-size: 1.6rem;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+}
+
+.main-container {
+    background-color: #eff7fa;
+    width: 70%
 }
 
 .art-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    
 }
 
 .art {
@@ -113,7 +161,7 @@ body {
 }
 
 .artfour {
-    grid-column: 2 / span 1;
+    grid-column: 2 / span
     grid-row: 2 / span 1;
 }
 
@@ -125,8 +173,8 @@ img {
 /* Nav Styles */
 
 nav {
-    margin-top: .5rem;
-    background-color: white;
+    margin-top: 6rem;
+    background-color: #f0f0f0;
     position: fixed;
     width: 100%;
     height: 3rem;
@@ -135,7 +183,7 @@ nav {
     padding-top: .5rem;
     padding-bottom: .5rem;
     top: 0;
-    z-index: 2;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,13 +191,7 @@ nav {
     
 }
 
-nav {
-    display: flex;
-    padding-right: 10px;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-    font-size: 2rem;
-}
+
 
 .menu {
     background-color: transparent;
@@ -212,4 +254,44 @@ nav a:hover {
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
+/* Nav Styles */
 
+.nav-container {
+    top: 0;
+    position: fixed;
+    height: 6rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000;
+    margin-top: 0;
+    border-bottom: 2px white dashed;
+    z-index: 2;
+}
+
+.social-container ul {
+    display: inline-flex;
+    list-style: none;
+}
+
+.social-container img {
+    width: 3.65rem;
+    height: auto;
+    padding: .8rem;
+filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%) contrast(88%);
+
+
+}
+
+.social-container img:hover {
+    width: 3.575rem;
+    height: auto;
+}
+
+.logo p {
+    font-family: 'Lilita One';
+    font-size: 4rem;
+    color: #ABCCD4 ;
+    margin-left: 1.5rem;
+}
