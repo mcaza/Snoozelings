@@ -187,3 +187,16 @@ function runCode() {
     snoozelingGenerate('three');
     snoozelingGenerate('four');
 }
+
+function getDate() {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getYear() + 1900;
+    const text = '~ ' + months[month] + ' ' + day + ', ' + year;
+    console.log(text);
+    document.getElementById('date').innerHTML = text;
+}
+
+getDate();

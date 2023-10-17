@@ -127,10 +127,14 @@ body {
 
 .bar-container p {
     font-size: 1.6rem;
-    width: 60%;
+    width: 65%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 1rem;
+}
+
+#date {
+    font-style: italic;
 }
 
 .main-container {
