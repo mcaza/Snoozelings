@@ -4,6 +4,7 @@ const tail = ['Dragon', 'Long', 'Nub', 'Poof'];
 const face = ['Tongue'];
 const clothes = ['None','None','None','None','None', 'HarnessTrans', 'HarnessBrown', 'HarnessPink', 'HarnessBlue', 'BandagesChest', 'ServiceVestBeige', 'ServiceVestBlue', 'ServiceVestPink', 'ServiceVestRed'];
 const hats = ['None','None','None','None', 'FlowerCrownPastel', 'Glasses', 'Halo'];
+const affirmations = ['I am in the right place at the right time, doing the right thing.', 'Every decision I make is supported by my whole and inarguable experience.', 'I am allowed to ask for what I want and what I need.', 'I am allowed to feel good.', 'I am complete as I am, others simply support me.', 'I am growing and I am going at my own pace.', 'I am held and supported by those who love me.', 'I am open to healing.', 'I am optimistic because today is a new day.', 'I am still learning so it’s okay to make mistakes.', 'I am worthy of investing in myself.', 'I belong here, and I deserve to take up space.', 'I can be soft in my heart and firm in my boundaries.', 'I can hold two opposing feelings at once, it means I am processing.', 'I deserve self-respect and a clean space.', 'I embrace the questions in my heart and welcome the answers in their own time.', 'I have come farther than I would have ever thought possible, and I’m learning along the way.', 'I look forward to tomorrow and the opportunities that await me.', 'I strive for joy, not for perfection.', 'I welcome the wisdom that comes with growing older.', 'My body is beautiful in this moment and at its current size.', 'My life is not a race or competition.', 'My perspective is unique and important.', 'My weirdness is wonderful.', 'There is room for me at the table.', 'Today is an opportunity to grow and learn.', 'Words may shape me, but they do not make me. I am here already.'];
 
 function snoozeling() {
     this.mainColor = chooseColor();
@@ -193,8 +194,18 @@ function getDate() {
     const month = date.getMonth();
     const year = date.getYear() + 1900;
     const text = '~ ' + months[month] + ' ' + day + ', ' + year;
-    console.log(text);
     document.getElementById('date').innerHTML = text;
 }
 
+function getAffirmation() {
+    const randomNum = Math.floor(Math.random() * affirmations.length);
+    const affirmation = affirmations[randomNum];
+    document.getElementById('affirmation').innerHTML = affirmation;
+}
+
 getDate();
+getAffirmation();
+
+/*
+const users = ['Squirrel', 'Finn', 'Slothie'];
+console.log(users[users.length-1]);*/
