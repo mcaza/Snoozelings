@@ -11,7 +11,7 @@
 <body>
     <div class="nav-container">
         <div class="logo">
-            <p>Snoozelings</p>
+            <a href="index.html">Snoozelings</a>
         </div>
         <div class="social-container">
             <ul>
@@ -24,21 +24,42 @@
         </div>
     </div>
     <nav>
-        <a href="#" class="menu">Slothie's Nests</a>
+        <div class="dropdown">
+            <button class="menu dropdown dropbtn" id="drop"><a href="https://stackoverflow.com/questions/11419998/text-decoration-none-not-working">Slothe's Abode</a></button>
+            <div class="dropdown-content">
+                <a href="#">Snoozeling Nests</a>
+                <a href="#">Crafting Table</a>
+                <a href="#">Farm Plots</a>
+            </div>
+        </div>
         <div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop">Snooze Land</button>
             <div class="dropdown-content">
-                <a href="#">Farm Plots</a>
-                <a href="#">Crafting Table</a>
                 <a href="#">Exploring</a>
+                <a href="#">Adoption House</a>
+                <a href="#">Kindness Shop</a>
+                <a href="#">Snooze Styles</a>
             </div>
-
         </div>
-        <a href="#" class="menu">Self Care</a>
+        <div class="dropdown">
+            <button class="menu dropdown dropbtn" id="drop">Mini Games</button>
+            <div class="dropdown-content">
+                <a href="#">Daily Raffle</a>
+                <a href="#">Random Item</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="menu dropdown dropbtn" id="drop">Self Care</button>
+            <div class="dropdown-content">
+                <a href="#">Journal</a>
+                <a href="#">Med Tracker</a>
+            </div>
+        </div>
         <a href="#" class="menu">Social Web</a>
         <a href="#" class="menu">Log Out</a>
-    </nav>
 
+    </nav>
+    <app-header></app-header>
     <div class="body-container">
         <div class="left-container">
             <div class="bar-container">
@@ -96,12 +117,12 @@
                     </div>
                     <div class="art">
                         <img src="" id="TopWingone">
-                    </div> 
-                    <div class ="art">
+                    </div>
+                    <div class="art">
                         <a onclick="runCode()"><img src="resources/BlueBalloon.png" id="Transparentone"></a>
                     </div>
                 </div>
-                <p><strong>Mood:</strong> Joyful</p>
+                <p id="mood"><strong>Mood:</strong> Happy</p>
             </div>
             <div class="bar-container">
                 <p>fdsgregarh</p>

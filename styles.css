@@ -92,6 +92,7 @@ body {
     
 }
 
+
 .body-container {
     display: flex;
     flex-direction: row;
@@ -108,9 +109,10 @@ body {
     display: flex;
     flex-direction: column;
     row-gap:2rem;
+    height: 200rem;
 }
 
-.bar-container {
+.bar-container, .main-container {
     background-color: #FAFCFF ;
     border-radius: 10px;
     border: #827188  2px dashed;
@@ -216,6 +218,7 @@ nav a:hover {
     padding-top: .8rem;
     padding-bottom: .8rem;
     border-radius: 10px;
+    
 }
 
 .line {
@@ -242,6 +245,8 @@ nav a:hover {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
     border-radius: 10px;
+    width: 100%;
+    
 }
 
 /* Links inside the dropdown */
@@ -251,10 +256,22 @@ nav a:hover {
   text-decoration: none;
   display: block;
     font-size: 2rem;
+    border-top: 1px solid 	#AA98A9;
+}
+
+a:link, a:visited {
+    text-decoration: none!important;
+    color: black;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+.dropbtn:hover {
+    opacity: 100%;
+    background-color: #F8F8F8;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    border-radius: 10px;
+}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
@@ -294,7 +311,7 @@ filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%
     height: auto;
 }
 
-.logo p {
+.logo a {
     font-family: 'Lilita One';
     font-size: 4rem;
     color: #ABCCD4 ;
