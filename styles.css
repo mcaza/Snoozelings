@@ -63,12 +63,12 @@
 }
 
 @font-face {
-  font-family: 'Lilita One';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/lilitaone/v15/i7dPIFZ9Zz-WBtRtedDbYEF8RQ.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    font-family: 'Lilita One';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/lilitaone/v15/i7dPIFZ9Zz-WBtRtedDbYEF8RQ.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 
@@ -89,7 +89,7 @@ body {
     background-attachment: fixed;
     text-align: center;
     margin-top: 11.4rem;
-    
+
 }
 
 
@@ -108,19 +108,20 @@ body {
     justify-items: center;
     display: flex;
     flex-direction: column;
-    row-gap:2rem;
+    row-gap: 2rem;
     height: 200rem;
 }
 
-.bar-container, .main-container {
-    background-color: #FAFCFF ;
+.bar-container,
+.main-container {
+    background-color: #FAFCFF;
     border-radius: 10px;
-    border: #827188  2px dashed;
+    border: #827188 2px dashed;
 }
 
 .bar-container img {
     -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 
 .bar-container h2 {
@@ -141,7 +142,7 @@ body {
 }
 
 .main-container {
-    background-color: #FFFDFF ;
+    background-color: #FFFDFF;
     width: 70%
 }
 
@@ -149,7 +150,7 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    
+
 }
 
 .art {
@@ -168,13 +169,12 @@ body {
 }
 
 .artfour {
-    grid-column: 2 / span
-    grid-row: 2 / span 1;
+    grid-column: 2 / span grid-row: 2 / span 1;
 }
 
 img {
     width: 25rem;
-    
+
 }
 
 /* Nav Styles */
@@ -194,7 +194,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     flex-direction: row;
 }
 
@@ -218,7 +218,7 @@ nav a:hover {
     padding-top: .8rem;
     padding-bottom: .8rem;
     border-radius: 10px;
-    
+
 }
 
 .line {
@@ -232,35 +232,36 @@ nav a:hover {
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
     border-radius: 10px;
     width: 100%;
-    
+
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
     font-size: 2rem;
-    border-top: 1px solid 	#AA98A9;
+    border-top: 1px solid #AA98A9;
 }
 
-a:link, a:visited {
-    text-decoration: none!important;
+a:link,
+a:visited {
+    text-decoration: none !important;
     color: black;
 }
 
@@ -274,7 +275,9 @@ a:link, a:visited {
 }
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
 /* Nav Styles */
 
@@ -301,7 +304,7 @@ a:link, a:visited {
     width: 3.65rem;
     height: auto;
     padding: .8rem;
-filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%) contrast(88%);
+    filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%) contrast(88%);
 
 
 }
@@ -314,7 +317,7 @@ filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%
 .logo a {
     font-family: 'Lilita One';
     font-size: 4rem;
-    color: #ABCCD4 ;
+    color: #ABCCD4;
     margin-left: 1.5rem;
 }
 
@@ -322,8 +325,9 @@ filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%
 
 @media only screen and (max-width: 1500px) {
     .body-container {
-       width: 90%; 
+        width: 90%;
     }
+
     .left-container {
         width: 35%;
     }
@@ -334,7 +338,7 @@ filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%
         width: 99%;
         column-gap: 1.5rem;
     }
-    
+
     .menu {
         font-size: 1.7rem;
     }
@@ -346,11 +350,11 @@ filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%
         row-gap: 1.5rem;
         align-items: center;
     }
-    
+
     .left-container {
         width: 95%;
     }
-    
+
     .main-container {
         width: 95%;
     }
@@ -360,37 +364,81 @@ filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%
     .social-container {
         display: none;
     }
+
     .nav-container {
         justify-content: center;
     }
-    
+
     nav {
         flex-wrap: wrap;
         justify-content: center;
         justify-items: center;
         height: 6rem;
+        position: static;
+        flex-direction: row;
+        margin-top: 0;
     }
-    
+
     .menu {
         font-size: 1.7rem;
     }
-    
+
     nav > div {
         flex: 33%;
     }
-    
+
     .menu {
-        width: 150px;
+        width: 100%;
         padding: 0;
         padding-top: .5rem;
         padding-bottom: .5rem;
     }
-    
+
     .dropdown-content a {
         font-size: 1.6rem;
     }
-    
+
     body {
-        margin-top: 14.8rem;
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        justify-content:  center;
+    }
+    .nav-container {
+        position: static;
+        width: 100%;
+    }
+    
+    .body-container {
+        margin-top: 1rem;
+    }
+    
+    .dropdown-content {
+        min-width: 100px;
+    }
+    
+
+
+}
+
+@media only screen and (max-width: 415px) {
+    nav {
+        height: 9rem;
+        
+    }
+
+}
+
+@media only screen and (max-width: 285px) {
+    nav {
+        font-size: 1rem;
+        height: 10rem;
+
+    }
+    nav > div {
+        flex: 50%;
     }
 }
