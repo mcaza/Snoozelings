@@ -441,4 +441,24 @@ a:visited {
     nav > div {
         flex: 50%;
     }
+    
+    .left-container {
+        row-gap: 1rem;
+    }
+    
+    .left-container p {
+        font-size: 1.3rem;
+    }
+    
+    .left-container h2 {
+        font-size: 1.7rem;
+    }
+    
+    .body-container {
+        row-gap: 1rem;
+    }
+    
+    .left-container img {
+        width: 80%;
+    }
 }
