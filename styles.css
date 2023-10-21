@@ -112,6 +112,13 @@ body {
     height: 200rem;
 }
 
+.mobile-left, .mobile-right {
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 2rem;
+}
+
+
 .bar-container,
 .main-container {
     background-color: #FAFCFF;
@@ -344,23 +351,77 @@ a:visited {
     }
 }
 
+@media only screen and (max-width: 1025px) {
+    .menu {
+        font-size: 1.6rem;
+        padding-right: 1.2rem;
+        padding-left: 1.2rem;
+    }
+    
+    .dropdown-content {
+        min-width: 30px;
+        padding-right: .4rem;
+        padding-left: .4rem;
+        width: 93%;
+    }
+    
+    .dropdown-content a {
+        font-size: 1.4rem;
+    }
+    
+    .art-container img {
+        width: 70%;
+    }
+}
+
 @media only screen and (max-width: 925px) {
     .body-container {
         flex-direction: column-reverse;
         row-gap: 1.5rem;
         align-items: center;
+        
+        
     }
 
     .left-container {
         width: 95%;
+        
     }
 
     .main-container {
         width: 95%;
+        
+    }
+    
+    
+    
+    .left-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 2rem;
+        justify-items: center;
+        align-items: flex-start;
+    }
+    
+    .left-container div {
+        flex: 45%;
+    }
+    
+    .bar-container {
+        height: auto;
+    }
+    
+    .mobile-left {
+        row-gap: 2rem;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .art-container img {
+        width: 78%;
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 650px) {
     .social-container {
         display: none;
     }
@@ -424,11 +485,24 @@ a:visited {
 
 }
 
-@media only screen and (max-width: 415px) {
+@media only screen and (max-width: 500px) {
     nav {
         height: 9rem;
         
     }
+    
+    .left-container div {
+        flex: 50%;
+    }
+
+    .left-container {
+        display: inline-flex;
+
+        align-content: flex-start;
+
+
+    }
+    
 
 }
 
@@ -444,6 +518,7 @@ a:visited {
     
     .left-container {
         row-gap: 1rem;
+        
     }
     
     .left-container p {
