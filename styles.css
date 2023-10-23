@@ -112,9 +112,11 @@ body {
     height: 200rem;
 }
 
-.mobile-left, .mobile-right {
+.mobile-left,
+.mobile-right {
     display: flex;
     flex-direction: column;
+    grid-row-gap: 2rem;
     grid-row-gap: 2rem;
 }
 
@@ -157,10 +159,14 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-
 }
 
 .art {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.artlarge {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
 }
@@ -179,9 +185,13 @@ body {
     grid-column: 2 / span grid-row: 2 / span 1;
 }
 
-img {
+.art img {
     width: 25rem;
 
+}
+
+.artlarge img {
+    width: 40rem;
 }
 
 /* Nav Styles */
@@ -312,8 +322,6 @@ a:visited {
     height: auto;
     padding: .8rem;
     filter: invert(100%) sepia(2%) saturate(831%) hue-rotate(198deg) brightness(122%) contrast(88%);
-
-
 }
 
 .social-container img:hover {
@@ -327,6 +335,130 @@ a:visited {
     color: #ABCCD4;
     margin-left: 1.5rem;
 }
+
+/* Pet Profile Styles */
+.info {
+    border: 2px dashed #827188;
+    border-radius: 10px;
+    width: 350px;
+    height: 100%;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1.7rem;
+    row-gap: 1rem;
+}
+
+.button-bar {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: .8rem;
+}
+
+.petrow {
+    display: flex;
+    column-gap: 1rem;
+    justify-content: space-evenly;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.petinfo-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.main-container p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.55rem;
+}
+
+.petinfo-container p {
+    margin-bottom: 1rem;
+}
+
+.trophies {
+    height: 80%;
+}
+
+h3 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+h4 {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+}
+
+.art-container p {
+    margin-top: 1rem;
+
+}
+
+hr {
+    width: 75%;
+    color: gainsboro;
+    opacity: 50%;
+}
+
+.info h4 {
+    margin-top: 1rem;
+    text-align: left;
+    padding-left: 1.6rem;
+    padding-bottom: .8rem;
+    border-bottom: 2px dashed #827188;
+}
+
+.rowtwo {
+    height: 300px;
+    column-gap: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+
+}
+
+
+
+.itemsBox {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    row-gap: 1rem;
+}
+
+
+
+.snoozelinginfo {
+    text-align: left;
+    margin-left: 1.6rem;
+}
+
+
+.physicalInfo {
+    margin-right: 1.1rem;
+}
+
+.snoozelinginfo li {
+    margin-top: .3rem;
+    margin-left: 2rem;
+}
+
+.pbspecialmarkings {
+    margin-bottom: 1rem;
+}
+
+
 
 /* Media Styles */
 
@@ -357,18 +489,18 @@ a:visited {
         padding-right: 1.2rem;
         padding-left: 1.2rem;
     }
-    
+
     .dropdown-content {
         min-width: 30px;
         padding-right: .4rem;
         padding-left: .4rem;
         width: 93%;
     }
-    
+
     .dropdown-content a {
         font-size: 1.4rem;
     }
-    
+
     .art-container img {
         width: 70%;
     }
@@ -379,22 +511,22 @@ a:visited {
         flex-direction: column-reverse;
         row-gap: 1.5rem;
         align-items: center;
-        
-        
+
+
     }
 
     .left-container {
         width: 95%;
-        
+
     }
 
     .main-container {
         width: 95%;
-        
+
     }
-    
-    
-    
+
+
+
     .left-container {
         flex-direction: row;
         flex-wrap: wrap;
@@ -402,20 +534,21 @@ a:visited {
         justify-items: center;
         align-items: flex-start;
     }
-    
+
     .left-container div {
         flex: 45%;
     }
-    
+
     .bar-container {
         height: auto;
     }
-    
+
     .mobile-left {
         row-gap: 2rem;
         display: flex;
         flex-direction: column-reverse;
     }
+
     .art-container img {
         width: 78%;
     }
@@ -466,21 +599,22 @@ a:visited {
         width: 100%;
         margin-right: auto;
         margin-left: auto;
-        justify-content:  center;
+        justify-content: center;
     }
+
     .nav-container {
         position: static;
         width: 100%;
     }
-    
+
     .body-container {
         margin-top: 1rem;
     }
-    
+
     .dropdown-content {
         min-width: 100px;
     }
-    
+
 
 
 }
@@ -488,9 +622,9 @@ a:visited {
 @media only screen and (max-width: 500px) {
     nav {
         height: 9rem;
-        
+
     }
-    
+
     .left-container div {
         flex: 50%;
     }
@@ -502,7 +636,7 @@ a:visited {
 
 
     }
-    
+
 
 }
 
@@ -512,27 +646,28 @@ a:visited {
         height: 10rem;
 
     }
+
     nav > div {
         flex: 50%;
     }
-    
+
     .left-container {
         row-gap: 1rem;
-        
+
     }
-    
+
     .left-container p {
         font-size: 1.3rem;
     }
-    
+
     .left-container h2 {
         font-size: 1.7rem;
     }
-    
+
     .body-container {
         row-gap: 1rem;
     }
-    
+
     .left-container img {
         width: 80%;
     }
