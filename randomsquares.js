@@ -140,7 +140,7 @@ function setMarkings(color, type) {
 }
 
 function specialMarkings(snoozeling) {
-    let markingsString = "<strong>Special Traits: </strong>";
+    let markingsString = "<strong>Special Traits: </strong><ul style='text-align: left;margin-top: 0;'>";
     const itemsArray = [snoozeling.wings, snoozeling.bellyMarking, snoozeling.spotsMarking];
     const nameArray = ['Wings', 'Belly Marking', 'Body Scales'];
     let trueArray = [];
@@ -200,12 +200,15 @@ function snoozelingGenerate(number, snoozelingOne) {
     if (snoozelingOne.angel === true) {
         document.getElementById('TopWing' + number).src = 'Layers/AngelWingTop.png';
         document.getElementById('BottomWing' + number).src = 'Layers/AngelWingBottom.png';
+        document.getElementById('clothes').innerHTML = '<ul style="margin-left: .5rem;text-align: left;"><li>Angel Set</li></ul>';
     } else if (snoozelingOne.wings === true) {
         setMainColorPic('TopWing' + number, 'Layers/Wings/Pegasus/Top/', snoozelingOne.mainColor);
         setMainColorPic('BottomWing' + number, 'Layers/Wings/Pegasus/Bottom/', snoozelingOne.mainColor);
+        document.getElementById('clothes').innerHTML = '';
     } else {
         document.getElementById('TopWing' + number).src = "";
         document.getElementById('BottomWing' + number).src = "";
+        document.getElementById('clothes').innerHTML = '';
     }
     document.getElementById('Transparent' + number).src = "Layers/transparentSquare.png";
     document.getElementById('pbmaincolor').innerHTML = "<strong>Main Color: </strong>" + snoozelingOne.mainColor;
