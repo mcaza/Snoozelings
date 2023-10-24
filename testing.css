@@ -1,0 +1,53 @@
+#parentRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.artparent {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.artparenttwo {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.row-one img {
+    width: 100%;
+}
+
+#childrenRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.artchild1 {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.artchild2 {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.artchild3 {
+    grid-row: 1 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.artchild4 {
+    grid-row: 1 / span 1;
+    grid-column: 4 / span 1;
+}
+
+.row-two img {
+    width: 80%;
+}
+
+button {
+    margin-right: 10px;
+}
