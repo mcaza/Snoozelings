@@ -197,7 +197,7 @@ function chooseTailColor(tempHairColor) {
 }
 
 //Snoozeling Factory
-function Snoozeling(id, mainColor, eyeColor, hairColor, tailColor, noseColor, hairType, tailType, bellyMarking, spotsMarking, wings) {
+function Snoozeling(id, mainColor, eyeColor, hairColor, tailColor, noseColor, hairType, tailType, bellyMarking, spotsMarking, wings, mood) {
     this.id = id;
     this.mainColor = mainColor;
     this.eyeColor = eyeColor;
@@ -209,7 +209,7 @@ function Snoozeling(id, mainColor, eyeColor, hairColor, tailColor, noseColor, ha
     this.bellyMarking = bellyMarking;
     this.spotsMarking = spotsMarking;
     this.wings = wings;
-    this.mood = chooseFromArrayRandom(moodList);
+    this.mood = mood;
     this.faceType = this.mood.fileName;
     if (this.mood.colors === true) {
         this.faceColor = this.mood.fileName;
@@ -229,7 +229,8 @@ function randomSnoozeling(id) {
     const tempBelly = flipCoin();
     const tempSpots = flipCoin();
     const tempWings = randomNumbercheck(4);
-    const newSnooze = new Snoozeling(id, tempMainColor, tempEyecolor, tempHairColor, tempTailColor, tempNoseColor, tempHairType, tempTailType, tempBelly, tempSpots, tempWings);
+    const tempMood = chooseFromArrayRandom(moodList);
+    const newSnooze = new Snoozeling(id, tempMainColor, tempEyecolor, tempHairColor, tempTailColor, tempNoseColor, tempHairType, tempTailType, tempBelly, tempSpots, tempWings, tempMood);
     return newSnooze;
 }
 
@@ -334,6 +335,7 @@ function breedSnoozeling(one, two, id) {
     let tempEyeArray = [];
     let possibleEyes = [];
     let cleanEyes = [];
+    let normalEyes = [];
     for (let i = 0; i < one.eyeColor.colorCategories.length; i++) {
         tempEyeArray.push(one.eyeColor.colorCategories[i]);
     }
@@ -366,17 +368,22 @@ function breedSnoozeling(one, two, id) {
     possibleColors.push(one.eyeColor);
     possibleColors.push(two.eyeColor);
     cleanEyes = removeDuplicates(possibleColors);
+    for (let i = 0; i < cleanEyes.length; i++) {
+        if (cleanEyes[i].colorRarity !== 'Rare') {
+            normalEyes.push(cleanEyes[i]);
+        }
+    }
     if (tempMainColor.colorRarity === 'Rare') {
         const chance = flipCoin();
         if (chance === true) {
             tempEyeColor = tempMainColor;
         } else {
-            const randomNum = randomNumber(cleanEyes.length);
-            tempEyeColor = cleanEyes[randomNum];
+            const randomNum = randomNumber(normalEyes.length);
+            tempEyeColor = normalEyes[randomNum];
         }
     } else {
-        const randomNum = randomNumber(cleanEyes.length);
-        tempEyeColor = cleanEyes[randomNum];
+        const randomNum = randomNumber(normalEyes.length);
+        tempEyeColor = normalEyes[randomNum];
     }
 
     //Hair Calculations
@@ -545,7 +552,7 @@ function breedSnoozeling(one, two, id) {
     }
 
     //Make New Snoozeling
-    const babySnooze = new Snoozeling(id, tempMainColor, tempEyeColor, tempHairColor, tempTailColor, tempNoseColor, tempHairType, tempTailType, tempBellyMarking, tempSpotsMarking, tempWings);
+    const babySnooze = new Snoozeling(id, tempMainColor, tempEyeColor, tempHairColor, tempTailColor, tempNoseColor, tempHairType, tempTailType, tempBellyMarking, tempSpotsMarking, tempWings, tempMood);
     return babySnooze;
 }
 
@@ -577,8 +584,8 @@ function putSnoozelingOnPage(number, snoozeling) {
     }
     
     if (snoozeling.tailType === 'Dragon') {
-        document.getElementById('Tail' + number).src = 'Layers/Tail/Dragon/End/' + snoozeling.hairColor.fileName;
-        document.getElementById('SecondTail' + number).src = 'Layers/Tail/Dragon/' + snoozeling.mainColor.fileName;
+        document.getElementById('SecondTail' + number).src = 'Layers/Tail/Dragon/End/' + snoozeling.hairColor.fileName;
+        document.getElementById('Tail' + number).src = 'Layers/Tail/Dragon/' + snoozeling.mainColor.fileName;
     } else {
         document.getElementById('Tail' + number).src = 'Layers/Tail/' + snoozeling.tailType + '/' + snoozeling.tailColor.fileName;
         document.getElementById('SecondTail' + number).src = '';
