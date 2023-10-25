@@ -185,7 +185,7 @@ body {
 
 .art img {
     width: 25rem;
-
+    
 }
 
 .artlarge img {
@@ -461,7 +461,7 @@ hr {
 }
 
 #bottomSpace {
-    height: 19rem;
+    min-height: 19rem;
 }
 
 /* Footer Styles */
@@ -530,8 +530,61 @@ margin-top: 15px;
     color: rebeccapurple;
 }
 
-/* Media Styles */
+/* Scroll Bar Styles */
+/* width */
+.info::-webkit-scrollbar {
+  width: 8px;
+}
 
+/* Track */
+.info::-webkit-scrollbar-track {
+  background: 	#E5E4E2;
+  border-radius: 10px;
+}
+ 
+/* Handle */
+.info::-webkit-scrollbar-thumb {
+  background: 	#AA98A9; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.info::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+
+/* Pillow Test Styles */
+.artcontainertwo {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.pillow {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+    z-index: 0;
+}
+
+.arttwo {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+    z-index: 1;
+}
+
+
+
+.pillow img {
+    width: 40%;
+}
+
+.arttwo img {
+    -webkit-transform: none;
+    transform: none;
+    width: 35%;
+}
+
+/* Media Styles */
 @media only screen and (max-width: 1500px) {
     .body-container {
         width: 90%;

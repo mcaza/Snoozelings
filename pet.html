@@ -148,7 +148,7 @@
                     <a href="journal" class="taskList">Fill Out Journal</a><br>
                     <a href="farm" class="taskList">Harvest Plants</a><br>
                     <a href="explore" class="taskList">Collect Exploring Goods</a><br>
-                    <a href="raffle" class="taskList">Enter Daily Raffle</a><br>
+                    <a href="raffle" class="taskList" >Enter Daily Raffle</a><br>
                     <a href="craftingtable" class="taskList">Finish Crafting Item</a><br>
                     <button onClick="" class="taskList clearNotifs">Clear Notifications</button><br><br>
                 </div>
@@ -168,67 +168,108 @@
 
         <!-- All Main Content -->
         <div class="main-container">
-            <div class="artcontainertwo">
-                <div class="pillow">
-                    <img src="Layers/Pillow.png">
+            <div class="button-bar">
+                <button class="fancyButton">Edit Profile</button>
+                <button class="fancyButton">Change Job</button>
+                <button class="fancyButton">Bond Souls</button>
+            </div>
+            <div class="petrow rowone">
+                <div class="petinfo-container">
+                    <h3>Sir Silly Sniff</h3>
+                    <p>Level 3 Farmer</p>
+                    <div class="trophies info">
+                        <h4>Trophies</h4>
+                    </div>
                 </div>
-                <div class="arttwo">
-                    <img src="" id="BottomWingtwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="Primarytwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="Spotstwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="Bellytwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="MainLinestwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="Eyestwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="Facetwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="ClothesBottomtwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="Hairtwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="SecondTailtwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="Tailtwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="Nosetwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="FaceMaintwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="FaceExtratwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="ClothesToptwo">
-                </div>
-                <div class="arttwo">
-                    <img src="" id="TopWingtwo">
-                </div>
-                <div class="arttwo">
-                    <a onclick="runCode()"><img src="resources/BlueBalloon.png" id="Transparenttwo"></a>
+                <div class="art-container">
+                    <div class="artlarge">
+                        <img src="" id="BottomWinglarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="Primarylarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="Spotslarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="Bellylarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="MainLineslarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="Eyeslarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="Facelarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="ClothesBottomlarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="Hairlarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="SecondTaillarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="Taillarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="Noselarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="FaceMainlarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="FaceExtralarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="ClothesToplarge">
+                    </div>
+                    <div class="artlarge">
+                        <img src="" id="TopWinglarge">
+                    </div>
+                    <div class="artlarge">
+                        <img onClick="petPageCode()" src="resources/BlueBalloon.png" id="Transparentlarge">
+                    </div>
+                    <p><strong>Sir Silly Sniff's Pronouns:</strong> She / Her</p>
                 </div>
             </div>
+            <hr>
+            <div class="petrow rowtwo">
+                <div class="physicalInfo info">
+                    <h4>Plushie Build</h4>
+                    <p class="snoozelinginfo" id="pbmaincolor"></p>
+                    <p class="snoozelinginfo" id="pbhaircolor"></p>
+                    <p class="snoozelinginfo" id="pbeyecolor"></p>
+                    <p class="snoozelinginfo" id="pbnosecolor"></p>
+                    <p class="snoozelinginfo" id="pbhairstyle"></p>
+                    <p class="snoozelinginfo" id="pbtailstyle"></p>
+                    <p class="snoozelinginfo" id="pbspecialmarkings"></p>
+                    <p class="snoozelinginfo" id="pb"></p>
+                    <p class="snoozelinginfo" id="pb"></p>
+                    <p id="pb"></p>
+                </div>
+                <div class="itemsBox">
+                    <div class="itemsapplied info">
+                        <h4>Applied Trinkets</h4>
+                    </div>
+                    <div class="apparel info">
+                        <h4>Snooze Clothes</h4>
+                        <p class="testinfo" id="clothes"></p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div id="bottomSpace">
+                
+            </div>
         </div>
-    </div>
-    <!--End of All Main Content-->
+        </div>
+        <!--End of All Main Content-->
 
-
+   
 
     <!-- Footer Goes Here -->
     <div class="footer-container">
@@ -243,8 +284,8 @@
             </ul>
         </div>
     </div>
-
-
+         
+    
     <!-- Script Link -->
     <script src="main.js"></script>
 

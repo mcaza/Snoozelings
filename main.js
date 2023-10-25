@@ -631,7 +631,7 @@ function specialMarkings(snoozeling) {
 }
 
 //Display Snoozeling (Left and Large)
-function runCode() {
+function petPageCode() {
     var testSnooze = new randomSnoozeling(0);
     putSnoozelingOnPage('one', testSnooze);
     putSnoozelingOnPage('large', testSnooze);
