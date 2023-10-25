@@ -634,8 +634,18 @@ function specialMarkings(snoozeling) {
 function petPageCode() {
     var testSnooze = new randomSnoozeling(0);
     putSnoozelingOnPage('one', testSnooze);
+    setMoodLeft(testSnooze);
+    testSnooze.mood = findMoodByName('Happy');
     putSnoozelingOnPage('large', testSnooze);
     profileInfo(testSnooze);
+}
+
+//Mood Left Bar Set
+function setMoodLeft(snoozeling) {
+    const mood = snoozeling.mood.moodName;
+    console.log(mood);
+    const fullMood = '<strong>Mood:</strong> ' + mood;
+    document.getElementById('mood').innerHTML = fullMood;
 }
 
 
