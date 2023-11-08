@@ -82,7 +82,7 @@ html {
 body {
     display: flex;
     align-items: center;
-    background-image: url(resources/PurpleSquares.png);
+    background-image: url(../resources/PurpleSquares.png);
     background-repeat: repeat;
     background-size: 290px;
     background-attachment: fixed;
@@ -142,6 +142,10 @@ hr {
     width: 75%;
     color: gainsboro;
     opacity: 50%;
+}
+
+.wideImage {
+    width: 80%;
 }
 
 /* Navigation Bar Styles (Black) */
@@ -314,6 +318,10 @@ a:visited {
     font-style: italic;
 }
 
+#moodForm {
+    display: none;
+}
+
 /* Main Container Universal Styles */
 
 .main-container {
@@ -341,6 +349,15 @@ a:visited {
 
 .artlarge img {
     width: 40rem;
+}
+
+.artStarter {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.artStarter img {
+    width: 25rem;
 }
 
 .art img {
@@ -404,14 +421,14 @@ margin-top: 15px;
     border: 0;
 }
 
-.clearNotifs {
+#clearNotifs {
     background-color: transparent;
     border: 0;
     font-size: 1.3rem;
     font-family: Karla;
 }
 
-.clearNotifs:hover {
+#clearNotifs:hover {
     color: rebeccapurple;
 }
 
@@ -515,6 +532,10 @@ margin-top: 15px;
     min-height: 19rem;
 }
 
+.petOwnedBy {
+    font-size: 30rem;
+}
+
 /* Nest.html Styles */
 
 .artcontainertwo {
@@ -545,6 +566,15 @@ margin-top: 15px;
     -webkit-transform: none;
     transform: none;
     width: 35%;
+}
+
+/* Starter Page Styles */
+
+.radioStarter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 100px;
 }
 
 /* Media Styles */
@@ -597,8 +627,6 @@ margin-top: 15px;
         flex-direction: column-reverse;
         row-gap: 1.5rem;
         align-items: center;
-
-
     }
 
     .left-container {

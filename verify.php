@@ -1,0 +1,124 @@
+<?php
+require_once 'includes/config_session.inc.php';
+require_once 'includes/dbh-inc.php';
+require_once 'includes/verifyPageCheck.inc.php';
+require_once 'includes/viewErrors.inc.php';
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Dark Top Bar, Snoozeling Text Logo, and Social Media Icons */ -->
+    <div class="nav-container">
+        <div id="logo">
+            <a href="index.html">Snoozelings</a>
+        </div>
+        <div class="social-container">
+            <ul>
+                <?php require_once 'includes/socialIcons.inc.php'; ?>
+            </ul>
+        </div>
+    </div>
+
+    <!-- White Secondary Top Bar. Includes Menu and Drop Down Menus -->
+    <nav>
+        <?php require_once "includes/taskbar.inc.php"; ?>
+    </nav>
+
+    <!-- Container for Everything Below the Bars -->
+    <div class="body-container">
+
+        <!-- Container for all Left Page Elements -->
+        <div class="left-container">
+            <div class="mobile-left">
+                <div class="bar-container">
+                    <h2>Daily Affirmation</h2>
+
+                    <?php require_once 'includes/dailyAffirmation.inc.php'; ?>
+
+                    <p id="date"></p>
+                </div>
+
+                <!-- Snoozeling Display Box. Currently Generates Random Snoozeling -->
+                <div class="bar-container">
+                    <?php require 'includes/leftPet.inc.php'; ?>
+                    <p id="mood" onClick="showForm()"><strong>Mood:</strong> Happy</p>
+                    <form id="moodForm">
+                        <label for="mood">Choose a Mood:</label>
+                        <select id="moodSelect" name="mood">
+                            <option value="Happy">Happy</option>
+                            <option value="Anxious">Anxious</option>
+                            <option value="Worried">Worried</option>
+                            <option value="Silly">Silly</option>
+                            <option value="Overwhelmed">Overwhelmed</option>
+                        </select><br>
+                        <input type="button" onClick="hideForm()" value="Change Mood">
+                    </form>
+                </div>
+            </div>
+
+            <div class="mobile-right">
+                <!-- Daily Affirmation Box -->
+
+
+                <!-- To Do List -->
+                <div class="bar-container">
+                    <h2>To Do</h2>
+                    <?php require_once 'includes/notifications.inc.php'; ?>
+                    <button onclick="window.location.href='includes/clearNotifications.inc.php';" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
+                </div>
+
+                <!-- Daily Stats -->
+                <div class="bar-container">
+                    <h2>Daily Records</h2>
+                    <?php require_once 'includes/dailyRecords.inc.php' ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Main Content -->
+        <div class="main-container">
+            <div><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
+            <div>
+                <h3>Verify Your Email</h3>
+            </div>
+            <form method="post" action="includes/verifyEmail.inc.php">
+                <label for="code">Enter Your Code:</label><br>
+                <input type="text" name="code"><br>
+                <button>Submit</button><br><br>
+            </form>
+            <?php verifyErrors(); ?>
+            <hr>
+            <h3>Didn't Get Your Code?</h3>
+        </div>
+    </div>
+    <!--End of All Main Content-->
+
+
+
+    <!-- Footer Goes Here -->
+    <div class="footer-container">
+        <div class="footer-texts">
+            <ul>
+                <?php require_once 'includes/bottomBar.inc.php'; ?>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Script Link -->
+    <script src="main.js"></script>
+
+</body>
+
+</html>

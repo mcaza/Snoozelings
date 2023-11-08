@@ -1,0 +1,37 @@
+<?php
+require_once 'dbh-inc.php';
+require_once 'config_session.inc.php';
+
+$code = $_POST["code"];
+$userId = $_SESSION['user_id'];
+
+$errors = [];
+$value = 1;
+$emptyString = "";
+
+$query = "SELECT * FROM users WHERE id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($result["tempCode"] === $code) {
+    $query = "UPDATE users SET emailVerified = :value WHERE id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":value", $value);
+    $stmt->execute();
+    
+    $query = "UPDATE users SET tempCode = :emptyString WHERE id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":emptyString", $emptyString);
+    $stmt->execute();
+    
+    header("Location: ../index.php");
+} else {
+    $errors["incorrect"] = "The code you enterred is incorrect." . $_POST["code"] . " vs " . $result["tempCode"];
+    $_SESSION["errors_verify"] = $errors;
+    header("Location: ../verify.php");
+}
+
