@@ -38,6 +38,37 @@ function isEmailRegistered(object $pdo, string $email) {
     }
 }
 
-function createUser(object $pdo, string $username, string $pwd, string $email, $birthdate) {
-    setUser($pdo, $username, $pwd, $email, $birthdate);
+function futureDate($date) {
+    $todaysDate = date("Y");
+    if ($date > $todaysDate) {
+        return true;
+    }
+}
+
+function thirteenYears($date) {
+    $date = strtotime($date);
+    $today = strtotime("-13 year");
+    if ($date > $today) {
+        return true;
+    }
+}
+
+function passwordCheck(string $pwd, string $pwd2) {
+
+    if ($pwd === $pwd2) {
+        
+    } else {
+        return true;
+    }
+}
+
+function passwordLength($pwd) {
+    $count = strlen($pwd);
+    if ($count < 8) {
+        return true;
+    }
+}
+
+function createUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter) {
+    setUser($pdo, $username, $pwd, $email, $birthdate, $pronouns, $newsletter);
 }

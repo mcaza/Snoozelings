@@ -11,5 +11,5 @@ echo "<p>" . $result['snoozelingsCrafted'] . " Snoozelings Crafted</p>";
 //echo "<p>" . $result['itemsCrafted'] . " Items Crafted</p>";
 //echo "<p>" . $result['activeMembers'] . " Active Members</p>";
 echo "<p>" . $result['newMembers'] . " New Members</p>";
-echo "<p>" . $result['kindnessCoins'] . " Kindness Coins Given</p>";
+echo "<p>" . $result['kindnessCoins'] . " Kindness Coins Earned</p>";
     

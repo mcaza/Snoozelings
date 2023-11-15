@@ -1,7 +1,7 @@
 <?php
 
-require_once 'dbh-inc.php';
-require_once 'config_session.inc.php';
+require_once '../../includes/dbh-inc.php';
+require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
@@ -12,6 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $todaysDate = date("Y-m-d");
     $job = "jack";
     $mood = "Happy";
+    $breedStatus = "Closed";
+    $title = "The New";
     
     $query = "SELECT * FROM blueprints WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -20,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     
-   $query = "INSERT INTO snoozelings (owner_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials, name, pronouns, birthDate, job, mood) VALUES (:owner_id, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials, :name, :pronouns, :birthDate, :job, :mood);";
+   $query = "INSERT INTO snoozelings (owner_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials, name, pronouns, birthDate, job, mood, breedStatus, title) VALUES (:owner_id, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials, :name, :pronouns, :birthDate, :job, :mood, :breedStatus, :title);";
     $stmt = $pdo->prepare($query);
     
     $stmt->bindParam(":owner_id", $userId);
@@ -37,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":birthDate", $todaysDate);
     $stmt->bindParam(":job", $job);
     $stmt->bindParam(":mood", $mood);
+    $stmt->bindParam(":breedStatus", $breedStatus);
+    $stmt->bindParam(":title", $title);
 
     $stmt->execute(); 
     
@@ -58,6 +62,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $newId);
     $stmt->bindParam(":userId", $userId);
     $stmt->execute();
+    
+    $number = 1;
+    $query = "UPDATE users SET snoozelingsCrafted = :number WHERE id = :userId";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":number", $number);
+    $stmt->bindParam(":userId", $userId);
+    $stmt->execute();
+    
+    //Add 2 Farms to Account
+    $round = 2;
+    for ($i = 0; $i < $round; $i++) {
+        $query = 'INSERT farms (user_id) VALUES (:id)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
+    $_SESSION['bonded'] = htmlspecialchars($name);
     
     header("Location: ../pet?ID=" . $result["id"]);
     

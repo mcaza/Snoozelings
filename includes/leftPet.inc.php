@@ -1,8 +1,7 @@
 <?php
 
 //Connection Stuff
-require_once 'dbh-inc.php';
-require_once 'displayPet.inc.php';
+require_once '../includes/displayPet.inc.php';
 
     if (isset($_SESSION["user_id"])) {
         //$Results - Grab Bonded Pet ID

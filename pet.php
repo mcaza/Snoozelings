@@ -1,11 +1,11 @@
 <?php
-require_once 'includes/config_session.inc.php';
-require_once 'includes/dbh-inc.php';
-require_once 'includes/verifyCheck.inc.php'; 
-require_once 'includes/verifySinglePet.inc.php'; 
+require_once '../includes/config_session.inc.php';
+require_once '../includes/dbh-inc.php';
+require_once '../includes/verifyCheck.inc.php'; 
+require_once '../includes/verifySinglePet.inc.php'; 
 
 
-
+$id = $_GET['ID'];
 ?>
 
 <!DOCTYPE html>
@@ -26,14 +26,14 @@ require_once 'includes/verifySinglePet.inc.php';
         </div>
         <div class="social-container">
             <ul>
-                <?php require_once 'includes/socialIcons.inc.php'; ?>
+                <?php require_once '../includes/socialIcons.inc.php'; ?>
             </ul>
         </div>
     </div>
 
     <!-- White Secondary Top Bar. Includes Menu and Drop Down Menus -->
     <nav>
-        <?php require_once "includes/taskbar.inc.php"; ?>
+        <?php require_once "../includes/taskbar.inc.php"; ?>
     </nav>
 
     <!-- Container for Everything Below the Bars -->
@@ -45,14 +45,14 @@ require_once 'includes/verifySinglePet.inc.php';
                 <div class="bar-container">
                     <h2>Daily Affirmation</h2>
                     
-                    <?php require_once 'includes/dailyAffirmation.inc.php'; ?>
+                    <?php require_once '../includes/dailyAffirmation.inc.php'; ?>
                     
                     <p id="date"></p>
                 </div>
 
                 <!-- Snoozeling Display Box. Currently Generates Random Snoozeling -->
                 <div class="bar-container">
-                    <?php require 'includes/leftPet.inc.php'; ?>
+                    <?php require '../includes/leftPet.inc.php'; ?>
                     <p id="mood" onClick="showForm()"><strong>Mood:</strong> Happy</p>
                     <form id="moodForm">
                         <label for="mood">Choose a Mood:</label>
@@ -73,39 +73,49 @@ require_once 'includes/verifySinglePet.inc.php';
 
 
                 <!-- To Do List -->
-                <div class="bar-container">
+                <?php if(isset($_SESSION['user_id'])) {
+               echo '<div class="bar-container">
                     <h2>To Do</h2>
-                    <?php require_once 'includes/notifications.inc.php'; ?>
-                    <button onclick="window.location.href='includes/clearNotifications.inc.php';" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
-                </div>
+                    <?php require_once "../includes/notifications.inc.php"; ?>
+                    <button onclick="window.location.href="../includes/clearNotifications.inc.php";" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
+                </div>';
+                } ?>
 
                 <!-- Daily Stats -->
                 <div class="bar-container">
                     <h2>Daily Records</h2>
-                    <?php require_once 'includes/dailyRecords.inc.php' ?>
+                    <?php require_once '../includes/dailyRecords.inc.php' ?>
                 </div>
             </div>
         </div>
 
         <!-- All Main Content -->
-        <div class="main-container">
-            <?php require_once 'includes/petPageButtons.inc.php'; ?>
+        <div class="main-container"><div>
+            <?php 
+            //User Navigation
+            echo '<div id="onlyOne" class="leftRightButtons">';
+            if ($id > 1) {
+                echo '<a id="leftArrow" href="pet?ID=' . ($id - 1) . '"><<</a>';
+            }
+            echo '<a href="pet?ID=' . ($id + 1) . '">>></a>';
+            echo '</div>'; ?>
+            <?php require_once '../includes/petPageButtons.inc.php'; ?>
             <div class="petrow rowone">
                 <div class="petinfo-container">
-                    <?php require_once 'includes/petTitle.inc.php'; ?>
+                    <?php require_once '../includes/petTitle.inc.php'; ?>
                     <div class="trophies info">
                         <h4>Trophies</h4>
                     </div>
                 </div>
                 <div class="art-container">
-                    <?php require_once 'includes/largePet.inc.php'; ?>
+                    <?php require_once '../includes/largePet.inc.php'; ?>
                 </div>
             </div>
             <hr>
             <div class="petrow rowtwo">
                 <div class="physicalInfo info">
                     <h4>Plushie Build</h4>
-                    <?php require_once 'includes/plushieBuild.inc.php'; ?>
+                    <?php require_once '../includes/plushieBuild.inc.php'; ?>
                 </div>
                 <div class="itemsBox">
                     <div class="itemsapplied info">
@@ -116,7 +126,7 @@ require_once 'includes/verifySinglePet.inc.php';
                         <p class="testinfo" id="clothes"></p>
                     </div>
                 </div>
-            </div>
+            </div></div>
             <hr>
             <div id="bottomSpace">
 
@@ -131,7 +141,7 @@ require_once 'includes/verifySinglePet.inc.php';
     <div class="footer-container">
         <div class="footer-texts">
             <ul>
-                <?php require_once 'includes/bottomBar.inc.php'; ?>
+                <?php require_once '../includes/bottomBar.inc.php'; ?>
             </ul>
         </div>
     </div>
@@ -139,6 +149,13 @@ require_once 'includes/verifySinglePet.inc.php';
 
     <!-- Script Link -->
    <script src="main.js"></script>
+    <script>
+    //Profile / Snoozeling / Collection Fix When Only Right Arrow
+var leftArrow = document.getElementById('leftArrow');
+if (!leftArrow) {
+    document.getElementById('onlyOne').style.justifyContent = 'flex-end';
+}
+    </script>
 
 </body>
 

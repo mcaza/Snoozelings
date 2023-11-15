@@ -1,6 +1,6 @@
 <?php
-require_once 'dbh-inc.php';
-require_once 'config_session.inc.php';
+require_once '../../includes/dbh-inc.php';
+require_once '../../includes/config_session.inc.php';
 
 $code = $_POST["code"];
 $userId = $_SESSION['user_id'];

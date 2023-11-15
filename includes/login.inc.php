@@ -4,9 +4,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST["usernamelogin"];
     $pwd = $_POST["pwdlogin"];
     try {
-        require_once 'dbh-inc.php';
-        require_once 'login_model.inc.php';
-        require_once 'login_contr.inc.php';
+        require_once '../../includes/dbh-inc.php';
+        require_once '../../includes/login_model.inc.php';
+        require_once '../../includes/login_contr.inc.php';
         
         //ERROR HANDLERS
         $errors = [];
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $errors["wrong_password"] = "Your password is incorrect";
         }
         
-        require_once 'config_session.inc.php';
+        require_once '../../includes/config_session.inc.php';
         
         if ($errors) {
             $_SESSION["errors_login"] = $errors;
@@ -38,12 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sessionId = $newSessionId . "_" . $results["id"];
         session_id($sessionId);
         
+        //Set Bonded Pet Name
+        $name = petName($pdo, $results['bonded']);
         $_SESSION["user_id"] = $results["id"];
         $_SESSION["user_username"] = htmlspecialchars($results["username"]);
+        $_SESSION['bonded'] = htmlspecialchars($name['name']);
         
         $_SESSION["last_regeneration"] = time();
         
-        header("Location: ../signup.php");
+        header("Location: ../index.php");
         
         $pdo=null;
         $stmt = null;

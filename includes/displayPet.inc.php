@@ -1,6 +1,16 @@
 <?php 
 function displayPet($pet, $class) {    
+    //Pillow Array
+    $pillows = ['Blue', 'Green', 'Orange', 'Pink', 'Purple', 'Red', 'Yellow'];
+    
     echo '<div class="art-container">';
+    if($class === "arttwo") {
+        $randomNum = rand(0, count($pillows)-1);
+        echo "<div class='${class} pillow'>";
+        echo "<img src='Layers/Pillows/" . $pillows[$randomNum] . ".png'>";
+        echo "</div>";
+    }
+    
     if (strpos($pet["specials"], "Wings") !== false) {
         
             echo "<div class='${class}'>";
@@ -29,13 +39,22 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Faces/Happy/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
         echo "</div>";
+        if (strlen($pet['clothesBottom']) > 1) {
+        $clothesBottom = explode(' ', $pet['clothesBottom']);
+        foreach ($clothesBottom as $clothing) {
+            echo "<div class='${class}'>";
+         echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+            echo "</div>";
+        } }
         echo "<div class='${class}'>";
         if ($pet["hairType"] === "Floof") {
         echo "<img src='Layers/Hair/" . $pet["hairType"] . "/" . $pet["mainColor"] . ".png' id = 'Hairone'>";
         } else {
             echo "<img src='Layers/Hair/" . $pet["hairType"] . "/" . $pet["hairColor"] . ".png' id = 'Hairone'>";
         }
-        echo "</div>";
+            echo "</div>";
+    
+    
         if ($pet["tailType"] === "Dragon") {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Tail/Dragon/End/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
@@ -51,6 +70,13 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Noses/" . $pet["noseColor"] . ".png' id = 'Noseone'>";
         echo "</div>";
+    if (strlen($pet['clothesBottom']) > 1) {
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+            echo "<div class='${class}'>";
+         echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
+            echo "</div>";
+        } }
         if (strpos($pet["specials"], "Wings") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";

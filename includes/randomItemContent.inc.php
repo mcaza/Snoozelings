@@ -1,0 +1,32 @@
+<?php
+
+$userId = $_SESSION['user_id'];
+$item = $_SESSION['item'];
+unset($_SESSION['item']);
+
+//Get User Info
+$query = "SELECT dailyPrize FROM users WHERE id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//Will have cute snoozeling for alpha. Custom art later. Confused face if already took item.
+echo '<div><img style="width: 40%;" src="resources/BlueBalloon.png"></div>';
+if ($item) {
+    echo '<p>You reach into the bag and find: ' . $item . '</p>';
+} else {
+    echo '<h4>Feeling Down? Have a free item.</h4>';
+    
+}
+
+
+
+$number = intval($result['dailyPrize']);
+if ($number === 0) {
+    echo '<p>I hope it makes your day a little brighter.</p>';
+    echo '<button class="fancyButton" style="width: 200px; margin-right: auto; margin-left: auto;margin-bottom: 1.5rem;" onClick="window.location.href=\'../includes/dailyItem.inc.php\'">Get Free Item</button>';
+} else {
+    echo '<p><i>You have already taken an item today.</i></p>';
+    echo '<p><i>Please come back tomorrow.</i></p>';
+}

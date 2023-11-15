@@ -1,8 +1,8 @@
 <?php
-require_once 'includes/config_session.inc.php';
-require_once 'includes/dbh-inc.php';
-require_once 'includes/verifyPageCheck.inc.php';
-require_once 'includes/viewErrors.inc.php';
+require_once '../includes/config_session.inc.php';
+require_once '../includes/dbh-inc.php';
+require_once '../includes/verifyPageCheck.inc.php';
+require_once '../includes/viewErrors.inc.php';
 
 
 ?>
@@ -25,14 +25,14 @@ require_once 'includes/viewErrors.inc.php';
         </div>
         <div class="social-container">
             <ul>
-                <?php require_once 'includes/socialIcons.inc.php'; ?>
+                <?php require_once '../includes/socialIcons.inc.php'; ?>
             </ul>
         </div>
     </div>
 
     <!-- White Secondary Top Bar. Includes Menu and Drop Down Menus -->
     <nav>
-        <?php require_once "includes/taskbar.inc.php"; ?>
+        <?php require_once "../includes/taskbar.inc.php"; ?>
     </nav>
 
     <!-- Container for Everything Below the Bars -->
@@ -44,14 +44,14 @@ require_once 'includes/viewErrors.inc.php';
                 <div class="bar-container">
                     <h2>Daily Affirmation</h2>
 
-                    <?php require_once 'includes/dailyAffirmation.inc.php'; ?>
+                    <?php require_once '../includes/dailyAffirmation.inc.php'; ?>
 
                     <p id="date"></p>
                 </div>
 
                 <!-- Snoozeling Display Box. Currently Generates Random Snoozeling -->
                 <div class="bar-container">
-                    <?php require 'includes/leftPet.inc.php'; ?>
+                    <?php require '../includes/leftPet.inc.php'; ?>
                     <p id="mood" onClick="showForm()"><strong>Mood:</strong> Happy</p>
                     <form id="moodForm">
                         <label for="mood">Choose a Mood:</label>
@@ -72,27 +72,29 @@ require_once 'includes/viewErrors.inc.php';
 
 
                 <!-- To Do List -->
-                <div class="bar-container">
+                <?php if(isset($_SESSION['user_id'])) {
+               echo '<div class="bar-container">
                     <h2>To Do</h2>
-                    <?php require_once 'includes/notifications.inc.php'; ?>
-                    <button onclick="window.location.href='includes/clearNotifications.inc.php';" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
-                </div>
+                    <?php require_once "../includes/notifications.inc.php"; ?>
+                    <button onclick="window.location.href="../includes/clearNotifications.inc.php";" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
+                </div>';
+                } ?>
 
                 <!-- Daily Stats -->
                 <div class="bar-container">
                     <h2>Daily Records</h2>
-                    <?php require_once 'includes/dailyRecords.inc.php' ?>
+                    <?php require_once '../includes/dailyRecords.inc.php' ?>
                 </div>
             </div>
         </div>
 
         <!-- All Main Content -->
-        <div class="main-container">
+        <div class="main-container"><div  class="bottomPush">
             <div><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
             <div>
                 <h3>Verify Your Email</h3>
             </div>
-            <form method="post" action="includes/verifyEmail.inc.php">
+            <form method="post" action="../includes/verifyEmail.inc.php">
                 <label for="code">Enter Your Code:</label><br>
                 <input type="text" name="code"><br>
                 <button>Submit</button><br><br>
@@ -101,7 +103,7 @@ require_once 'includes/viewErrors.inc.php';
             <hr>
             <h3>Didn't Get Your Code?</h3>
         </div>
-    </div>
+    </div></div>
     <!--End of All Main Content-->
 
 
@@ -110,7 +112,7 @@ require_once 'includes/viewErrors.inc.php';
     <div class="footer-container">
         <div class="footer-texts">
             <ul>
-                <?php require_once 'includes/bottomBar.inc.php'; ?>
+                <?php require_once '../includes/bottomBar.inc.php'; ?>
             </ul>
         </div>
     </div>

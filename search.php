@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $colorSearch = $_POST["colorSearch"];
     
     try {
-        require_once "includes/dbh-inc.php";
+        require_once "../includes/dbh-inc.php";
         
         $query = "SELECT * FROM Colors WHERE CONCAT(categories,rarity) LIKE CONCAT('%', :colorSearch, '%')";
         

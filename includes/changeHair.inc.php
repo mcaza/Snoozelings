@@ -1,0 +1,65 @@
+<?php
+
+require_once '../../includes/dbh-inc.php';
+require_once '../../includes/config_session.inc.php';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $userId = $_SESSION['user_id'];
+    
+    //Get Variables
+    $hair = $_POST["hair"];
+    $id = $_POST["snoozeling"];
+    
+   //Get Pet Name
+    $query = "SELECT name, pronouns FROM snoozelings WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $name = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Pronouns
+    if ($name['pronouns'] === "He/Him") {
+        $pronouns = "his";
+    } elseif ($name['pronouns'] === "She/Her") {
+        $pronouns = "her";
+    } else {
+        $pronouns = "their";
+    }
+    
+    //Check for Coins. If no coins, reroute to trendytails with error message
+    $query = "SELECT coinCount FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $coins = $stmt->fetch(PDO::FETCH_ASSOC);
+    $count = intval($coins['coinCount']);
+    
+    if ($count < 5) {
+        $_SESSION['reply'] = "You do not have enough gold coins.";
+         header("Location: ../trendytails");
+    } else {
+    //Remove 5 coins
+    $query = 'UPDATE users SET coinCount = coinCount - 5 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+        
+    //Change Hairstyle
+    $query = 'UPDATE snoozelings SET hairType = :hair WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":hair", $hair);
+    $stmt->execute();
+        
+    //Update Session message
+    $_SESSION['reply'] = '<p>' . htmlspecialchars($name['name']) . ' loves ' . $pronouns . ' new hairstyle!!!</p>';
+    
+    //Reroute to trendytails
+    header("Location: ../trendytails");
+    }
+    
+    
+    
+} else {
+    header("Location: ../trendytails");
+}

@@ -30,6 +30,19 @@
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 
+    //Reset Daily Free Item Variable
+    $query = "UPDATE users SET dailyPrize = 0";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
+    //Close All Journal Entries
+    $query = "UPDATE chronicPainEntries SET closed = 1";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $query = "UPDATE mentalHealthEntries SET closed = 1";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
     $affirmstmt = null;
     $userstmt = null;
     $pdo = null;

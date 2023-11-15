@@ -1,148 +1,4 @@
-//Color Stuff
-//Color Factory
-function Color(id, array) {
-    this.id = id;
-    this.colorName = array[0];
-    this.displayName = array[1];
-    this.fileName = array[0] + '.png';
-    this.colorRarity = array[2];
-    this.colorCategories = array[3];
-}
-
-//Find Color Function
-function findColorByName(color) {
-    return colorList.find(x => x.colorName === color);
-}
-
-//Color Information
-const colorArray = [
-                    ['Amethyst', 'Amethyst', 'Common', ['Purple']],
-                    ['Banana', 'Banana', 'Common', ['Yellow']],
-                    ['Basil', 'Basil', 'Common', ['Green']],
-                    ['BeachRock', 'Beach Rock', 'Common', ['Brown']],
-                    ['Beef', 'Beef', 'Common', ['Brown', 'Red']],
-                    ['BellPepper', 'Bell Pepper', 'Common', ['Red', 'Eyeburner']],
-                    ['Berry', 'Berry', 'Common', ['Pink']],
-                    ['Blackberry', 'Blackberry', 'Common', ['Blue', 'Dark']],
-                    ['Blueberry', 'Blueberry', 'Common', ['Blue']],
-                    ['BlueMushroom', 'Blue Mushroom', 'Common', ['Blue', 'Pastel']],
-                    ['BlueRaspberry', 'Blue Raspberry', 'Common', ['Blue', 'Eyeburner']],
-                    ['Bubblegum', 'Bubblegum', 'Common', ['Pink', 'Pastel']],
-                    ['BurntToast', 'Burnt Toast', 'Common', ['Brown']],
-                    ['Cherry', 'Cherry', 'Common', ['Red']],
-                    ['Cinnamon', 'Cinnamon', 'Common', ['Brown']],
-                    ['Cornflower', 'Cornflower', 'Common', ['Blue']],
-                    ['CottonCandy', 'Cotton Candy', 'Uncommon', ['Pink', 'Purple', 'Blue', 'Pastel']],
-                    ['Cranberry', 'Cranberry', 'Common', ['Red']],
-                    ['Denim', 'Denim', 'Common', ['Blue', 'Pastel']],
-                    ['Dewdrop', 'Dewdrop', 'Common', ['Blue', 'Pastel']],
-                    ['Eggplant', 'Eggplant', 'Common', ['Purple']],
-                    ['FruitSnack', 'Fruit Snack', 'Common', ['Blue']],
-                    ['Gold', 'Gold', 'Common', ['Yellow']],
-                    ['Goldfish', 'Goldfish', 'Common', ['Orange', 'Pastel']],
-                    ['GreenGrape', 'Green Grape', 'Common', ['Green']],
-                    ['Guava', 'Guava', 'Common', ['Yellow', 'Pastel']],
-                    ['Gumdrop', 'Gumdrop', 'Common', ['Purple']],
-                    ['Haunt', 'Haunt', 'Uncommon', ['Purple', 'Orange']],
-                    ['Holiday', 'Holiday', 'Uncommon', ['Red', 'Green', 'Purple']],
-                    ['HotChocolate', 'Hot Chocolate', 'Common', ['Brown']],
-                    ['Icing', 'Icing', 'Common', ['Blue', 'Pastel']],
-                    ['Ink', 'Ink', 'Common', ['Black', 'Monochrome', 'Dark']],
-                    ['Iron', 'Iron', 'Common', ['Grey', 'Monochrome']],
-                    ['JellyBean', 'Jelly Bean', 'Common', ['Blue', 'Eyeburner']],
-                    ['Juice', 'Juice', 'Common', ['Red', 'Pastel']],
-                    ['Kiwi', 'Kiwi', 'Common', ['Green']],
-                    ['Latte', 'Latte', 'Common', ['Brown']],
-                    ['Lavender', 'Lavender', 'Common', ['Purple', 'Pastel']],
-                    ['Leaf', 'Leaf', 'Common', ['Green']],
-                    ['Lemon', 'Lemon', 'Common', ['Yellow']],
-                    ['Lime', 'Lime', 'Common', ['Green', 'Eyeburner']],
-                    ['Love', 'Love', 'Common', ['Pink', 'Red']],
-                    ['Mandarin', 'Mandarin', 'Common', ['Orange']],
-                    ['Marker', 'Marker', 'Common', ['Pink', 'Eyeburner']],
-                    ['Marmalade', 'Marmalade', 'Common', ['Orange']],
-                    ['Mocha', 'Mocha', 'Common', ['Brown']],
-                    ['Molasses', 'Molasses', 'Common', ['Brown']],
-                    ['Night', 'Night', 'Common', ['Blue', 'Dark']],
-                    ['Oatmeal', 'Oatmeal', 'Common', ['Brown', 'Pastel']],
-                    ['Olive', 'Olive', 'Common', ['Green']],
-                    ['Orange', 'Orange', 'Common', ['Orange']],
-                    ['Papaya', 'Papaya', 'Common', ['Orange', 'Eyeburner']],
-                    ['Party', 'Party', 'Common', ['Purple']],
-                    ['Peach', 'Peach', 'Common', ['Orange', 'Pastel']],
-                    ['Pillow', 'Pillow', 'Common', ['Purple']],
-                    ['Pine', 'Pine', 'Common', ['Green']],
-                    ['Plum', 'Plum', 'Common', ['Purple']],
-                    ['Potato', 'Potato', 'Common', ['Brown']],
-                    ['PurpleGrape', 'Purple Grape', 'Common', ['Purple']],
-                    ['Rock', 'Rock', 'Common', ['Grey', 'Monochrome']],
-                    ['Sardine', 'Sardine', 'Common', ['Grey', 'Monochrome']],
-                    ['Seafoam', 'Seafoam', 'Common', ['Green', 'Pastel']],
-                    ['Shell', 'Shell', 'Common', ['Pink', 'Purple', 'Pastel']],
-                    ['Silver', 'Silver', 'Common', ['Grey', 'Monochrome']],
-                    ['Snow', 'Snow', 'Common', ['White', 'Monochrome']],
-                    ['Taffy', 'Taffy', 'Common', ['Pink', 'Purple']],
-                    ['Tomato', 'Tomato', 'Common', ['Red']],
-                    ['Vanilla', 'Vanilla', 'Common', ['Yellow']],
-                    ['Waterfall', 'Waterfall', 'Common', ['Blue', 'Pastel']],
-                    ['Yarn', 'Yarn', 'Common', ['Red', 'Pastel']],
-                    ['Pastel', 'Pastel', 'Uncommon', ['Blue', 'Purple', 'Pastel']],
-                    ['SoftServe', 'Soft Serve', 'Uncommon', ['Pink', 'Brown', 'White']],
-                    ['Sloth', 'Sloth', 'Rare', ['Brown', 'Green']],
-                    ['Bee', 'Bee', 'Rare', ['Yellow', 'Brown', 'White']],
-                    ['Raccoon', 'Raccoon', 'Rare', ['Grey', 'White', 'Monochrome']],
-                    ['RedPanda', 'Red Panda', 'Rare', ['Orange', 'White', 'Black']],
-                    ['Retro', 'Retro', 'Rare', ['Black', 'Purple', 'Pink', 'Green', 'Eyeburner']]
-                   ];
-
-//Create Colors and add to color list
-let colorList = [];
-for (let i = 0; i < colorArray.length; i++) {
-    const tempObject = new Color(i, colorArray[i]);
-    colorList.push(tempObject);
-}
-
-//Return Colors by Rarity
-function returnColorsByRarity(rarity) {
-    let tempList = [];
-    for (let i = 0; i < colorList.length; i++) {
-        if (colorList[i].colorRarity === rarity) {
-            tempList.push(colorList[i]);
-        }
-    }
-    return tempList;
-}
-
-//Return Colors by SubColors
-function returnColorsByCategory(category) {
-    let tempList = [];
-    for (let i = 0; i < colorList.length; i++) {
-        for (let j = 0; j < colorList[i].colorCategories.length; j++) {
-            if (colorList[i].colorCategories[j] === category) {
-                tempList.push(colorList[i]);
-            }
-        }
-    }
-    return tempList;
-}
-
-//Choose Random Common Color Function
-function chooseByColorRarity(rarity) {
-    const tempArray = returnColorsByRarity(rarity);
-    const choice = Math.floor(Math.random() * tempArray.length);
-    return tempArray[choice];
-}
-
-//Emotion Stuff
-//Emotion Factory
-function Mood(id, array) {
-    this.id = id;
-    this.moodName = array[0];
-    this.fileName = array[1];
-    this.colors = array[2];
-}
-
-//Create Moods
+/* //Create Moods
 const moodArray = [
                     ['Afraid', 'Worried', true],
                     ['Anxious', 'Worried', true],
@@ -153,89 +9,7 @@ const moodArray = [
                     ['Silly', 'Silly', false],
                     ['Overwhelmed', 'Worried', true],
                     ['Worried', 'Worried', true]
-                ];
-
-//Create Moods and add to mood list
-let moodList = [];
-for (let i = 0; i < moodArray.length; i++) {
-    const tempObject = new Mood(i, moodArray[i]);
-    moodList.push(tempObject);
-}
-
-//Find Mood By Name Function
-function findMoodByName(name) {
-    return moodList.find(x => x.moodName === name);
-}
-
-//Snoozeling Stuff
-//Array Stuff
-const hairTypes = ['Floof', 'Wave', 'Mane', 'Mop', 'Flowing'];
-const tailTypes = ['Dragon', 'Long', 'Nub', 'Poof'];
-
-//Choose Hair Color Function
-function chooseHairColor(tempMainColor) {
-    if (tempMainColor.colorRarity === 'Rare') {
-        const tempNumber = flipCoin();
-        if (tempNumber === true) {
-            return tempMainColor;
-        } else {
-            return chooseByColorRarity('Common');
-        }
-    } else {
-        return chooseByColorRarity('Common');
-    }
-}
-
-//Choose Tail Color Function
-function chooseTailColor(tempHairColor) {
-    const randomChance = flipCoin();
-    if (tempHairColor.colorRarity === 'Rare' || randomChance === true) {
-        return tempHairColor;
-    } else {
-        return chooseByColorRarity('Common');
-    }
-}
-
-//Snoozeling Factory
-function Snoozeling(id, mainColor, eyeColor, hairColor, tailColor, noseColor, hairType, tailType, bellyMarking, spotsMarking, wings, mood) {
-    this.id = id;
-    this.mainColor = mainColor;
-    this.eyeColor = eyeColor;
-    this.hairColor = hairColor;
-    this.tailColor = tailColor;
-    this.noseColor = noseColor;
-    this.hairType = hairType;
-    this.tailType = tailType;
-    if (this.tailType === "Dragon") {
-        this.tailColor = this.hairColor;
-    }
-    this.bellyMarking = bellyMarking;
-    this.spotsMarking = spotsMarking;
-    this.wings = wings;
-    this.mood = mood;
-    this.faceType = this.mood.fileName;
-    if (this.mood.colors === true) {
-        this.faceColor = this.mood.fileName;
-    } else {
-        this.faceColor = "";
-    }
-}
-
-function randomSnoozeling(id) {
-    const tempMainColor = chooseFromArrayRandom(colorList);
-    const tempEyecolor = chooseByColorRarity('Common');
-    const tempHairColor = chooseHairColor(tempMainColor);
-    const tempTailColor = chooseTailColor(tempHairColor);
-    const tempTailType = chooseFromArrayRandom(tailTypes);
-    const tempHairType = chooseFromArrayRandom(hairTypes);
-    const tempNoseColor = chooseFromArrayRandom(colorList);
-    const tempBelly = flipCoin();
-    const tempSpots = flipCoin();
-    const tempWings = randomNumbercheck(4);
-    const tempMood = chooseFromArrayRandom(moodList);
-    const newSnooze = new Snoozeling(id, tempMainColor, tempEyecolor, tempHairColor, tempTailColor, tempNoseColor, tempHairType, tempTailType, tempBelly, tempSpots, tempWings, tempMood);
-    return newSnooze;
-}
+                ]; 
 
 function breedSnoozeling(one, two, id) {
     let tempMainColor = {};
@@ -557,92 +331,7 @@ function breedSnoozeling(one, two, id) {
     //Make New Snoozeling
     const babySnooze = new Snoozeling(id, tempMainColor, tempEyeColor, tempHairColor, tempTailColor, tempNoseColor, tempHairType, tempTailType, tempBellyMarking, tempSpotsMarking, tempWings, tempMood);
     return babySnooze;
-}
-
-//Set Snoozeling on Page
-function putSnoozelingOnPage(number, snoozeling) {
-    document.getElementById('Primary' + number).src = 'Layers/Primary/' + snoozeling.mainColor.fileName;
-    document.getElementById('MainLines' + number).src = 'Layers/MainLines/' + snoozeling.mainColor.fileName;
-    if (snoozeling.spotsMarking === true) {
-        document.getElementById('Spots' + number).src = 'Layers/Markings/Spots/' + snoozeling.mainColor.fileName;
-    } else {
-        document.getElementById('Spots' + number).src = '';
-    }
-    if (snoozeling.bellyMarking === true) {
-        document.getElementById('Belly' + number).src = 'Layers/Markings/Belly/' + snoozeling.mainColor.fileName;
-    } else {
-        document.getElementById('Belly' + number).src = '';
-    }
-    if (snoozeling.wings === true) {
-        document.getElementById('BottomWing' + number).src = 'Layers/Wings/Pegasus/Bottom/' + snoozeling.mainColor.fileName;
-        document.getElementById('TopWing' + number).src = 'Layers/Wings/Pegasus/Top/' + snoozeling.mainColor.fileName;
-    } else {
-        document.getElementById('BottomWing' + number).src = '';
-        document.getElementById('TopWing' + number).src = '';
-    }
-    if (snoozeling.hairType === 'Floof') {
-        document.getElementById('Hair' + number).src = 'Layers/Hair/' + snoozeling.hairType + '/' + snoozeling.mainColor.fileName;
-    } else {
-        document.getElementById('Hair' + number).src = 'Layers/Hair/' + snoozeling.hairType + '/' + snoozeling.hairColor.fileName;
-    }
-
-    if (snoozeling.tailType === 'Dragon') {
-        document.getElementById('SecondTail' + number).src = 'Layers/Tail/Dragon/End/' + snoozeling.hairColor.fileName;
-        document.getElementById('Tail' + number).src = 'Layers/Tail/Dragon/' + snoozeling.mainColor.fileName;
-    } else {
-        document.getElementById('Tail' + number).src = 'Layers/Tail/' + snoozeling.tailType + '/' + snoozeling.tailColor.fileName;
-        document.getElementById('SecondTail' + number).src = '';
-    }
-    if (snoozeling.mood.fileName === 'Silly') {
-        document.getElementById('Eyes' + number).src = '';
-        document.getElementById('Face' + number).src = 'Layers/Faces/' + snoozeling.mood.fileName + '/' + snoozeling.mainColor.fileName;
-    } else {
-        document.getElementById('Eyes' + number).src = 'Layers/Faces/' + snoozeling.mood.fileName + '/Eyes/' + snoozeling.eyeColor.fileName;
-        document.getElementById('Face' + number).src = 'Layers/Faces/' + snoozeling.mood.fileName + '/Lines/' + snoozeling.mainColor.fileName;
-    }
-    document.getElementById('Nose' + number).src = 'Layers/Noses/' + snoozeling.noseColor.fileName;
-    document.getElementById('Transparent' + number).src = 'Layers/transparentSquare.png';
-}
-
-//Set Snoozeling Information on Profile
-function profileInfo(snoozeling) {
-    document.getElementById('pbmaincolor').innerHTML = "<strong>Main Color: </strong>" + snoozeling.mainColor.displayName;
-    document.getElementById('pbhaircolor').innerHTML = "<strong>Hair Color: </strong>" + snoozeling.hairColor.displayName;
-    document.getElementById('pbeyecolor').innerHTML = "<strong>Eye Color: </strong>" + snoozeling.eyeColor.displayName;
-    document.getElementById('pbnosecolor').innerHTML = "<strong>Nose Color: </strong>" + snoozeling.noseColor.displayName;
-    document.getElementById('pbhairstyle').innerHTML = "<strong>Hair Style: </strong>" + snoozeling.hairType;
-    document.getElementById('pbtailstyle').innerHTML = "<strong>Tail Type: </strong>" + snoozeling.tailType;
-    document.getElementById('pbtailcolor').innerHTML = "<strong>Tail Color: </strong>" + snoozeling.tailColor.displayName;
-    specialMarkings(snoozeling);
-}
-
-//Display Special Markings
-function specialMarkings(snoozeling) {
-    let markingsString = "<strong>Special Traits: </strong><ul style='text-align: left;margin-top: 0;'>";
-    const itemsArray = [snoozeling.wings, snoozeling.bellyMarking, snoozeling.spotsMarking];
-    const nameArray = ['Wings', 'Belly Marking', 'Body Scales'];
-    let trueArray = [];
-    for (let i = 0; i < itemsArray.length; i++) {
-        if (itemsArray[i]) {
-            trueArray.push(nameArray[i]);
-        }
-    }
-    for (let i = 0; i < trueArray.length; i++) {
-        markingsString = markingsString + '<li>' + trueArray[i] + '</li>';
-    }
-    markingsString = markingsString + '</ul>';
-    document.getElementById('pbspecialmarkings').innerHTML = markingsString;
-}
-
-//Display Snoozeling (Left and Large)
-function petPageCode() {
-    var testSnooze = new randomSnoozeling(0);
-    putSnoozelingOnPage('one', testSnooze);
-    setMoodLeft(testSnooze);
-    testSnooze.mood = findMoodByName('Happy');
-    putSnoozelingOnPage('large', testSnooze);
-    profileInfo(testSnooze);
-}
+} */
 
 //Mood Left Bar Set
 function setMoodLeft(snoozeling) {
@@ -663,33 +352,6 @@ function setMoodSelect(mood, snoozeling) {
     }
 }
 
-
-//Breed Snoozeling Babies
-let snoozeOne = {};
-let snoozeTwo = {};
-
-function newMom() {
-    snoozeOne = randomSnoozeling(0);
-    putSnoozelingOnPage('one', snoozeOne);
-}
-
-function newDad() {
-    snoozeTwo = new randomSnoozeling(1);
-    putSnoozelingOnPage('two', snoozeTwo);
-}
-
-function breedCode() {
-    const babyOne = new breedSnoozeling(snoozeOne, snoozeTwo, 2);
-    const babyTwo = new breedSnoozeling(snoozeOne, snoozeTwo, 3);
-    const babyThree = new breedSnoozeling(snoozeOne, snoozeTwo, 4);
-    const babyFour = new breedSnoozeling(snoozeOne, snoozeTwo, 5);
-    putSnoozelingOnPage('1', babyOne);
-    putSnoozelingOnPage('2', babyTwo);
-    putSnoozelingOnPage('3', babyThree);
-    putSnoozelingOnPage('4', babyFour);
-}
-
-
 function getDate() {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const date = new Date();
@@ -700,13 +362,8 @@ function getDate() {
     document.getElementById('date').innerHTML = text;
 }
 
-
-
 getDate();
 
-
-//const bredSnoozeling = breedSnoozeling(snoozeOne, snoozeTwo, 2);
-//console.log(bredSnoozeling);
 
 //Basic Functions
 //Flip Coin Function 50/50
@@ -752,16 +409,10 @@ function removeDuplicates(arr) {
         index) => arr.indexOf(item) === index);
 }
 
-function setMainColorPic(type, file, mainColor) {
-    const link = file + mainColor + ".png";
-    document.getElementById(type).src = link;
-}
-
-//Left Bar Mood Update
+//MoodForm Stuff
 function showForm() {
     document.getElementById('moodForm').style.display = 'block';
 }
-
 function hideForm() {
     const e = document.getElementById('moodSelect');
     const value = e.options[e.selectedIndex].value;
@@ -769,3 +420,27 @@ function hideForm() {
     setMoodSelect(moodObject);
     document.getElementById('moodForm').style.display = 'none';
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

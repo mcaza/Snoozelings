@@ -1,12 +1,12 @@
 <?php
-require_once 'dbh-inc.php';
-require_once 'config_session.inc.php';
+require_once '../../includes/dbh-inc.php';
+require_once '../../includes/config_session.inc.php';
 
 if (isset($_GET['ID'])) {   
     $id = $_GET['ID'];
 }
 
-$query = "SELECT owner_id FROM snoozelings WHERE id = :id;";
+$query = "SELECT owner_id, name FROM snoozelings WHERE id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->execute();
@@ -22,6 +22,7 @@ if ($_SESSION["user_id"] === $result["owner_id"]) {
     $stmt->execute();
     $pdo = null;
     $stmt = null;
+    $_SESSION['bonded'] = htmlspecialchars($result['name']);
     header("Location: ../pet?ID=" . $id);
     die();
 } else {

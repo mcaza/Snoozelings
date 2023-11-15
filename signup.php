@@ -1,8 +1,9 @@
 <?php
-require_once 'includes/config_session.inc.php';
-require_once 'includes/dbh-inc.php';
-require_once 'includes/signup_view.inc.php';
-require_once 'includes/login_view.inc.php';
+require_once '../includes/config_session.inc.php';
+require_once '../includes/dbh-inc.php';
+require_once '../includes/signup_view.inc.php';
+require_once '../includes/login_view.inc.php';
+require_once '../includes/loginRedirect.inc.php';
 
 ?>
 
@@ -24,14 +25,14 @@ require_once 'includes/login_view.inc.php';
         </div>
         <div class="social-container">
             <ul>
-                <?php require_once 'includes/socialIcons.inc.php'; ?>
+                <?php require_once '../includes/socialIcons.inc.php'; ?>
             </ul>
         </div>
     </div>
 
     <!-- White Secondary Top Bar. Includes Menu and Drop Down Menus -->
     <nav>
-        <?php require_once "includes/taskbar.inc.php"; ?>
+        <?php require_once "../includes/taskbar.inc.php"; ?>
     </nav>
 
     <!-- Container for Everything Below the Bars -->
@@ -43,14 +44,26 @@ require_once 'includes/login_view.inc.php';
                 <div class="bar-container">
                     <h2>Daily Affirmation</h2>
                     
-                    <?php require_once 'includes/dailyAffirmation.inc.php'; ?>
+                    <?php require_once '../includes/dailyAffirmation.inc.php'; ?>
+                    
                     <p id="date"></p>
                 </div>
 
                 <!-- Snoozeling Display Box. Currently Generates Random Snoozeling -->
                 <div class="bar-container">
-                    <?php require_once 'includes/leftPet.inc.php'; ?>
-                    <p id="mood"><strong>Mood:</strong> Happy</p>
+                    <?php require '../includes/leftPet.inc.php'; ?>
+                    <p id="mood" onClick="showForm()"><strong>Mood:</strong> Happy</p>
+                    <form id="moodForm">
+                        <label for="mood">Choose a Mood:</label>
+                        <select id="moodSelect" name="mood">
+                            <option value="Happy">Happy</option>
+                            <option value="Anxious">Anxious</option>
+                            <option value="Worried">Worried</option>
+                            <option value="Silly">Silly</option>
+                            <option value="Overwhelmed">Overwhelmed</option>
+                        </select><br>
+                        <input type="button" onClick="hideForm()" value="Change Mood">
+                    </form>
                 </div>
             </div>
 
@@ -58,30 +71,24 @@ require_once 'includes/login_view.inc.php';
                 <!-- Daily Affirmation Box -->
 
 
-
                 <!-- Daily Stats -->
                 <div class="bar-container">
                     <h2>Daily Records</h2>
-                    <p>319 Journal Entries</p>
-                    <p>938 Crops Harvested</p>
-                    <p>57 Snoozelings Crafted</p>
-                    <p>92 Items Crafted</p>
-                    <p>593 Total Active Members</p>
-                    <p>59 Kindness Coins Rewarded</p>
+                    <?php require_once '../includes/dailyRecords.inc.php' ?>
                 </div>
             </div>
         </div>
 
         <!-- All Main Content -->
-        <div class="main-container">
-            <h2><?php outputUsername(); ?></h2>
-            <h3>Signup</h3>
+        <div class="main-container"><div  class="bottomPush">
+            <div><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
+            <h3>Create An Account</h3>
 
             <form action="includes/signup.inc.php" method="post">
                 <?php 
             signupInputs();
         ?>
-                <button>Signup</button>
+                <button  class="fancyButton regButton">Register</button>
             </form>
             
             <?php
@@ -89,25 +96,9 @@ require_once 'includes/login_view.inc.php';
             
             ?>
             
-            <h3>Login</h3>
-            <form action="includes/login.inc.php" method="post">
-                <input type="text" name="usernamelogin" placeholder="Username"><br>
-                <input type="password" name="pwdlogin" placeholder="Password"><br>
-                <button>Login</button>
-            </form>
-            
-            <?php
-            checkLoginErrors();
-            ?>
-            
-            <h3>Logout</h3>
-            <form action="includes/logout.inc.php" method="post">
-                <button>Logout</button>
-            </form>
-
             
         </div>
-    </div>
+    </div></div>
     <!--End of All Main Content-->
 
 
@@ -116,19 +107,14 @@ require_once 'includes/login_view.inc.php';
     <div class="footer-container">
         <div class="footer-texts">
             <ul>
-                <li><a href="">Terms of Service</a></li>
-                <li><a href="">Code of Conduct</a></li>
-                <li><a href="">Privacy Policy</a></li>
-                <li><a href="">Contact Us</a></li>
-                <li><a href="">Moderator Help</a></li>
-
+                <?php require_once '../includes/bottomBar.inc.php'; ?>
             </ul>
         </div>
     </div>
 
 
     <!-- Script Link -->
-    <script src="main.js"></script>
+   <script src="main.js"></script>
 
 </body>
 

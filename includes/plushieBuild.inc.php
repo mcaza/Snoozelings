@@ -45,7 +45,7 @@ if (isset($_GET['ID'])) {
                     <p class="snoozelinginfo" id="pbhaircolor"><strong>Hair Color: </strong>' . $hairColorResults["display"] . '</p>
                     <p class="snoozelinginfo" id="pbtailcolor"><strong>Tail Color: </strong>' . $tailColorResults["display"] . '</p>
                     <p class="snoozelinginfo" id="pbeyecolor"><strong>Eye Color: </strong>' . $eyeColorResults["display"] . '</p>
-                    <p class="snoozelinginfo" id="pbnosecolor"><strong>Nose Color: </strong>' . $hairColorResults["display"] . '</p>
+                    <p class="snoozelinginfo" id="pbnosecolor"><strong>Nose Color: </strong>' . $noseColorResults["display"] . '</p>
                     <p class="snoozelinginfo" id="pbhairstyle"><strong>Hair Style: </strong>' . $result["hairType"] . '</p>
                     <p class="snoozelinginfo" id="pbtailstyle"><strong>Tail Type: </strong>' . $result["tailType"] . '</p>
                     <p class="snoozelinginfo" id="pbspecialmarkings" style="margin-bottom: .3rem;"><strong>Special Traits: </strong></p>

@@ -11,10 +11,10 @@ $count = count($results);
 
 if ($count == 0) {
     //Display Button
-    echo '<div><button class="fancyButton" onClick="window.location.href=\'includes/generateStarters.inc.php\'">Generate Snoozelings</button></div>';
+    echo '<div><button class="fancyButton" onClick="window.location.href=\'../includes/generateStarters.inc.php\'">Generate Snoozelings</button></div>';
 } else {
     //Display Snoozelings + Pick Button
-    echo '<form method="post" action="includes/firstSnoozeling.inc.php">';
+    echo '<form method="post" action="../includes/firstSnoozeling.inc.php">';
     require_once 'displayStarters.inc.php';
     echo '<label for="name">Name Your Snoozeling:</label><br>';
     echo '<input type="text" name="name"><br>';

@@ -22,8 +22,8 @@ function getEmail(object $pdo, string $email) {
     return $result;
 }
 
-function setUser(object $pdo, string $username, string $pwd, string $email, $birthdate) {
-    $query = "INSERT INTO users (username, password, email, birthdate, signupDate) VALUES (:username, :pwd, :email, :birthdate, :signupDate);";
+function setUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter) {
+    $query = "INSERT INTO users (username, password, email, birthdate, signupDate, newsletter, pronouns, affirmation) VALUES (:username, :pwd, :email, :birthdate, :signupDate, :newsletter, :pronouns, :affirmation);";
     $stmt = $pdo->prepare($query);
     
     //Password Hashing
@@ -31,6 +31,7 @@ function setUser(object $pdo, string $username, string $pwd, string $email, $bir
         'cost' => 12
     ];
     $hashedPwd = password_hash($pwd, PASSWORD_BCRYPT, $options);
+    $affirmation = "I'm going to do my best to journal everyday. And even when I'm not perfect, I'm going to forgive myself. The important thing is not giving up.";
     
     $todaysDate = date("Y-m-d");
     
@@ -40,5 +41,8 @@ function setUser(object $pdo, string $username, string $pwd, string $email, $bir
     $stmt->bindParam(":email", $email);
     $stmt->bindParam(":birthdate", $birthdate);
     $stmt->bindParam(":signupDate", $todaysDate);
+    $stmt->bindParam(":newsletter", $newsletter);
+    $stmt->bindParam(":affirmation", $affirmation);
+    $stmt->bindParam(":pronouns", $pronouns);
     $stmt->execute();
 }

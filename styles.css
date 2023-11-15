@@ -77,6 +77,8 @@ html {
     scroll-padding-top: 8em;
     font-size: 10px;
     font-family: Karla, serif;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -130,12 +132,36 @@ h4 {
     margin-bottom: 0.8rem;
 }
 
+h5 {
+    font-size: 1.75rem;
+    border-top: 2px dashed #827188;
+    padding-top: .8rem;
+    margin-bottom: 0;
+}
+
+h6 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.itemIcons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: 10rem;
+}
+
 .info h4 {
     margin-top: 1rem;
     text-align: left;
     padding-left: 1.6rem;
     padding-bottom: .8rem;
     border-bottom: 2px dashed #827188;
+}
+
+.bottomPush {
+    margin-bottom: 2rem;
 }
 
 hr {
@@ -146,6 +172,52 @@ hr {
 
 .wideImage {
     width: 80%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+.item {
+    width: 40%;
+    height: auto;
+    margin: .8rem;
+}
+
+.pushDown {
+    margin-top: 2.5rem;
+}
+
+/* Table Styles */
+
+table {
+    width: 65%;
+    margin-right: auto;
+    margin-left: auto;
+    background: white;
+    border: 2px white dashed;
+    border-radius: 20px;
+    font-size: 1.7rem;
+    overflow: hidden;
+    background-color: #827188;
+}
+
+th {
+    font-size: 2rem;
+    padding: .25rem;
+    padding-top: .7rem;
+    padding-bottom: .7rem;
+    color: white;
+}
+
+td {
+    background-color: white;
+    width: 20%;
+    padding: .5rem;
+    font-size: 1.5rem;
 }
 
 /* Navigation Bar Styles (Black) */
@@ -201,7 +273,7 @@ nav {
     padding-top: .5rem;
     padding-bottom: .5rem;
     top: 0;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,7 +299,7 @@ nav a:hover {
     padding-top: .8rem;
     padding-bottom: .8rem;
     border-radius: 10px;
-
+    
 }
 
 /* Dropdown Styles */
@@ -270,6 +342,7 @@ a:visited {
     padding-bottom: .8rem;
     border-radius: 10px;
     font-weight: 500;
+    z-index: 3;
 }
 
 .dropdown:hover .dropdown-content {
@@ -326,7 +399,7 @@ a:visited {
 
 .main-container {
     background-color: #FFFDFF;
-    width: 70%
+    width: 70%;
 }
 
 /* Art Styles */
@@ -351,6 +424,17 @@ a:visited {
     width: 40rem;
 }
 
+.artJournal {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.artJournal img {
+    width: 40rem;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 .artStarter {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
@@ -371,7 +455,8 @@ a:visited {
 .footer-container {
 
     position: relative;
-  width: 110%;
+    width: 99.1vw;
+
     height: 20px;
   background-color: #1C161D;
   color: white;
@@ -381,6 +466,7 @@ margin-top: 15px;
     bottom: 0;
     padding-bottom: 28px;
     font-size: 1.6rem;
+    
 
 }
 
@@ -409,7 +495,8 @@ margin-top: 15px;
     border-radius: 10px;
     font-size: 2rem;
     font-family: Karla;
-    padding: .5rem;
+    padding: 1rem;
+    margin-top: .5rem;
     
 }
 
@@ -530,10 +617,132 @@ margin-top: 15px;
 
 #bottomSpace {
     min-height: 19rem;
+    margin-right: 3rem;
 }
 
 .petOwnedBy {
     font-size: 30rem;
+}
+
+/* Journal Styles */
+.journalRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.journalDisplay {
+    width: 50%;
+}
+
+/* Journal Entry Styles */
+.radioRow {
+    display: flex;
+    flex-direction: row;
+    column-gap: .5rem;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+.radioBox {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    accent-color: purple;
+}
+
+.checkboxJournal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+}
+
+.journalEntries {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 2rem;
+    justify-content: center;
+}
+
+.journalEntry {
+    border: 2px dashed #827188;
+    width: 27%;
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.journalInfo {
+    text-align: left;
+}
+
+/* Trendy Tails Styles */
+.trendytails {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.trendybox {
+    border:  2px dashed #827188;
+    border-radius: 20px;
+    padding: 20px;
+    width: 25%;
+}
+
+/* Shop Page Styles */
+
+.shopRows {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+    justify-content: space-evenly;
+}
+
+.shopBox {
+    width: 25%;
+    padding: 1.4rem;
+    border: 2px dashed #827188;
+    border-radius: 20px;
+}
+
+.shopBox h4 {
+    margin-top: 8px;
+}
+
+.shopImg {
+    width: 80%;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+/* Farm Styles */
+.farmBoxes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    justify-content: center;
+    row-gap: 2rem;
+}
+
+.farm {
+    border: 2px dashed #827188;
+    border-radius: 20px;
+    width: 30%;
+    overflow: hidden;
+}
+
+.farmBox {
+    width: 100%;
+    margin-bottom: 0;
 }
 
 /* Nest.html Styles */
@@ -548,6 +757,9 @@ margin-top: 15px;
     grid-row: 1 / 1;
     grid-column: 1 / 1;
     z-index: 0;
+    width: 85%;
+    align-self: end;
+   
 }
 
 .arttwo {
@@ -556,7 +768,24 @@ margin-top: 15px;
     z-index: 1;
 }
 
+.pets {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    grid-row-gap: 2rem;
+    column-gap: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
 
+.nestpet {
+    width: 27rem;
+    border: 2px dashed #827188;
+    border-radius: 10px;
+
+}
 
 .pillow img {
     width: 40%;
@@ -565,7 +794,122 @@ margin-top: 15px;
 .arttwo img {
     -webkit-transform: none;
     transform: none;
-    width: 35%;
+    width: 90%;
+}
+
+/* Item Page Styles */
+.itemPageRow {
+    border: 2px dashed #827188;
+    padding: 30px;
+    width: 300px;
+    border-radius: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* Inventory Styles */
+
+#inventory {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    row-gap: 1.5rem;
+    column-gap: 1.5rem;
+    padding: 3rem;
+}
+
+.invItem {
+    width: 110px;
+    padding: 8px;
+    border: 2px dashed #827188;
+    border-radius: 5px;
+    height: 145px;
+}
+
+/* Shop Styles */
+
+.seedItem {
+    width: 160px;
+    padding: 8px;
+    border: 2px dashed #827188;
+    border-radius: 5px;
+    height: auto;
+}
+
+.seedRows {
+    display: flex;
+    flex-direction: row;
+    grid-row-gap: 1.5rem;
+    flex-wrap: wrap;
+    column-gap: 1.5rem;
+    justify-content: space-evenly;
+    margin-top: 3rem;
+}
+
+.topShop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Boards Styles */
+
+.filterBoxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 5rem;
+}
+
+.articon {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.articon img {
+    width: 20rem;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.post {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    border: 2px dashed #827188;
+    border-radius: 20px;
+    margin-top: 2rem;
+    justify-content: center;
+    padding: 8px;
+    padding: 2.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.postUser {
+    width: 25%;
+    margin-left: 2rem;
+    padding-right: 2rem;
+    border-right: 1px solid silver;
+}
+
+.postRowOne {
+    display: flex;
+    flex-direction: row;
+    height: 22rem;
+}
+
+.postContent {
+    overflow: auto;
+    padding: 1rem;
+}
+
+.readMore {
+    text-align: right;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /* Starter Page Styles */
@@ -575,6 +919,112 @@ margin-top: 15px;
     justify-content: center;
     flex-wrap: wrap;
     column-gap: 100px;
+}
+
+/* Return Bar Styles (Explore, Farming, Crafting, Etc) */
+
+.returnBar {
+    border: 2px dashed #827188;
+    width: 70%;
+    border-radius: 20px;
+    padding: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#Beach {
+    display: none;
+}
+
+#Forest {
+    display: none;
+}
+
+/*Profile Styles */
+
+.profileRow {
+    column-gap: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+    height: 20rem;
+}
+
+#collectionArrow {
+    align-content: right;
+}
+
+.leftRightButtons {
+    display: flex;
+    font-size: 2rem;
+    justify-content: space-between;
+}
+
+/* Form Styles */ 
+.form {
+    display: inline-block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.input {
+    margin-bottom: 1.6rem;
+    border-radius: 3px;
+    height: 2rem;
+    font-size: 1.4rem;
+    border: 2px solid silver;
+}
+
+select {
+    height: 3.4rem;
+    width: auto;
+    border: 2px solid #827188;
+}
+
+.conditions {
+    font-size: 1.5rem;
+    line-height: 2.8rem;
+    margin-bottom: 1.6rem;
+    margin-left: .5rem;
+}
+
+.regButton {
+    margin-bottom: .5rem;
+    padding: .8rem;
+    width: auto;
+    
+}
+
+.updateButton {
+    margin-bottom: .5rem;
+    padding: .8rem;
+}
+
+.checkBox {
+    border: 2px solid #827188;
+}
+
+.newsletter {
+    border: 2px solid silver;
+    border-radius: 10px;
+    padding: 10px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.newsletter h4 {
+    margin-top: 0;
+}
+
+.status {
+    width: 30rem;
 }
 
 /* Media Styles */
