@@ -23,6 +23,7 @@ $loggedInBar = '<div class="dropdown">
             <div class="dropdown-content">
                 <a href="dailyraffle.html">Daily Raffle</a>
                 <a href="randomitem">Random Item</a>
+                <a href="designer">Snooze Maker</a>
             </div>
         </div>
         <div class="dropdown">

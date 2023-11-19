@@ -9,25 +9,21 @@ $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 echo '<div class="radioStarter">';
+$count = 1;
 foreach ($results as $result) {
-    echo '<div>';
-    echo '<input type="radio" name="snoozeling" value="' . $result["id"] . '" class="input-hidden />';
-    echo '<label for="' . $result["id"] . '">';
+    echo '<div id="section' . $count . '" class="boxStarter">';
+    echo '<input onClick="changeColour(\'' . $count . '\')" type="radio" id ="button' . $count . '" name="snoozeling" value="' . $result["id"] . '" style="margin-top: 1rem"  />';
+    echo '<label for="button' . $count . '">';
     //Display Images
     displayStarter($result, "artStarter");
     echo '</label>';
     echo '</div>';
+    $count++;
 }
 echo '</div>';
 
 function displayStarter($pet, $class) {    
     echo '<div class="art-container">';
-    if (strpos($pet["specials"], "Wings") !== false) {
-        
-            echo "<div class='${class}'>";
-            echo "<img src='Layers/Wings/Pegasus/Bottom/" . $pet["mainColor"] . ".png' id = 'BottomWingone'>";
-            echo "</div>";
-        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/Primary/" . $pet["mainColor"] . ".png' id = 'Primaryone'>";
         echo "</div>";
@@ -41,6 +37,14 @@ function displayStarter($pet, $class) {
             echo "<img src='Layers/Markings/Belly/" . $pet["mainColor"] . ".png' id = 'Bellyone'>";
             echo "</div>";
         }
+    if (strpos($pet["specials"], "Boots") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Boots/" . $pet["mainColor"] . ".png' id = 'Bootsone'>";
+            echo "</div>";
+        }
+        echo "<div class='${class}'>";
+        echo "<img src='Layers/Ear/" . $pet["noseColor"] . ".png' id = 'Earone'>";
+        echo "</div>";
         echo "<div class='${class}'>";
         echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
         echo "</div>";
@@ -72,11 +76,6 @@ function displayStarter($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Noses/" . $pet["noseColor"] . ".png' id = 'Noseone'>";
         echo "</div>";
-        if (strpos($pet["specials"], "Wings") !== false) {
-            echo "<div class='${class}'>";
-            echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";
-            echo "</div>";
-        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/transparentSquare.png'>";
         echo "</div>";

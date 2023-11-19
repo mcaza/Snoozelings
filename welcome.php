@@ -20,7 +20,7 @@ require_once '../includes/welcomeCheck.inc.php';
     <!-- Dark Top Bar, Snoozeling Text Logo, and Social Media Icons */ -->
     <div class="nav-container">
         <div id="logo">
-            <a href="index.html">Snoozelings</a>
+            <a href="index">Snoozelings</a>
         </div>
         <div class="social-container">
             <ul>
@@ -51,18 +51,6 @@ require_once '../includes/welcomeCheck.inc.php';
                 <!-- Snoozeling Display Box. Currently Generates Random Snoozeling -->
                 <div class="bar-container">
                     <?php require '../includes/leftPet.inc.php'; ?>
-                    <p id="mood" onClick="showForm()"><strong>Mood:</strong> Happy</p>
-                    <form id="moodForm">
-                        <label for="mood">Choose a Mood:</label>
-                        <select id="moodSelect" name="mood">
-                            <option value="Happy">Happy</option>
-                            <option value="Anxious">Anxious</option>
-                            <option value="Worried">Worried</option>
-                            <option value="Silly">Silly</option>
-                            <option value="Overwhelmed">Overwhelmed</option>
-                        </select><br>
-                        <input type="button" onClick="hideForm()" value="Change Mood">
-                    </form>
                 </div>
             </div>
 
@@ -89,9 +77,8 @@ require_once '../includes/welcomeCheck.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div class="bottomPush">
-            <div><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
-            <h3>Adopt Your 1st Snoozeling</h3>
-            <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            
+            
             <?php require_once '../includes/welcomeCode.inc.php'; ?>
         </div></div>
     </div>
@@ -111,6 +98,61 @@ require_once '../includes/welcomeCheck.inc.php';
 
     <!-- Script Link -->
     <script src="main.js"></script>
+    <script>function changeColour(value)
+{ 
+    switch(value)
+    {
+        case '1':
+            document.getElementById('section1').style.backgroundColor = "#EBE5F6";
+            document.getElementById('section2').style.backgroundColor = "transparent";
+            document.getElementById('section3').style.backgroundColor = "transparent";
+            document.getElementById('section4').style.backgroundColor = "transparent";
+            document.getElementById('section5').style.backgroundColor = "transparent";
+            document.getElementById('section6').style.backgroundColor = "transparent";
+        break;
+        case '2':
+            document.getElementById('section1').style.backgroundColor = "transparent";
+            document.getElementById('section2').style.backgroundColor = "#EBE5F6";
+            document.getElementById('section3').style.backgroundColor = "transparent";
+            document.getElementById('section4').style.backgroundColor = "transparent";
+            document.getElementById('section5').style.backgroundColor = "transparent";
+            document.getElementById('section6').style.backgroundColor = "transparent";
+        break;
+        case '3':
+            document.getElementById('section1').style.backgroundColor = "transparent";
+            document.getElementById('section2').style.backgroundColor = "transparent";
+            document.getElementById('section3').style.backgroundColor = "#EBE5F6";
+            document.getElementById('section4').style.backgroundColor = "transparent";
+            document.getElementById('section5').style.backgroundColor = "transparent";
+            document.getElementById('section6').style.backgroundColor = "transparent";
+        break;
+        case '4':
+            document.getElementById('section1').style.backgroundColor = "transparent";
+            document.getElementById('section2').style.backgroundColor = "transparent";
+            document.getElementById('section3').style.backgroundColor = "transparent";
+            document.getElementById('section4').style.backgroundColor = "#EBE5F6";
+            document.getElementById('section5').style.backgroundColor = "transparent";
+            document.getElementById('section6').style.backgroundColor = "transparent";
+        break;
+        case '5':
+            document.getElementById('section1').style.backgroundColor = "transparent";
+            document.getElementById('section2').style.backgroundColor = "transparent";
+            document.getElementById('section3').style.backgroundColor = "transparent";
+            document.getElementById('section4').style.backgroundColor = "transparent";
+            document.getElementById('section5').style.backgroundColor = "#EBE5F6";
+            document.getElementById('section6').style.backgroundColor = "transparent";
+        break;
+        case '6':
+            document.getElementById('section1').style.backgroundColor = "transparent";
+            document.getElementById('section2').style.backgroundColor = "transparent";
+            document.getElementById('section3').style.backgroundColor = "transparent";
+            document.getElementById('section4').style.backgroundColor = "transparent";
+            document.getElementById('section5').style.backgroundColor = "transparent";
+            document.getElementById('section6').style.backgroundColor = "#EBE5F6";
+        break;
+    }
+    
+}</script>
 
 </body>
 

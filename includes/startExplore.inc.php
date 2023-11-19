@@ -10,6 +10,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //Grab Form Variables
 $petId = $_POST["explorer"];
+if ($petId) {
 $area = $_POST["area"];
     $userId = $_SESSION['user_id'];
     $specials = ['21', '20'];
@@ -108,7 +109,8 @@ $area = $_POST["area"];
     $_SESSION['coins'] = $coinsWon;
     $_SESSION['items'] = $itemsWon;
     $_SESSION['petName'] = htmlspecialchars($name['name']);
-    
+}
+    $_SESSION['error'] = 'You must select an explorer.';
         header("Location: ../explore");
     
 } else {

@@ -1,5 +1,5 @@
 <?php
-$id = $_GET['id'] + 1;
+$id = $_GET['id'];
 $userId = $_SESSION['user_id'];
 
 //Get How Many of Item
@@ -17,6 +17,7 @@ $stmt = $pdo->prepare($query);
 $stmt->bindParam(":item", $id);
 $stmt->execute();
 $item = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 //Get Snoozelings
 $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
@@ -50,9 +51,13 @@ echo '<p><strong>Type: </strong>' . $type . '</p>';
 echo '<p><strong>Rarity: </strong>' . ucfirst($item['rarity']) . '</p>';
 echo '<p><strong>Quantity: </strong>' . $count . '</p>';
 echo '</div>';
+
+//Planter Box - Add Farm Plot
 if ($item['name'] === "PlanterBox") {
     echo '<button class="fancyButton" onClick="window.location.href=\'includes/useBox.inc.php\'">Add Farm Plot</button>';
 }
+
+//Fabric / Design (Remove Later)
 if ($item['type'] === 'fabric' || $item['type'] === 'design') {
 echo "<form action='../includes/useItem.inc.php' onsubmit=\"return confirm('Are you sure you want to use this item?');\">";
 echo '<label for="snoozeling" class="form">Pick a Snoozeling:</label><br>';
@@ -63,5 +68,7 @@ foreach ($snoozelings as $snooze) {
 echo '</select><br>';
 echo "<button>Use Item</button>";
 echo '</form>';
+    
+    //Clothes Top / Bottom Use Items
 }
 echo '</div>';

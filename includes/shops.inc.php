@@ -9,14 +9,14 @@ echo '<div class="shopRows">';
 
 echo '<a href="seedshop" class="shopBox">';
 echo '<div>';
-echo '<img src="resources/gardenShop.png" class="shopImg">';
+echo '<img src="resources/seedNPC.png" class="shopImg" >';
 echo '<h4>Seed Shop</h4>';
 echo '</div>';
 echo '</a>';
   
 echo '<a href="kindnessshop" class="shopBox">';
 echo '<div >';
-echo '<img src="resources/kindnessShop.png" class="shopImg">';
+echo '<img src="resources/kindnessNPC.png" class="shopImg">';
 echo '<h4>Kindness Shop</h4>';
 echo '</div>';
 echo '</a>';

@@ -42,11 +42,16 @@ function displayPet($pet, $class) {
         echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
         echo "</div>";
         echo "<div class='${class}'>";
-        echo "<img src='Layers/Faces/Happy/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
+        echo "<img src='Layers/Faces/" . $pet['mood'] . "/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
         echo "</div>";
         echo "<div class='${class}'>";
-        echo "<img src='Layers/Faces/Happy/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
+        echo "<img src='Layers/Faces/" . $pet['mood'] . "/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
         echo "</div>";
+    if ($pet['mood'] === 'Overwhelmed') {
+        echo "<div class='${class}'>";
+        echo "<img src='Layers/tear.png' id = 'Tearone'>";
+        echo "</div>";
+    }
         if (strlen($pet['clothesBottom']) > 1) {
         $clothesBottom = explode(' ', $pet['clothesBottom']);
         foreach ($clothesBottom as $clothing) {
@@ -56,9 +61,9 @@ function displayPet($pet, $class) {
         } }
         echo "<div class='${class}'>";
         if ($pet["hairType"] === "Floof") {
-        echo "<img src='Layers/Hair/" . $pet["hairType"] . "/" . $pet["mainColor"] . ".png' id = 'Hairone'>";
+            echo "<img src='Layers/Hair/" . $pet["hairType"] . "/" . $pet["mainColor"] . ".png' id = 'Hairone'>";
         } else {
-            echo "<img src='Layers/Hair/" . $pet["hairType"] . "/" . $pet["hairColor"] . ".png' id = 'Hairone'>";
+            echo '<img src="Layers/Hair/' . $pet['hairType'] . "/" . $pet['hairColor'] . '.png" id="Hairone">';
         }
             echo "</div>";
     
@@ -90,10 +95,16 @@ function displayPet($pet, $class) {
             echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";
             echo "</div>";
         }
+    if ($class === 'tinyPet') {
+        echo "<div class='${class}'>";
+        echo "<a href='profile?id=" . $pet['owner_id'] . "'><img src='Layers/transparentSquare.png'></a>";
+        echo "</div>";
+    } else {
         echo "<div class='${class}'>";
         echo "<a href='pet?ID=" . $pet['id'] . "'><img src='Layers/transparentSquare.png'></a>";
         echo "</div>";
-        
+    }
+
         echo "</div>";
                         
 }

@@ -31,7 +31,10 @@ if (!$num === 0) {
     echo '<select class="input"  name="type" style="width: 8rem;">';
     echo '<option value=""></option>';
     echo '<option value="general">General</option>';
-    echo '<option value="freebies">Freebies</option>';
+    echo '<option value="media">Media</option>';
+    echo '<option value="freebies">Giveaways</option>';
+    echo '<option value="artwork">Artwork</option>';
+    echo '<option value="guides">Guides</option>';
     
     //Edit to 1 After Testing
     if ($userId === "4") {
@@ -46,7 +49,7 @@ if (!$num === 0) {
     
     //Enter Text
     echo '<label style="margin-top: 2rem;" for="post" class="form">Post:</label><br>';
-    echo '<textarea class="input" name="post" style="width: 50rem;" rows="80"></textarea><br>';
+    echo '<textarea  cols="72" class="input" style="height: 20rem;"></textarea><br>';
 
     //End Form
     echo '<button  class="fancyButton" style="width: 8rem;">Post</button>';

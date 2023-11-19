@@ -37,7 +37,7 @@ if ($userId === $id) {
 }
 echo "<div class='pets'>";
 
-$roundCounter = 1;
+
 foreach ($results as $pet) {
 
     echo "<div class='nestpet'>";
@@ -46,15 +46,12 @@ foreach ($results as $pet) {
     echo '<h5><a href="pet?ID=' . $pet['id'] . '">'. htmlspecialchars($pet['name']) . '</a></h5>';
     echo '<p class="slogan">' . $pet['title'] . '</p>';
     echo "</div>";
-    if(($roundCounter % 3) === 0) {
-        echo "<hr>";
-    }
-    $roundCounter++;
+    
 }
 
-if ($roundCounter % 3 === 0 || $roundCounter % 3 === 2) {
+
     echo "<hr>";
-}
+
 
 /* if ((count($results) % 3) === 2) {
     echo "<div class='nestpet'><h5>Open Spot</h5></div>";

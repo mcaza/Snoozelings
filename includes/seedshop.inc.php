@@ -65,7 +65,7 @@ if ($reply) {
 }
 
 //Show Image. Change Later
-echo '<img src="resources/BlueBalloon.png" style="width: 40%;">';
+echo '<img src="resources/seedNPC.png" style="width: 35%;">';
 
 //Get Plant Puns (Auto Set Valentine's Day or Birthday)
 if ($formatted === $birthday) {

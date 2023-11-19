@@ -109,7 +109,14 @@ if ($id === $userId) {
     echo '  <div class="petrow profileRow">
                <div class="physicalInfo info">
                     <h4>Achievements</h4>
-                </div>
+                    <div class="achievementIcons">';
+    $trophies = explode(" ", $result['trophies']);
+    foreach ($trophies as $trophy) {
+        echo '<img style="height: 60px;" src="trophies/' . $trophy . '.png" title="' . $trophy . '">';
+    }
+
+             echo   '</div>';
+             echo   '</div>
                 <div class="physicalInfo info">
                     <h4>Friends</h4>
                 </div>

@@ -94,8 +94,8 @@ echo '</form>';
 echo "<div id='inventory'>";
 foreach ($itemCount as $item) {
     if ($itemCount[$round] > 0) {
-        if ($items[$round]['type'] === $type || $type === "all" || !$type) {
-        echo '<a href="item?id=' . $round-1 . '">';
+        if ($items[$round -1]['type'] === $type || $type === "all" || !$type) {
+        echo '<a href="item?id=' . $round  . '">';
     echo '<div class="invItem">';
         if ($itemCount[$round] > 1) {
             if ($items[$round]['name'] === "DeerAntlers") {

@@ -23,7 +23,7 @@ require_once '../includes/verifySinglePet.inc.php';
     <!-- Dark Top Bar, Snoozeling Text Logo, and Social Media Icons */ -->
     <div class="nav-container">
         <div id="logo">
-            <a href="index.html">Snoozelings</a>
+            <a href="index">Snoozelings</a>
         </div>
         <div class="social-container">
             <ul>
@@ -111,6 +111,17 @@ require_once '../includes/verifySinglePet.inc.php';
 
     <!-- Script Link -->
    <script src="main.js"></script>
+    <script>
+    document.getElementById('commentButton').onclick = (event) => {
+        var setting = document.getElementById('makeComment').style.display;
+        if (setting === "" || setting === "none") {
+            document.getElementById('makeComment').style.display = "block";
+        } else {
+            document.getElementById('makeComment').style.display = "none";
+        }
+ }
+    
+    </script>
 
 </body>
 

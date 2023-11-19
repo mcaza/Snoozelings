@@ -22,6 +22,17 @@ require_once '../includes/displayPet.inc.php';
         $petInfo = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         echo '<h2><a href="pet?ID=' . $petInfo[0]['id'] . '">' . htmlspecialchars($petInfo[0]["name"]) . '</a></h2>';
         displayPet($petInfo[0], "art");
+        echo '<p id="mood" onClick="showForm()"><strong>Mood:</strong> Happy</p>';
+        echo '<form id="moodForm" method="POST" action="includes/changeMood.inc.php">';
+        echo '<label class="form" for="mood">Choose a Mood:</label><br>';
+        echo '<select class="input" id="moodSelect" name="mood">';
+        echo '<option value="Happy">Happy</option>';
+        echo '<option value="Worried">Anxious</option>';
+        echo '<option value="Overwhelmed">Overwhelmed</option>';
+        echo '</select><br>';
+        echo '<button class="fancyButton" style="font-size: 2rem; margin-bottom: 1rem;">Change Mood</button>';
+        echo '</form>';
+
             
 
         }      else {
@@ -49,3 +60,8 @@ require_once '../includes/displayPet.inc.php';
         displayPet($allPets[$randNum], "art");
        
     }
+
+
+                    
+
+                    

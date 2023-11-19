@@ -6,9 +6,8 @@ $userId = $_SESSION['user_id'];
 $common = "Common";
 
 //Grab all the Common Color Info
-$query = "SELECT * FROM colors WHERE rarity = :common";
+$query = "SELECT * FROM colors";
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":common", $common);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $count = count($results) - 1;
@@ -25,8 +24,8 @@ header("Location: ../welcome.php");
 function randomCommon($pdo, $results, $userId, $count) {
     $tempSpecials = "";
     
-    $hairTypes = ['Floof', 'Flowing', 'Mane', 'Mop', 'Wave'];
-    $tailTypes = ['Dragon', 'Long', 'Nub', 'Poof'];
+    $hairTypes = ['Floof', 'Mane', 'Mohawk', 'Wave'];
+    $tailTypes = ['Dragon', 'Long', 'Nub', 'Samoyed'];
     
     $hairCount = count($hairTypes) - 1;
     $tailCount = count($tailTypes) - 1;
@@ -49,11 +48,12 @@ function randomCommon($pdo, $results, $userId, $count) {
     $randomNum = rand(0, $count); 
     $tempHairColor = $results[$randomNum]["name"];
     
-    $randomNum = rand(1,3); 
+     
     
     if ($tempTailType === "Dragon") {
         $tempTailColor = $tempHairColor;
     } else {
+        $randomNum = rand(1,3);
     if ($randomNum === 1) {
         $tempTailColor = $tempMainColor;
     } elseif ($randomNum === 2) {
@@ -72,6 +72,11 @@ function randomCommon($pdo, $results, $userId, $count) {
     $randomNum = rand(1,2); 
     if ($randomNum === 1) {
         $tempSpecials .= "Spots ";
+    }
+    
+    $randomNum = rand(1,2); 
+    if ($randomNum === 1) {
+        $tempSpecials .= "Boots ";
     }
     
     $randomNum = rand(1,2); 

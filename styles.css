@@ -168,10 +168,13 @@ hr {
     width: 75%;
     color: gainsboro;
     opacity: 50%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .wideImage {
     width: 80%;
+    border-radius: 20px;
 }
 
 .row {
@@ -450,6 +453,17 @@ a:visited {
     transform: scaleX(-1);
 }
 
+.tinyPet {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.tinyPet img {
+    width: 20rem;
+        -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 /* Footer Styles */
 
 .footer-container {
@@ -636,6 +650,26 @@ margin-top: 15px;
     width: 50%;
 }
 
+/* Designer Page Styles */
+.designerBoxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    column-gap: 1.5rem;
+}
+
+.designerCheck {
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
+.checkBoxDes {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
 /* Journal Entry Styles */
 .radioRow {
     display: flex;
@@ -745,6 +779,7 @@ margin-top: 15px;
     margin-bottom: 0;
 }
 
+
 /* Nest.html Styles */
 
 .artcontainertwo {
@@ -776,7 +811,7 @@ margin-top: 15px;
     align-items: center;
     grid-row-gap: 2rem;
     column-gap: 1rem;
-    margin-bottom: 1rem;
+
     margin-top: 1rem;
 }
 
@@ -890,9 +925,7 @@ margin-top: 15px;
 
 .postUser {
     width: 25%;
-    margin-left: 2rem;
     padding-right: 2rem;
-    border-right: 1px solid silver;
 }
 
 .postRowOne {
@@ -910,6 +943,46 @@ margin-top: 15px;
     text-align: right;
     margin-top: 0;
     margin-bottom: 0;
+    border-top: 1px solid 	#E5E4E2;
+}
+
+.commentBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px dashed #827188;
+    margin-bottom: 3rem;
+    border-radius: 20px;
+    align-items: center;
+    height: 200px;
+    overflow: hidden;
+}
+
+.commentText {
+    overflow: auto; 
+    padding: 3rem;
+    height: 80%; 
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%
+}
+
+#makeComment {
+    border: 2px dashed #827188;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: none;
+}
+
+.makeComment textarea {
+    border-radius: 20px;
 }
 
 /* Starter Page Styles */
@@ -918,7 +991,14 @@ margin-top: 15px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    column-gap: 100px;
+    column-gap: 30px;
+    row-gap: 30px;
+}
+
+.boxStarter {
+
+    border-radius: 20px;
+    border: 2px dashed #827188;
 }
 
 /* Return Bar Styles (Explore, Farming, Crafting, Etc) */
@@ -963,6 +1043,16 @@ margin-top: 15px;
     justify-content: space-between;
 }
 
+.achievementIcons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    justify-content: center;
+    overflow: auto;
+}
+
 /* Form Styles */ 
 .form {
     display: inline-block;
@@ -974,9 +1064,11 @@ margin-top: 15px;
 .input {
     margin-bottom: 1.6rem;
     border-radius: 3px;
-    height: 2rem;
+    height: 2.5rem;
     font-size: 1.4rem;
     border: 2px solid silver;
+    padding-left: .5rem;
+    padding-right: .5rem;
 }
 
 select {

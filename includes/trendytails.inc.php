@@ -23,7 +23,7 @@ if ($_SESSION['reply']) {
 }
     
 //Display Coin Count Top Right
-echo '<div>';
+echo '<div style="text-align: right">';
 if ($player['coinCount'] === "1") {
     echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Gold Coin</p>';
 } else {
@@ -38,10 +38,10 @@ if ($reply) {
 
 
 //Will have cute snoozeling for alpha. Custom art later
-echo '<div><img style="width: 40%;" src="resources/BlueBalloon.png"></div>';
+echo '<div><img style="width: 35%;" src="resources/trendyNPC.png"></div>';
 
 //Text. Her talking or something
- echo '<h4 >Fancy a New Look?</h4>';
+ echo '<p><i>Fancy a New Look?</i></p>';
 
 
 echo '<div class="trendytails">';
@@ -65,9 +65,8 @@ echo '</select><br>';
 echo '<label for="hair" class="form">Hairstyle:</label><br>';
 echo '<select class="input"  name="hair">';
 echo '<option value="Floof">No Hair</option>';
-echo '<option value="Flowing">Flowing</option>';
 echo '<option value="Mane">Mane</option>';
-echo '<option value="Mop">Mop</option>';
+echo '<option value="Mohawk">Mohawk</option>';
 echo '<option value="Wave">Wave</option>';
 echo '</select><br>';
 
@@ -99,7 +98,7 @@ echo '<select class="input"  name="tails">';
 echo '<option value="Dragon">Dragon</option>';
 echo '<option value="Long">Long</option>';
 echo '<option value="Nub">Nub</option>';
-echo '<option value="Poof">Poof</option>';
+echo '<option value="Samoyed">Samoyed</option>';
 echo '</select><br>';
 
 //Button

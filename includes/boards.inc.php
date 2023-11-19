@@ -60,6 +60,51 @@ if ($type === "all" && $order === "all") {
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 }
+    } elseif ($type === "media") {
+       if ($order === "likes") {
+        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":type", $type);
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":type", $type);
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+}
+    } elseif ($type === "artwork") {
+       if ($order === "likes") {
+        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":type", $type);
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":type", $type);
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+}
+    } elseif ($type === "guides") {
+       if ($order === "likes") {
+        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":type", $type);
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":type", $type);
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+}
     } else {
     $query = 'SELECT * FROM posts ORDER BY datetime DESC LIMIT 20';
         $stmt = $pdo->prepare($query);
@@ -86,9 +131,12 @@ echo '<div class="filterBox">';
 echo '<label style="margin-top: 2rem;" for="type" class="form">Type:</label><br>';
 echo '<select class="input"  name="type" style="width: 8rem;">';
 echo '<option value="all"></option>';
-echo '<option value="official">Official</option>';
+echo '<option value="official">News</option>';
 echo '<option value="general">General</option>';
-echo '<option value="freebies">Freebies</option>';
+echo '<option value="media">Media</option>';
+echo '<option value="freebies">Giveaways</option>';
+echo '<option value="artwork">Artwork</option>';
+echo '<option value="guides">Guides</option>';
 echo '</select>';
 echo '</div>';
 echo '</div>';
@@ -117,11 +165,12 @@ foreach ($posts as $post) {
     echo '<div class="post">';
     echo '<div class="postRowOne">';
     echo '<div class="postUser">';
-    displayPet($pet, "articon");
     echo '<a href="profile?id=' . $post['user_id'] . '"><h4 style="margin-top: 0;">'  . htmlspecialchars($user['username']) . '</h4></a>';
+    displayPet($pet, "articon");
+    
     echo '</div>';
 
-    echo '<div class="postContent">';
+    echo '<div class="postContent" style="margin-right: auto; margin-left: auto;">';
     echo '<h3>' . htmlspecialchars($post['title']) . '</h3>';
     echo '<p>' . nl2br(htmlspecialchars($post['text'])) . '</p></div>';
     echo '</div>';

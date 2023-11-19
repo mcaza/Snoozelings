@@ -6,9 +6,11 @@ $explorer = "Explorer";
 
 $coins = $_SESSION['coins'];
 $items = $_SESSION['items'];
+$error = $_SESSION['error'];
 $name = $_SESSION['petName'];
 
 unset($_SESSION['coins']);
+unset($_SESSION['error']);
 unset($_SESSION['items']);
 unset($_SESSION['petName']);
 
@@ -56,6 +58,14 @@ if ($items || $coins > 0) {
     }
     echo '</div>';
 }
+
+if ($error) {
+    echo '<div class="returnBar" style="margin-top: 1rem;">';
+    echo '<p>' . $error . '</p>';
+    echo '</div>';
+}
+
+
 
 //Form Details
 echo '<form method="post" action="includes/startExplore.inc.php">';
