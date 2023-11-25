@@ -3,8 +3,26 @@ require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
+require_once '../includes/plotCheck.inc.php';
 
+$id = $_GET['id'];
+$userId = $_SESSION['user_id'];
 
+//Grab Amount of Farm Plots
+$query = 'SELECT id FROM farms WHERE user_id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//Count Plots and Return Plot Number 
+$count = 1;
+foreach ($result as $farm) {
+    if ($farm['id'] === $id) {
+        break;
+    }
+    $count++;
+}
 
 
 ?>
@@ -15,8 +33,9 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Farm Plot #<?=$count?></title>
     <link rel="stylesheet" href="styles.css">
+    <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
 
 <body>

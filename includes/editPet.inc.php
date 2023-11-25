@@ -39,7 +39,7 @@ unset($_SESSION['id']);
     }
     
 //Redirect to Pet Page
-header("Location: ../pet?ID=" . $id);
+header("Location: ../pet?id=" . $id);
 } else {
     header("Location: ../index.php");
 }

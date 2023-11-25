@@ -50,6 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":rarity", $item['rarity']);
         $stmt->bindParam(":canDonate", $item['canDonate']);
         $stmt->execute();
+        
+            //Update +1 to User Records
+        $query = 'UPDATE users SET itemsBought = itemsBought + 1 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
     
         //Set Response Message
         $_SESSION['reply'] = "You have purchased 1 " . $item['display'] . '.';

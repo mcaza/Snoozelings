@@ -97,14 +97,18 @@ $area = $_POST["area"];
     $hours = 2;
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $formatted = $modified->format('Y-m-d H:i:s');
-    
-    
-    
+
     $query = "UPDATE snoozelings SET cooldownTime = :datetime WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":datetime", $formatted);
     $stmt->bindParam(":id", $petId);
     $stmt->execute(); 
+    
+    //Update +1 to User Records
+    $query = 'UPDATE users SET explores = explores + 1 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
     
     $_SESSION['coins'] = $coinsWon;
     $_SESSION['items'] = $itemsWon;

@@ -38,8 +38,8 @@ if ($id === $userId) {
     echo '<a href="profile?id=' . ($id + 1) . '">>></a>';
     echo '</div>';
     echo '<div class="button-bar">
-                <button class="fancyButton" onClick="window.location.href=\'/updateAccount.php?ID=' . $id . '\'">Update Account</button>
-                <button class="fancyButton" onClick="window.location.href=\'/editProfile.php?ID=' . $id . '\'">Edit Profile</button>
+                <button class="fancyButton" onClick="window.location.href=\'/updateaccount?id=' . $id . '\'">Update Account</button>
+                <button class="fancyButton" onClick="window.location.href=\'/editprofile?id=' . $id . '\'">Edit Profile</button>
             </div>';
     //Left Side Profile Info + Right Side Active Pet
     echo '<div class="petrow rowone">';
@@ -56,11 +56,11 @@ if ($id === $userId) {
     echo '<div class="button-bar">';
     $count = intval($result['blockRequests']);
        if (!$count) {
-           echo '<button class="fancyButton" onClick="window.location.href=\'/addFriend.php?ID=' . $id . '\'">Add Friend</button>';
+           echo '<button class="fancyButton" onClick="window.location.href=\'/includes/addFriend.php?id=' . $id . '\'">Add Friend</button>';
        }   
     $count = intval($result['blockMessages']);
     if (!$count) {
-           echo '<button class="fancyButton" onClick="window.location.href=\'../includes/sendMessage.php?ID=' . $id . '\'">Send Message</button>';
+           echo '<button class="fancyButton" onClick="window.location.href=\'sendmessage?id=' . $id . '\'">Send Message</button>';
        }  
 
     echo '</div>';

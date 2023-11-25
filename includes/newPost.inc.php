@@ -20,7 +20,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check if Posted Today
 $num = intval($result['new']);
-if (!$num === 0) {
+if ($num === 0) {
     echo '<p style="margin-top: 2rem;"><strong>You have already posted on the bulletin board today.</strong></p>';
 } else {
     //Form
@@ -49,7 +49,7 @@ if (!$num === 0) {
     
     //Enter Text
     echo '<label style="margin-top: 2rem;" for="post" class="form">Post:</label><br>';
-    echo '<textarea  cols="72" class="input" style="height: 20rem;"></textarea><br>';
+    echo '<textarea name="post" cols="72" class="input" style="height: 20rem;"></textarea><br>';
 
     //End Form
     echo '<button  class="fancyButton" style="width: 8rem;">Post</button>';

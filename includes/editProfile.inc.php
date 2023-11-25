@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bonded = $_POST["bonded"];
     $userId = $_SESSION['user_id'];
     $farmName = $_POST['farm'];
+    $mailbox = $_POST['mailbox'];
     
     //Update Pronouns, Friend Requests, and Message Requests
     $query = "UPDATE users SET pronouns = :pronouns, blockRequests = :friends, blockMessages = :messages WHERE id = :id";
@@ -39,7 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['bonded'] = htmlspecialchars($result['name']);
     }
     
-    
+    //Update Mailbox Color
+    if ($mailbox) {
+        $query = 'UPDATE users SET mailbox = :mailbox WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":mailbox", $mailbox);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
     
     //Update Status
     if ($status) {

@@ -37,7 +37,7 @@ $stmt->execute();
 $farmNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 echo '<h3 style="margin-bottom: .5rem;">Update Your Profile</h3>';
-echo '<form action="../includes/editProfile.inc.php" method="post">';
+echo '<form action="includes/editProfile.inc.php" method="post">';
 
 //Pronouns Check
 switch ($result['pronouns']) {
@@ -86,7 +86,7 @@ switch ($result['breedStatus']) {
 
 //Status Box
 echo '<label for="status" class="form">Change Status:</label><br>';
-echo '<select class="input status" name="status">';
+echo '<select class="input" name="status">';
 echo '<option value=""></option>';
 foreach ($statuses as $status) {
     $value = intval($status['special']);
@@ -110,11 +110,22 @@ echo '</select><br>';
 
 //Farm Name
 echo '<label for="farm" class="form">Change Farm Name:</label><br>';
-echo '<select class="input status" name="farm">';
+echo '<select class="input" name="farm">';
 echo '<option value=""></option>';
 foreach ($farmNames as $name) {
     echo "<option value='" . $name['name'] . "'>" . $name['name'] . "</option>";
 }
+echo '</select><br>';
+
+//Mailbox Color
+echo '<label for="mailbox" class="form">Change Mailbox Color:</label><br>';
+echo '<select class="input" name="mailbox">';
+echo '<option value=""></option>';
+echo '<option value="blue">Blue</option>';
+echo '<option value="cyan">Cyan</option>';
+echo '<option value="orange">Orange</option>';
+echo '<option value="purple">Purple</option>';
+echo '<option value="red">Red</option>';
 echo '</select><br>';
 
 //Allow Friend Requests

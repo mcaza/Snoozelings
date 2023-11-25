@@ -23,7 +23,13 @@ foreach ($results as $result) {
 echo '</div>';
 
 function displayStarter($pet, $class) {    
+    
     echo '<div class="art-container">';
+    if (strpos($pet["specials"], "Wings") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Wings/Pegasus/Bottom/" . $pet["mainColor"] . ".png' id = 'Wingsbottomone'>";
+            echo "</div>";
+        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/Primary/" . $pet["mainColor"] . ".png' id = 'Primaryone'>";
         echo "</div>";
@@ -76,6 +82,11 @@ function displayStarter($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Noses/" . $pet["noseColor"] . ".png' id = 'Noseone'>";
         echo "</div>";
+    if (strpos($pet["specials"], "Wings") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'Wingstopone'>";
+            echo "</div>";
+        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/transparentSquare.png'>";
         echo "</div>";

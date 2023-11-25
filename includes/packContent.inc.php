@@ -98,17 +98,17 @@ foreach ($itemCount as $item) {
         echo '<a href="item?id=' . $round  . '">';
     echo '<div class="invItem">';
         if ($itemCount[$round] > 1) {
-            if ($items[$round]['name'] === "DeerAntlers") {
-                $s = "";
+            if ($items[$round-1]['multiples']) {
+                $name = $items[$round-1]['multiples'];
             } else {
-                $s = "s";
+                $name = $items[$round-1]['display'];
             }
         
     } else {
-        $s = "";
+        $name = $items[$round-1]['display'];
     }
     echo '<img src="items/' . $items[$round-1]['name'] . '.png">';
-    echo '<p>' . $itemCount[$round] . ' ' . $items[$round-1]['display'] . $s . '</p>';
+    echo '<p>' . $itemCount[$round] . ' ' . $name . '</p>';
         echo '</div></a>';
         }
     }

@@ -25,7 +25,7 @@ $type = $result ['type'];
         $stmt->execute();
         $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
     }
-if (!$latestEntry || $latestEntry['closed'] === 1) {
+if (!$latestEntry || $latestEntry['closed'] === "1") {
     //Back to Pack Arrows
  echo '<div class="leftRightButtons">';
 echo '<a href="journal"><<</a>';

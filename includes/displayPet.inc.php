@@ -101,7 +101,7 @@ function displayPet($pet, $class) {
         echo "</div>";
     } else {
         echo "<div class='${class}'>";
-        echo "<a href='pet?ID=" . $pet['id'] . "'><img src='Layers/transparentSquare.png'></a>";
+        echo "<a href='pet?id=" . $pet['id'] . "'><img src='Layers/transparentSquare.png'></a>";
         echo "</div>";
     }
 

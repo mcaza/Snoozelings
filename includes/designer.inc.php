@@ -14,7 +14,7 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $fabrics = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-echo '<h3 style="margin-top: 1rem; margin-bottom: 2rem;">Snoozelings Designer</h3>';
+echo '<h3 style="margin-top: 1rem; margin-bottom: 2rem;">Snoozelings Maker</h3>';
  echo '<div class="art-container">';
     
 

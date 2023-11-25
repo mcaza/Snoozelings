@@ -43,7 +43,7 @@ foreach ($results as $pet) {
     echo "<div class='nestpet'>";
     
     displayPet($pet, "arttwo");
-    echo '<h5><a href="pet?ID=' . $pet['id'] . '">'. htmlspecialchars($pet['name']) . '</a></h5>';
+    echo '<h5><a href="pet?id=' . $pet['id'] . '">'. htmlspecialchars($pet['name']) . '</a></h5>';
     echo '<p class="slogan">' . $pet['title'] . '</p>';
     echo "</div>";
     

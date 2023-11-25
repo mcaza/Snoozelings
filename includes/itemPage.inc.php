@@ -56,19 +56,7 @@ echo '</div>';
 if ($item['name'] === "PlanterBox") {
     echo '<button class="fancyButton" onClick="window.location.href=\'includes/useBox.inc.php\'">Add Farm Plot</button>';
 }
-
-//Fabric / Design (Remove Later)
-if ($item['type'] === 'fabric' || $item['type'] === 'design') {
-echo "<form action='../includes/useItem.inc.php' onsubmit=\"return confirm('Are you sure you want to use this item?');\">";
-echo '<label for="snoozeling" class="form">Pick a Snoozeling:</label><br>';
-echo '<select class="input"  name="snoozeling">';
-foreach ($snoozelings as $snooze) {
-    echo '<option value="' . $snooze['id'] . '">' . htmlspecialchars($snooze['name']) . '</option>';
-}
-echo '</select><br>';
-echo "<button>Use Item</button>";
-echo '</form>';
     
     //Clothes Top / Bottom Use Items
-}
+
 echo '</div>';

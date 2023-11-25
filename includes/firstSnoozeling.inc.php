@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $job = "jack";
     $mood = "Happy";
     $breedStatus = "Closed";
-    $title = "The New";
+    $title = "The New One";
     
     $query = "SELECT * FROM blueprints WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -73,11 +73,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Add 2 Farms to Account
     $round = 2;
     for ($i = 0; $i < $round; $i++) {
-        $query = 'INSERT farms (user_id) VALUES (:id)';
+        $query = 'INSERT INTO farms (user_id) VALUES (:id)';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
     }
+    
+    //Welcome Mail Message
+    $message = "Welcome newest Snooze Land citizen!!
+    
+    Read through this letter for important Snooze Land information.
+    
+    <b style='font-size: 2rem;'>Mail System</b>
+    
+    Here in Snooze Land, we don't want to overwhelm our postman. We also feel that it's important to not be checking our inboxes all the time. Because of these two reasons, the postman only delivers your mail twice a day at 6 AM EST and 7PM EST.
+    
+    Please keep this in mind when sending messages to your friends. They aren't ignoring you. Postman Penn is just making sure to take plenty of breaks on his route.
+    
+    <b style='font-size: 2rem;'>Health Journaling</b>
+    
+    When filling out your journal, we ask that you do not include any identifying information. Even though no one will be reading your journal but you, we believe it is best that we do not have access to this information.
+    
+    <strong>Things You Can Include:</strong>
+    Symptoms, Times, Dates, Body Locations, How Your Appointments Went, New Treatments Attempted, Generic Medication Names (Heart Medication, Antidepressents, Cortisone Shots), Medication Doses (Anxiety Med 1 - 30mg), Physio Exercises
+    
+    <strong>Things You Shouldn't Include:</strong>
+    Doctors Names, Your Name, Facility Names, Facility Addresses, Specific Medication Names (Bupropion, etc), City/State/Province Names
+    
+    <b>Please Note</b>
+    If you are having any difficult thoughts about harming yourself or others, please contact emergency services immeadiately. We can not help you because your journal is meant to be private and is not monitored by staff. There are professionals out there trained to help you through these tough times.
+    
+    That's everything for today. Hope you enjoy the game. <3
+    
+    ~From Slothie";
+    $title = "Welcome to Snooze Land!";
+    $from = 1;
+    $one = 1;
+    $zero = 0;
+    $now = new DateTime();
+    $date = $now->format('Y-m-d H:i:s');
+    $query = "INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime) VALUES (:from, :to, :title, :message, :sent, :opened, :datetime)";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":from", $from);
+    $stmt->bindParam(":to", $userId);
+    $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":message", $message);
+    $stmt->bindParam(":sent", $one);
+    $stmt->bindParam(":opened", $zero);
+    $stmt->bindParam(":datetime", $date);
+    $stmt->execute();
     
     $_SESSION['bonded'] = htmlspecialchars($name);
     

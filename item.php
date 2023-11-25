@@ -4,7 +4,14 @@ require_once '../includes/dbh-inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
+$id = $_GET['id'];
 
+//Get Pet Name
+    $query = "SELECT display FROM itemList WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $name = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -15,8 +22,9 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title><?= $name['display'] ?></title>
     <link rel="stylesheet" href="styles.css">
+    <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
 
 <body>

@@ -427,6 +427,15 @@ a:visited {
     width: 40rem;
 }
 
+.mailPet {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.mailPet img {
+    width: 270px;
+}
+
 .artJournal {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
@@ -638,6 +647,32 @@ margin-top: 15px;
     font-size: 30rem;
 }
 
+/* MailBox Styles */
+a.selected {
+    font-weight: bold;
+    font-size: 20rem;
+}
+
+.mail {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    border: 2px dashed #827188;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+}
+
+.mailInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
 /* Journal Styles */
 .journalRow {
     display: flex;
@@ -755,6 +790,21 @@ margin-top: 15px;
     width: 80%;
     border-radius: 2rem;
     overflow: hidden;
+}
+
+/* Stitcher Shop Styles */
+
+.fabricItems {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 2rem;
+    column-gap: 2rem;
+    width: 70%;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
 }
 
 /* Farm Styles */

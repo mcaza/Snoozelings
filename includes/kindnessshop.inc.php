@@ -62,10 +62,11 @@ foreach ($items as $item) {
     echo '<p><strong>' . $item['display'] . '</strong></p>';
     if ($item['price'] < 2) {
         echo '<p>' . $item['price'] . ' Kindness Coin</p>';
+        echo "<form method='POST' action='includes/buyKindness.inc.php' onsubmit=\"return confirm('This will cost " . $item['price'] . " coin.');\">";   
     } else {
         echo '<p>' . $item['price'] . ' Kindness Coins</p>';
+        echo "<form method='POST' action='includes/buyKindness.inc.php' onsubmit=\"return confirm('This will cost " . $item['price'] . " coins.');\">";   
     }
-    echo "<form method='POST' action='includes/buyKindness.inc.php' onsubmit=\"return confirm('This will cost " . $item['price'] . " coins.');\">";   
     echo '<input type="hidden" name="item" value="' . $item['item_id'] . '">';
     echo '<input type="hidden" name="price" value="' . $item['price'] . '">';
     echo '<button style="margin-bottom: .7rem; width: 50%;" class="fancyButton">Buy</button>';

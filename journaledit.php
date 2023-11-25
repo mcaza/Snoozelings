@@ -5,7 +5,8 @@ require_once '../includes/verifyCheck.inc.php';
 require_once '../includes/verifySinglePet.inc.php'; 
 
 
-
+$now = new DateTime();
+$formatted = $now->format('Y-m-d');
 
 ?>
 
@@ -15,7 +16,7 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Edit Journal : <?=$formatted?></title>
     <link rel="stylesheet" href="styles.css">
 </head>
 

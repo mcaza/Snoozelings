@@ -69,9 +69,9 @@ echo '<img src="resources/seedNPC.png" style="width: 35%;">';
 
 //Get Plant Puns (Auto Set Valentine's Day or Birthday)
 if ($formatted === $birthday) {
-    echo '<p>Ha-pea Birthday!!</p>';
+    echo '<p><i>Ha-pea Birthday!!</i></p>';
 } elseif ($formatted === $valentines) {
-    echo '<p>Will you peas be my Valentine?</p>';
+    echo '<p><i>Will you peas be my Valentine?</i></p>';
 } else {
     $query = 'SELECT * FROM seedPuns';
     $stmt = $pdo->prepare($query);

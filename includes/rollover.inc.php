@@ -1,17 +1,22 @@
-<?php
+ <?php
     require_once 'dbh-inc.php';
+
+    //Date Stuff
+    $now = new DateTime();
+    $date = $now->format('Y-m-d');
+
+    //Grab All Info
+    $query = "SELECT * FROM users WHERE lastLog = :date";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":date", $date);
+    $stmt->execute();
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     //Get all Affirmations
     $affirmquery = "SELECT * FROM affirmations";
     $affirmstmt = $pdo->prepare($affirmquery);
     $affirmstmt->execute();
     $affirmresults = $affirmstmt->fetchAll(PDO::FETCH_ASSOC);
-
-    //Get All Users
-    $userquery = "SELECT id FROM users";
-    $userstmt = $pdo->prepare($userquery);
-    $userstmt->execute();
-    $users = $userstmt->fetchAll(PDO::FETCH_ASSOC);
 
     $affirmlength = count($affirmresults); 
 
@@ -41,6 +46,15 @@
     $stmt->execute();
     $query = "UPDATE mentalHealthEntries SET closed = 1";
     $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
+    //Reset Daily Post
+    $one = 1;
+    $zero = 0;
+    $query = "UPDATE posts SET new = :one WHERE new = :zero";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":one", $one);
+    $stmt->bindParam(":zero", $zero);
     $stmt->execute();
 
     $affirmstmt = null;

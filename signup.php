@@ -13,8 +13,9 @@ require_once '../includes/loginRedirect.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Signup</title>
     <link rel="stylesheet" href="styles.css">
+    <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
 
 <body>
