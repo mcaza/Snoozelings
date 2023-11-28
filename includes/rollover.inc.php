@@ -129,14 +129,25 @@
     //Pick Winners for Raffles
     $array = [];
     array_push($array, $raffles[0]['id'], $raffles[1]['id'], $raffles[2]['id']);
-    $entries = explode(" ", $raffentries['entries']);
+    if(strlen($raffentries['entries']) === 0) {
+        $entries = 0;
+    } else {
+        $entries = explode(" ", $raffentries['entries']);
+    }
+    
     $count = 0;
+    //unset($entriesone[0]);  
+    //$entries = array_values($entriesone); 
     foreach ($array as $round) {
-        if ($entries > 0) {
+        if (count($entries) > 0) {
         //Pick Winner
-        $num = count($entries) - 1;
-        $rand = rand(0, $num);
-        $winner = $entries[$rand];
+        if (count($entries) === 1) {
+            $winner = $entries[0];
+        } else {
+            $num = count($entries) - 1;
+            $rand = rand(0, $num);
+            $winner = $entries[$rand];
+        }
         $query = 'UPDATE raffles SET winner = :winner WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":winner", $winner);
@@ -184,7 +195,7 @@
         
         Hmmmm... Yes yes. It\'s a ' . $raffles[$count]['display'] . '!
         
-        Maybe I\'ll win next. I could really use a new hat.';
+        Maybe I\'ll win next time. I could really use a new hat.';
         $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":sender", $sender);
@@ -198,7 +209,7 @@
         $stmt->execute();
         $count++;
         } else {
-            $winner = "No Winner";
+            $winner = 0;
             $query = 'UPDATE raffles SET winner = :winner WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":winner", $winner);

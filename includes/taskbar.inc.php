@@ -33,7 +33,7 @@ $loggedInBar = '<div class="dropdown">
             </div>
         </div>
         <div class="dropdown">
-            <button class="menu dropdown dropbtn" id="drop"><a href="selfcare.html">Community</a></button>
+            <button class="menu dropdown dropbtn" id="drop"><a href="community">Community</a></button>
             <div class="dropdown-content">
                 <a href="mailbox">Mailbox</a>
                 <a href="boards">Bulletin Board</a>

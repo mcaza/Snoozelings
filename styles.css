@@ -1124,6 +1124,7 @@ a.selected {
     display: inline-block;
     font-size: 1.8rem;
     margin-bottom: 1rem;
+    font-weight: bold;
 }
 
 .input {

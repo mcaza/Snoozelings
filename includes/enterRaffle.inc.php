@@ -25,7 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $entries = $stmt->fetch(PDO::FETCH_ASSOC);
     $array = explode(" ", $entries['entries']);
-    $count = count($array);
+    if ($array[0] === "") {
+        $count = 1;
+    } else {
+        $count = count($array);
+    }
+    
     if ($count < 1) {
         $temp = $userId;
     } else {

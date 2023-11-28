@@ -22,6 +22,16 @@ function getEmail(object $pdo, string $email) {
     return $result;
 }
 
+function checkEmail(object $pdo, string $email) {
+    $query = "SELECT emails FROM alphaemails WHERE emails = :email";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":email", $email);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result;
+}
+
 function setUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter) {
     $query = "INSERT INTO users (username, password, email, birthdate, signupDate, newsletter, pronouns, affirmation) VALUES (:username, :pwd, :email, :birthdate, :signupDate, :newsletter, :pronouns, :affirmation);";
     $stmt = $pdo->prepare($query);

@@ -48,12 +48,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     
-    //Mark Breeding Completes
+    //Mark Breeding Completed
     $one = 1;
     $query = 'UPDATE breedings SET completed = :one WHERE user_id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":one", $one);
+    $stmt->execute();
+    
+    //Increase Daily Records +1
+    $query = 'UPDATE dailyRecords SET snoozelingsCrafted = snoozelingsCrafted + 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    
+    //Increase User Records +1
+    $query = 'UPDATE users SET snoozelingsCrafted = snoozelingsCrafted + 1 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
     $stmt->execute();
     
     //Reroute 

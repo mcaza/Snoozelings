@@ -63,11 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":userId", $userId);
     $stmt->execute();
     
-    $number = 1;
-    $query = "UPDATE users SET snoozelingsCrafted = :number WHERE id = :userId";
+    //Increase Daily Records +1
+    $query = 'UPDATE dailyRecords SET newMembers = newMembers + 1';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":number", $number);
-    $stmt->bindParam(":userId", $userId);
     $stmt->execute();
     
     //Add 2 Farms to Account

@@ -22,7 +22,12 @@ $day = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Get Entries Count
 $explode = explode(" ", $day['entries']);
-$count = count($explode);
+if (strlen($day['entries']) === 0) {
+    $count = 0;
+} else {
+     $count = count($explode);
+}
+
 
 //Grab Raffle Items
 $query = 'SELECT * FROM raffles ORDER BY id DESC LIMIT 3';
@@ -100,31 +105,43 @@ if (!($day['id'] === "1")) {
     echo '<h3>Yesterday\'s Winners</h3>';
     $query = 'SELECT username FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $results[3]['donator']);
+    $stmt->bindParam(":id", $results[3]['winner']);
     $stmt->execute();
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitems" style="margin-bottom:2rem;">';
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[3]['item'] . '.png">';
-    echo '<p><i>' . $winner['username'] . '</i></p>';
+    echo '<img src="items/' . $results[3]['item'] . '.png" style="margin-top: 1rem">';
+    if ($winner) {
+        echo '<p><i>' . $winner['username'] . '</i></p>';
+    } else {
+        echo '<p><i>No Winner</i></p>';
+    }
     echo '</div>';
     $query = 'SELECT username FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $results[4]['donator']);
+    $stmt->bindParam(":id", $results[4]['winner']);
     $stmt->execute();
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[4]['item'] . '.png">';
-    echo '<p><i>' . $winner['username'] . '</i></p>';
+    echo '<img src="items/' . $results[4]['item'] . '.png" style="margin-top: 1rem">';
+    if ($winner) {
+        echo '<p><i>' . $winner['username'] . '</i></p>';
+    } else {
+        echo '<p><i>No Winner</i></p>';
+    }
     echo '</div>';
     $query = 'SELECT username FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $results[5]['donator']);
+    $stmt->bindParam(":id", $results[5]['winner']);
     $stmt->execute();
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[5]['item'] . '.png">';
-    echo '<p><i>' . $winner['username'] . '</i></p>';
+    echo '<img src="items/' . $results[5]['item'] . '.png" style="margin-top: 1rem">';
+    if ($winner) {
+        echo '<p><i>' . $winner['username'] . '</i></p>';
+    } else {
+        echo '<p><i>No Winner</i></p>';
+    }
     echo '</div>';
     echo '</div>';
     echo '<p style="font-size: 2rem; margin-top: 3rem;"><strong>Total Entries: </strong>' . $count . '</p>';

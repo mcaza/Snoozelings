@@ -49,6 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if(passwordLength($pwd)) {
             $errors["short_password"] = "Your password must be at least 8 characters in length.";
         }
+        if (alphaEmail($pdo, $email)) {
+            $errors["alpha_email"] = "That email is not registered for alpha testing.";
+        }
         
         require_once '../../includes/config_session.inc.php';
         

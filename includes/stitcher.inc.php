@@ -78,7 +78,7 @@ if ($page === "questions") {
         echo '<button  class="fancyButton">Apply Fabric</button>';
         echo '</form>';
     } else {
-        echo '<p><strong>You do not have any fabrics to use.<strong></p>';
+        echo '<p><strong>You do not have any fabrics to use.</strong></p>';
     }
 } elseif ($page === "design") {
     echo '<p><i>"A new tail? That\'s very exciting. Should be no problem at all."</i></p>';
@@ -123,7 +123,7 @@ if ($page === "questions") {
         echo '<button  class="fancyButton">Apply Design</button>';
         echo '</form>';
     } else {
-        echo '<p><strong>You do not have any designs to use.<strong></p>';
+        echo '<p><strong>You do not have any designs to use.</strong></p>';
     }
 } elseif ($page === "new") {
     //Check Active Breeding
@@ -158,13 +158,13 @@ if ($page === "questions") {
         
 }  elseif (!$kitcount) {
         if ($bpcount === 0) {
-            echo '<p><strong>You do not have any sewing kits or blueprints.<strong></p>';
+            echo '<p><strong>You do not have any sewing kits or blueprints.</strong></p>';
         } else {
-            echo '<p><strong>You do not have any sewing kits.<strong></p>';
+            echo '<p><strong>You do not have any sewing kits.</strong></p>';
         }
     } else {
         if (!$bpcount) {
-            echo '<p><strong>You do not have any blueprints. <br><br>You need at least 1 blueprint to make a new snoozeling.<strong></p>';
+            echo '<p><strong>You do not have any blueprints. <br><br>You need at least 1 blueprint to make a new snoozeling.</strong></p>';
         } else {
             if ($bpcount > 10) {
                 $bpcount = 10;

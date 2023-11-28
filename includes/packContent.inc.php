@@ -4,6 +4,8 @@ $userId = $_SESSION['user_id'];
 $itemCount = [0];
 $type = $_GET['type'];
 $name = $_SESSION['bonded'];
+$reply = $_SESSION['reply'];
+unset($_SESSION['reply']);
 
 //Get Bonded ID
 $query = "SELECT bonded FROM users WHERE id = :id";
@@ -43,12 +45,11 @@ for ($i=0; $i < $amount; $i++) {
     }
 }
 
-//Message Box
-if ($_SESSION['message']) {
-     echo '<div class="returnBar" style="margin-top: 1rem; margin-bottom: 2rem;">';
-    echo '<p>' . $_SESSION['message'] . '</p>';
+//Notification
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 2rem;">';
+    echo '<p>' . $reply . '</p>';
     echo '</div>';
-    unset($_SESSION['message']);
 }
 
 //Title

@@ -86,7 +86,7 @@ if ($formatted === $birthday) {
 echo '<div class="seedRows">';
 foreach ($seeds as $seed) {
     echo '<div class="seedItem">';
-    echo '<img style="margin-top:.3rem;" src="items/' . $seed['name'] . '.png">';
+    echo '<img style="margin-top:.3rem;" src="items/' . $seed['name'] . '.png" title="' . $seed['description'] . '">';
     echo '<p><strong>' . $seed['plantName'] . ' Seed</strong></p>';
     echo '<p>' . $seed['price'] . ' Gold Coins</p>';
     echo "<form method='POST' action='includes/buySeed.inc.php' onsubmit=\"return confirm('This will cost " . $seed['price'] . " coins.');\">";   

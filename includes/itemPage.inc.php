@@ -18,7 +18,6 @@ $stmt->bindParam(":item", $id);
 $stmt->execute();
 $item = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
 //Get Snoozelings
 $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
 $stmt = $pdo->prepare($query);
@@ -33,6 +32,9 @@ if ($item['type'] === 'clothesBottom') {
 }
 if ($item['type'] === 'clothesTop') {
     $type = "Clothes [Top]";
+}
+if ($item['type'] === 'clothesHoodie') {
+    $type = "Clothes [Hoodie]";
 }
 
 //Back to Pack Arrows
@@ -56,7 +58,40 @@ echo '</div>';
 if ($item['name'] === "PlanterBox") {
     echo '<button class="fancyButton" onClick="window.location.href=\'includes/useBox.inc.php\'">Add Farm Plot</button>';
 }
+
+if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie') {
+    echo '<form method="post" action="includes/wearClothes.inc.php">';
+    echo '<input type="hidden" name="item" value="' . $id . '">';
+    echo '<label for="area"  class="form">Choose A Pet:</label><br>';
+    echo '<select  class="input" name="pet" id="pet"><br>';
+    foreach ($snoozelings as $pet) {
+        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+    }
+    echo '</select>';
+    echo '<div><button class="fancyButton">Wear Item</button></div>';
+    echo '</form>';
+
+}
     
     //Clothes Top / Bottom Use Items
 
 echo '</div>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
