@@ -49,6 +49,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     
+    //Check for Blueprints
+    $bpid = 21;
+    $query = 'SELECT * FROM items WHERE list_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $bpid);
+    $stmt->execute();
+    $bps = $stmt->fetch(PDO::FETCH_ASSOC);
+    $bpcount = count($bps);
+    if ($bpcount < $blueprints) {
+        $_SESSION['reply'] = 'You have used more blueprints than is in your inventory.';
+        header("Location: ../stitcher?page=new");
+    }
+    
     //Check for bed
     $bed = 27;
     $query = "SELECT * FROM items WHERE list_id = :id LIMIT 1";
@@ -57,10 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $bed = $stmt->fetch(PDO::FETCH_ASSOC);
     
-  /*  if (!$bed) {
+    if (!$bed) {
         $_SESSION['reply'] = 'You need a Pet Bed for the new snoozeling to sleep in.';
             header("Location: ../stitcher?page=new");
-    } */    
+    }   
     
     //Create a Breeding ID
     $query = "INSERT INTO breedings (user_id, one, two, blueprints) VALUES (:user, :one, :two, :blueprints)";
@@ -86,6 +99,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Remove Items (Sewing Kit, Blueprints, Bed)
+    $itemArray = [27, 20];
+    for ($i = 0; $i < $blueprints; $i++) {
+        array_push($itemArray, 21);
+    }
+    foreach ($itemArray as $item) {
+        $query = 'DELETE FROM items WHERE list_id = :id LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $item);
+        $stmt->execute(); 
+    }
     
     //Send Letter
     //Grab Snoozeling Names

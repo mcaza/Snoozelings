@@ -48,7 +48,7 @@ $stmt->bindParam(":num", $num);
 $stmt->execute();
 
 //Redirect
-    $_SESSION['item'] = $items[$fixedNumber]['display'];
+    $_SESSION['reply'] = "You have recieved the following item: " . $items[$fixedNumber]['display'];
     header("Location: ../randomitem");
 } else {
     header("Location: ../randomitem");

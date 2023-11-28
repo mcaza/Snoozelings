@@ -3,6 +3,11 @@
 $userId = $_SESSION['user_id'];
 $name = $_SESSION['petName'];
 
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="snoozeland"><<</a>';
+echo '</div>';
+
 echo '<h3>Snooze Shops</h3>';
 
 echo '<div class="shopRows">';

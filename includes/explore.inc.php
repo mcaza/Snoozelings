@@ -31,6 +31,11 @@ $query = "SELECT * FROM snoozelings WHERE (job = :jack OR job = :explorer) && ow
     $stmt->execute();
     $itemQuery = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="snoozeland"><<</a>';
+echo '</div>';
+
 echo '<div><img id="exploreImage" class="wideImage" src="resources/Farmland.png"></div>';
 echo '<div class="returnItems">';
 

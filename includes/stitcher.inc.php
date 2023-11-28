@@ -135,32 +135,35 @@ if ($page === "questions") {
     
     //Count Sewing Kits
     $sewingid = 20;
-    $query = "SELECT * FROM items WHERE list_id = :id";
+    $query = "SELECT * FROM items WHERE list_id = :id AND user_id = :user";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $sewingid);
+    $stmt->bindParam(":user", $userId);
     $stmt->execute();
     $kits = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $kitcount = count($kits);
     
     //Count Blueprints
-    $sewingid = 21;
-    $query = "SELECT * FROM items WHERE list_id = :id";
+    $bpid = 21;
+    $query = "SELECT * FROM items WHERE list_id = :id  AND user_id = :user";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $sewingid);
+    $stmt->bindParam(":user", $userId);
+    $stmt->bindParam(":id", $bpid);
     $stmt->execute();
     $bp = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $bpcount = count($bp);
     if ($breedingstatus['completed'] === "0") {
-        echo '<p><strong>You need to wait until your snoozeling is delivered before you can craft another.<strong></p>';
+        echo '<p><strong>You need to wait until your snoozeling is delivered before you can craft another.</strong></p>';
         
-}  elseif ($kitcount === 0) {
+        
+}  elseif (!$kitcount) {
         if ($bpcount === 0) {
             echo '<p><strong>You do not have any sewing kits or blueprints.<strong></p>';
         } else {
             echo '<p><strong>You do not have any sewing kits.<strong></p>';
         }
     } else {
-        if ($bpcount === 0) {
+        if (!$bpcount) {
             echo '<p><strong>You do not have any blueprints. <br><br>You need at least 1 blueprint to make a new snoozeling.<strong></p>';
         } else {
             if ($bpcount > 10) {

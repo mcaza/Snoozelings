@@ -113,10 +113,11 @@ $area = $_POST["area"];
     $_SESSION['coins'] = $coinsWon;
     $_SESSION['items'] = $itemsWon;
     $_SESSION['petName'] = htmlspecialchars($name['name']);
-}
+    header("Location: ../explore");
+} else {
     $_SESSION['error'] = 'You must select an explorer.';
         header("Location: ../explore");
-    
+}
 } else {
     header("Location: ../index.php");
 }

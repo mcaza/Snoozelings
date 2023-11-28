@@ -15,7 +15,7 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Snoozeling Stitcher</title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -66,8 +66,8 @@ require_once '../includes/verifySinglePet.inc.php';
                 <?php if(isset($_SESSION['user_id'])) {
                echo '<div class="bar-container">
                     <h2>To Do</h2>
-                    <?php require_once "../includes/notifications.inc.php"; ?>
-                    <button onclick="window.location.href="../includes/clearNotifications.inc.php";" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
+                    ';  require_once "../includes/notifications.inc.php"; 
+                    echo '<br>
                 </div>';
                 } ?>
 

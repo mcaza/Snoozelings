@@ -14,6 +14,11 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $fabrics = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="games"><<</a>';
+echo '</div>';
+
 echo '<h3 style="margin-top: 1rem; margin-bottom: 2rem;">Snoozelings Maker</h3>';
  echo '<div class="art-container">';
     
@@ -163,11 +168,11 @@ echo '<input  type="checkbox" id="belly"><label class="designerCheck" for="belly
 echo '</div>';
 
 echo '<div class="checkBoxDes">';
-echo '<input  type="checkbox" id="boots"><label class="designerCheck" for="belly">Boots</label><br>';
+echo '<input  type="checkbox" id="boots"><label class="designerCheck" for="boots">Boots</label><br>';
 echo '</div>';
 
 echo '<div class="checkBoxDes">';
-echo '<input type="checkbox" id="spots"><label class="designerCheck" for="belly">Spots</label><br>';
+echo '<input type="checkbox" id="spots"><label class="designerCheck" for="spots">Spots</label><br>';
 echo '</div>';
 
 echo '<div class="checkBoxDes">';

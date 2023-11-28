@@ -91,6 +91,7 @@ require_once '../includes/loginRedirect.inc.php';
 
 
     <!-- Footer Goes Here -->
+    
     <div class="footer-container">
         <div class="footer-texts">
             <ul>

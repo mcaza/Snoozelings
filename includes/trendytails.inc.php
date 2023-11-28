@@ -21,6 +21,14 @@ if ($_SESSION['reply']) {
     $reply = $_SESSION['reply'];
     unset($_SESSION['reply']);
 }
+
+//Top Div
+echo '<div class="topShop">';
+
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="snoozeland"><<</a>';
+echo '</div>';
     
 //Display Coin Count Top Right
 echo '<div style="text-align: right">';
@@ -29,6 +37,7 @@ if ($player['coinCount'] === "1") {
 } else {
     echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Gold Coins</p>';
 }
+echo '</div>';
 echo '</div>';
 
 //Session Reply Area

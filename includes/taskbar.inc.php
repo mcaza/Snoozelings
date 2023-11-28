@@ -10,7 +10,7 @@ $loggedInBar = '<div class="dropdown">
             </div>
         </div>
         <div class="dropdown">
-            <button class="menu dropdown dropbtn" id="drop"><a href="snoozeland.html">Snooze Land</a></button>
+            <button class="menu dropdown dropbtn" id="drop"><a href="snoozeland">Snooze Land</a></button>
             <div class="dropdown-content">
                 <a href="explore">Exploring</a>
                 <a href="adoptionhouse.html">Adoption House</a>
@@ -19,9 +19,9 @@ $loggedInBar = '<div class="dropdown">
             </div>
         </div>
         <div class="dropdown">
-            <button class="menu dropdown dropbtn" id="drop"><a href="games.html">Mini Games</a></button>
+            <button class="menu dropdown dropbtn" id="drop"><a href="games">Mini Games</a></button>
             <div class="dropdown-content">
-                <a href="dailyraffle.html">Daily Raffle</a>
+                <a href="raffle">Daily Raffle</a>
                 <a href="randomitem">Random Item</a>
                 <a href="designer">Snooze Maker</a>
             </div>

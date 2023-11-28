@@ -100,6 +100,8 @@ body {
     width: 70%;
     column-gap: 3rem;
     align-items: flex-start;
+    flex: 1;
+    min-height: 82vh;
 }
 
 .main-container {
@@ -531,15 +533,12 @@ margin-top: 15px;
     border: 0;
 }
 
-#clearNotifs {
-    background-color: transparent;
-    border: 0;
-    font-size: 1.3rem;
-    font-family: Karla;
+.notif {
+    font-size: 1.7rem;
 }
 
-#clearNotifs:hover {
-    color: rebeccapurple;
+.notif:hover {
+    font-weight: bold;
 }
 
 /* Scroll Bar Styles */
@@ -763,6 +762,23 @@ a.selected {
     border-radius: 20px;
     padding: 20px;
     width: 25%;
+}
+
+/* Raffle Styles */
+.raffleitems {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 5rem;
+    margin-top: 2rem;
+   
+}
+
+.raffleitem {
+     border: 2px dashed #827188;
+    padding: 1rem;
+    width: 20%;
+    border-radius: 20px;
 }
 
 /* Shop Page Styles */
@@ -1107,7 +1123,6 @@ a.selected {
 .form {
     display: inline-block;
     font-size: 1.8rem;
-    font-weight: bold;
     margin-bottom: 1rem;
 }
 

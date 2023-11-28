@@ -1,8 +1,8 @@
 <?php
 
 $userId = $_SESSION['user_id'];
-$item = $_SESSION['item'];
-unset($_SESSION['item']);
+$reply = $_SESSION['reply'];
+unset($_SESSION['reply']);
 
 //Get User Info
 $query = "SELECT dailyPrize FROM users WHERE id = :id";
@@ -11,14 +11,19 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="games"><<</a>';
+echo '</div>';
+
+//Session Reply Area
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 1rem;"><p>' . $reply . '</p></div>';
+}
+
 //Will have cute snoozeling for alpha. Custom art later. Confused face if already took item.
 echo '<div><img style="width: 40%;" src="resources/BlueBalloon.png"></div>';
-if ($item) {
-    echo '<p>You reach into the bag and find: ' . $item . '</p>';
-} else {
     echo '<h4>Feeling Down? Have a free item.</h4>';
-    
-}
 
 
 

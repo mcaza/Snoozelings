@@ -72,8 +72,8 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 <?php if(isset($_SESSION['user_id'])) {
                echo '<div class="bar-container">
                     <h2>To Do</h2>
-                    <?php require_once "../includes/notifications.inc.php"; ?>
-                    <button onclick="window.location.href="../includes/clearNotifications.inc.php";" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
+                    ';  require_once "../includes/notifications.inc.php"; 
+                    echo '<br>
                 </div>';
                 } ?>
 

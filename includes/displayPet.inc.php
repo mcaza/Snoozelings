@@ -3,7 +3,9 @@ function displayPet($pet, $class) {
     //Pillow Array
     $pillows = ['Blue', 'Green', 'Orange', 'Pink', 'Purple', 'Red', 'Yellow'];
     
+    
     echo '<div class="art-container">';
+    if ($pet['mainColor']) {
     if($class === "arttwo") {
         $randomNum = rand(0, count($pillows)-1);
         echo "<div class='${class} pillow'>";
@@ -95,11 +97,16 @@ function displayPet($pet, $class) {
             echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";
             echo "</div>";
         }
+    }
     if ($class === 'tinyPet') {
         echo "<div class='${class}'>";
         echo "<a href='profile?id=" . $pet['owner_id'] . "'><img src='Layers/transparentSquare.png'></a>";
         echo "</div>";
-    } else {
+    } elseif (!$pet['mainColor']) {
+        echo "<div class='${class}'>";
+        echo "<img src='Layers/transparentSquare.png'>";
+        echo "</div>";
+    }else {
         echo "<div class='${class}'>";
         echo "<a href='pet?id=" . $pet['id'] . "'><img src='Layers/transparentSquare.png'></a>";
         echo "</div>";

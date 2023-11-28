@@ -4,7 +4,7 @@ require_once '../includes/dbh-inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
-$username = $_SESSION['user_username'];
+
 
 
 ?>
@@ -15,7 +15,7 @@ $username = $_SESSION['user_username'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$username ?>'s Collection</title>
+    <title>Daily Raffle</title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -80,17 +80,9 @@ $username = $_SESSION['user_username'];
         </div>
 
         <!-- All Main Content -->
-        <div class="main-container"><div>
-            <?php require_once '../includes/nestContent.php'; ?>
-            <script>
-    //Profile / Snoozeling / Collection Fix When Only Right Arrow
-var leftArrow = document.getElementById('leftArrow');
-if (!leftArrow) {
-    document.getElementById('onlyOne').style.justifyContent = 'flex-end';
-}
-    </script>
+        <div class="main-container"><div  class="bottomPush">
+            <?php require_once '../includes/raffle.inc.php'; ?>
         </div></div>
-        
     </div>
     <!--End of All Main Content-->
 
@@ -108,7 +100,6 @@ if (!leftArrow) {
 
     <!-- Script Link -->
    <script src="main.js"></script>
-    
 
 </body>
 

@@ -73,8 +73,8 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 <?php if(isset($_SESSION['user_id'])) {
                echo '<div class="bar-container">
                     <h2>To Do</h2>
-                    <?php require_once "../includes/notifications.inc.php"; ?>
-                    <button onclick="window.location.href="../includes/clearNotifications.inc.php";" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
+                    ';  require_once "../includes/notifications.inc.php"; 
+                    echo '<br>
                 </div>';
                 } ?>
 
@@ -92,9 +92,9 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
             //User Navigation
             echo '<div id="onlyOne" class="leftRightButtons">';
             if ($id > 1) {
-                echo '<a id="leftArrow" href="pet?ID=' . ($id - 1) . '"><<</a>';
+                echo '<a id="leftArrow" href="pet?id=' . ($id - 1) . '"><<</a>';
             }
-            echo '<a href="pet?ID=' . ($id + 1) . '">>></a>';
+            echo '<a href="pet?id=' . ($id + 1) . '">>></a>';
             echo '</div>'; ?>
             <?php require_once '../includes/petPageButtons.inc.php'; ?>
             <div class="petrow rowone">
