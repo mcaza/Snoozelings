@@ -299,6 +299,17 @@ function breed($pdo, $first, $second, $user, $breeding) {
             array_push($rare, "DinoOatmeal");
         }
     }
+    if ($one['mainColor'] === "Banana" || $two['mainColor'] === "Banana") {
+        if (in_array("Brown", $mainone) || in_array("Brown", $maintwo)) {
+            array_push($rare, "BananaPeel");
+        }
+    }
+    if ((in_array("Eyeburner", $mainone) && in_array("White", $maintwo)) || (in_array("Eyeburner", $maintwo) && in_array("White", $maintwo))) {
+        array_push($rare, "Paint");
+    }
+    if ((in_array("Pastel", $mainone) && in_array("Black", $maintwo)) || (in_array("Pastel", $maintwo) && in_array("Black", $maintwo))) {
+        array_push($rare, "Chalkboard");
+    }
     
     $rare = array_unique($rare);
     $rare = array_values($rare);

@@ -115,6 +115,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST['badmood']) {
         $symptoms .= "Bad Mood, ";
     }
+    if ($_POST['vertigo']) {
+        $symptoms .= "Vertigo, ";
+    }
     $symptoms = substr($symptoms, 0, -2);
     
     if($_POST['meds']) {

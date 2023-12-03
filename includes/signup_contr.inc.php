@@ -77,6 +77,6 @@ function alphaEmail(object $pdo, string $email) {
     }
 }
 
-function createUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter) {
-    setUser($pdo, $username, $pwd, $email, $birthdate, $pronouns, $newsletter);
+function createUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter, string $randomString) {
+    setUser($pdo, $username, $pwd, $email, $birthdate, $pronouns, $newsletter, $randomString);
 }

@@ -1086,7 +1086,51 @@ a.selected {
     display: none;
 }
 
-/*Profile Styles */
+/* Adoption House Styles */
+.adoptionPets {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.adoptPet {
+
+}
+
+/* Pet Job Page */
+.progressbar {
+    background-color: silver;
+    height: 30px;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+}
+
+.innerbar {
+    background-color: #827188;
+    height: 30px;
+    font-size: 2rem;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    
+}
+
+.jobtitle {
+    font-size: 2rem;
+    font-weight: bold;
+    
+}
+
+/* Profile Styles */
 
 .profileRow {
     column-gap: 2rem;
@@ -1117,6 +1161,12 @@ a.selected {
     row-gap: 1rem;
     justify-content: center;
     overflow: auto;
+}
+
+.profilenav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 /* Form Styles */ 

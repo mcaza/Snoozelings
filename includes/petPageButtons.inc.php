@@ -26,10 +26,12 @@ $query = "SELECT owner_id FROM snoozelings WHERE id = :id;";
 
 if ($_SESSION["user_id"] === $result["owner_id"]) { 
     echo '<div class="button-bar">
-                <button class="fancyButton" onClick="window.location.href=\'/editPet.php?ID=' . $id . '\'">Edit Profile</button>
-                <button class="fancyButton">Change Job</button>
-                <button class="fancyButton" onClick="window.location.href=\'../includes/bondSoul.inc.php?ID=' . $id . '\'">Bond Souls</button>
+                <button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Edit Profile</button>
+                <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Change Job</button>
+                <button class="fancyButton" onClick="window.location.href=\'../includes/bondSoul.inc.php?id=' . $id . '\'">Bond Souls</button>
             </div>';
+} elseif ($result['owner_id'] === "0") {
+     echo '<div class="button-bar"><p style="font-size: 2rem;" >Up for Adoption</p></div>';
 } else {
     //Get Username
     $query = "SELECT username FROM users WHERE id = :id;";

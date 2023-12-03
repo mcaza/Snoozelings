@@ -9,15 +9,45 @@ $name = $_POST["name"];
 $pronouns = $_POST["pronouns"];
 $status = $_POST["status"];
 $title = $_POST["title"];
-    $userId = $_SESSION['user_id'];
+$id = $_POST['id'];
+$userId = $_SESSION['user_id'];
 
-//Grab Pet ID
-$id = $_SESSION['id'];
-unset($_SESSION['id']);
+    //Variable Checks
+    //Pronouns
+    if ($pronouns) {
+        if(!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them")) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    //Snoozeling Title
+    if ($title) {
+        $query = 'SELECT * FROM titles';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $titles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $check = 0;
+        foreach ($titles as $titl) {
+            if ($title === $titl['title']) {
+                $check = 1;
+            }
+        }
+        if ($check === 0) {
+            header("Location: ../editPet?id=" . $id);
+            die();
+        }
+    }
+    //Pet Inspiration
+    if ($status) {
+        if (!($status === "Closed" || $status === "Open")) {
+            header("Location: ../editPet?id=" . $id);
+            die();
+        }
+    }
+    
 
-
-//Insert into Pet Table
- $query = "UPDATE snoozelings SET name = :name, pronouns = :pronouns, breedStatus = :status, title = :title WHERE id = :id";
+    //Insert into Pet Table
+    $query = "UPDATE snoozelings SET name = :name, pronouns = :pronouns, breedStatus = :status, title = :title WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->bindParam(":name", $name);

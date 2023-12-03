@@ -26,7 +26,7 @@ $query = "SELECT * FROM itemList";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$amount = count($items);
+$amount = count($items) + 1;
 
 //Fetch Coin Counts
 $query = "SELECT coinCount, kindnessCount FROM users WHERE id = :id";

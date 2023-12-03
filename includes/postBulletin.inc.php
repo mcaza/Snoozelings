@@ -12,6 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $likes = 0;
     $new = 0;
     
+    if (!($type === 'general' || $type === 'media' || $type === 'freebies' || $type === 'artwork' || $type === 'guides')) {
+        $_SESSION['title'] = $title;
+        $_SESSION['post'] = $post;
+        header("Location: ../newPost");
+        die();
+    }
+    
     //Get Date
     $now = new DateTime();
     $formatted = $now->format('Y-m-d H:i:s');

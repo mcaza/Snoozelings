@@ -11,6 +11,12 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Pick Starter Snoozeling
+if (!$user['bonded']) {
+    echo '<div style="margin-bottom: .8rem;"><a href="welcome" class="notif">' . $count . '. Pick 1st Snoozeling</a></div>';
+    $count++;
+}
+
 //Unopened Mail Check
 $query = 'SELECT * FROM mail WHERE reciever = :id AND sent = 1 AND opened = 0';
 $stmt = $pdo->prepare($query);
@@ -41,7 +47,20 @@ if ($journal['type'] === "pain") {
         }
     }
 } elseif ($journal['type'] === "mentalHealth") {
-    
+    $query = 'SELECT * FROM mentalHealthEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $journal = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($journal['id']) {
+        if ($result > $journal['date']) {
+            echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
+            $count++; 
+        }
+    }
+} else {
+    echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Create Journal</a></div>';
+    $count++;
 }
 
 //Crops Harvest Check
@@ -61,7 +80,7 @@ foreach ($plants as $plant) {
 }
 //Crops Plant Check
 foreach ($plants as $plant) {
-    if (!$plantName) {
+    if (!$plant['plantName']) {
         echo '<div style="margin-bottom: .8rem;"><a href="plot?id=' . $plant['id'] . '" class="notif">' . $count . '. Plant Seeds</a></div>';
         $count++;
         break;

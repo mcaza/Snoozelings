@@ -25,7 +25,7 @@ function randomCommon($pdo, $results, $userId, $count) {
     $tempSpecials = "";
     
     $hairTypes = ['Floof', 'Mane', 'Mohawk', 'Wave'];
-    $tailTypes = ['Dragon', 'Long', 'Nub', 'Samoyed'];
+    $tailTypes = ['Dragon', 'Long', 'Nub', 'Pom'];
     
     $hairCount = count($hairTypes) - 1;
     $tailCount = count($tailTypes) - 1;

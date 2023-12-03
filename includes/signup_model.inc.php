@@ -32,8 +32,8 @@ function checkEmail(object $pdo, string $email) {
     return $result;
 }
 
-function setUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter) {
-    $query = "INSERT INTO users (username, password, email, birthdate, signupDate, newsletter, pronouns, affirmation) VALUES (:username, :pwd, :email, :birthdate, :signupDate, :newsletter, :pronouns, :affirmation);";
+function setUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter, string $randomString) {
+    $query = "INSERT INTO users (username, password, email, birthdate, signupDate, newsletter, pronouns, affirmation, tempCode) VALUES (:username, :pwd, :email, :birthdate, :signupDate, :newsletter, :pronouns, :affirmation, :tempCode);";
     $stmt = $pdo->prepare($query);
     
     //Password Hashing
@@ -54,5 +54,6 @@ function setUser(object $pdo, string $username, string $pwd, string $email, $bir
     $stmt->bindParam(":newsletter", $newsletter);
     $stmt->bindParam(":affirmation", $affirmation);
     $stmt->bindParam(":pronouns", $pronouns);
+    $stmt->bindParam(":tempCode", $randomString);
     $stmt->execute();
 }

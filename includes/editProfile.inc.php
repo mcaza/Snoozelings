@@ -14,6 +14,89 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $farmName = $_POST['farm'];
     $mailbox = $_POST['mailbox'];
     
+    //Variable Checks
+    //Pronouns
+    if ($pronouns) {
+        if(!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them")) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    //Status
+    if ($status) {
+        $query = 'SELECT * FROM statuses';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $statuses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $check = 0;
+        foreach ($statuses as $stat) {
+            if ($status === $stat['status']) {
+                $check = 1;
+            }
+        }
+        if ($check === 0) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    //Farm Name
+    if ($farmName) {
+        $query = 'SELECT * FROM farmNames';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $farms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $check = 0;
+        foreach ($farms as $farm) {
+            if ($farmName === $farm['name']) {
+                $check = 1;
+            }
+        }
+        if ($check === 0) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    //Mailbox Color
+    if ($mailbox) {
+        if (!($mailbox === 'blue' || $mailbox === 'cyan' || $mailbox === 'orange' || $mailbox === 'purple' || $mailbox === 'red')) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    //Allow Friend Requests
+    if ($friends) {
+        if (!($friends === "0" || $friends === "1")) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    //Alow Messages
+    if ($messages) {
+        if (!($messages === "0" || $messages === "1")) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    //Check if Bonded Pet is Owned by Person
+    if ($bonded) {
+        $query = 'SELECT * FROM snoozelings WHERE owner_id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $check = 0;
+        foreach ($pets as $pet) {
+            if ($bonded === $pet['id']) {
+                $check = 1;
+            }
+        }
+        if ($check === 0) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    
+    
     //Update Pronouns, Friend Requests, and Message Requests
     $query = "UPDATE users SET pronouns = :pronouns, blockRequests = :friends, blockMessages = :messages WHERE id = :id";
     $stmt = $pdo->prepare($query);

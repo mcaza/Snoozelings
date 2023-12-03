@@ -7,10 +7,12 @@ $petName = $_SESSION['bonded'];
 $item =  $_SESSION['item'];
 $amount = $_SESSION['amount'];
 $name = $_SESSION['name'];
+$reply = $_SESSION['reply'];
 
 unset($_SESSION['item']);
 unset($_SESSION['amount']);
 unset($_SESSION['name']);
+unset($_SESSION['reply']);
 
 
 //Get Farmname
@@ -53,6 +55,11 @@ if ($item) {
         }
         echo '</div>';
     }
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+    echo '<p>' . $reply . '</p>';
+    echo '</div>';
+}
 
 //Water Pop Up
 if ($result > $water['lastWater']) {

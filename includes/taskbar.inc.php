@@ -1,7 +1,7 @@
 <?php 
 
 $loggedInBar = '<div class="dropdown">
-            <button class="menu dropdown dropbtn" id="drop"><a href="profile.php?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s Abode</a></button>
+            <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s Abode</a></button>
             <div class="dropdown-content">
                 <a href="collection?id=' . $_SESSION['user_id'] . '">Snoozeling Nests</a>
                 <a href="crafting.html">Crafting Table</a>
@@ -13,7 +13,7 @@ $loggedInBar = '<div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop"><a href="snoozeland">Snooze Land</a></button>
             <div class="dropdown-content">
                 <a href="explore">Exploring</a>
-                <a href="adoptionhouse.html">Adoption House</a>
+                <a href="adoption">Adoption House</a>
                 <a href="shops">Snooze Shops</a>
                 <a href="trendytails">Trendy Tails</a>
             </div>
@@ -45,10 +45,13 @@ $loggedInBar = '<div class="dropdown">
 
 $loggedOutBar = 
         '<div>
-            <a href="signup.php" class="menu">Sign Up</a>
+            <a href="signup" class="menu">Sign Up</a>
         </div>
         <div>
-            <a href="login.php" class="menu">Log In</a>
+            <a href="login" class="menu">Log In</a>
+        </div>
+        <div>
+            <a href="helpme" class="menu">Help Me</a>
         </div>';
         
 

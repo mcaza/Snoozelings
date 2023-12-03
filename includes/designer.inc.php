@@ -156,8 +156,11 @@ echo '<label for="tailType" class="form">Tail Style:</label><br>';
 echo '<select id="tailType"  class="input">';
 echo '<option value="Dragon">Dragon</option>';
 echo '<option value="Long">Long</option>';
+echo '<option value="Mermaid">Mermaid</option>';
 echo '<option value="Nub">Nub</option>';
-echo '<option value="Samoyed">Samoyed</option>';
+echo '<option value="Panther">Panther</option>';
+echo '<option value="Pom">Pom</option>';
+echo '<option value="Wooly">Wooly</option>';
 echo '</select><br>';
 echo '</div>';
 

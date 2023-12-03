@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $reduce = .80;
     } elseif ($exp < 600) {
         $reduce = .70;
-    } elseif ($exp < 100) {
+    } elseif ($exp < 1000) {
         $reduce = .60;
     } else {
         $reduce = .50;
@@ -60,6 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $seedId = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if(!$seedId) {
+        $_SESSION["reply"] = "You do not own any of that seed.";
+        header("Location: ../farm");
+        die();
+    }
     
 //Calculate Times
     //Update Snoozeling to working and add cooldown

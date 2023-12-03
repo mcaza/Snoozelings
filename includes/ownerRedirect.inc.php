@@ -1,7 +1,7 @@
 <?php
 function ownerRedirect($pdo) {
 //Get Pet ID and Owner ID
-$id = $_GET['ID'];
+$id = $_GET['id'];
 $userId = $_SESSION['user_id'];
 
 //Query for Owner ID of Pet
@@ -15,7 +15,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($userId === $result['owner_id']) {
     
 } else {
-    header("Location: ../pet?ID=" . $id);
+    header("Location: ../pet?id=" . $id);
 }
 }
 

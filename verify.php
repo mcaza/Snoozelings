@@ -79,20 +79,9 @@ require_once '../includes/viewErrors.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
-            <div><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
-            <div>
-                <h3>Verify Your Email</h3>
-            </div>
-            <form method="post" action="../includes/verifyEmail.inc.php">
-                <label for="code">Enter Your Code:</label><br>
-                <input type="text" name="code"><br>
-                <button>Submit</button><br><br>
-            </form>
-            <?php verifyErrors(); ?>
-            <hr>
-            <h3>Didn't Get Your Code?</h3>
-        </div>
+            <?php require_once '../includes/verify.inc.php'; ?>
     </div></div>
+    </div>
     <!--End of All Main Content-->
 
 

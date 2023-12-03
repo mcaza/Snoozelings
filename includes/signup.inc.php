@@ -69,7 +69,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
         }
         
-        createUser($pdo, $username, $pwd, $email, $birthday, $pronouns, $newsletter);
+        //Email Code
+        $length = 8;
+        $characters = '0123456789abcdefghijklmnopqrs092u3tuvwxyzaskdhfhf9882323ABCDEFGHIJKLMNksadf9044OPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+          
+        createUser($pdo, $username, $pwd, $email, $birthday, $pronouns, $newsletter, $randomString);
+        
+        $address = $email;
+
+        $title ="Snoozelings Email Confirmation";
+        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $username . ',<br><br>We are excited to welcome you into the world of Snoozelings!!! <br><br>You\'ll get to play in just a few more seconds, but first, we need you to confirm your email using the link below. If the link doesn\t work, you can also copy & paste the code manually.<br><br><a href="https://snoozelings.com/verify?code=' . $randomString . '">Click Here to Verify Email</a></p><h1>' . $randomString . '</h1><p>If you did not personally attempt to log in to your account just now, please reset your password immediately.<br><br>See you soon,<br><i>Snoozelings</i></p>';
+
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+        //From
+        $headers .= 'From: Snoozelings <autoreply@snoozelings.com>' . "\r\n";
+
+        mail($address, $title, $msg, $headers);
         
         header("Location: ../login.php");
         

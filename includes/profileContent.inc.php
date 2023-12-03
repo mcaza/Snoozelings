@@ -122,7 +122,18 @@ if ($id === $userId) {
                 </div>
             </div> ';
     
-    //Hr
+    //Nav section
+    if ($id === $userId) {
+    echo '<hr>';
+    echo '<div class="profilenav">';
+    echo '<a href="crafting"><img src="resources/desk.png" style="height: 150px; width: auto;"></a>';
+    echo '<a href="farm"><img src="resources/plantbox.png" style="height: 150px; width: auto;"></a>';
+    echo '<a href="pack"><img src="resources/backpack.jpg" style="height: 150px; width: auto;"></a>';
+    echo '</div>';
+    }
+
+
+    //Bottom Section
     echo '<hr>';
     
     echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';

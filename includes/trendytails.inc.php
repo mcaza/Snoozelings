@@ -107,7 +107,7 @@ echo '<select class="input"  name="tails">';
 echo '<option value="Dragon">Dragon</option>';
 echo '<option value="Long">Long</option>';
 echo '<option value="Nub">Nub</option>';
-echo '<option value="Samoyed">Samoyed</option>';
+echo '<option value="Pom">Pom</option>';
 echo '</select><br>';
 
 //Button

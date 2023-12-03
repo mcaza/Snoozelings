@@ -114,6 +114,8 @@ require_once '../includes/verifySinglePet.inc.php';
      var type = document.getElementById('tailType').value;
         if (type === 'Dragon') {
             document.getElementById('TailTopdesigner').src = "Layers/Tail/Dragon/" + inputText + ".png";
+        } else if (type === 'Mermaid') {
+            document.getElementById('TailTopdesigner').src = "Layers/Tail/Mermaid/" + inputText + ".png";
         }
      var checkBox = document.getElementById("belly");
         if (checkBox.checked == true) {
@@ -173,7 +175,11 @@ require_once '../includes/verifySinglePet.inc.php';
             var mainColor = document.getElementById('mainColor').value;
             document.getElementById('Taildesigner').src = "Layers/Tail/Dragon/End/" + color + ".png";
             document.getElementById('TailTopdesigner').src = "Layers/Tail/Dragon/" + mainColor + ".png";
-        } else {
+        } else if (inputText === 'Mermaid') {
+            var mainColor = document.getElementById('mainColor').value;
+            document.getElementById('Taildesigner').src = "Layers/Tail/" + inputText + "/" + mainColor + ".png";
+            document.getElementById('TailTopdesigner').src = "";
+        }else {
             document.getElementById('Taildesigner').src = "Layers/Tail/" + inputText + "/" + color + ".png";
             document.getElementById('TailTopdesigner').src = "";
         }
@@ -186,7 +192,11 @@ require_once '../includes/verifySinglePet.inc.php';
             var mainColor = document.getElementById('mainColor').value;
             document.getElementById('Taildesigner').src = "Layers/Tail/Dragon/End/" + inputText + ".png";
             document.getElementById('TailTopdesigner').src = "Layers/Tail/Dragon/" + mainColor + ".png";
-        } else {
+        } else if (type === 'Mermaid') {
+            var mainColor = document.getElementById('mainColor').value;
+            document.getElementById('Taildesigner').src = "Layers/Tail/" + type + "/" + mainColor + ".png";
+            document.getElementById('TailTopdesigner').src = "";
+        }else {
             document.getElementById('Taildesigner').src = "Layers/Tail/" + type + "/" + inputText + ".png";
             document.getElementById('TailTopdesigner').src = "";
         }

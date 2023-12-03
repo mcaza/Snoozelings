@@ -275,6 +275,7 @@ echo '</div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="muscle" value="muscle"><label for="muscle">Muscle Spasms</label></div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="fog" value="fog"><label for="fog">Brain Fog</label></div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="badmood" value="badmood"><label for="badmood">Bad Mood</label></div>';
+        echo '<div class="checkboxJournal"><input type="checkbox" name="vertigo" value="vertigo"><label for="vertigo">Vertigo</label></div>';
         
         //Rate Sleep
         echo '<label class="form" style="margin-top: 2rem;">Rate Your Sleep:</label><br>';

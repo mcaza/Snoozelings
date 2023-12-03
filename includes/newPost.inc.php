@@ -1,6 +1,11 @@
 <?php
 
 $userId = $_SESSION['user_id'];
+$title = $_SESSION['title'];
+$post = $_SESSION['post'];
+unset($_SESSION['title']);
+unset($_SESSION['post']);
+
 
  //Back to Pack Arrows
  echo '<div class="leftRightButtons">';
@@ -27,7 +32,7 @@ if ($num === 0) {
     echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 journal per day.');\">";  
 
     //Pick Category
-    echo '<label style="margin-top: 2rem;" for="type" class="form">Category:</label><br>';
+    echo '<label style="margin-top: 2rem;" for="type" class="form" required>Category:</label><br>';
     echo '<select class="input"  name="type" style="width: 8rem;">';
     echo '<option value=""></option>';
     echo '<option value="general">General</option>';
@@ -45,11 +50,21 @@ if ($num === 0) {
     
     //Enter Title
     echo '<label style="margin-top: 2rem;" for="title" class="form">Title:</label><br>';
-    echo '<input class="input" type="text" name="title"><br>';
+    if ($title) {
+        echo '<input class="input" type="text" name="title" value="' . $title . '" required><br>';
+    } else {
+        echo '<input class="input" type="text" name="title" required><br>';
+    }
+    
     
     //Enter Text
     echo '<label style="margin-top: 2rem;" for="post" class="form">Post:</label><br>';
-    echo '<textarea name="post" cols="72" class="input" style="height: 20rem;"></textarea><br>';
+    if ($post) {
+        echo '<textarea name="post" cols="72" class="input" style="height: 20rem;" required>' . $post . '</textarea><br>';
+    } else {
+        echo '<textarea name="post" cols="72" class="input" style="height: 20rem;" required></textarea><br>';
+    }
+    
 
     //End Form
     echo '<button  class="fancyButton" style="width: 8rem;">Post</button>';

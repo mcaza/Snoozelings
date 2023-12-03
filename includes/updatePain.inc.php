@@ -142,37 +142,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     
-    if ($_POST['exhaustion'] || $_POST['nausea'] || $_POST['vomit'] || $_POST['poops'] || $_POST['throat'] || $_POST['insomnia'] || $_POST['bloating'] || $_POST['fever'] || $_POST['chills'] || $_POST['congestion'] || $_POST['muscle'] || $_POST['fog'] || $_POST['badmood']) {
+    if ($_POST['exhaustion'] || $_POST['nausea'] || $_POST['vomit'] || $_POST['poops'] || $_POST['throat'] || $_POST['insomnia'] || $_POST['bloating'] || $_POST['fever'] || $_POST['chills'] || $_POST['congestion'] || $_POST['muscle'] || $_POST['fog'] || $_POST['badmood'] || $_POST['vertigo']) {
     //Symptoms
     $symptoms = "";
     if ($_POST['exhaustion']) {
         $symptoms .= "Exhaustion, ";
     }
-    $symptoms = "";
     if ($_POST['nausea']) {
         $symptoms .= "Nausea, ";
     }
-    $symptoms = "";
     if ($_POST['vomit']) {
         $symptoms .= "Vomiting, ";
     }
-    $symptoms = "";
     if ($_POST['poops']) {
         $symptoms .= "Bad Poops, ";
     }
-    $symptoms = "";
     if ($_POST['throat']) {
         $symptoms .= "Sore Throat, ";
     }
-    $symptoms = "";
     if ($_POST['insomnia']) {
         $symptoms .= "Insomnia, ";
     }
-    $symptoms = "";
     if ($_POST['bloating']) {
         $symptoms .= "Bloating, ";
     }
-    $symptoms = "";
     if ($_POST['fever']) {
         $symptoms .= "Fever, ";
     }
@@ -180,32 +173,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST['chills']) {
         $symptoms .= "Chills, ";
     }
-    $symptoms = "";
     if ($_POST['congestion']) {
         $symptoms .= "Congestion, ";
     }
-    $symptoms = "";
     if ($_POST['muscle']) {
         $symptoms .= "Muscle Spasms, ";
     }
-    $symptoms = "";
     if ($_POST['fog']) {
         $symptoms .= "Brain Fog, ";
     }
-    $symptoms = "";
     if ($_POST['badmood']) {
         $symptoms .= "Bad Mood, ";
     }
-        
-    if($_POST['meds']) {
-        $meds = $_POST['meds'];
-        $query = "UPDATE mentalHealthEntries SET missedMeds = :meds WHERE id = :id";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":meds", $meds);
-        $stmt->execute();
-    } 
-        
+        if ($_POST['vertigo']) {
+        $symptoms .= "Vertigo, ";
+    }
+    $symptoms = substr($symptoms, 0, -2);
         
     $symptoms = substr($symptoms, 0, -2);
         $description = substr($description, 0, -2);
@@ -215,6 +198,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":symptoms", $symptoms);
         $stmt->execute();
     }
+    
+    if($_POST['meds']) {
+        $meds = $_POST['meds'];
+        $query = "UPDATE mentalHealthEntries SET missedMeds = :meds WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":meds", $meds);
+        $stmt->execute();
+    } 
 
     //Set Session for Coins
     $_SESSION['finish'] = 2;

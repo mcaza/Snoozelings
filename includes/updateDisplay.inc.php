@@ -2,7 +2,7 @@
 
 //Grab User ID
 $userId = $_SESSION['user_id'];
-$id = $_GET['ID'];
+$id = $_GET['id'];
 
 //Grab Pet Info from Database
 $query = "SELECT * FROM snoozelings WHERE id = :id";
@@ -17,12 +17,9 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $titles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$id = $_GET['ID'];
-$_SESSION['id'] = $id;
-
-
-echo '<h3>Edit ' . htmlspecialchars($result['name']) . "'s Information</h3>";
+echo '<h3 style="margin-bottom: 2rem">Edit ' . htmlspecialchars($result['name']) . "'s Information</h3>";
 echo '<form action="../includes/editPet.inc.php" method="post">';
+echo '<input type="hidden" name="id" value="' . $id . '">';
 
 //Form "Name"
 echo '<label class="form" for="name">New Name:</label><br>';

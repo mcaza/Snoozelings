@@ -2,9 +2,8 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
-if (isset($_GET['ID'])) {   
-    $id = $_GET['ID'];
-}
+$id = $_GET['id'];
+
 
 $query = "SELECT owner_id, name FROM snoozelings WHERE id = :id;";
     $stmt = $pdo->prepare($query);
@@ -23,8 +22,8 @@ if ($_SESSION["user_id"] === $result["owner_id"]) {
     $pdo = null;
     $stmt = null;
     $_SESSION['bonded'] = htmlspecialchars($result['name']);
-    header("Location: ../pet?ID=" . $id);
+    header("Location: ../pet?id=" . $id);
     die();
 } else {
-    header("Location: ../pet?ID=" . $id);
+    header("Location: ../pet?id=" . $id);
 }
