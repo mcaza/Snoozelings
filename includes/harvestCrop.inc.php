@@ -10,19 +10,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $plot = $_POST['plot'];
     $farmer = $_POST['farmer'];
     
-    //Get Information from Farms
-    $query = "SELECT * FROM farms WHERE id = :id";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $plot);
-    $stmt->execute();
-    $farm = $stmt->fetch(PDO::FETCH_ASSOC);
-    
     //Get Job + EXP
     $query = "SELECT job, farmEXP, name FROM snoozelings WHERE id = :farmer";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":farmer", $farmer);
     $stmt->execute();
     $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Check if Pet is Crafting
+    if ($snooze['job'] === "jack") {
+        $query = 'SELECT * FROM craftingtables WHERE pet_id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $farmer);
+        $stmt->execute();
+        $table = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($table) {
+            $now = new DateTime();
+            $future_date = new DateTime($table['finishtime']);
+            if ($future_date >= $now) {
+                $_SESSION['reply'] = "That snoozeling is currently crafting.";
+                header("Location: ../farm");
+                die(); 
+            }
+        }
+    }
+    
+    //Get Information from Farms
+    $query = "SELECT * FROM farms WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $plot);
+    $stmt->execute();
+    $farm = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Reward EXP To Pet
     if ($snooze['job'] === "Farmer") {

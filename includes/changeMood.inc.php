@@ -9,6 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     $mood = $_POST['mood'];
     
+    //Check for Fake Moods 
+    if(!($mood === "Happy" || $mood === "Sleepy" || $mood === "Overwhelmed" || $mood === "Anxious")) {
+        header("Location: ../index");
+        die();
+    }
+    
     //Grab Bonded ID
     $query = "SELECT bonded FROM users WHERE id = :id";
     $stmt = $pdo->prepare($query);

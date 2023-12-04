@@ -4,7 +4,7 @@ $loggedInBar = '<div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s Abode</a></button>
             <div class="dropdown-content">
                 <a href="collection?id=' . $_SESSION['user_id'] . '">Snoozeling Nests</a>
-                <a href="crafting.html">Crafting Table</a>
+                <a href="crafting">Crafting Table</a>
                 <a href="farm">Farm Plots</a>
                 <a href="pack">Fanny Pack</a>
             </div>

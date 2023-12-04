@@ -83,7 +83,7 @@ if ($int === 0) {
     echo '</select></br>';
     
     //Button
-    echo "<button>Use Item</button>";
+    echo "<button class='fancyButton'>Plant Seed</button>";
     echo '</form>';
     
 } else {
@@ -100,7 +100,7 @@ if ($int === 0) {
         
     }
     echo '</select></br>';
-        echo "<button>Use Item</button>";
+        echo "<button class='fancyButton'>Harvest</button>";
         echo '</form>';
         
     } elseif ($diff === 1) {

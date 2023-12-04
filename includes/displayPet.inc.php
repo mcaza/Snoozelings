@@ -137,7 +137,7 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<a href='profile?id=" . $pet['owner_id'] . "'><img src='Layers/transparentSquare.png'></a>";
         echo "</div>";
-    } elseif (!$pet['mainColor']) {
+    } elseif (!$pet['mainColor'] || $class === "artcrafting") {
         echo "<div class='${class}'>";
         echo "<img src='Layers/transparentSquare.png'>";
         echo "</div>";

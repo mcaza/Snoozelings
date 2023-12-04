@@ -6,8 +6,8 @@ $query = "SELECT * FROM users WHERE id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->execute();
-    
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
 $birthday = substr($result['birthdate'], 5);
 $join = substr($result['signupDate'], 5);
 $monthNum = $birthday.substr(0, 3);
@@ -26,7 +26,6 @@ $query = "SELECT * FROM snoozelings WHERE id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $petId);
     $stmt->execute();
-    
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($id === $userId) {
@@ -42,8 +41,8 @@ if ($id === $userId) {
                 <button class="fancyButton" onClick="window.location.href=\'/editprofile?id=' . $id . '\'">Edit Profile</button>
             </div>';
     //Left Side Profile Info + Right Side Active Pet
-    echo '<div class="petrow rowone">';
-    echo '<div class="petinfo-container">';
+    echo '<div class="profilerow">';
+    echo '<div class="profilecontainerleft">';
     echo "<h3>Your Profile</h3>";
     
 } else {
@@ -65,20 +64,15 @@ if ($id === $userId) {
 
     echo '</div>';
     //Left Side Profile Info + Right Side Active Pet
-    echo '<div class="petrow rowone">';
-    echo '<div class="petinfo-container">';
+    echo '<div class="profilerow">';
+    echo '<div class="profilecontainerleft">';
     echo "<h3>" . htmlspecialchars($result["username"]) . "'s Profile</h3>";
-}
-
-
-    
-    
-    
+    }
     //Insert Status Here
     echo "<p>" . $result["status"] . "</p>";
     
-    echo '<div class="physicalInfo info">';
-    echo '<h4>Profile Info</h4>';
+echo '<div class="profilebox">';
+echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info</h4>';
     echo '<p class="snoozelinginfo"><strong>Player ID: </strong>' . $result['id'];
     echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>' . $result['pronouns'];
     echo '<p class="snoozelinginfo"><strong>Birthday: </strong>' . $monthArray[$monthNum -1] . " " . $dayNum;
@@ -96,7 +90,7 @@ if ($id === $userId) {
     echo '<p class="snoozelinginfo"><strong>Farm Name: </strong>' . $result['farmName'];
     echo '</div>';
     echo '</div>';
-    echo '<div class="art-container">';
+echo '<div class="displaycontainerright">';
     displayPet($pet, "artlarge");
     echo "<p><strong>Bonded Snoozeling:</strong> " . "<a href='pet?ID=" . $pet['id'] . "'>" . htmlspecialchars($pet["name"]) . "</a></p>";
     echo '</div>';    
@@ -106,10 +100,10 @@ if ($id === $userId) {
        echo "<hr>";
     
     //Left Side Achievements + Right Side Friends
-    echo '  <div class="petrow profileRow">
-               <div class="physicalInfo info">
-                    <h4>Achievements</h4>
-                    <div class="achievementIcons">';
+    echo '  <div class="secondrow">
+               <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;">
+<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Achievements</h4>
+                                   <div  >';
     $trophies = explode(" ", $result['trophies']);
     foreach ($trophies as $trophy) {
         echo '<img style="height: 60px;" src="trophies/' . $trophy . '.png" title="' . $trophy . '">';
@@ -117,10 +111,36 @@ if ($id === $userId) {
 
              echo   '</div>';
              echo   '</div>
-                <div class="physicalInfo info">
-                    <h4>Friends</h4>
-                </div>
-            </div> ';
+                <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;">
+                    <h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" ><a href="friends">&nbsp;&nbsp;&nbsp;Friends</a></h4>';
+    
+                 //Friend Display
+                echo '<div style="display: flex; flex-direction: row; column-gap: 3rem;">';
+                 if ($result['friendList']) {
+                     $friends = explode(" ", $result['friendList']);
+                     $friends = array_slice($friends, 0, 11);
+                     $length = count($friends);
+                     $count = 0;
+                     foreach ($friends as $friend) {
+                         $query = "SELECT * FROM users WHERE id = :id";
+                         $stmt = $pdo->prepare($query);
+                         $stmt->bindParam(":id", $friend);
+                        $stmt->execute();
+                        $friendinfo = $stmt->fetch(PDO::FETCH_ASSOC);
+                         if ($count === 0 || $count === 6) {
+                             echo '<div>';
+                             echo '<ul>';
+                         }
+                         echo '<li style ="font-size: 1.6rem;text-align: left;"><a href="profile?id=' . $friendinfo['id'] . '">' . $friendinfo['username'] . '</a></li>';
+                         if ($count === 5 || $count === 11 || $count === $length-1) {
+                             echo '</ul>';
+                             echo '</div>';
+                         }
+                         $count++;
+                     }
+                     
+                 }
+    echo '</div></div></div> ';
     
     //Nav section
     if ($id === $userId) {

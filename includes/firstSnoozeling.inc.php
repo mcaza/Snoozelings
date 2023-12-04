@@ -77,6 +77,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     
+    //Add Crafting Table
+    $query = 'INSERT INTO craftingtables (pet_id, user_id) VALUES (:pet, :id)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":pet", $result['id']);
+    $stmt->execute();
+    
     //Welcome Mail Message
     $message = "Welcome newest Snooze Land citizen!!
     

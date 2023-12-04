@@ -5,14 +5,7 @@ require_once '../includes/verifyCheck.inc.php';
 require_once '../includes/verifySinglePet.inc.php'; 
 
 
-$id = $_GET['id'];
 
-//Pet Name
-$query = 'SELECT name FROM snoozelings WHERE id = :id';
-$stmt = $pdo->prepare($query);
-$stmt->bindParam(":id", $id);
-$stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -22,7 +15,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$result['name']?></title>
+    <title>Crafting Table</title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -87,10 +80,9 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
 
         <!-- All Main Content -->
-        <div class="main-container"><div>
-            <?php require_once '../includes/pet.inc.php'; ?>
-
-        </div>
+        <div class="main-container"><div  class="bottomPush">
+            <?php require_once '../includes/crafting.inc.php'; ?>
+        </div></div>
     </div>
     <!--End of All Main Content-->
 
@@ -108,13 +100,6 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <!-- Script Link -->
    <script src="main.js"></script>
-    <script>
-    //Profile / Snoozeling / Collection Fix When Only Right Arrow
-var leftArrow = document.getElementById('leftArrow');
-if (!leftArrow) {
-    document.getElementById('onlyOne').style.justifyContent = 'flex-end';
-}
-    </script>
 
 </body>
 

@@ -4,6 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
 //Grab Form Variables
 $name = $_POST["name"];
 $pronouns = $_POST["pronouns"];
@@ -11,6 +12,135 @@ $status = $_POST["status"];
 $title = $_POST["title"];
 $id = $_POST['id'];
 $userId = $_SESSION['user_id'];
+    
+    //Snoozeling Info
+    $query = 'SELECT clothesBottom, clothesTop, clothesHoodie, clothesBoth, owner_id FROM snoozelings WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Snoozeling Own Check
+    if (!($snooze['owner_id'] === $userId)) {
+        header("Location: ../index");
+        die();
+    }
+    
+    //Remove Clothing
+    $query = 'SELECT * FROM itemList';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $itemcount = count($items) + 2;
+    for ($i = 1; $i < $itemcount; $i++) {
+        if ($_POST[ $i ]) {
+            $item = $_POST[$i];
+        }
+        if ($item) {
+            //Get Type
+            $type = $items[$i-1]['type'];
+            //Adjust Pet Clothes
+            switch ($type) {
+                case "clothesBottom":
+                    $list = explode(" ", $snooze["clothesBottom"]);
+                    if (count($list) === 1) {
+                        $final = "";
+                    } else {
+                        $key = array_search($items[$i-1]['name'], $list);
+                        unset($list[$key]);
+                        $newList = array_values($list);
+                        if (count($newList) === 1) {
+                            $final = $newList[0];
+                        } else {
+                            $final = implode(" ", $newList);
+                        }
+                    }
+                    $query = 'UPDATE snoozelings SET clothesBottom = :clothes WHERE id = :id';
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->bindParam(":clothes", $final);
+                    $stmt->execute();
+                    $final = "";
+                    $list = "";
+                    $newList = "";
+                break;
+                case "clothesTop":
+                    $list = explode(" ", $snooze["clothesTop"]);
+                    if (count($list) === 1) {
+                        $final = "";
+                    } else {
+                        $key = array_search($items[$i-1]['name'], $list);
+                        unset($list[$key]);
+                        $newList = array_values($list);
+                        if (count($newList) === 1) {
+                            $final = $newList[0];
+                        } else {
+                            $final = implode(" ", $newList);
+                        }
+                    }
+                    $query = 'UPDATE snoozelings SET clothesTop = :clothes WHERE id = :id';
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->bindParam(":clothes", $final);
+                    $stmt->execute();
+                    $final = "";
+                    $list = "";
+                    $newList = "";
+                break;
+                case "clothesHoodie":
+                    $list = explode(" ", $snooze["clothesHoodie"]);
+                    if (count($list) === 1) {
+                        $final = "";
+                    } else {
+                        $key = array_search($items[$i-1]['name'], $list);
+                        unset($list[$key]);
+                        $newList = array_values($list);
+                        if (count($newList) === 1) {
+                            $final = $newList[0];
+                        } else {
+                            $final = implode(" ", $newList);
+                        }
+                    }
+                    $query = 'UPDATE snoozelings SET clothesHoodie = :clothes WHERE id = :id';
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->bindParam(":clothes", $final);
+                    $stmt->execute();
+                    $final = "";
+                    $list = "";
+                    $newList = "";
+                break;
+                case "clothesBoth":
+                    $list = explode(" ", $snooze["clothesBoth"]);
+                    if (count($list) === 1) {
+                        $final = "";
+                    } else {
+                        $key = array_search($items[$i-1]['name'], $list);
+                        unset($list[$key]);
+                        $newList = array_values($list);
+                        if (count($newList) === 1) {
+                            $final = $newList[0];
+                        } else {
+                            $final = implode(" ", $newList);
+                        }
+                    }
+                    $query = 'UPDATE snoozelings SET clothesBoth = :clothes WHERE id = :id';
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->bindParam(":clothes", $final);
+                    $stmt->execute();
+                    $final = "";
+                    $list = "";
+                    $newList = "";
+                break;
+            }
+            
+            //Return Item
+                
+            //Reset $item
+            $item = "";
+        }
+    }
 
     //Variable Checks
     //Pronouns

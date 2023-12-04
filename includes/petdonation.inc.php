@@ -46,6 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die(); 
     }
     
+    //Check if Pet is crafter
+    $query = 'SELECT pet_id FROM craftingtables WHERE user_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $crafter = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($crafter['pet_id'] === $one) {
+        $_SESSION['reply'] = '<p>You can not donate the pet currently assigned to your crafting table.</p>';
+        header("Location: ../adoption");
+        die(); 
+    }
+    
     //Set Adoption Release Time
     $now = new DateTime();
     $hours = rand(8, 24);

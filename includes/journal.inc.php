@@ -93,9 +93,9 @@ if (!$journalCheck) {
     echo '<button class="fancyButton" onClick="window.location.href=\'/journalentry\'">Write Journal</button>';
 } elseif ($latestEntry['closed'] === "0") {
     if ($finish === 1) {
-        echo '<div class="returnBar" style="margin-top: 1rem;">You earned 5 coins.</div>';
+        echo '<div class="returnBar" style="margin-top: 1rem;"><p>You earned 5 coins.</p></div>';
     } elseif ($finish === 2) {
-        echo '<div class="returnBar" style="margin-top: 1rem;">Your journal has been edited.</div>';
+        echo '<div class="returnBar" style="margin-top: 1rem;"><p>Your journal has been edited.</p></div>';
     }
     
     echo '<h4  style="margin-top: 2rem;">Journal Completed</h4>';

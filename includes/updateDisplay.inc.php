@@ -17,6 +17,11 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $titles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="pet?id=' . $id . '"><<</a>';
+echo '</div>';
+
 echo '<h3 style="margin-bottom: 2rem">Edit ' . htmlspecialchars($result['name']) . "'s Information</h3>";
 echo '<form action="../includes/editPet.inc.php" method="post">';
 echo '<input type="hidden" name="id" value="' . $id . '">';
@@ -63,16 +68,69 @@ echo '<select  class="input" name="title"><br>';
 foreach ($titles as $title) {
     echo '<option value="' . $title['title'] . '">' . $title['title'] . '</option>';
 }
-if ($result['farmEXP > 1000']) {
+if ($result['farmEXP']  > 1000) {
     echo '<option value="Crop Whisper">Crop Whisperer</option>';
 }
-if ($result['explorerEXP > 1000']) {
+if ($result['explorerEXP '] > 1000) {
     echo '<option value="Grand Adventurer">Grand Adventurer</option>';
 }
-if ($result['farmEXP > 1000']) {
+if ($result['farmEXP '] > 1000) {
     echo '<option value="Hooked on Crafts">Hooked on Crafts</option>';
 }
 echo "</select><br>";
+
+//List of Current Clothes (Adding Later)
+echo '<label for="status"  class="form">Remove Clothes:</label><br>';
+if ($result['clothesTop'] || $result['clothesBottom'] || $result['clothesHoodie'] || $result['clothesboth']) {
+if ($result['clothesTop']) {
+    $clothes = explode(" ", $result['clothesTop']);
+    foreach ($clothes as $clothing) {
+        $query = 'SELECT * FROM itemList WHERE name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $clothing);
+        $stmt->execute();
+        $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+    }
+}
+if ($result['clothesBottom']) {
+    $clothes = explode(" ", $result['clothesBottom']);
+    foreach ($clothes as $clothing) {
+        $query = 'SELECT * FROM itemList WHERE name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $clothing);
+        $stmt->execute();
+        $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+    }
+}
+if ($result['clothesHoodie']) {
+    $clothes = explode(" ", $result['clothesHoodie']);
+    foreach ($clothes as $clothing) {
+        $query = 'SELECT * FROM itemList WHERE name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $clothing);
+        $stmt->execute();
+        $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+    }
+}
+if ($result['clothesBoth']) {
+    $clothes = explode(" ", $result['clothesBoth']);
+    foreach ($clothes as $clothing) {
+        $query = 'SELECT * FROM itemList WHERE name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $clothing);
+        $stmt->execute();
+        $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+    }
+}
+
+echo '<br>';
+} else {
+    echo '<p>Your snoozeling is not wearing any clothes</p><br>';
+}
 
 //Breeding Status Check
 switch ($result['breedStatus']) {
@@ -89,16 +147,22 @@ switch ($result['breedStatus']) {
 
 //Form Breeding Status
 echo '<label for="status"  class="form">Pet Inspiration:</label><br>';
-echo '<select  class="input" name="status"><br>';
+echo '<select  class="input" name="status" id="status"><br>';
 echo '<option value="Closed"' . $closed . '>Closed</option>';
 echo '<option value="Open"' . $open . '>Open</option>';
 //echo '<option value="Friends"' . $friends . '>Friends Only</option>';
 echo '</select><br>';
 
 //Breeding Status Javascript
-echo '<div id="breedingInfoDiv"><p id="breedingInfo">Test Test</p></div>';
+if ($closed === "selected") {
+    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Only you can use this pet as inspiration.</p></div>';
+} elseif ($open === "selected") {
+    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any users can use this pet as inspiration.</p></div>';
+}
 
-//List of Current Clothes (Adding Later)
+
+
+
 
 //Submit Button
 echo '<div>';

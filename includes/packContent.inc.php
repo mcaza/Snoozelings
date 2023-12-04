@@ -45,6 +45,12 @@ for ($i=0; $i < $amount; $i++) {
     }
 }
 
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="profile?id=' . $userId . '"><<</a>';
+echo '</div>';
+
+
 //Notification
 if ($reply) {
     echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 2rem;">';

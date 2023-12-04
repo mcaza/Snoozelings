@@ -120,7 +120,7 @@ body {
 .info {
     border: 2px dashed #827188;
     border-radius: 10px;
-    width: 350px;
+    width: 50%;
     height: 100%;
 }
 
@@ -194,6 +194,37 @@ hr {
 
 .pushDown {
     margin-top: 2.5rem;
+}
+
+/* Profile Styles NEW */
+
+.profilerow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-span: 2rem;
+}
+
+.profilecontainerleft {
+    width: 40%;
+    height: 350px;
+}
+
+.profilebox {
+    border: 2px dashed #827188;
+    border-radius: 20px;
+    height: 100%;
+}
+
+.profilerowtwo {
+    width: 40%;
+}
+
+.secondrow {
+    display: flex;
+    flex-direction: row;
+    justify-content:  center;
+    column-gap: 4.5rem;
 }
 
 /* Table Styles */
@@ -429,6 +460,15 @@ a:visited {
     width: 40rem;
 }
 
+.artcrafting {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.artcrafting img {
+    width: 30rem;
+}
+
 .mailPet {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
@@ -542,24 +582,59 @@ margin-top: 15px;
 }
 
 /* Scroll Bar Styles */
-.info::-webkit-scrollbar {
-  width: 8px;
+html::-webkit-scrollbar {
+  width: 15px;
 }
 
-.info::-webkit-scrollbar-track {
+html::-webkit-scrollbar-track {
   background: 	#E5E4E2;
   border-radius: 10px;
 }
  
-.info::-webkit-scrollbar-thumb {
+html::-webkit-scrollbar-thumb {
   background: 	#AA98A9; 
   border-radius: 10px;
 }
 
-.info::-webkit-scrollbar-thumb:hover {
+html::-webkit-scrollbar-thumb:hover {
   background: #b30000; 
 }
 
+.profilerowtwo::-webkit-scrollbar {
+  width: 8px;
+}
+
+.profilerowtwo::-webkit-scrollbar-track {
+  background: 	#E5E4E2;
+  border-radius: 10px;
+}
+ 
+.profilerowtwo::-webkit-scrollbar-thumb {
+  background: 	#AA98A9; 
+  border-radius: 10px;
+}
+
+.profilerowtwo::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+
+.bar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bar::-webkit-scrollbar-track {
+  background: 	#E5E4E2;
+  border-radius: 10px;
+}
+ 
+.bar::-webkit-scrollbar-thumb {
+  background: 	#AA98A9; 
+  border-radius: 10px;
+}
+
+.bar::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
 /* Pet.html Styles */
 
 .button-bar {
@@ -588,10 +663,15 @@ margin-top: 15px;
 
 .trophies {
     height: 80%;
+    width: 50%;
 }
 
 .art-container p {
     margin-top: 1rem;
+}
+
+.infocontainer {
+    width: auto;
 }
 
 .rowtwo {
@@ -1099,6 +1179,66 @@ a.selected {
 
 .adoptPet {
 
+}
+
+/* Crafting Styles */
+.craftimages {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.craftbuttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.craftbutton {
+    font-size: 1.5rem;
+    padding: 1rem;
+    width: 8rem;
+    border-radius: 10px;
+}
+
+.craftbutton:hover {
+    background-color: silver;
+}
+
+.recipebuttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 2rem;
+    justify-content: center;
+}
+
+.recipe {
+    display: flex;
+    flex-direction: row;
+    width: 45%;
+    border: 1px silver solid;
+    border-radius: 20px;
+}
+
+a .recipe:hover {
+    background-color: lavender;
+}
+
+.recipeimg {
+    padding: .3rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.recipetext {
+    width: 100%;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Pet Job Page */

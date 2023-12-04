@@ -42,6 +42,11 @@ $query = "SELECT lastWater FROM users WHERE id = :id";
 $now = new DateTime();
 $result = $now->format('Y-m-d H:i:s');
 
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="profile?id=' . $userId . '"><<</a>';
+echo '</div>';
+
 //Farm Name
 echo '<h3 style="margin-bottom: 2rem;">' . $farmName['farmName'] . '</h3>';
 if ($item) {

@@ -102,7 +102,18 @@ require_once '../includes/ownerRedirect.inc.php';
 
     <!-- Script Link -->
    <script src="main.js"></script>
+    <script>
+    
+     document.getElementById('status').onchange = (event) => {
+        var inputText = event.target.value;
+         if (inputText == "Closed") {
+             document.getElementById('breedingInfo').innerHTML = "Only you can use this pet as inspiration.";
+         } else {
+            document.getElementById('breedingInfo').innerHTML = "Any users can use this pet as inspiration.";
 
+         }
+     }
+    </script>
 </body>
 
 </html>

@@ -68,12 +68,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Send Letter to Donator
     
     
-    //Set owner_id of pet to new owner
-    $query = 'UPDATE snoozelings SET owner_id = :id WHERE id = :pet';
+    //Set owner_id of pet to new owner & Gotcha Date
+    $todaysDate = date("Y-m-d");
+    $query = 'UPDATE snoozelings SET owner_id = :id, gotchaDate = :date WHERE id = :pet';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":pet", $pet['pet_id']);
+    $stmt->bindParam(":date", $todaysDate);
     $stmt->execute();
+    
+    
     
     //Remove Adopt
     $query = "DELETE FROM adopts WHERE id = :id";

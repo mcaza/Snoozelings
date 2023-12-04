@@ -18,6 +18,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    //Check if Pet is Crafting
+    if ($snooze['job'] === "jack") {
+        $query = 'SELECT * FROM craftingtables WHERE pet_id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $farmer);
+        $stmt->execute();
+        $table = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($table) {
+            $now = new DateTime();
+            $future_date = new DateTime($table['finishtime']);
+            if ($future_date >= $now) {
+                $_SESSION['reply'] = "That snoozeling is currently crafting.";
+                header("Location: ../farm");
+                die(); 
+            }
+        }
+    }
+    
     $exp = $snooze['farmEXP'] + .5;
 
 
