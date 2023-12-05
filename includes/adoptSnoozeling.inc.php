@@ -66,7 +66,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Send Letter to Donator
+    $message = "What a beautiful day for an adoption!!!
     
+    I'm just writing you this letter quick to let you know the snoozeling that you left in my care, " . $pet['name'] . ' has found a new home.
+    
+    They are adored and very well taken care of. One might even say they are a bit spoiled.
+    
+    As thanks for your kind gesture, I\'ve deposited a kindness coin into your bank.
+    
+    With lots of love,
+    ~Miss Lulu';
+    $title = $pet['name'] . "has found a home";
+    $from = 5;
+    $one = 1;
+    $zero = 0;
+    $picture = "adoptNPC";
+    $now = new DateTime();
+    $date = $now->format('Y-m-d H:i:s');
+    $query = "INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:from, :to, :title, :message, :sent, :opened, :datetime, :picture)";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":from", $from);
+    $stmt->bindParam(":to", $pet['owner_id']);
+    $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":message", $message);
+    $stmt->bindParam(":sent", $one);
+    $stmt->bindParam(":opened", $zero);
+    $stmt->bindParam(":datetime", $date);
+    $stmt->bindParam(":picture", $picture);
+    $stmt->execute();
     
     //Set owner_id of pet to new owner & Gotcha Date
     $todaysDate = date("Y-m-d");

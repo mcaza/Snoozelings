@@ -515,6 +515,17 @@ a:visited {
     transform: scaleX(-1);
 }
 
+.artfriends {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+}
+
+.artfriends img {
+    width: 20rem;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 /* Footer Styles */
 
 .footer-container {

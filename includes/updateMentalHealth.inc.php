@@ -17,6 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Form Updates
     if ($_POST["anxiety"]) {
         $anxiety = $_POST["anxiety"];
+        if ($anxiety > 10 || $anxiety < 1) {
+            header("Location: ../index");
+            die();
+        }
+        
         $query = "UPDATE mentalHealthEntries SET anxiety = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -25,6 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["depression"]) {
         $depression = $_POST["depression"];
+        if ($depression > 10 || $depression < 1) {
+        header("Location: ../index");
+            die();
+    }
+        
         $query = "UPDATE mentalHealthEntries SET depression = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -33,6 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["stress"]) {
         $stress = $_POST["stress"];
+        if ($stress > 10 || $stress < 1) {
+        header("Location: ../index");
+            die();
+    }
+        
         $query = "UPDATE mentalHealthEntries SET stress = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -41,6 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["productivity"]) {
         $produce = $_POST["productivity"];
+        if ($productivity > 10 || $productivity < 1) {
+        header("Location: ../index");
+            die();
+    }
+        
         $query = "UPDATE mentalHealthEntries SET productivity = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -49,6 +69,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["health"]) {
         $health = $_POST["health"];
+        if ($health > 10 || $health < 1) {
+        header("Location: ../index");
+            die();
+    }
+        
         $query = "UPDATE mentalHealthEntries SET physicalHealth = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -57,6 +82,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["sleep"]) {
         $sleep = $_POST["sleep"];
+        if ($sleep > 10 || $sleep < 1) {
+        header("Location: ../index");
+            die();
+    }
+        
         $query = "UPDATE mentalHealthEntries SET sleep = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -65,6 +95,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["water"]) {
         $water = $_POST["water"];
+        if ($water > 10 || $water < 1) {
+        header("Location: ../index");
+            die();
+    }
+        
         $query = "UPDATE mentalHealthEntries SET water = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);

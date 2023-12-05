@@ -36,6 +36,11 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $farmNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Back Arrow & Title
+echo '<div class="leftRightButtons">';
+echo '<a href="profile?id=' . $userId . '"><<</a>';
+echo '</div>';
+
 echo '<h3 style="margin-bottom: .5rem;">Update Your Profile</h3>';
 echo '<form action="includes/editProfile.inc.php" method="post">';
 

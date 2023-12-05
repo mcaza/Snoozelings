@@ -6,12 +6,12 @@ function displayPet($pet, $class) {
     
     echo '<div class="art-container">';
     if ($pet['mainColor']) {
-    if($class === "arttwo") {
+    /* if($class === "arttwo") {
         $randomNum = rand(0, count($pillows)-1);
         echo "<div class='${class} pillow'>";
         echo "<img src='Layers/Pillows/" . $pillows[$randomNum] . ".png'>";
         echo "</div>";
-    }
+    } */
     
     if (strpos($pet["specials"], "Wings") !== false) {
         
@@ -78,12 +78,21 @@ function displayPet($pet, $class) {
          echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
             echo "</div>";
         } } }
+        if ($pet['clothesHoodie']) {
+            $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+        foreach ($clothesHoodies as $clothing) {
+            echo "<div class='${class}'>";
+         echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+            echo "</div>";
+        } 
+        }
         echo "<div class='${class}'>";
+        if (!$pet['clothesHoodie']) {
         if ($pet["hairType"] === "Floof") {
             echo "<img src='Layers/Hair/" . $pet["hairType"] . "/" . $pet["mainColor"] . ".png' id = 'Hairone'>";
         } else {
             echo '<img src="Layers/Hair/' . $pet['hairType'] . "/" . $pet['hairColor'] . '.png" id="Hairone">';
-        }
+        } }
             echo "</div>";
         if ($pet["tailType"] === "Dragon") {
             echo "<div class='${class}'>";
@@ -124,6 +133,14 @@ function displayPet($pet, $class) {
             echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";
             echo "</div>";
         }
+        if ($pet['clothesHoodie']) {
+            $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+        foreach ($clothesHoodies as $clothing) {
+            echo "<div class='${class}'>";
+         echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
+            echo "</div>";
+        } 
+        }
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
@@ -137,7 +154,7 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<a href='profile?id=" . $pet['owner_id'] . "'><img src='Layers/transparentSquare.png'></a>";
         echo "</div>";
-    } elseif (!$pet['mainColor'] || $class === "artcrafting") {
+    } elseif (!$pet['mainColor'] || $class === "artcrafting" || $class === "artfriends") {
         echo "<div class='${class}'>";
         echo "<img src='Layers/transparentSquare.png'>";
         echo "</div>";

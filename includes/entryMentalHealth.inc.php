@@ -29,6 +29,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $triggers = $_POST['triggers'];
     $notes = $_POST['notes'];
     
+    //Custom Variable Checks
+    if ($anxiety > 10 || $anxiety < 1) {
+        header("Location: ../index");
+            die();
+    }
+    
+    if ($depression > 10 || $depression < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($stress > 10 || $stress < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($productivity > 10 || $productivity < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($health > 10 || $health < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($sleep > 10 || $sleep < 1) {
+        header("Location: ../index");
+            die();
+    }
+    
+    if ($water > 10 || $water < 1) {
+        header("Location: ../index");
+            die();
+    }
+    
     //Good Behaviours
     $good = "";
     if ($_POST['eat']) {

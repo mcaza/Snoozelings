@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST["username"];
     $pwd = $_POST["pwd"];
     $pwd2 = $_POST["pwd2"];
-    $email = $_POST["email"];
+    $email = strtolower($_POST["email"]);
     $birthday = $_POST["birthday"];
     $pronouns = $_POST["pronouns"];
     if (isset($_POST['newsletter'])) {

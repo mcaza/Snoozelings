@@ -20,13 +20,13 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $day = $stmt->fetch(PDO::FETCH_ASSOC);
 
-//Get Entries Count
-$explode = explode(" ", $day['entries']);
-if (strlen($day['entries']) === 0) {
-    $count = 0;
-} else {
-     $count = count($explode);
-}
+    //Get Entries Count
+    if ($day['entries']) {
+        $explode = explode(" ", $day['entries']);
+        $count = count($explode) -1;
+    } else {
+        $count = 1;
+    }
 
 
 //Grab Raffle Items
@@ -93,9 +93,8 @@ if (!($day['id'] === "1")) {
     $stmt->execute();
     $day = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    //Get Entries Count
-    $explode = explode(" ", $day['entries']);
-    $count = count($explode);
+
+    
     //Grab Raffle Items
     $query = 'SELECT * FROM raffles ORDER BY id DESC LIMIT 6';
     $stmt = $pdo->prepare($query);

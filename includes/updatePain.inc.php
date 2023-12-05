@@ -17,6 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Form Updates
     if ($_POST["low"]) {
         $low = $_POST["low"];
+        if ($low > 10 || $low < 1) {
+        header("Location: ../index");
+            die();
+        }
         $query = "UPDATE chronicPainEntries SET lowestPain = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -25,6 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["high"]) {
         $high = $_POST["high"];
+        if ($high > 10 || $high < 1) {
+        header("Location: ../index");
+            die();
+    }
         $query = "UPDATE chronicPainEntries SET highestPain = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -33,6 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["avg"]) {
         $avg = $_POST["avg"];
+        if ($avg > 10 || $avg < 1) {
+        header("Location: ../index");
+            die();
+    }
         $query = "UPDATE chronicPainEntries SET averagePain = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -41,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
         if ($_POST["location"]) {
         $location = $_POST["location"];
+            
         $query = "UPDATE chronicPainEntries SET painLocation = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -49,6 +62,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["sleep"]) {
         $sleep = $_POST["sleep"];
+        if ($sleep > 10 || $sleep < 1) {
+        header("Location: ../index");
+            die();
+    }
         $query = "UPDATE chronicPainEntries SET sleep = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -57,6 +74,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["water"]) {
         $water = $_POST["water"];
+        if ($water > 10 || $water < 1) {
+        header("Location: ../index");
+            die();
+    }
         $query = "UPDATE chronicPainEntries SET water = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -65,6 +86,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["activity"]) {
         $activity = $_POST["activity"];
+        if ($activity > 10 || $activity < 1) {
+        header("Location: ../index");
+            die();
+    }
         $query = "UPDATE chronicPainEntries SET physicalActivity = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -73,6 +98,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["weather"]) {
         $weather = $_POST["weather"];
+        if (!($weather === "Frozen" || $weather === "Cold" || $weather === "Mild" || $weather === "Hot" || $weather === "Wet" || $weather === "Dry")) {
+        header("Location: ../index");
+            die();
+    }
         $query = "UPDATE chronicPainEntries SET weather = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -81,6 +110,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["air"]) {
         $air = $_POST["air"];
+        if (!($air === "Sickly" || $air === "Bad" || $air === "Fine" || $air === "Good")) {
+        header("Location: ../index");
+            die();
+    }
         $query = "UPDATE chronicPainEntries SET air = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);

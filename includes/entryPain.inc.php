@@ -31,6 +31,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $remedy = $_POST['remedy'];
     $notes = $_POST['notes'];
     
+    //Custom Variable Checks
+    if ($low > 10 || $low < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($high > 10 || $high < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($avg > 10 || $avg < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($sleep > 10 || $sleep < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($water > 10 || $water < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if ($activity > 10 || $activity < 1) {
+        header("Location: ../index");
+            die();
+    }
+    if (!($weather === "Frozen" || $weather === "Cold" || $weather === "Mild" || $weather === "Hot" || $weather === "Wet" || $weather === "Dry")) {
+        header("Location: ../index");
+            die();
+    }
+    if (!($air === "Sickly" || $air === "Bad" || $air === "Fine" || $air === "Good")) {
+        header("Location: ../index");
+            die();
+    }
+    
     //Description
     $description = "";
     if ($_POST['swollen']) {

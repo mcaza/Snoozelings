@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $_SESSION['bonded'] = htmlspecialchars($name);
     
-    header("Location: ../pet?ID=" . $result["id"]);
+    header("Location: ../pet?id=" . $result["id"]);
     
     
 } else {

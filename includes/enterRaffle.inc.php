@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($coins < 1) {
         $_SESSION['reply'] = 'You do not have enough coins to do this.';
         header("Location: ../raffle");
+        die();
     }
     
     //Add Name to Raffle Tickets
@@ -24,18 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $entries = $stmt->fetch(PDO::FETCH_ASSOC);
-    $array = explode(" ", $entries['entries']);
-    if ($array[0] === "") {
-        $count = 1;
+    if ($entries) {
+        $array = explode(" ", $entries['entries']);
+        $count = count($array) - 1;
     } else {
-        $count = count($array);
+        $count = 0;
     }
     
-    if ($count < 1) {
-        $temp = $userId;
-    } else {
-        $temp = $entries['entries'] . ' ' . $userId;
-    }
+    $temp = $entries['entries'] . ' ' . $userId;
+    $temp = trim($temp);
+    
     $query = 'UPDATE rafflecount SET entries = :temp WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $entries['id']);

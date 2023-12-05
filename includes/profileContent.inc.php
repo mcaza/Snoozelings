@@ -37,8 +37,8 @@ if ($id === $userId) {
     echo '<a href="profile?id=' . ($id + 1) . '">>></a>';
     echo '</div>';
     echo '<div class="button-bar">
-                <button class="fancyButton" onClick="window.location.href=\'/updateaccount?id=' . $id . '\'">Update Account</button>
-                <button class="fancyButton" onClick="window.location.href=\'/editprofile?id=' . $id . '\'">Edit Profile</button>
+                <button class="fancyButton" onClick="window.location.href=\'/updateaccount\'">Update Account</button>
+                <button class="fancyButton" onClick="window.location.href=\'/editprofile\'">Edit Profile</button>
             </div>';
     //Left Side Profile Info + Right Side Active Pet
     echo '<div class="profilerow">';
@@ -55,7 +55,7 @@ if ($id === $userId) {
     echo '<div class="button-bar">';
     $count = intval($result['blockRequests']);
        if (!$count) {
-           echo '<button class="fancyButton" onClick="window.location.href=\'/includes/addFriend.php?id=' . $id . '\'">Add Friend</button>';
+           echo '<button class="fancyButton" onClick="window.location.href=\'/includes/addFriend.inc.php?id=' . $id . '\'">Add Friend</button>';
        }   
     $count = intval($result['blockMessages']);
     if (!$count) {
@@ -76,23 +76,118 @@ echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font
     echo '<p class="snoozelinginfo"><strong>Player ID: </strong>' . $result['id'];
     echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>' . $result['pronouns'];
     echo '<p class="snoozelinginfo"><strong>Birthday: </strong>' . $monthArray[$monthNum -1] . " " . $dayNum;
-    echo '<p class="snoozelinginfo"><strong>Join Date: </strong>' . $monthArray[$joinMonth -1] . " " . $joinDay;
-
+    
+    if (!($id === "3" || $id === "4" || $id === "5" || $id === "6" || $id === "7" || $id === "8" || $id === "9")) {
+          
+          echo '<p class="snoozelinginfo"><strong>Join Date: </strong>' . $monthArray[$joinMonth -1] . " " . $joinDay;
     echo '<p class="snoozelinginfo"><strong>User Records: </strong>';
     echo '<ul style="text-align: left;margin-top: 0;padding-bottom: 0;font-size:1.6rem;">';
-    echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['journalEntries'] . ' Journal Entries</p>';
-    echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['cropsHarvested'] . ' Crops Harvested</p>';
-    echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['snoozelingsCrafted'] . ' Snoozelings Crafted</p>';
-    echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['itemsCrafted'] . ' Items Crafted</p>';
+        if ($result['journalEntries'] === "1") {
+                        echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['journalEntries'] . ' Journal Entry</p>';
 
+        } else {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['journalEntries'] . ' Journal Entries</p>';
+        }
+        if ($result['cropsHarvested'] === "1") {
+                                    echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['cropsHarvested'] . ' Crop Harvested</p>';
 
+        } else {
+                        echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['cropsHarvested'] . ' Crops Harvested</p>';
+
+        }
+        if ($result['snoozelingsCrafted'] === "1") {
+                        echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['snoozelingsCrafted'] . ' Snoozeling Crafted</p>';
+
+        } else {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['snoozelingsCrafted'] . ' Snoozelings Crafted</p>';
+        }
+        if ($result['itemsCrafted'] === "1") {
+                        echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['itemsCrafted'] . ' Item Crafted</p>';
+
+        } else {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['itemsCrafted'] . ' Items Crafted</p>';
+        }
+    
+    
+    
+    
     echo '</ul>';
     echo '<p class="snoozelinginfo"><strong>Farm Name: </strong>' . $result['farmName'];
+    } else {
+        if ($id === "4") {
+              echo '<p class="snoozelinginfo"><strong>Job: </strong>Seed Shopkeeper</p>';
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Trail Mix</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Responsible & Hard Working</p>';
+              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Crossbreeding Plants</p>';
+             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>Preserving Fauna</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Sprout holds the Snooze Land record for most plants harvested in a single lifetime.</p>';
+        } elseif ($id === "3") {
+            echo '<p class="snoozelinginfo"><strong>Job: </strong>Professional Snow Sledder</p>';
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Snownuts</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Playful & Worry Free</p>';
+              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Building Snow Forts</p>';
+             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>Spreading Joy</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Snow\'s fur changes depending on the season, just like a weasel.</p>';
+        } elseif ($id === "5") {
+            echo '<p class="snoozelinginfo"><strong>Job: </strong>Adoption Director</p>';
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Cucumber Sandwiches</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Loving & Sincere</p>';
+              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Braiding Hair</p>';
+             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>Finding Homes for Homeless Snoozelings</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Miss Lulu and Minky are often <br>seen together. They\'re platonic soulmates.</p>';
+        } elseif ($id === "6") {
+            echo '<p class="snoozelinginfo"><strong>Job: </strong>Runs Sewing Shop</p>';
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Honeycomb</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Artistic & Quick-witted</p>';
+              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Creating Snoozelings</p>';
+             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To find that pin he dropped almost three years ago.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> When Minky isn\'t working, he spends time stitching teddy bears for the adoption house.</p>';
+        } elseif ($id === "7") {
+            echo '<p class="snoozelinginfo"><strong>Job: </strong>Mail Courier</p>';
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Blueberries</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Determined & 	Pro-active</p>';
+              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Shadow Puppets</p>';
+             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To find joy in simple things.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Even with his prosthetic leg, Cole always delivers the mail on time. His favorite part of the job is seeing the excitement on <br>his customer\'s faces.</p>';
+        } elseif ($id === "8") {
+            echo '<p class="snoozelinginfo"><strong>Job: </strong>Kindness Shopkeeper</p>';
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Cream Cheese Bagels</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Generous & Warmhearted</p>';
+              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Counting Backwards</p>';
+             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To encourage unity</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Melody is on the autism spectrum and doesn\'t like to hugged. Instead, they<br> prefer forehead to forehead contact.</p>';
+        } elseif ($id === "9") {
+            echo '<p class="snoozelinginfo"><strong>Job: </strong>Baking Pies</p>';
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Whipped Cream</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Patient & Messy</p>';
+              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Touching Nose with Tongue</p>';
+             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>Opening a Bakery</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Pudding can sense free food from miles away. He will show up at random <br>parties and events just for the food.</p>';
+        }
+    }
     echo '</div>';
     echo '</div>';
-echo '<div class="displaycontainerright">';
+echo '<div class="displaycontainerright" >';
+if ($id === "4") {
+    echo '<img src="resources/seedNPC.png" style="width: 37rem;margin-left: 3rem;">';
+} elseif ($id === "3") {
+    echo '<img src="resources/snowNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 3rem;">';
+} elseif ($id === "5") {
+    echo '<img src="resources/adoptNPC.png" style="width: 37rem;margin-left: 3rem;">';
+} elseif ($id === "6") {
+    echo '<img src="resources/sewingNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 3rem;">';
+} elseif ($id === "7") {
+    echo '<img src="resources/postmanNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 2rem;">';
+} elseif ($id === "8") {
+    echo '<img src="resources/kindnessNPC.png" style="width: 35rem;margin-left: 5.5rem;">';
+} elseif ($id === "9") {
+    echo '<img src="resources/bakerNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 2rem;">';
+} else {
     displayPet($pet, "artlarge");
     echo "<p><strong>Bonded Snoozeling:</strong> " . "<a href='pet?ID=" . $pet['id'] . "'>" . htmlspecialchars($pet["name"]) . "</a></p>";
+}
+    
+    
     echo '</div>';    
     echo '</div>';
  
@@ -112,7 +207,7 @@ echo '<div class="displaycontainerright">';
              echo   '</div>';
              echo   '</div>
                 <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;">
-                    <h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" ><a href="friends">&nbsp;&nbsp;&nbsp;Friends</a></h4>';
+                    <h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" ><a href="friends?id=' . $id . '">&nbsp;&nbsp;&nbsp;Friends</a></h4>';
     
                  //Friend Display
                 echo '<div style="display: flex; flex-direction: row; column-gap: 3rem;">';

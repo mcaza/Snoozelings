@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 function getUsername(object $pdo, string $username) {
-    $query = "SELECT username FROM users WHERE username = :username;";
+    $username = strtolower($username);
+    $query = "SELECT username FROM users WHERE usernamedata = :username;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":username", $username);
     $stmt->execute();
@@ -33,8 +34,10 @@ function checkEmail(object $pdo, string $email) {
 }
 
 function setUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter, string $randomString) {
-    $query = "INSERT INTO users (username, password, email, birthdate, signupDate, newsletter, pronouns, affirmation, tempCode) VALUES (:username, :pwd, :email, :birthdate, :signupDate, :newsletter, :pronouns, :affirmation, :tempCode);";
+    $query = "INSERT INTO users (username, password, email, birthdate, signupDate, newsletter, pronouns, affirmation, tempCode, usernamedata, emailVerified) VALUES (:username, :pwd, :email, :birthdate, :signupDate, :newsletter, :pronouns, :affirmation, :tempCode, :data, :verify);";
     $stmt = $pdo->prepare($query);
+    
+    $data = strtolower($username);
     
     //Password Hashing
     $options = [
@@ -42,6 +45,7 @@ function setUser(object $pdo, string $username, string $pwd, string $email, $bir
     ];
     $hashedPwd = password_hash($pwd, PASSWORD_BCRYPT, $options);
     $affirmation = "I'm going to do my best to journal everyday. And even when I'm not perfect, I'm going to forgive myself. The important thing is not giving up.";
+    $one = 1;
     
     $todaysDate = date("Y-m-d");
     
@@ -55,5 +59,7 @@ function setUser(object $pdo, string $username, string $pwd, string $email, $bir
     $stmt->bindParam(":affirmation", $affirmation);
     $stmt->bindParam(":pronouns", $pronouns);
     $stmt->bindParam(":tempCode", $randomString);
+    $stmt->bindParam(":data", $data);
+    $stmt->bindParam(":verify", $one);
     $stmt->execute();
 }

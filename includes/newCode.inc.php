@@ -48,7 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //From
     $headers .= 'From: Snoozelings <autoreply@snoozelings.com>' . "\r\n";
 
-    mail($address, $title, $msg, $headers);
+    if(mail($address, $title, $msg, $headers)) {
+        echo 'success';
+        echo $address;
+    }
     
     $_SESSION["reply"] = "A new code has been sent. Please check your email.";
         header("Location: ../verify.php");
