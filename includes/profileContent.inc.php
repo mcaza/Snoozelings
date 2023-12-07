@@ -184,7 +184,7 @@ if ($id === "4") {
     echo '<img src="resources/bakerNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 2rem;">';
 } else {
     displayPet($pet, "artlarge");
-    echo "<p><strong>Bonded Snoozeling:</strong> " . "<a href='pet?ID=" . $pet['id'] . "'>" . htmlspecialchars($pet["name"]) . "</a></p>";
+    echo "<p><strong>Bonded Snoozeling:</strong> " . "<a href='pet?id=" . $pet['id'] . "'>" . htmlspecialchars($pet["name"]) . "</a></p>";
 }
     
     

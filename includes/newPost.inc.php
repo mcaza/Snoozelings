@@ -23,11 +23,11 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
 //Check if Posted Today
-$num = intval($result['new']);
-if ($num === 0 && $result) {
-    echo '<p style="margin-top: 2rem;"><strong>You have already posted on the bulletin board today.</strong></p>';
-} else {
+$num = $result['new'];
+if (!$result) {
+    
     //Form
     echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 bulletin board per day.');\">";  
 
@@ -69,6 +69,53 @@ if ($num === 0 && $result) {
     //End Form
     echo '<button  class="fancyButton" style="width: 8rem;">Post</button>';
     echo '</form>';
+    
+} else {
+    if ( $result['new'] === "1") {
+        //Form
+    echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 bulletin board per day.');\">";  
+
+    //Pick Category
+    echo '<label style="margin-top: 2rem;" for="type" class="form" required>Category:</label><br>';
+    echo '<select class="input"  name="type" style="width: 8rem;">';
+    echo '<option value=""></option>';
+    echo '<option value="general">General</option>';
+    echo '<option value="media">Media</option>';
+    echo '<option value="freebies">Giveaways</option>';
+    echo '<option value="artwork">Artwork</option>';
+    echo '<option value="guides">Guides</option>';
+    
+    //Edit to 1 After Testing
+    if ($userId === "1") {
+        echo '<option value="official">Official</option>';
+    }
+    
+    echo '</select><br>';
+    
+    //Enter Title
+    echo '<label style="margin-top: 2rem;" for="title" class="form">Title:</label><br>';
+    if ($title) {
+        echo '<input class="input" type="text" name="title" value="' . $title . '" required><br>';
+    } else {
+        echo '<input class="input" type="text" name="title" required><br>';
+    }
+    
+    
+    //Enter Text
+    echo '<label style="margin-top: 2rem;" for="post" class="form">Post:</label><br>';
+    if ($post) {
+        echo '<textarea name="post" cols="72" class="input" style="height: 20rem;" required>' . $post . '</textarea><br>';
+    } else {
+        echo '<textarea name="post" cols="72" class="input" style="height: 20rem;" required></textarea><br>';
+    }
+    
+
+    //End Form
+    echo '<button  class="fancyButton" style="width: 8rem;">Post</button>';
+    echo '</form>';
+    } else {
+        echo '<p style="margin-top: 2rem;"><strong>You have already posted on the bulletin board today.</strong></p>';
+    }
 }
   
 

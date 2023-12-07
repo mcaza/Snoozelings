@@ -20,9 +20,10 @@ if ($journal) {
 
 
 //Grab Bonded Pet
-$query = 'SELECT * FROM snoozelings WHERE name = :name';
+$query = 'SELECT * FROM snoozelings WHERE name = :name AND owner_id = :id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":name", $petName);
+$stmt->bindParam(":id", $userId);
 $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 

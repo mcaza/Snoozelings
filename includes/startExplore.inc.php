@@ -4,26 +4,22 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 
-
-
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //Grab Form Variables
 $petId = $_POST["explorer"];
 if ($petId) {
 $area = $_POST["area"];
     $userId = $_SESSION['user_id'];
-    $specials = ['21', '20'];
     $farmCommon = ['Coin', '2', '3', '4', '1', '5', '116'];
-    $farmUncommon = ['15', '16', 'FabricCow', '93'];
-    $farmRare = ['96'];
+    $farmUncommon = ['15', '16'];
+    $farmRare = ['96', '87', '93'];
     $cowArray = ['87', '90', '88', '89'];
     $woodsCommon = ['Coin', '3', '6', '7', '8', '9', '116'];
-    $woodsUncommon = ['17', '25', '94', '91'];
-    $woodsRare = ['97'];
+    $woodsUncommon = ['17', '25'];
+    $woodsRare = ['97', '94', '91'];
     $oceanCommon = ['Coins', '10', '11', '12', '13', '14', '116'];
-    $oceanUncommon = ['18', '19', '95', '92'];
-    $oceanRare = ['98'];
+    $oceanUncommon = ['18', '19'];
+    $oceanRare = ['98', '95', '92'];
     $seeds = ['29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43'];
     $itemsWon = [];
     $coinsWon = 0;
@@ -85,18 +81,22 @@ $area = $_POST["area"];
    //Insert Items Into Player's Table
     foreach ($itemsWon as $item) {
 
-        $number = intval($item);
-        $fixedNumber = $number -1;
+        $query = 'SELECT * FROM itemList WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $item);
+        $stmt->execute();
+        $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
+         
         $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
         $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":list", $number);
+    $stmt->bindParam(":list", $item);
     $stmt->bindParam(":user", $userId);
-    $stmt->bindParam(":name", $items[$fixedNumber]['name']);
-    $stmt->bindParam(":display", $items[$fixedNumber]['display']);
-    $stmt->bindParam(":description", $items[$fixedNumber]['description']);
-    $stmt->bindParam(":type", $items[$fixedNumber]['type']);
-    $stmt->bindParam(":rarity", $items[$fixedNumber]['rarity']);
-    $stmt->bindParam(":canDonate", $items[$fixedNumber]['canDonate']);
+    $stmt->bindParam(":name", $iteminfo['name']);
+    $stmt->bindParam(":display", $iteminfo['display']);
+    $stmt->bindParam(":description", $iteminfo['description']);
+    $stmt->bindParam(":type", $iteminfo['type']);
+    $stmt->bindParam(":rarity", $iteminfo['rarity']);
+    $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
     $stmt->execute();
     } 
     
@@ -120,7 +120,7 @@ $area = $_POST["area"];
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":datetime", $formatted);
     $stmt->bindParam(":id", $petId);
-    $stmt->execute(); 
+    $stmt->execute();  
     
     //Update +1 to User Records
     $query = 'UPDATE users SET explores = explores + 1 WHERE id = :id';
@@ -172,7 +172,6 @@ function pickItem($rarity, $area) {
     global $farmCommon;
     global $farmUncommon;
     global $farmRare;
-    global $specials;
     global $seeds;
     global $coinsWon;
     global $itemsWon;
@@ -185,87 +184,110 @@ function pickItem($rarity, $area) {
     global $itemsWon;
     global $cowArray;
     global $coinsWon;
+    
+
     if ($area === "Farmland") {
-        if ($rarity < 110) {
-            $randomNum = rand(0, 6);
-            $item = $farmCommon[$randomNum];
-            if ($item === "Coin") {
-                $coinsWon++;
-            } else {
-                array_push($itemsWon, $item);
-            }
-        } elseif ($rarity < 150) {
-            $randomNum = rand(0, 3);
-            $item = $farmUncommon[$randomNum];
-            if ($item === "FabricCow") {
-                $randomNum = rand(0, 3);
-                $item = $cowArray[$randomNum];
-                array_push($itemsWon, $item);
-            } else {
-                array_push($itemsWon, $item);
-            }
-        } elseif ($rarity < 160) {
-            $randomNum = 0;
+        //Farm Rolls
+        if ($rarity === 1) {
+            $item = '20';
+            array_push($itemsWon, $item);
+        } elseif ($rarity < 6) {
+            $item = '21';
+            array_push($itemsWon, $item);
+        } elseif ($rarity < 21) {
+            $count = count($farmRare) - 1;
+            $randomNum = rand(0, $count);
             $item = $farmRare[$randomNum];
             array_push($itemsWon, $item);
-        } elseif ($rarity === 160) {
-            $randomNum = rand(0, 1);
-            $item = $specials[$randomNum];
+        } elseif ($rarity < 41) {
+            $count = count($farmUncommon) - 1;
+            $randomNum = rand(0, $count);
+            $item = $farmUncommon[$randomNum];
+            array_push($itemsWon, $item);
+        } elseif ($rarity < 51) {
+            $coinsWon += 3;
+        } elseif ($rarity < 71) {
+            $coinsWon += 2;
+        } elseif ($rarity < 131) {
+            $coinsWon++;
+        } elseif ($rarity < 266) {
+            $count = count($farmCommon) - 1;
+            $randomNum = rand(0, $count);
+            $item = $farmCommon[$randomNum];
             array_push($itemsWon, $item);
         } else {
-            $randomNum = rand(0, 14);
+            $count = count($seeds) - 1;
+            $randomNum = rand(0, $count);
             $item = $seeds[$randomNum];
             array_push($itemsWon, $item);
         }
     } elseif ($area === "Forest") {
-        if ($rarity < 110) {
-            $randomNum = rand(0, 6);
-            $item = $woodsCommon[$randomNum];
-            if ($item === "Coin") {
-                $coinsWon++;
-            } else {
-                array_push($itemsWon, $item);
-            }
-        } elseif ($rarity < 150) {
-            $randomNum = rand(0, 3);
-            $item = $woodsUncommon[$randomNum];
+        //Forest Rolls
+        if ($rarity === 1) {
+            $item = '20';
             array_push($itemsWon, $item);
-        } elseif ($rarity < 160) {
-            $randomNum = 0;
+        } elseif ($rarity < 6) {
+            $item = '21';
+            array_push($itemsWon, $item);
+        } elseif ($rarity < 21) {
+            $count = count($woodsRare) - 1;
+            $randomNum = rand(0, $count);
             $item = $woodsRare[$randomNum];
             array_push($itemsWon, $item);
-        } elseif ($rarity === 160) {
-            $randomNum = rand(0, 2);
-            $item = $specials[$randomNum];
+        } elseif ($rarity < 41) {
+            $count = count($woodsUncommon) - 1;
+            $randomNum = rand(0, $count);
+            $item = $woodsUncommon[$randomNum];
+            array_push($itemsWon, $item);
+        } elseif ($rarity < 51) {
+            $coinsWon += 3;
+        } elseif ($rarity < 71) {
+            $coinsWon += 2;
+        } elseif ($rarity < 131) {
+            $coinsWon++;
+        } elseif ($rarity < 266) {
+            $count = count($woodsCommon) - 1;
+            $randomNum = rand(0, $count);
+            $item = $woodsCommon[$randomNum];
             array_push($itemsWon, $item);
         } else {
-            $randomNum = rand(0, 14);
+            $count = count($seeds) - 1;
+            $randomNum = rand(0, $count);
             $item = $seeds[$randomNum];
             array_push($itemsWon, $item);
         }
     } elseif ($area === "Beach") {
-        if ($rarity < 110) {
-            $randomNum = rand(0, 6);
-            $item = $oceanCommon[$randomNum];
-            if ($item === "Coins") {
-                $coinsWon +=3;
-            } else {
-                array_push($itemsWon, $item);
-            }
-        } elseif ($rarity < 150) {
-            $randomNum = rand(0, 3);
-            $item = $oceanUncommon[$randomNum];
+        //Beach Rolls
+        if ($rarity === 1) {
+            $item = '20';
             array_push($itemsWon, $item);
-        } elseif ($rarity < 160) {
-            $randomNum = 0;
+        } elseif ($rarity < 6) {
+            $item = '21';
+            array_push($itemsWon, $item);
+        } elseif ($rarity < 21) {
+            $count = count($oceanRare) - 1;
+            $randomNum = rand(0, $count);
             $item = $oceanRare[$randomNum];
             array_push($itemsWon, $item);
-        } elseif ($rarity = 160) {
-            $randomNum = rand(0, 1);
-            $item = $specials[$randomNum];
+        } elseif ($rarity < 41) {
+            $count = count($oceanUncommon) - 1;
+            $randomNum = rand(0, $count);
+            $item = $oceanUncommon[$randomNum];
+            array_push($itemsWon, $item);
+        } elseif ($rarity < 51) {
+            $coinsWon += 3;
+        } elseif ($rarity < 71) {
+            $coinsWon += 2;
+        } elseif ($rarity < 131) {
+            $coinsWon++;
+        } elseif ($rarity < 266) {
+            $count = count($oceanCommon) - 1;
+            $randomNum = rand(0, $count);
+            $item = $oceanCommon[$randomNum];
             array_push($itemsWon, $item);
         } else {
-            $randomNum = rand(0, 14);
+            $count = count($seeds) - 1;
+            $randomNum = rand(0, $count);
             $item = $seeds[$randomNum];
             array_push($itemsWon, $item);
         }

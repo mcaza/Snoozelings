@@ -35,8 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":new", $new);
     $stmt->execute();
     
+    //Get Bulletin ID
+    $query = 'SELECT id FROM posts WHERE user_id = :id ORDER BY id DESC LIMIT 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $id = $stmt->fetch(PDO::FETCH_ASSOC);
+    
     //Reroute
-    header("Location: ../boards.php");
+    header("Location: ../post?id=" . $id['id']);
     
 } else {
     header("Location: ../boards.php");

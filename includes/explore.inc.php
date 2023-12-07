@@ -95,7 +95,7 @@ echo '<option value="Beach">Dazzling Coast</option>';
 echo '</select></br>';
 echo '<button  class="fancyButton editButton">Send Exploring</button>';
 echo '</form>';
-
+echo '<h4>We are testing exploring and the bottom values are not accurate</h4>';
 echo '<div id="Farmland">';
 echo '<h6>Snoozeling Ranch Items</h6>';
 echo '<h6></h6>';

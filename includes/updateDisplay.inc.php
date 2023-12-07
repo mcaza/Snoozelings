@@ -96,7 +96,7 @@ echo '<label for="showbed"  class="form">Bed on Pet Page:</label><br>';
 echo '<select  class="input" name="showbed"><br>';
 echo '<option value=""></option>';
 echo '<option value="1">Yes</option>';
-echo '<option value="0">No</option>';
+echo '<option value="2">No</option>';
 echo '</select><br>';
 
 //List of Current Clothes (Adding Later)

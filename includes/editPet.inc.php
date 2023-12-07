@@ -212,10 +212,12 @@ $userId = $_SESSION['user_id'];
     
     //Showbed
     if ($showbed) {
-        if (!($showbed === "1" || $showbed === "0")) {
+        if (!($showbed === "1" || $showbed === "2")) {
+            echo 'test';
             header("Location: ../editPet?id=" . $id);
             die();
         } else {
+            
             $query = 'UPDATE snoozelings SET showbed = :bed WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);

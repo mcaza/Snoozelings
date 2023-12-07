@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     
     //Get Newest Entry
-    $query = 'SELECT id FROM chronicPainEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
+    $query = 'SELECT id FROM mentalHealthEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();

@@ -23,9 +23,9 @@ $day = $stmt->fetch(PDO::FETCH_ASSOC);
     //Get Entries Count
     if ($day['entries']) {
         $explode = explode(" ", $day['entries']);
-        $count = count($explode) ;
+        $count = count($explode);
     } else {
-        $count = 1;
+        $count = 0;
     }
 
 

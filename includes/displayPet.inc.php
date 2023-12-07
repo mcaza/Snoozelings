@@ -152,10 +152,15 @@ function displayPet($pet, $class) {
             echo "</div>";
         } } }
     }
-    if(($class === "arttwo" && !($pet['tailType'] === "Dragon" || "Panther")) || ($class === "artlarge" && $pet['showbed'] === "1" && !($pet['tailType'] === "Dragon" || "Panther"))) {
-        echo "<div class='${class}'>";
+    if(($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] === "1"))) {
+        if ($pet['tailType'] === "Dragon" || $pet['tailType'] === "Panther") {
+            
+        } else {
+            echo "<div class='${class}'>";
         echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
         echo "</div>";
+        }
+        
     } 
     if ($class === 'tinyPet') {
         echo "<div class='${class}'>";

@@ -33,7 +33,7 @@ echo '</div>';
     echo '<p style="margin-top:1.2rem">Questions Left Blank Will Not Be Changed</p>';
     //Check Type of Journal
     if ($type === "mentalHealth") {
-        echo "<form method='POST' action='includes/editMentalHealth.inc.php' onsubmit=\"return confirm('Please confirm there is no identifying information');\">";    
+        echo "<form method='POST' action='includes/updateMentalHealth.inc.php' onsubmit=\"return confirm('Please confirm there is no identifying information');\">";    
         
         //Rate Anxiety
         echo '<label class="form" style="margin-top: 1rem;">Rate Your Anxiety:</label><br>';

@@ -22,7 +22,7 @@ if ($reply) {
 }
 
 //Will have cute snoozeling for alpha. Custom art later. Confused face if already took item.
-echo '<div><img style="width: 40%;" src="resources/BlueBalloon.png"></div>';
+echo '<div><img style="width: 40%;" src="resources/freeitemNPC.png"></div>';
     echo '<h4>Feeling Down? Have a free item.</h4>';
 
 

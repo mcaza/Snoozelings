@@ -41,7 +41,7 @@ if ($journal['type'] === "pain") {
     $stmt->execute();
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($journal['id']) {
-        if ($journal['closed'] === 1) {
+        if ($journal['closed'] === "1") {
             echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
             $count++; 
         }
@@ -53,7 +53,7 @@ if ($journal['type'] === "pain") {
     $stmt->execute();
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($journal['id']) {
-        if ($journal['closed'] === 1) {
+        if ($journal['closed'] === "1") {
             echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
             $count++; 
         }
@@ -61,6 +61,25 @@ if ($journal['type'] === "pain") {
 } else {
     echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Create Journal</a></div>';
     $count++;
+}
+
+//Explore Check
+$jack = "jack";
+$explorer = "Explorer";
+$query = "SELECT * FROM snoozelings WHERE (job = :jack OR job = :explorer) && owner_id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":jack", $jack);
+$stmt->bindParam(":explorer", $explorer);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$explorers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$now = new DateTime();
+$result = $now->format('Y-m-d H:i:s');
+foreach ($explorers as $pet) {
+    if ($result > $pet['cooldownTime']) {
+        '<div style="margin-bottom: .8rem;"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
+        break;
+    }
 }
 
 //Crops Harvest Check
@@ -78,6 +97,7 @@ foreach ($plants as $plant) {
         }
     }
 }
+
 //Crops Plant Check
 foreach ($plants as $plant) {
     if (!$plant['plantName']) {

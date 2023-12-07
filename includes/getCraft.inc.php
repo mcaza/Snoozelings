@@ -15,6 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    //Get Job
+    $query = "SELECT job, name FROM snoozelings WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+    
     //Get Item Info
     $query = 'SELECT * FROM itemList WHERE name = :name';
     $stmt = $pdo->prepare($query);
@@ -43,10 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":null", $null);
     $stmt->execute();
     
-    //Add EXP to Pet
-    $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1';
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
+    if ($snooze['job'] != "jack") {
+        //Add EXP to Pet
+        $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+    }
+    
     
     //Add +1 Journal to Daily Record
     $query = 'UPDATE dailyRecords SET itemsCrafted = itemsCrafted + 1';

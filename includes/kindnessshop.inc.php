@@ -32,7 +32,7 @@ echo '</div>';
     
 //Display Coin Count Top Right
 echo '<div>';
-if ($player['coinCount'] === "1") {
+if ($player['kindnessCount'] === "1") {
     echo '<p><strong>Inventory: </strong>' . $player['kindnessCount'] . ' Kindness Coin</p>';
 } else {
     echo '<p><strong>Inventory: </strong>' . $player['kindnessCount'] . ' Kindness Coins</p>';
@@ -58,7 +58,7 @@ echo '<p><i>"I know being kind is its own reward, but it doesn\'t hurt to spoil 
 echo '<div class="seedRows">';
 foreach ($items as $item) {
     echo '<div class="seedItem">';
-    echo '<img style="margin-top:3rem;" src="items/' . $item['name'] . '.png" title="' . $item['description'] . '">';
+    echo '<img style="margin-top:3rem; min-height: 105px;" src="items/' . $item['name'] . '.png" title="' . $item['description'] . '">';
     echo '<p><strong>' . $item['display'] . '</strong></p>';
     if ($item['price'] < 2) {
         echo '<p>' . $item['price'] . ' Kindness Coin</p>';

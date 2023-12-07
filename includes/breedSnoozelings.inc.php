@@ -85,7 +85,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user", $userId);
     $stmt->bindParam(":one", $first);
-    $stmt->bindParam(":two", $second);
+    if ($breedid) {
+        $stmt->bindParam(":two", $breedid);
+    } else {
+        $stmt->bindParam(":two", $second);
+    }
+    
     $stmt->bindParam(":blueprints", $blueprints);
     $stmt->execute();
     
@@ -180,7 +185,51 @@ header("Location: ../index");
     die();
 }
 
+//Nose Function
+    function chooseNose($one, $two, $pdo) {
+        $query = 'SELECT * FROM colors WHERE name = :name';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $one['noseColor']);
+    $stmt->execute();
+    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
+    $mainone = explode(" ", $cats1['categories']);
+    array_shift($mainone);
+    
+    $query = 'SELECT * FROM colors WHERE name = :name';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $two['noseColor']);
+    $stmt->execute();
+    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
+    $maintwo = explode(" ", $cats2['categories']);
+    array_shift($maintwo);
+    $mainColors = array_merge($mainone, $maintwo);
+        $mainColors = array_unique($mainColors);
+    $mainColors = array_values($mainColors);
+        
+        $subcolors = [];
+    foreach ($mainColors as $color) {
+        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":colorSearch", $color);
+        $stmt->execute();
+        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($subs as $sub) {
+            if ($sub['rarity'] === "Rare") {
+                
+            } else {
+                array_push($subcolors, $sub['name']);
+            }
+        }
+    }
+    $subcolors = array_unique($subcolors);
+    $subcolors = array_values($subcolors);
 
+        $count = count($subcolors) - 1;
+        $num = rand(0, $count);
+        $noseColor = $subcolors[$num];
+        
+        return $noseColor;
+    }
 
 
 function breed($pdo, $first, $second, $user, $breeding, $breedid) {
@@ -496,51 +545,7 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
             $eyeColor = $eyecolors[$num];
     }
     
-    //Nose Function
-    function chooseNose($one, $two, $pdo) {
-        $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['noseColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
-    array_shift($mainone);
     
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['noseColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    array_shift($maintwo);
-    $mainColors = array_merge($mainone, $maintwo);
-        $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
-        
-        $subcolors = [];
-    foreach ($mainColors as $color) {
-        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":colorSearch", $color);
-        $stmt->execute();
-        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($subs as $sub) {
-            if ($sub['rarity'] === "Rare") {
-                
-            } else {
-                array_push($subcolors, $sub['name']);
-            }
-        }
-    }
-    $subcolors = array_unique($subcolors);
-    $subcolors = array_values($subcolors);
-
-        $count = count($subcolors) - 1;
-        $num = rand(0, $count);
-        $noseColor = $subcolors[$num];
-        
-        return $noseColor;
-    }
     
     //Nose/Ear Color Selection
     $fabrics = [];
