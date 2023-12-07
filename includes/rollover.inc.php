@@ -125,29 +125,26 @@
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $raffles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    //Pick Winners for Raffles
+
+//Pick Winners for Raffles
     $array = [];
     array_push($array, $raffles[0]['id'], $raffles[1]['id'], $raffles[2]['id']);
     if(strlen($raffentries['entries']) === 0) {
         $entries = 0;
     } else {
         $entries = explode(" ", $raffentries['entries']);
+        array_shift($entries);
     }
-    
+
     $count = 0;
     //unset($entriesone[0]);  
     //$entries = array_values($entriesone); 
     foreach ($array as $round) {
-        if (count($entries) > 0) {
         //Pick Winner
-        if (count($entries) === 1) {
-            $winner = $entries[0];
-        } else {
             $num = count($entries) - 1;
             $rand = rand(0, $num);
             $winner = $entries[$rand];
-        }
+        
         $query = 'UPDATE raffles SET winner = :winner WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":winner", $winner);
@@ -193,7 +190,7 @@
         
         I brought you something. I believe it\'s a raffle prize?
         
-        Hmmmm... Yes yes. It\'s a ' . $raffles[$count]['display'] . '!
+        Oh yes!!!. It\'s a ' . $raffles[$count]['display'] . '!
         
         Maybe I\'ll win next time. I could really use a new hat.';
         $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
@@ -208,15 +205,8 @@
         $stmt->bindParam(":picture", $picture);
         $stmt->execute();
         $count++;
-        } else {
-            $winner = 0;
-            $query = 'UPDATE raffles SET winner = :winner WHERE id = :id';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":winner", $winner);
-            $stmt->bindParam(":id", $round);
-            $stmt->execute();
-        }
-    }
+        } 
+    
     
     //Pick 3 New Prizes
     for ($i = 0; $i < 3; $i++) {
@@ -237,9 +227,10 @@
             $stmt->execute();
             
             //Delete Item
-            $query = 'DELETE FROM raffleitems WHERE id = :id';
+            $query = 'DELETE FROM raffleitems WHERE id = :id AND donator_id = :user LIMIT 1';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $items[$rand]['id']);
+            $stmt->bindParam(":user", $items[$rand]['donator_id']);
             $stmt->execute();
             
             //Give Coin
@@ -269,7 +260,7 @@
             $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":sender", $sender);
-            $stmt->bindParam(":reciever", $userId);
+            $stmt->bindParam(":reciever", $items[$rand]['donator_id']);
             $stmt->bindParam(":title", $title);
             $stmt->bindParam(":message", $message);
             $stmt->bindParam(":sent", $one);

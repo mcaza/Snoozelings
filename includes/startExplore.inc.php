@@ -73,15 +73,6 @@ $area = $_POST["area"];
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $exp = intval($result['exploreEXP']);
     
-    //Get Previous Coins
-    $query = "SELECT coinCount FROM users WHERE id = :id";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $coins = $result['coinCount'];
-
-    
     //Calculate How Many Rolls
     $exp = intval($result['exploreEXP']);
     $rolls = howMany($exp);
@@ -91,7 +82,7 @@ $area = $_POST["area"];
         $item = pickItem($rarity, $area);
     }
     
-    //Insert Items Into Player's Table
+   //Insert Items Into Player's Table
     foreach ($itemsWon as $item) {
 
         $number = intval($item);
@@ -107,14 +98,17 @@ $area = $_POST["area"];
     $stmt->bindParam(":rarity", $items[$fixedNumber]['rarity']);
     $stmt->bindParam(":canDonate", $items[$fixedNumber]['canDonate']);
     $stmt->execute();
-    }
+    } 
     
+    if ($coinsWon) {
     //Add Coins to User
-    $query = "UPDATE users SET coinCount = :coins WHERE id = :id";
+    $query = "UPDATE users SET coinCount = coinCount + :coins WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->bindParam(":coins", $coins);
+    $stmt->bindParam(":coins", $coinsWon);
     $stmt->execute();
+    }
+    
     
     //Update Snoozeling to working and add cooldown
     $now = new DateTime();
@@ -134,11 +128,13 @@ $area = $_POST["area"];
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     
-    //Update +1 to User Records
-    $query = 'UPDATE snoozelings SET exploreEXP = exploreEXP + 1 WHERE id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $petId);
-    $stmt->execute();
+    if ($name['job'] === "Explorer") {
+        //Update +1 to User Records
+        $query = 'UPDATE snoozelings SET exploreEXP = exploreEXP + 1 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $petId);
+        $stmt->execute();
+    }
     
     $_SESSION['coins'] = $coinsWon;
     $_SESSION['items'] = $itemsWon;
@@ -187,7 +183,6 @@ function pickItem($rarity, $area) {
     global $oceanUncommon;
     global $oceanRare;
     global $itemsWon;
-    global $coins;
     global $cowArray;
     global $coinsWon;
     if ($area === "Farmland") {
@@ -195,7 +190,6 @@ function pickItem($rarity, $area) {
             $randomNum = rand(0, 6);
             $item = $farmCommon[$randomNum];
             if ($item === "Coin") {
-                $coins++;
                 $coinsWon++;
             } else {
                 array_push($itemsWon, $item);
@@ -228,7 +222,6 @@ function pickItem($rarity, $area) {
             $randomNum = rand(0, 6);
             $item = $woodsCommon[$randomNum];
             if ($item === "Coin") {
-                $coins++;
                 $coinsWon++;
             } else {
                 array_push($itemsWon, $item);
@@ -255,8 +248,7 @@ function pickItem($rarity, $area) {
             $randomNum = rand(0, 6);
             $item = $oceanCommon[$randomNum];
             if ($item === "Coins") {
-                $coins += 3;
-                $coinsWo +=3;
+                $coinsWon +=3;
             } else {
                 array_push($itemsWon, $item);
             }

@@ -35,6 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     
+    if(!$farmer) {
+        $_SESSION['reply'] = 'You need to select a farmer';
+        header("Location: ../farm");
+        die();
+    }
+    
     //Get Information from Farms
     $query = "SELECT * FROM farms WHERE id = :id";
     $stmt = $pdo->prepare($query);

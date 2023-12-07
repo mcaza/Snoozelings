@@ -34,9 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Remove Item
-    $query = 'DELETE FROM items WHERE id = :id';
+    $query = 'DELETE FROM items WHERE id = :id AND user_id = :userId';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $design);
+    $stmt->bindParam(":userId", $userId);
     $stmt->execute(); 
     
     //Set Message and Reroute

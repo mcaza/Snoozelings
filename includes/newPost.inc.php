@@ -25,11 +25,11 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check if Posted Today
 $num = intval($result['new']);
-if ($num === 0) {
+if ($num === 0 && $result) {
     echo '<p style="margin-top: 2rem;"><strong>You have already posted on the bulletin board today.</strong></p>';
 } else {
     //Form
-    echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 journal per day.');\">";  
+    echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 bulletin board per day.');\">";  
 
     //Pick Category
     echo '<label style="margin-top: 2rem;" for="type" class="form" required>Category:</label><br>';
@@ -42,7 +42,7 @@ if ($num === 0) {
     echo '<option value="guides">Guides</option>';
     
     //Edit to 1 After Testing
-    if ($userId === "4") {
+    if ($userId === "1") {
         echo '<option value="official">Official</option>';
     }
     

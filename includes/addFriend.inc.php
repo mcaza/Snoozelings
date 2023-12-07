@@ -19,6 +19,13 @@ if ($result['blockRequests'] === 1) {
     die();
 }
 
+//Check if they exist
+if(!$result) {
+    $_SESSION['reply'] = "There is no account with this user id.";
+    header("Location: ../friends?id=" . $userId);
+    die();
+}
+
 //Check for Friend Limit
 $query = 'SELECT friendList FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
@@ -40,6 +47,7 @@ if ($id === $userId) {
     header("Location: ../index");
     die();
 }
+
 
 //Check if they are on friend list
 if ($result) {

@@ -201,6 +201,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $result['id']);
     $stmt->execute();
     
+    //Add 5 Coins
+    $query = 'UPDATE users SET coinCount = coinCount + 5 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    
     //Set Session for Coins
     $_SESSION['finish'] = 1;
     

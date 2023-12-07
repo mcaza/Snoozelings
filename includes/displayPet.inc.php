@@ -1,17 +1,14 @@
 <?php 
 function displayPet($pet, $class) {    
-    //Pillow Array
-    $pillows = ['Blue', 'Green', 'Orange', 'Pink', 'Purple', 'Red', 'Yellow'];
     
     
     echo '<div class="art-container">';
     if ($pet['mainColor']) {
-    /* if($class === "arttwo") {
-        $randomNum = rand(0, count($pillows)-1);
-        echo "<div class='${class} pillow'>";
-        echo "<img src='Layers/Pillows/" . $pillows[$randomNum] . ".png'>";
+    if($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] === "1")) {
+        echo "<div class='${class}'>";
+        echo "<img src='Layers/Beds/Back/" . $pet['bedcolor'] . ".png'>";
         echo "</div>";
-    } */
+    } 
     
     if (strpos($pet["specials"], "Wings") !== false) {
         
@@ -94,6 +91,11 @@ function displayPet($pet, $class) {
             echo '<img src="Layers/Hair/' . $pet['hairType'] . "/" . $pet['hairColor'] . '.png" id="Hairone">';
         } }
             echo "</div>";
+        if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] === "1")) {
+        echo "<div class='${class}'>";
+        echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+        echo "</div>";
+    } 
         if ($pet["tailType"] === "Dragon") {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Tail/Dragon/End/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
@@ -150,6 +152,11 @@ function displayPet($pet, $class) {
             echo "</div>";
         } } }
     }
+    if(($class === "arttwo" && !($pet['tailType'] === "Dragon" || "Panther")) || ($class === "artlarge" && $pet['showbed'] === "1" && !($pet['tailType'] === "Dragon" || "Panther"))) {
+        echo "<div class='${class}'>";
+        echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+        echo "</div>";
+    } 
     if ($class === 'tinyPet') {
         echo "<div class='${class}'>";
         echo "<a href='profile?id=" . $pet['owner_id'] . "'><img src='Layers/transparentSquare.png'></a>";

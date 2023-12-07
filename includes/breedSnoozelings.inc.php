@@ -12,15 +12,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($second === "other") {
         $breedid = $_POST['id'];
     }
-    
     if ($breedid) {
         if ($breedid === $first) {
             $_SESSION['reply'] = 'You need to use 2 different snoozelings as inspiration.';
             header("Location: ../stitcher?page=new");
+            die();
         }
     } if ($second === $first) {
         $_SESSION['reply'] = 'You need to use 2 different snoozelings as inspiration.';
             header("Location: ../stitcher?page=new");
+            die();
     }
     
     //Check if person has max snoozelings
@@ -34,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($count > 9) {
         $_SESSION['reply'] = 'You currently have the max number of snoozelings.';
         header("Location: ../stitcher?page=new");
+        die();
     }
     
     //If using an ID, check permissions
@@ -46,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($status['breedStatus'] === 'Closed') {
             $_SESSION['reply'] = 'This snoozeling is not allowed to be used for inspiration.';
             header("Location: ../stitcher?page=new");
+            die();
         }
     }
     
@@ -60,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($bpcount < $blueprints) {
         $_SESSION['reply'] = 'You have used more blueprints than is in your inventory.';
         header("Location: ../stitcher?page=new");
+        die();
     }
     
     //Check for bed
@@ -73,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!$bed) {
         $_SESSION['reply'] = 'You need a Pet Bed for the new snoozeling to sleep in.';
             header("Location: ../stitcher?page=new");
+            die();
     }   
     
     //Create a Breeding ID
@@ -89,12 +94,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
-    $breedid = $stmt->fetch(PDO::FETCH_ASSOC);
-    $breedingId = $breedid['id'];
+    $breedidid = $stmt->fetch(PDO::FETCH_ASSOC);
+    $breedingId = $breedidid['id'];
     
     //Cycle Through Amount of Blueprints. Create a blueprint for each
     for ($i = 0; $i < $blueprints; $i++) {
-        breed($pdo, $first, $second, $userId, $breedingId);
+        breed($pdo, $first, $second, $userId, $breedingId, $breedid);
     }
     
     
@@ -104,9 +109,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         array_push($itemArray, 21);
     }
     foreach ($itemArray as $item) {
-        $query = 'DELETE FROM items WHERE list_id = :id LIMIT 1';
+        $query = 'DELETE FROM items WHERE list_id = :id AND user_id = :user LIMIT 1';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $item);
+        $stmt->bindParam(":user", $userId);
         $stmt->execute(); 
     }
     
@@ -120,7 +126,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $query = 'SELECT * FROM snoozelings WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $second);
+    if ($breedid) {
+        $stmt->bindParam(":id", $breedid);
+    } else {
+        $stmt->bindParam(":id", $second);
+    }
     $stmt->execute();
     $nametwo = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -173,7 +183,7 @@ header("Location: ../index");
 
 
 
-function breed($pdo, $first, $second, $user, $breeding) {
+function breed($pdo, $first, $second, $user, $breeding, $breedid) {
     //Get Info from parent One
     $query = 'SELECT * FROM snoozelings WHERE id = :id';
     $stmt = $pdo->prepare($query);
@@ -185,7 +195,7 @@ function breed($pdo, $first, $second, $user, $breeding) {
     if ($breedid) {
     $query = 'SELECT * FROM snoozelings WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $first);
+    $stmt->bindParam(":id", $breedid);
     $stmt->execute();
     $two = $stmt->fetch(PDO::FETCH_ASSOC);
     } else {
@@ -195,6 +205,7 @@ function breed($pdo, $first, $second, $user, $breeding) {
         $stmt->execute();
         $two = $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
     
     //Calculate Main Color
     $query = 'SELECT * FROM colors WHERE name = :name';
@@ -485,73 +496,15 @@ function breed($pdo, $first, $second, $user, $breeding) {
             $eyeColor = $eyecolors[$num];
     }
     
-    //Nose/Ear Color Selection
-    $fabrics = [];
-    $fabricnames = [];
-    $query = 'SELECT name FROM colors';
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    $colors = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    foreach ($colors as $color) {
-        array_push($fabricnames, $color['name']);
-    }
-    
-    if (!in_array($one['noseColor'], $fabricnames)) {
-        array_push($fabrics, $one['noseColor']);
-    }
-    
-    if (!in_array($two['noseColor'], $fabricnames)) {
-        array_push($fabrics, $two['noseColor']);
-    }
-    if (count($fabrics) > 0) {
-        if (in_array($mainColor, $rare)) {
-            $num = rand(0, 100);
-            if ($num < 50) {
-                $count = count($fabrics) - 1;
-                $num = rand(0, $count);
-                $noseColor = $fabrics[$num];
-            } else {
-                $noseColor = $mainColor;
-            }
-        } else {
-        $count = count($fabrics) -1;
-        $num = rand(0, $count);
-        $noseColor = $fabrics[$num];
-        }    
-    } elseif (in_array($mainColor, $rare)) {
-        $num = rand(0, 100);
-            if ($num < 50) {
-                $noseColor = $mainColor;
-            } else {
-                        $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['noseColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
-    
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['noseColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    $mainColors = array_merge($mainone, $maintwo);
-        $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
-        
-        $count = count($mainColors) - 1;
-        $num = rand(0, $count);
-        $noseColor = $mainColors[$num];
-            }
-} else {
+    //Nose Function
+    function chooseNose($one, $two, $pdo) {
         $query = 'SELECT * FROM colors WHERE name = :name';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":name", $one['noseColor']);
     $stmt->execute();
     $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
     $mainone = explode(" ", $cats1['categories']);
+    array_shift($mainone);
     
     $query = 'SELECT * FROM colors WHERE name = :name';
     $stmt = $pdo->prepare($query);
@@ -559,13 +512,87 @@ function breed($pdo, $first, $second, $user, $breeding) {
     $stmt->execute();
     $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
     $maintwo = explode(" ", $cats2['categories']);
+    array_shift($maintwo);
     $mainColors = array_merge($mainone, $maintwo);
         $mainColors = array_unique($mainColors);
     $mainColors = array_values($mainColors);
-        $count = count($mainColors)-1;
-        $num = rand(0, $count);
-        $noseColor = $mainColors[$num];
+        
+        $subcolors = [];
+    foreach ($mainColors as $color) {
+        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":colorSearch", $color);
+        $stmt->execute();
+        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($subs as $sub) {
+            if ($sub['rarity'] === "Rare") {
+                
+            } else {
+                array_push($subcolors, $sub['name']);
+            }
+        }
     }
+    $subcolors = array_unique($subcolors);
+    $subcolors = array_values($subcolors);
+
+        $count = count($subcolors) - 1;
+        $num = rand(0, $count);
+        $noseColor = $subcolors[$num];
+        
+        return $noseColor;
+    }
+    
+    //Nose/Ear Color Selection
+    $fabrics = [];
+    $query = 'SELECT * FROM fabrics WHERE name = :name';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $one['noseColor']);
+    $stmt->execute();
+    $fabricone = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $query = 'SELECT * FROM fabrics WHERE name = :name';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $one['noseColor']);
+    $stmt->execute();
+    $fabrictwo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if ($fabricone) {
+        array_push($fabrics, $one['noseColor']);
+    }
+    
+    if ($fabrictwo) {
+        array_push($fabrics, $one['noseColor']);
+    }
+    
+    if ($fabrics) {
+        $count = count($fabrics);
+        if ($count > 1) {
+            $num = rand(0,4);
+            if ($num === 0) {
+                $noseColor = $one['noseColor'];
+            } elseif ($num === 1) {
+                $noseColor = $two['noseColor'];
+            } else {
+                $noseColor =  chooseNose($one, $two, $pdo);
+            }
+        } elseif ($count === 1) {
+            $num = rand(0,4);
+            if ($num === 1) {
+                if ($fabricone) {
+                    $noseColor = $one['noseColor'];
+                } elseif ($fabrictwo) {
+                    $noseColor = $two['noseColor'];
+                }
+            } else {
+                $noseColor =  chooseNose($one, $two, $pdo);
+            }
+        }
+        
+    } else {
+        $noseColor =  chooseNose($one, $two, $pdo);
+    }
+    
+
     
     //Calculate Hair Color
         if (in_array($mainColor, $rare)) {

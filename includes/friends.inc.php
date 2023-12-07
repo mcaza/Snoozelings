@@ -38,12 +38,17 @@ echo '<div style="display: flex;flex-direction: row;flex-wrap: wrap; justify-con
 //Fetch Friends
 $query = 'SELECT friendList FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":id", $userId);
+if ($id === $userId) {
+    $stmt->bindParam(":id", $userId);
+} else {
+    $stmt->bindParam(":id", $id);
+}
 $stmt->execute();
 $friends = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($friends) {
     $list = explode(" ", $friends['friendList']);
+    array_shift($list);
     foreach ($list as $friend) {
         //User Info
         $query = "SELECT * FROM users WHERE id = :id";

@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $likes = 0;
     $new = 0;
     
-    if (!($type === 'general' || $type === 'media' || $type === 'freebies' || $type === 'artwork' || $type === 'guides')) {
+    if (!($type === 'general' || $type === 'media' || $type === 'freebies' || $type === 'artwork' || $type === 'guides' || ($type === 'official' && $userId === "1"))) {
         $_SESSION['title'] = $title;
         $_SESSION['post'] = $post;
         header("Location: ../newPost");

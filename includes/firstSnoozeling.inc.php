@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $mood = "Happy";
     $breedStatus = "Closed";
     $title = "The New One";
+    $bed = "BrownFree";
     
     $query = "SELECT * FROM blueprints WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -22,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     
-   $query = "INSERT INTO snoozelings (owner_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials, name, pronouns, birthDate, job, mood, breedStatus, title) VALUES (:owner_id, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials, :name, :pronouns, :birthDate, :job, :mood, :breedStatus, :title);";
+   $query = "INSERT INTO snoozelings (owner_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials, name, pronouns, birthDate, job, mood, breedStatus, title, bedcolor) VALUES (:owner_id, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials, :name, :pronouns, :birthDate, :job, :mood, :breedStatus, :title, :bed);";
     $stmt = $pdo->prepare($query);
     
     $stmt->bindParam(":owner_id", $userId);
@@ -41,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":mood", $mood);
     $stmt->bindParam(":breedStatus", $breedStatus);
     $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":bed", $bed);
 
     $stmt->execute(); 
     
@@ -66,6 +68,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Increase Daily Records +1
     $query = 'UPDATE dailyRecords SET newMembers = newMembers + 1';
     $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    
+    //Add Bed to Account (Account bound)
+    $bed = 27;
+    $zero = 0;
+    
+    $query = 'SELECT * FROM itemList WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $bed);
+    $stmt->execute();
+    $item = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+        $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":list", $bed);
+    $stmt->bindParam(":user", $userId);
+    $stmt->bindParam(":name", $item['name']);
+    $stmt->bindParam(":display", $item['display']);
+    $stmt->bindParam(":description", $item['description']);
+    $stmt->bindParam(":type", $item['type']);
+    $stmt->bindParam(":rarity", $item['rarity']);
+    $stmt->bindParam(":canDonate", $zero);
     $stmt->execute();
     
     //Add 2 Farms to Account
@@ -106,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     Doctors Names, Your Name, Facility Names, Facility Addresses, Specific Medication Names (Bupropion, etc), City/State/Province Names
     
     <b>Please Note</b>
-    If you are having any difficult thoughts about harming yourself or others, please contact emergency services immeadiately. We can not help you because your journal is meant to be private and is not monitored by staff. There are professionals out there trained to help you through these tough times.
+    If you are having any difficult thoughts about harming yourself or others, please contact emergency services immediately. We cannot help you because your journal is meant to be private and is not monitored by staff. There are professionals out there trained to help you through these tough times.
     
     That's everything for today. Hope you enjoy the game. <3
     

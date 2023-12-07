@@ -148,7 +148,7 @@ echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Determined & 	Pro-active</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Shadow Puppets</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To find joy in simple things.</p>';
-              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Even with his prosthetic leg, Cole always delivers the mail on time. His favorite part of the job is seeing the excitement on <br>his customer\'s faces.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Even with their prosthetic leg, Cole always delivers the mail on time. Their favorite part of the job is seeing the excitement on <br>every customer\'s face.</p>';
         } elseif ($id === "8") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Kindness Shopkeeper</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Cream Cheese Bagels</p>';
@@ -199,10 +199,14 @@ if ($id === "4") {
                <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;">
 <h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Achievements</h4>
                                    <div  >';
-    $trophies = explode(" ", $result['trophies']);
-    foreach ($trophies as $trophy) {
+    if ($result['trophies']) {
+        $trophies = explode(" ", $result['trophies']);
+        array_shift($trophies);
+        foreach ($trophies as $trophy) {
         echo '<img style="height: 60px;" src="trophies/' . $trophy . '.png" title="' . $trophy . '">';
     }
+    }
+
 
              echo   '</div>';
              echo   '</div>
@@ -213,6 +217,7 @@ if ($id === "4") {
                 echo '<div style="display: flex; flex-direction: row; column-gap: 3rem;">';
                  if ($result['friendList']) {
                      $friends = explode(" ", $result['friendList']);
+                     array_shift($friends);
                      $friends = array_slice($friends, 0, 11);
                      $length = count($friends);
                      $count = 0;

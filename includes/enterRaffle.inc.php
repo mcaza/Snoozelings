@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":price", $price);
     $stmt->execute();
     
-    $_SESSION['reply'] = 'You have enterred today\'s raffle.';
+    $_SESSION['reply'] = 'You have entered today\'s raffle.';
         header("Location: ../raffle");
     
 } else {

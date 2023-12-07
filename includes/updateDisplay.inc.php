@@ -65,6 +65,7 @@ echo '</select><br>';
 //Title
 echo '<label for="title"  class="form">Snoozeling\'s Title:</label><br>';
 echo '<select  class="input" name="title"><br>';
+echo '<option value=""></option>';
 foreach ($titles as $title) {
     echo '<option value="' . $title['title'] . '">' . $title['title'] . '</option>';
 }
@@ -79,9 +80,28 @@ if ($result['farmEXP '] > 1000) {
 }
 echo "</select><br>";
 
+//Bed Color
+echo '<label for="bed"  class="form">Bed Color:</label><br>';
+echo '<select  class="input" name="bed"><br>';
+echo '<option value=""></option>';
+echo '<option value="BrownFree">Brown</option>';
+echo '<option value="BlueFree">Blue</option>';
+echo '<option value="GreenFree">Green</option>';
+echo '<option value="PinkFree">Pink</option>';
+echo '<option value="RedFree">Red</option>';
+echo '</select><br>';
+
+//Show Bed
+echo '<label for="showbed"  class="form">Bed on Pet Page:</label><br>';
+echo '<select  class="input" name="showbed"><br>';
+echo '<option value=""></option>';
+echo '<option value="1">Yes</option>';
+echo '<option value="0">No</option>';
+echo '</select><br>';
+
 //List of Current Clothes (Adding Later)
 echo '<label for="status"  class="form">Remove Clothes:</label><br>';
-if ($result['clothesTop'] || $result['clothesBottom'] || $result['clothesHoodie'] || $result['clothesboth']) {
+if ($result['clothesTop'] || $result['clothesBottom'] || $result['clothesHoodie'] || $result['clothesBoth']) {
 if ($result['clothesTop']) {
     $clothes = explode(" ", $result['clothesTop']);
     foreach ($clothes as $clothing) {

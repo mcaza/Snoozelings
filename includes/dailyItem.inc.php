@@ -24,31 +24,30 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Roll Items
 $count = count($items);
-$randomNum = rand(0, $count);
-$fixedNumber = $randomNum - 1;
+$randomNum = rand(0, $count - 1);
 
 //Insert Items
 $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
         $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":list", $randomNum);
+    $stmt->bindParam(":list", $items[$randomNum]['id']);
     $stmt->bindParam(":user", $userId);
-    $stmt->bindParam(":name", $items[$fixedNumber]['name']);
-    $stmt->bindParam(":display", $items[$fixedNumber]['display']);
-    $stmt->bindParam(":description", $items[$fixedNumber]['description']);
-    $stmt->bindParam(":type", $items[$fixedNumber]['type']);
-    $stmt->bindParam(":rarity", $items[$fixedNumber]['rarity']);
-    $stmt->bindParam(":canDonate", $items[$fixedNumber]['canDonate']);
-    $stmt->execute();
+    $stmt->bindParam(":name", $items[$randomNum]['name']);
+    $stmt->bindParam(":display", $items[$randomNum]['display']);
+    $stmt->bindParam(":description", $items[$randomNum]['description']);
+    $stmt->bindParam(":type", $items[$randomNum]['type']);
+    $stmt->bindParam(":rarity", $items[$randomNum]['rarity']);
+    $stmt->bindParam(":canDonate", $items[$randomNum]['canDonate']);
+    $stmt->execute(); 
     
-//Change User dailyPrize to 1
+ //Change User dailyPrize to 1
 $query = "UPDATE users SET dailyPrize = :num WHERE id = :id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->bindParam(":num", $num);
-$stmt->execute();
+$stmt->execute(); 
 
 //Redirect
-    $_SESSION['reply'] = "You have recieved the following item: " . $items[$fixedNumber]['display'];
+    $_SESSION['reply'] = "You have received the following item: " . $items[$randomNum]['display'];
     header("Location: ../randomitem");
 } else {
     header("Location: ../randomitem");

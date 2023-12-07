@@ -64,7 +64,6 @@ if ($journal['type'] === 'pain') {
     }
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $journal['id']);
-    $stmt->bindParam(":num", $days);
     $stmt->execute();
     $journals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

@@ -23,7 +23,7 @@ $day = $stmt->fetch(PDO::FETCH_ASSOC);
     //Get Entries Count
     if ($day['entries']) {
         $explode = explode(" ", $day['entries']);
-        $count = count($explode) -1;
+        $count = count($explode) ;
     } else {
         $count = 1;
     }
@@ -74,25 +74,35 @@ foreach ($results as $result) {
     echo '</div>';
 }
 echo '</div>';
-if (in_array($userId, $explode)) {
-    echo '<p style="margin-top: 3rem;"><strong>You have already enterred the raffle today.</strong></p>';
-} else {
-    echo "<form method='POST' action='includes/enterRaffle.inc.php' onsubmit=\"return confirm('Buying a ticket will cost you 1 gold coin.');\">";
+if ($count === 0 || !in_array($userId, $explode)) {
+     echo "<form method='POST' action='includes/enterRaffle.inc.php' onsubmit=\"return confirm('Buying a ticket will cost you 1 gold coin.');\">";
     echo '<button  class="fancyButton">Buy Ticket</button>';
     echo '</form>';
-}
+   
 
-echo '<p style="font-size: 2rem; margin-top: 3rem;"><strong>Total Entries: </strong>' . $count . '</p>';
+} else {
+        echo '<p style="margin-top: 3rem;"><strong>You have already entered the raffle today.</strong></p>';
+    }
+
+echo '<p style="font-size: 2rem; margin-top: 3rem;"><strong>Total Entries: </strong>' . $count  . '</p>';
 
 if (!($day['id'] === "1")) {
     //Grab Raffle Count
-    $id = intval($day['id']) - 1;
+    $query = 'SELECT * FROM rafflecount';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $day = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $num = count($day) - 1;
+    
     $query = 'SELECT * FROM rafflecount WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":id", $num);
     $stmt->execute();
-    $day = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    $yesterdays = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $numbers = explode(" ", $yesterdays['entries']);
+    $count = count($numbers);
 
     
     //Grab Raffle Items
@@ -162,8 +172,12 @@ echo "<form method='POST' action='includes/donateItem.inc.php' onsubmit=\"return
 foreach ($items as $item) {
     echo '<div style="margin-bottom:1rem;"><input type="radio" id="' . $item['name'] . '" name="donation" value="' . $item['list_id'] . '" required><label style="font-size: 1.8rem;" for="' . $item['name'] . '">' . $item['display'] . '</label><br></div>';
 }
+if (!$items) {
+    echo '<h4>You don\'t have any items that can be donated.';
+} else {
+    echo '<button  class="fancyButton">Donate Item</button>';
+}
 
-echo '<button  class="fancyButton">Donate Item</button>';
 echo '</form>';
 
 

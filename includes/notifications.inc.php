@@ -3,7 +3,7 @@
 $userId = $_SESSION['user_id'];
 $count = 1;
 $now = new DateTime();
-$result = $now->format('Y-m-d H:i:s');
+$result = $now->format('Y-m-d');
 
 $query = 'SELECT * FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
@@ -41,7 +41,7 @@ if ($journal['type'] === "pain") {
     $stmt->execute();
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($journal['id']) {
-        if ($result > $journal['date']) {
+        if ($journal['closed'] === 1) {
             echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
             $count++; 
         }
@@ -53,7 +53,7 @@ if ($journal['type'] === "pain") {
     $stmt->execute();
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($journal['id']) {
-        if ($result > $journal['date']) {
+        if ($journal['closed'] === 1) {
             echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
             $count++; 
         }

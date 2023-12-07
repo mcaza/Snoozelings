@@ -59,7 +59,7 @@ if ($item['name'] === "PlanterBox") {
     echo '<button class="fancyButton" onClick="window.location.href=\'includes/useBox.inc.php\'">Add Farm Plot</button>';
 }
 
-if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie') {
+if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
     echo '<form method="post" action="includes/wearClothes.inc.php">';
     echo '<input type="hidden" name="item" value="' . $id . '">';
     echo '<label for="area"  class="form">Choose A Pet:</label><br>';

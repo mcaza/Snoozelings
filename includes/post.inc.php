@@ -51,7 +51,7 @@ if ($post) {
     
     
     echo '<h3>' . htmlspecialchars($post['title']) . '</h3>';
-    echo '<p style="margin-top: 3rem;margin-bottom: 3rem;width: 70%;margin-left: auto;margin-right: auto;">' . nl2br(htmlspecialchars($post['text'])) . '</p>';
+    echo '<p style="margin-top: 3rem;margin-bottom: 3rem;width: 70%;margin-left: auto;margin-right: auto;line-height: 2rem;">' . nl2br(htmlspecialchars($post['text'])) . '</p>';
     echo '<p><i>' . $post['likes'] . ' Likes, ' . $count . ' Comments</i></p>';
     echo '</div>';
     
@@ -60,7 +60,7 @@ if ($post) {
     
     foreach ($comments as $comment) {
         //Get Bonded Pet Number
-        $query = 'SELECT bonded FROM users WHERE id = :id';
+        $query = 'SELECT bonded, username FROM users WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $comment['user_id']);
         $stmt->execute();
@@ -76,6 +76,7 @@ if ($post) {
         echo '<div class="commentBox">';
         echo '<div class="commentPet" style="border-right: 	#E5E4E2 1px solid;">';
         displayPet($pet, "tinyPet");
+        echo '<p style="margin-top: 0;"><b><a href="profile?id=' . $comment['user_id'] . '">' . htmlspecialchars($result['username']) . '</a></b></p>';
         echo '</div>';
         echo '<div class="commentText" >';
         echo '<p>' . nl2br(htmlspecialchars($comment['comment'])) . '</p>';

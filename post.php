@@ -62,18 +62,6 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 <!-- Snoozeling Display Box. Currently Generates Random Snoozeling -->
                 <div class="bar-container">
                     <?php require '../includes/leftPet.inc.php'; ?>
-                    <p id="mood" onClick="showForm()"><strong>Mood:</strong> Happy</p>
-                    <form id="moodForm">
-                        <label for="mood">Choose a Mood:</label>
-                        <select id="moodSelect" name="mood">
-                            <option value="Happy">Happy</option>
-                            <option value="Anxious">Anxious</option>
-                            <option value="Worried">Worried</option>
-                            <option value="Silly">Silly</option>
-                            <option value="Overwhelmed">Overwhelmed</option>
-                        </select><br>
-                        <input type="button" onClick="hideForm()" value="Change Mood">
-                    </form>
                 </div>
             </div>
 

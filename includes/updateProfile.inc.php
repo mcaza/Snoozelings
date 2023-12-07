@@ -180,7 +180,7 @@ echo '</select><br>';
 echo '<p><i>Any Blank Fields Will Not Be Changed</i></p>';
 
 //Submit Button
-echo '<button  class="fancyButton">Update Pet</button>';
+echo '<button  class="fancyButton">Update Profile</button>';
 echo '</form>';
 
 

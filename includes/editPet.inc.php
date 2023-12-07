@@ -11,6 +11,8 @@ $pronouns = $_POST["pronouns"];
 $status = $_POST["status"];
 $title = $_POST["title"];
 $id = $_POST['id'];
+$bed = $_POST['bed'];
+$showbed = $_POST['showbed'];
 $userId = $_SESSION['user_id'];
     
     //Snoozeling Info
@@ -136,6 +138,25 @@ $userId = $_SESSION['user_id'];
             }
             
             //Return Item
+            $query = 'SELECT * FROM itemList WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $item);
+            $stmt->execute();
+            $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":list", $item);
+            $stmt->bindParam(":user", $userId);
+            $stmt->bindParam(":name", $iteminfo['name']);
+            $stmt->bindParam(":display", $iteminfo['display']);
+            $stmt->bindParam(":description", $iteminfo['description']);
+            $stmt->bindParam(":type", $iteminfo['type']);
+            $stmt->bindParam(":rarity", $iteminfo['rarity']);
+            $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
+            $stmt->execute();
+     
+            
                 
             //Reset $item
             $item = "";
@@ -175,6 +196,33 @@ $userId = $_SESSION['user_id'];
         }
     }
     
+    //Bed
+    if ($bed) {
+        if (!($bed === "BlueFree" || $bed === "BrownFree" || $bed === "GreenFree" || $bed === "PinkFree" || $bed === "RedFree")) {
+            header("Location: ../editPet?id=" . $id);
+            die();
+        } else {
+            $query = 'UPDATE snoozelings SET bedcolor = :bed WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":bed", $bed);
+            $stmt->execute();
+        }
+    }
+    
+    //Showbed
+    if ($showbed) {
+        if (!($showbed === "1" || $showbed === "0")) {
+            header("Location: ../editPet?id=" . $id);
+            die();
+        } else {
+            $query = 'UPDATE snoozelings SET showbed = :bed WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":bed", $showbed);
+            $stmt->execute();
+        }
+    }
 
     //Insert into Pet Table
     $query = "UPDATE snoozelings SET name = :name, pronouns = :pronouns, breedStatus = :status, title = :title WHERE id = :id";

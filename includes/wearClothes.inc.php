@@ -31,13 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Make sure item is clothing type
-    if (!($type === 'clothesTop' || $type === "clothesBottom" || $type === 'clothesHoodie')) {
+    if (!($type === 'clothesTop' || $type === "clothesBottom" || $type === 'clothesHoodie' || $type === 'clothesBoth')) {
         $_SESSION['reply'] = "This is not a clothing item and cannot be worn.";
         header("Location: ../pack");
     }
       
     //Fetch Current Pet Clothes of that Type. 
-    $query = 'SELECT clothesTop, clothesBottom, clothesHoodie FROM snoozelings WHERE id = :id';
+    $query = 'SELECT clothesTop, clothesBottom, clothesHoodie, clothesBoth FROM snoozelings WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $petid);
     $stmt->execute();
@@ -51,6 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $clothes = $pet['clothesBottom'];
     } elseif ($type === 'clothesHoodie') {
         $clothes = $pet['clothesHoodie'];
+    } elseif ($type === 'clothesBoth') {
+        $clothes = $pet['clothesBoth'];
     }
     if (str_contains($clothes, $name)) {
         $_SESSION['reply'] = "Your pet is already wearing this item.";
@@ -73,6 +75,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $string .= ' ' . $result['name'];
         $string = trim($string);
         $query = 'UPDATE snoozelings SET clothesHoodie = :clothes WHERE id = :id';
+    } 
+    elseif ($type === 'clothesBoth') {
+        $string = $pet['clothesBoth'];
+        $string .= ' ' . $result['name'];
+        $string = trim($string);
+        $query = 'UPDATE snoozelings SET clothesBoth = :clothes WHERE id = :id';
     }
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $petid);

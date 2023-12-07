@@ -4,7 +4,7 @@ $userId = $_SESSION['user_id'];
 $jack = "jack";
 $explorer = "Explorer";
 
-$coins = $_SESSION['coins'];
+$coins = intval($_SESSION['coins']);
 $items = $_SESSION['items'];
 $error = $_SESSION['error'];
 $name = $_SESSION['petName'];
