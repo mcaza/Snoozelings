@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
         
     //Update Session message
-    $_SESSION['reply'] = '<p>' . htmlspecialchars($name['name'] . ' loves ' . $pronouns . ' new tailstyle!!!</p>');
+    $_SESSION['reply'] = htmlspecialchars($name['name'] . ' loves ' . $pronouns . ' new tailstyle!!!');
     
     //Reroute to trendytails
     header("Location: ../trendytails");

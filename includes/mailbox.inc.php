@@ -71,7 +71,7 @@ foreach ($mail as $letter) {
     $stmt->bindParam(":id", $letter['sender']);
     $stmt->execute();
     $sender = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo '<a href="mail?id=' . $letter['id'] . '">';
+    echo '<a href="mail?id=' . $letter['id'] . '" >';
     echo '<div class="mail">';
     if ($letter['opened'] === "1") {
         echo '<img src="resources/openletter.png" style="width: 80px;">';
@@ -82,7 +82,7 @@ foreach ($mail as $letter) {
     echo '<h4 style="margin-top: .5rem;">' . htmlspecialchars($letter['title']) . '</h4>';
     echo '<p>From ' . htmlspecialchars($sender['username']) . '</p>';
     echo '</div>';
-    echo '<input type="checkbox" name="' . $count . '" value="' . $letter['id'] . '" style="width: 30px; margin-right: 1rem;">';
+    echo '<input type="checkbox" href="" name="' . $count . '" value="' . $letter['id'] . '" style="width: 30px; margin-right: 1rem;">';
     echo '</div>';
     echo '</a>';
     $count++;
@@ -104,6 +104,6 @@ echo '</div>';
 }
 
 echo '<div style="text-align:right;">';
-echo '<button  class="fancyButton" style="background-color:#C80815; margin-right: 3rem;border-color: #800000">Delete Mail</button>';
+echo '<button  class="redButton" >Delete Mail</button>';
 echo '</form>';
 echo '</div>';

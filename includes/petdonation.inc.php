@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Return Bed
-    if ($bed === 0) {
+    if ($bed === "0") {
         $list = 27;
         $name = "PetBed";
         $display = "Pet Bed";
@@ -128,23 +128,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":rarity", $rarity);
         $stmt->bindParam(":canDonate", $canDonate);
         $stmt->execute();
-    }
+    } 
     
-    //Fix Pet Values
-    $erase = "";
-    $closed = "Closed";
-    $jack = "jack";
-    $zero = 0;
-    $title = "Up for Adoption";
-    $query = 'UPDATE snoozelings SET owner_id = :erase, breedStatus = :closed, job = :jack, farmEXP = :zero, craftEXP = :zero, exploreEXP = :zero, title = :title WHERE id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":erase", $erase);
-    $stmt->bindParam(":closed", $closed);
-    $stmt->bindParam(":jack", $jack);
-    $stmt->bindParam(":zero", $zero);
-    $stmt->bindParam(":title", $title);
-    $stmt->bindParam(":id", $one);
-    $stmt->execute(); 
+    
     
     //Remove & Return all Clothes
     if ($pet['clothesBottom']) {
@@ -231,6 +217,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute();
         }
     }
+    
+    //Fix Pet Values
+    $erase = "";
+    $closed = "Closed";
+    $jack = "jack";
+    $zero = 0;
+    $title = "Up for Adoption";
+    $query = 'UPDATE snoozelings SET owner_id = :erase, breedStatus = :closed, job = :jack, farmEXP = :zero, craftEXP = :zero, exploreEXP = :zero, title = :title, clothesbottom = :erase, clothesTop = :erase, clothesBoth = :erase, clothesHoodie = :erase WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":erase", $erase);
+    $stmt->bindParam(":closed", $closed);
+    $stmt->bindParam(":jack", $jack);
+    $stmt->bindParam(":zero", $zero);
+    $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":id", $one);
+    $stmt->execute(); 
     
     $_SESSION['reply'] = '<p>Your pet has been donated and will be available after their spa day.</p>';
         header("Location: ../adoption");

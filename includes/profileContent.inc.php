@@ -258,6 +258,9 @@ if ($id === "4") {
     
     echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';
 
+    if ($userId === "1") {
+    echo '<div style="text-align: right;"><form action="includes/rewardCoin.inc.php" method="POST"><input type="hidden" name="user" value="' . $id . '"><input name="reason" type="text" class="input"><br><button class="modButton">Kindness Coin</button></form></div>';
+    }
 
     echo "<script>
     //Profile / Snoozeling / Collection Fix When Only Right Arrow

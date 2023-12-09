@@ -176,7 +176,7 @@ if ($page === "questions") {
             $stmt->bindParam(":id", $userId);
             $stmt->execute();
             $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            echo "<form method='POST' action='includes/breedSnoozelings.inc.php' onsubmit=\"return confirm('Are you sure you want to make a new snoozeling?');\">";    
+            echo "<form method='POST' action='includes/breedSnoozelings.inc.php' onsubmit=\"return confirm('Are you sure you want to make a new snoozeling? This action will consume 1 sewing kit, 1 pet bed, and the selected number of blueprints.');\">";    
             echo '<label style="margin-top: 1rem;" for="first" class="form">1st Snoozeling for Inspiration:</label><br>';
             echo '<select class="input"  name="first">';
             foreach ($pets as $pet) {

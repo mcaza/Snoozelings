@@ -177,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":weather", $weather);
     $stmt->bindParam(":air", $air);
     $stmt->bindParam(":sleep", $sleep);
-    $stmt->bindParam(":water", $air);
+    $stmt->bindParam(":water", $water);
     $stmt->bindParam(":physicalActivity", $activity);
     $stmt->bindParam(":missedMeds", $meds);
     $stmt->bindParam(":remedies", $remedy);

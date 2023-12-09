@@ -7,12 +7,22 @@ $name = $_SESSION['bonded'];
 $reply = $_SESSION['reply'];
 unset($_SESSION['reply']);
 
+if (!$name) {
 //Get Bonded ID
 $query = "SELECT bonded FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$bonded = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//Get Bonded Name
+$query = 'SELECT name FROM snoozelings WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $bonded);
+$stmt->execute();
+$bonded = $stmt->fetch(PDO::FETCH_ASSOC);
+    $name = $bonded['name'];
+}
 
 //Fetch All Items
 $query = "SELECT * FROM items WHERE user_id = :id";
@@ -114,7 +124,7 @@ foreach ($itemCount as $item) {
     } else {
         $name = $items[$round-1]['display'];
     }
-    echo '<img src="items/' . $items[$round-1]['name'] . '.png">';
+    echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="height:100px">';
     echo '<p>' . $itemCount[$round] . ' ' . $name . '</p>';
         echo '</div></a>';
         }

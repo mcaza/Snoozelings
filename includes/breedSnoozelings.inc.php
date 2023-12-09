@@ -68,9 +68,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check for bed
     $bed = 27;
-    $query = "SELECT * FROM items WHERE list_id = :id LIMIT 1";
+    $query = "SELECT * FROM items WHERE list_id = :id AND user_id = :user LIMIT 1";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $bed);
+    $stmt->bindParam(":user", $userId);
     $stmt->execute();
     $bed = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -90,7 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $stmt->bindParam(":two", $second);
     }
-    
     $stmt->bindParam(":blueprints", $blueprints);
     $stmt->execute();
     
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":id", $item);
         $stmt->bindParam(":user", $userId);
         $stmt->execute(); 
-    }
+    } 
     
     //Send Letter
     //Grab Snoozeling Names
@@ -186,27 +186,11 @@ header("Location: ../index");
 }
 
 //Nose Function
-    function chooseNose($one, $two, $pdo) {
-        $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['noseColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
-    array_shift($mainone);
-    
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['noseColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    array_shift($maintwo);
-    $mainColors = array_merge($mainone, $maintwo);
-        $mainColors = array_unique($mainColors);
+    function chooseNose($mainColors, $pdo) {
+    $mainColors = array_unique($mainColors);
     $mainColors = array_values($mainColors);
         
-        $subcolors = [];
+    $subcolors = [];
     foreach ($mainColors as $color) {
         $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
         $stmt = $pdo->prepare($query);
@@ -227,7 +211,6 @@ header("Location: ../index");
         $count = count($subcolors) - 1;
         $num = rand(0, $count);
         $noseColor = $subcolors[$num];
-        
         return $noseColor;
     }
 
@@ -553,21 +536,38 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":name", $one['noseColor']);
     $stmt->execute();
-    $fabricone = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $fabricone = $stmt->fetch(PDO::FETCH_ASSOC);
     
     $query = 'SELECT * FROM fabrics WHERE name = :name';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['noseColor']);
+    $stmt->bindParam(":name", $two['noseColor']);
     $stmt->execute();
-    $fabrictwo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $fabrictwo = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($fabricone) {
         array_push($fabrics, $one['noseColor']);
+        $catsone = explode(" ", $fabricone['categories']);
+    } else {
+        $query = "SELECT * FROM colors WHERE name = :name";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $one['noseColor']);
+        $stmt->execute();
+        $colorone = $stmt->fetch(PDO::FETCH_ASSOC);
+        $catsone = explode(" ", $colorone['categories']);
     }
     
     if ($fabrictwo) {
-        array_push($fabrics, $one['noseColor']);
+        array_push($fabrics, $two['noseColor']);
+        $catstwo = explode(" ", $fabrictwo['categories']);
+    } else {
+        $query = "SELECT * FROM colors WHERE name = :name";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $two['noseColor']);
+        $stmt->execute();
+        $colortwo = $stmt->fetch(PDO::FETCH_ASSOC);
+        $catstwo = explode(" ", $colortwo['categories']);
     }
+    $categories = array_merge($catsone, $catstwo);
     
     if ($fabrics) {
         $count = count($fabrics);
@@ -578,7 +578,7 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
             } elseif ($num === 1) {
                 $noseColor = $two['noseColor'];
             } else {
-                $noseColor =  chooseNose($one, $two, $pdo);
+                $noseColor =  chooseNose($categories, $pdo);
             }
         } elseif ($count === 1) {
             $num = rand(0,4);
@@ -589,12 +589,12 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
                     $noseColor = $two['noseColor'];
                 }
             } else {
-                $noseColor =  chooseNose($one, $two, $pdo);
+                $noseColor = chooseNose($categories, $pdo);
             }
         }
         
     } else {
-        $noseColor =  chooseNose($one, $two, $pdo);
+        $noseColor =  chooseNose($categories, $pdo);
     }
     
 

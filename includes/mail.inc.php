@@ -56,7 +56,7 @@ if ($num < 2 || $num > 3 && $num < 10) {
 }
 echo '</div>';
 
-
+//Reply Box with Button
 if ($num < 3 || $num > 9) {
 echo '<hr>';
 echo '<form method="POST" action="includes/sendReply.inc.php">';
@@ -68,4 +68,11 @@ echo '<button  class="fancyButton">Send Reply</button>';
 echo '</form>';
 }
 
-//Reply Box with Button
+//Delete Button
+echo '<hr>';
+echo '<div style="text-align: right;">';
+echo '<form action="includes/deleteMail.inc.php" method="post">';
+echo '<input name="button" value="' . $id . '" type="hidden">';
+echo '<button  class="redButton">Delete Letter</button>';
+echo '</form>';
+echo '</div>';

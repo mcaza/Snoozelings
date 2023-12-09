@@ -54,6 +54,7 @@ echo '<p><strong>Rarity: </strong>' . ucfirst($item['rarity']) . '</p>';
 echo '<p><strong>Quantity: </strong>' . $count . '</p>';
 echo '</div>';
 
+if ($results) {
 //Planter Box - Add Farm Plot
 if ($item['name'] === "PlanterBox") {
     echo '<button class="fancyButton" onClick="window.location.href=\'includes/useBox.inc.php\'">Add Farm Plot</button>';
@@ -72,8 +73,7 @@ if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item
     echo '</form>';
 
 }
-    
-    //Clothes Top / Bottom Use Items
+}
 
 echo '</div>';
 

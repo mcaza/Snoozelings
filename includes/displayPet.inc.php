@@ -153,7 +153,7 @@ function displayPet($pet, $class) {
         } } }
     }
     if(($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] === "1"))) {
-        if ($pet['tailType'] === "Dragon" || $pet['tailType'] === "Panther") {
+        if ($pet['tailType'] === "Dragon" || $pet['tailType'] === "Panther" || $pet['tailType'] === "Mermaid") {
             
         } else {
             echo "<div class='${class}'>";

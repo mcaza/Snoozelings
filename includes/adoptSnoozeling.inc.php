@@ -58,17 +58,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Give Kindness Coin to Donator
-    $one = 1;
-    $query = 'UPDATE users SET kindnessCount = kindnessCount - :one WHERE id = :id';
+    $query = 'UPDATE users SET kindnessCount = kindnessCount + 1 WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->bindParam(":one", $one);
+    $stmt->bindParam(":id", $pet['owner_id']);
     $stmt->execute();
     
     //Send Letter to Donator
     $message = "What a beautiful day for an adoption!!!
     
-    I'm just writing you this letter quick to let you know the snoozeling that you left in my care, " . $pet['name'] . ' has found a new home.
+    I'm just writing you this letter quick to let you know the snoozeling that you left in my care, " . $pet['name'] . ', has found a new home.
     
     They are adored and very well taken care of. One might even say they are a bit spoiled.
     
@@ -76,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     With lots of love,
     ~Miss Lulu';
-    $title = $pet['name'] . "has found a home";
+    $title = $pet['name'] . " has found a home";
     $from = 5;
     $one = 1;
     $zero = 0;

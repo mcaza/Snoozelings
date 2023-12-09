@@ -77,7 +77,7 @@ if ($percent > 5) {
     $input = $percent . '%';
 }
 echo '<input type="radio" id="Farmer" value="Farmer" name="job" required><label for="Farmer" class="jobtitle">' . $farmname . '</label><br>';
-echo '<p>Higher Levels Makes Crops Grow Faster</p>';
+echo '<p>Higher Level Makes Crops Grow Faster</p>';
 //Calculate Values for Each Job. Display Radio Button then Job
 echo '<div class="progressbar">';
 echo '<div class="innerbar" style="width:' . $percent . '%;">' . $input . '</div>';
@@ -101,7 +101,7 @@ if ($percent > 5) {
     $input = $percent . '%';
 }
 echo '<input type="radio" id="Crafter" value="Crafter" name="job"><label for="Crafter" class="jobtitle">' . $craftname . '</label><br>';
-echo '<p>Higher Level Reduces Crafting Time</p>';
+echo '<p>Higher Level Unlocks More Recipes</p>';
 //Calculate Values for Each Job. Display Radio Button then Job
 echo '<div class="progressbar">';
 echo '<div class="innerbar" style="width:' . $percent . '%;">' . $input . '</div>';

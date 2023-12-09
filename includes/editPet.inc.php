@@ -16,11 +16,11 @@ $showbed = $_POST['showbed'];
 $userId = $_SESSION['user_id'];
     
     //Snoozeling Info
-    $query = 'SELECT clothesBottom, clothesTop, clothesHoodie, clothesBoth, owner_id FROM snoozelings WHERE id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+            $query = 'SELECT clothesBottom, clothesTop, clothesHoodie, clothesBoth, owner_id FROM snoozelings WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+            $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Snoozeling Own Check
     if (!($snooze['owner_id'] === $userId)) {
@@ -29,22 +29,38 @@ $userId = $_SESSION['user_id'];
     }
     
     //Remove Clothing
+    $clothesarray = [];
     $query = 'SELECT * FROM itemList';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $itemcount = count($items) + 2;
     for ($i = 1; $i < $itemcount; $i++) {
-        if ($_POST[ $i ]) {
+        if ($_POST[$i]) {
             $item = $_POST[$i];
-        }
-        if ($item) {
+            array_push($clothesarray, $item);
+            $item = "";
+        } }
+        foreach ($clothesarray as $item) {
+            
+            //Snoozeling Info
+            $query = 'SELECT clothesBottom, clothesTop, clothesHoodie, clothesBoth, owner_id FROM snoozelings WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+            $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+            $i = $item;
             //Get Type
             $type = $items[$i-1]['type'];
             //Adjust Pet Clothes
-            switch ($type) {
-                case "clothesBottom":
+            if ($type === "clothesBottom") {
                     $list = explode(" ", $snooze["clothesBottom"]);
+                    //Check if Still Equipt
+                    $temp = $items[$i-1]['name'];
+                    if(!in_array($temp, $list)) {
+                        header("Location: ../index");
+                        die();
+                    }
                     if (count($list) === 1) {
                         $final = "";
                     } else {
@@ -65,9 +81,14 @@ $userId = $_SESSION['user_id'];
                     $final = "";
                     $list = "";
                     $newList = "";
-                break;
-                case "clothesTop":
+            } elseif ($type === "clothesTop") {
                     $list = explode(" ", $snooze["clothesTop"]);
+                //Check if Still Equipt
+                    $temp = $items[$i-1]['name'];
+                    if(!in_array($temp, $list)) {
+                        header("Location: ../index");
+                        die();
+                    }
                     if (count($list) === 1) {
                         $final = "";
                     } else {
@@ -88,9 +109,14 @@ $userId = $_SESSION['user_id'];
                     $final = "";
                     $list = "";
                     $newList = "";
-                break;
-                case "clothesHoodie":
+            } elseif ($clothes === "clothesHoodie") {
                     $list = explode(" ", $snooze["clothesHoodie"]);
+                //Check if Still Equipt
+                    $temp = $items[$i-1]['name'];
+                    if(!in_array($temp, $list)) {
+                        header("Location: ../index");
+                        die();
+                    }
                     if (count($list) === 1) {
                         $final = "";
                     } else {
@@ -111,9 +137,14 @@ $userId = $_SESSION['user_id'];
                     $final = "";
                     $list = "";
                     $newList = "";
-                break;
-                case "clothesBoth":
+            } elseif ($type === "clothesBoth") {
                     $list = explode(" ", $snooze["clothesBoth"]);
+                //Check if Still Equipt
+                    $temp = $items[$i-1]['name'];
+                    if(!in_array($temp, $list)) {
+                        header("Location: ../index");
+                        die();
+                    }
                     if (count($list) === 1) {
                         $final = "";
                     } else {
@@ -134,10 +165,10 @@ $userId = $_SESSION['user_id'];
                     $final = "";
                     $list = "";
                     $newList = "";
-                break;
             }
             
-            //Return Item
+        
+      //Return Item
             $query = 'SELECT * FROM itemList WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $item);
@@ -154,14 +185,17 @@ $userId = $_SESSION['user_id'];
             $stmt->bindParam(":type", $iteminfo['type']);
             $stmt->bindParam(":rarity", $iteminfo['rarity']);
             $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
-            $stmt->execute();
+            $stmt->execute(); 
+        } 
+            
+            
      
             
                 
             //Reset $item
             $item = "";
-        }
-    }
+        
+    
 
     //Variable Checks
     //Pronouns
@@ -213,7 +247,6 @@ $userId = $_SESSION['user_id'];
     //Showbed
     if ($showbed) {
         if (!($showbed === "1" || $showbed === "2")) {
-            echo 'test';
             header("Location: ../editPet?id=" . $id);
             die();
         } else {

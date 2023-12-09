@@ -23,6 +23,11 @@ $seventh = $_POST['7'];
 $eighth = $_POST['8'];
 $ninth = $_POST['9'];
 $tenth = $_POST['10'];
+$button = $_POST['button'];
+    
+if ($button) {
+     deleteMail($button,$pdo);
+}
 
 if ($first) {
     deleteMail($first,$pdo);

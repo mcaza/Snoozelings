@@ -115,7 +115,7 @@ if ($days === "facts") {
             echo '<hr>';
             echo '<h4 style="margin-top:1.6rem; margin-bottom: 0;">Other</h4>';
             echo '<p><strong>Treatments Attempted: </strong>' . $box['remedies'] . '</p>';
-            echo '<p><strong>Notes: </strong>' . $box['notes'] . '</p>';
+            echo '<p><strong>Notes: </strong>' . $box['otherNotes'] . '</p>';
         } elseif ($journal['type'] === "mentalHealth") {
             echo '<h4 style="margin-top:0; margin-bottom: 0;">Health Info</h4>';
             echo '<p><strong>Anxiety Rating: </strong>' . $box['anxiety'] . '</p>';

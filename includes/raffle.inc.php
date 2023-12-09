@@ -68,8 +68,8 @@ foreach ($results as $result) {
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitem">';
-    echo '<p><i>Donated by ' . $user['username'] . '</i></p>';
-    echo '<a href="item?id=' . $result['list_id'] . '"><img src="items/' . $result['item'] . '.png" ></a>';
+    echo '<p><i>Donated by <br>' . $user['username'] . '</i></p>';
+    echo '<a href="item?id=' . $result['list_id'] . '"><img src="items/' . $result['item'] . '.png" style="height: 100px;"></a>';
     echo '<p><strong>' . $result['display'] . '</strong></p>';
     echo '</div>';
 }
@@ -119,7 +119,7 @@ if (!($day['id'] === "1")) {
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitems" style="margin-bottom:2rem;">';
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[3]['item'] . '.png" style="margin-top: 1rem">';
+    echo '<img src="items/' . $results[3]['item'] . '.png" style="margin-top: 1rem;height: 100px;"">';
     if ($winner) {
         echo '<p><i>' . $winner['username'] . '</i></p>';
     } else {
@@ -132,7 +132,7 @@ if (!($day['id'] === "1")) {
     $stmt->execute();
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[4]['item'] . '.png" style="margin-top: 1rem">';
+    echo '<img src="items/' . $results[4]['item'] . '.png" style="margin-top: 1rem;height: 100px;">';
     if ($winner) {
         echo '<p><i>' . $winner['username'] . '</i></p>';
     } else {
@@ -145,7 +145,7 @@ if (!($day['id'] === "1")) {
     $stmt->execute();
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[5]['item'] . '.png" style="margin-top: 1rem">';
+    echo '<img src="items/' . $results[5]['item'] . '.png" style="margin-top: 1rem;height: 100px;">';
     if ($winner) {
         echo '<p><i>' . $winner['username'] . '</i></p>';
     } else {

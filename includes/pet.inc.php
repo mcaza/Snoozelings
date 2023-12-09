@@ -88,6 +88,7 @@ if ($pet['job'] === 'jack') {
     $job = $pet['job'];
 }
 echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $job;
+echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>' . $pet['breedStatus'];
 echo '</div>';
 echo '</div>';
 
@@ -119,7 +120,7 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$queryMainColor = "SELECT display FROM colors WHERE name = :mainColor";
+$queryMainColor = "SELECT * FROM colors WHERE name = :mainColor";
 $queryHairColor = "SELECT * FROM colors WHERE name = :haircolor";
 $queryTailColor = "SELECT * FROM colors WHERE name = :tailColor";
 $queryEyeColor = "SELECT * FROM colors WHERE name = :eyeColor";
@@ -151,15 +152,17 @@ $noseColorResults = $stmt6->fetch(PDO::FETCH_ASSOC);
 
 if(!$noseColorResults) {
     $nose = $result['noseColor'];
+    $title = "Fabric";
 } else {
     $nose = $noseColorResults["display"];
+    $fabric = $noseColorResults["categories"];
 }
 
-echo '<p class="snoozelinginfo box" id="pbmaincolor"><strong>Main Color: </strong>' . $mainColorResults["display"] . '</p>
-        <p class="snoozelinginfo" id="pbhaircolor"><strong>Hair Color: </strong>' . $hairColorResults["display"] . '</p>
-        <p class="snoozelinginfo" id="pbtailcolor"><strong>Tail Color: </strong>' . $tailColorResults["display"] . '</p>
-        <p class="snoozelinginfo" id="pbeyecolor"><strong>Eye Color: </strong>' . $eyeColorResults["display"] . '</p>
-        <p class="snoozelinginfo" id="pbnosecolor"><strong>Skin Color: </strong>' . $nose . '</p>
+echo '<p class="snoozelinginfo box" id="pbmaincolor" title="' . $mainColorResults["categories"] . '"><strong>Main Color: </strong>' . $mainColorResults["display"] . '</p>
+        <p class="snoozelinginfo" id="pbhaircolor"title="' . $hairColorResults["categories"] . '"><strong>Hair Color: </strong>' . $hairColorResults["display"] . '</p>
+        <p class="snoozelinginfo" id="pbtailcolor"title="' . $tailColorResults["categories"] . '"><strong>Tail Color: </strong>' . $tailColorResults["display"] . '</p>
+        <p class="snoozelinginfo" id="pbeyecolor"title="' . $eyeColorResults["categories"] . '"><strong>Eye Color: </strong>' . $eyeColorResults["display"] . '</p>
+        <p class="snoozelinginfo" id="pbnosecolor"title="' . $fabric . '"><strong>Skin Color: </strong>' . $nose . '</p>
         <p class="snoozelinginfo" id="pbhairstyle"><strong>Hair Style: </strong>' . $result["hairType"] . '</p>
         <p class="snoozelinginfo" id="pbtailstyle"><strong>Tail Type: </strong>' . $result["tailType"] . '</p>
         <p class="snoozelinginfo" id="pbspecialmarkings" style="margin-bottom: .3rem;"><strong>Special Traits: </strong></p>
@@ -180,20 +183,33 @@ echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font
 $clothes = [];
 $list = "";
 if ($pet['clothesBoth']) {
-    $clothes = explode(" ", $pet['clothesBoth']);
+    $temp = explode(" ", $pet['clothesBoth']);
+    foreach ($temp as $tempie) {
+        array_push($clothes, $tempie);
+    }
+    
 }
 if ($pet['clothesTop']) {
-    $clothes = explode(" ", $pet['clothesTop']);
+    $temp = explode(" ", $pet['clothesTop']);
+    foreach ($temp as $tempie) {
+        array_push($clothes, $tempie);
+    }
 }
 if ($pet['clothesBottom']) {
-    $clothes = explode(" ", $pet['clothesBottom']);
+    $temp = explode(" ", $pet['clothesBottom']);
+    foreach ($temp as $tempie) {
+        array_push($clothes, $tempie);
+    }
 }
 if ($pet['clothesHoodie']) {
-    $clothes = explode(" ", $pet['clothesHoodie']);
+    $temp = explode(" ", $pet['clothesHoodie']);
+    foreach ($temp as $tempie) {
+        array_push($clothes, $tempie);
+    }
 }
 echo '<div style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; justify-content: center;">';
 foreach ($clothes as $item) {
-    echo '<img src="items/' . $item . '.png" style="width: 20%;" title="' . $item . '">';
+    echo '<img src="items/' . $item . '.png" style="width: 25%;" title="' . $item . '">';
 }
 echo '</div>';
 echo '</div>';
@@ -225,6 +241,8 @@ echo '<hr>';
 
 //Bottom Space
 echo '<div id="bottomSpace">';
+
+
 echo '</div>';
 
 

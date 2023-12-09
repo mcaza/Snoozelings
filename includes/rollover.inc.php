@@ -6,9 +6,11 @@
     $date = $now->format('Y-m-d');
 
     //Grab All Info
-    $query = "SELECT * FROM users WHERE lastLog = :date";
+    $one = "1";
+    $zero = "0";
+    $query = "SELECT * FROM users WHERE lastLog = :num";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":date", $date);
+    $stmt->bindParam(":num", $one);
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -18,14 +20,16 @@
     $affirmstmt->execute();
     $affirmresults = $affirmstmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $affirmlength = count($affirmresults); 
-
-    //Assign Affirmations
+    $affirmlength = count($affirmresults) - 1; 
+    
     foreach ($users as $user) {
+        //Assign Affirmations & Reset lastLog & DailyItem
         $randomNum = rand(1, $affirmlength);
-        $query = "UPDATE users SET affirmation = :affirmation WHERE id = :id";
+        $query = "UPDATE users SET affirmation = :affirmation, lastLog = :num, dailyPrize = :zero WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":affirmation", $affirmresults[$randomNum]["affirmation"]);
+        $stmt->bindParam(":num", $zero);
+        $stmt->bindParam(":zero", $zero);
         $stmt->bindParam(":id", $user["id"]);
         $stmt->execute();
     }
@@ -89,11 +93,6 @@
 
     //Reset Daily Records
     $query = "UPDATE dailyRecords SET journalEntries = 0, cropsHarvested = 0, snoozelingsCrafted = 0, itemsCrafted = 0, activeMembers = 0, newMembers = 0, kindnessCoins = 0 WHERE id = 1;";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-
-    //Reset Daily Free Item Variable
-    $query = "UPDATE users SET dailyPrize = 0";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 

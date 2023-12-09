@@ -32,12 +32,8 @@ if (isset($_SESSION["user_id"])) {
 }
 }
 
-function logDate($pdo) {
+function logCheck($pdo) {
     $userId = $_SESSION['user_id'];
-    
-    //Date Stuff
-    $now = new DateTime();
-    $date = $now->format('Y-m-d');
     
     $query = "SELECT lastLog FROM users WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -45,17 +41,18 @@ function logDate($pdo) {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if ($date === $result['lastLog']) {
+    if ($result['lastLog'] === "1") {
         
     } else {
-        $query = 'UPDATE users SET lastlog = :date WHERE id = :id';
+        $num = 1;
+        $query = 'UPDATE users SET lastlog = :num WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
-        $stmt->bindParam(":date", $date);
+        $stmt->bindParam(":num", $num);
         $stmt->execute();
     }
 }
 
-logDate($pdo);
+logCheck($pdo);
 
 verifyEmail($pdo);

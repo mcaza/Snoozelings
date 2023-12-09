@@ -584,6 +584,48 @@ margin-top: 15px;
     border: 0;
 }
 
+.redButton {
+    background-color: #FF0000;
+    color: white;
+    border: 0px;
+    border-bottom: 3px #8A0303 solid;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-family: Karla;
+    padding: 1rem;
+    margin-top: .5rem;
+    
+}
+
+.redButton:hover {
+    background-color: #FF0000;
+}
+
+.redButton:active {
+    border: 0;
+}
+
+.modButton {
+    background-color: #CC7722;
+    color: white;
+    border: 0px;
+    border-bottom: 3px #964000 solid;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-family: Karla;
+    padding: 1rem;
+    margin-top: .5rem;
+    
+}
+
+.modButton:hover {
+    background-color: #CC7722;
+}
+
+.modButton:active {
+    border: 0;
+}
+
 .notif {
     font-size: 1.7rem;
 }

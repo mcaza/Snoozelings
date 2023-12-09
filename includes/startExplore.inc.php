@@ -10,14 +10,14 @@ $petId = $_POST["explorer"];
 if ($petId) {
 $area = $_POST["area"];
     $userId = $_SESSION['user_id'];
-    $farmCommon = ['Coin', '2', '3', '4', '1', '5', '116'];
+    $farmCommon = ['2', '3', '4', '1', '5', '116'];
     $farmUncommon = ['15', '16'];
     $farmRare = ['96', '87', '93'];
     $cowArray = ['87', '90', '88', '89'];
-    $woodsCommon = ['Coin', '3', '6', '7', '8', '9', '116'];
+    $woodsCommon = ['3', '6', '7', '8', '9', '116'];
     $woodsUncommon = ['17', '25'];
     $woodsRare = ['97', '94', '91'];
-    $oceanCommon = ['Coins', '10', '11', '12', '13', '14', '116'];
+    $oceanCommon = ['10', '11', '12', '13', '14', '116'];
     $oceanUncommon = ['18', '19'];
     $oceanRare = ['98', '95', '92'];
     $seeds = ['29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43'];
@@ -80,7 +80,6 @@ $area = $_POST["area"];
     
    //Insert Items Into Player's Table
     foreach ($itemsWon as $item) {
-
         $query = 'SELECT * FROM itemList WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $item);
@@ -134,7 +133,7 @@ $area = $_POST["area"];
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $petId);
         $stmt->execute();
-    }
+    } 
     
     $_SESSION['coins'] = $coinsWon;
     $_SESSION['items'] = $itemsWon;
@@ -165,7 +164,7 @@ function howMany($exp) {
 }
 
 function rollRarity() {
-    return rand(1, 200);
+    return rand(1, 400);
 }
 
 function pickItem($rarity, $area) {
