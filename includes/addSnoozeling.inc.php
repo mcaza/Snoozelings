@@ -39,8 +39,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":mood", $mood);
     $stmt->bindParam(":breedStatus", $breedStatus);
     $stmt->bindParam(":title", $title);
-
     $stmt->execute(); 
+    
+    //Get Breeding Parents
+    $query = 'SELECT * FROM breedings WHERE blueprint = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $breeding = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Get New Snooze ID
+    $query = 'SELECT * FROM snoozelings ORDER BY id DESC LIMIT 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $newsnooze = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Add to Parent's Inspire
+    $parents = [];
+    array_push($parents, $breeding['one'], $breeding['two']);
+    foreach ($parents as $parent) {
+        $query = 'SELECT inspire FROM parents WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $parent);
+        $stmt->execute();
+        $inspire = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $add = ' ' . $newsnooze['id'];
+        $temp = $inspire .= $add;
+        $temp = trim($temp);
+        
+        $query = 'UPDATE snoozelings SET inspire = :inspire WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $parent);
+        $stmt->bindParam(":inspire", $temp);
+        $stmt->execute();
+    }
     
     //Delete Blueprints 
     $query = "DELETE FROM blueprints WHERE owner_id = :id";

@@ -4,146 +4,62 @@ $var = "id";
 
 $order = "datetime";
 //Filter GET Stuff
-if ($_GET['order']) {
-    $order = $_GET['order'];
-}
 if ($_GET['type']) {
-    $type = $_GET['type'];
+    $type = strtolower($_GET['type']);
 }
 
-//Get GET Data
-if ($type === "all" && $order === "all") {
-        $query = 'SELECT * FROM posts ORDER BY datetimr DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} elseif ($type === "official") {
-    if ($order === "likes") {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-} elseif ($type === "general") {
-        if ($order === "likes") {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-} elseif ($type === "freebies") {
-       if ($order === "likes") {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-}
-    } elseif ($type === "media") {
-       if ($order === "likes") {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-}
-    } elseif ($type === "artwork") {
-       if ($order === "likes") {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-}
-    } elseif ($type === "guides") {
-       if ($order === "likes") {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY likes DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $query = 'SELECT * FROM posts WHERE category = :type ORDER BY datetime DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":type", $type);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-}
-    } else {
-    $query = 'SELECT * FROM posts ORDER BY datetime DESC LIMIT 20';
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+//Get Page. Assign to 1 if no page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+
+//Amount Per Page
+$perPage = 10;
+
+//Positioning
+$start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
+
+//Get Posts Count
+$query = 'SELECT * FROM posts WHERE category = :type ORDER BY id DESC LIMIT 20';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(':type', $type);
+$stmt->execute();
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$total = count($posts);
+
+//Pages Amount
+$pages = ceil($total / $perPage);
+
+//Get Mail
+$query = 'SELECT * FROM posts WHERE category = :type ORDER BY id DESC LIMIT :start , :perPage';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(':start', $start, PDO::PARAM_INT);
+$stmt->bindParam(':perPage', $perPage, PDO::PARAM_INT);
+$stmt->bindParam(':type', $type);
+$stmt->execute();
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
+//Go Back Arrow
+echo '<div class="leftRightButtons">';
+echo '<a href="critterweb"><<</a>';
+echo '</div>';
 
 //Post Button (Right)
 echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newPost\'">New Post</button></div>';
-
-//Filter Section
-echo '<h3>Filter By</h3>';
-echo '<form method="GET">';
-echo '<div class="filterBoxes">';
-echo '<div class="filterBox">';
-echo '<label style="margin-top: 2rem;" for="order" class="form">Order:</label><br>';
-echo '<select class="input"  name="order" style="width: 8rem;">';
-echo '<option value="date"></option>';
-echo '<option value="date">Date</option>';
-echo '<option value="likes">Likes</option>';
-echo '</select>';
-echo '</div>';
-echo '<div class="filterBox">';
-echo '<label style="margin-top: 2rem;" for="type" class="form">Type:</label><br>';
-echo '<select class="input"  name="type" style="width: 8rem;">';
-echo '<option value="all"></option>';
-echo '<option value="official">News</option>';
-echo '<option value="general">General</option>';
-echo '<option value="media">Media</option>';
-echo '<option value="freebies">Giveaways</option>';
-echo '<option value="artwork">Artwork</option>';
-echo '<option value="guides">Guides</option>';
-echo '</select>';
-echo '</div>';
 echo '</div>';
 
-//Button & End Form
-echo '<button class="fancyButton">Filter</button>';
-echo '</form>';
+//Title
+if ($type === "submissions") {
+    echo '<h3 style="margin-bottom: 3rem">Monthly Submissions</h3>';
+} elseif ($type === "giveaways") {
+    echo '<h3 style="margin-bottom: 3rem">Giveaways & Freebies</h3>';
+} elseif ($type === "guides") {
+    echo '<h3 style="margin-bottom: 3rem">User Made Guides</h3>';
+} elseif ($type === "questions") {
+    echo '<h3 style="margin-bottom: 3rem">Questions & Answers</h3>';
+} else {
+    echo '<h3 style="margin-bottom: 3rem">' . $_GET['type'] . ' Posts</h3>';
+}
 
 
 //Display Posts
@@ -177,6 +93,20 @@ foreach ($posts as $post) {
     echo '<div class="readMore"><a href="post?id=' . $post['id'] . '"><h4>Read More >></h4></a></div>';
     echo '</div>';
     
+}
+
+if ($pages > 1) {
+//Pagination
+echo '<div class="pagination" style="margin-top: 1rem;">';
+for ($x = 1; $x <= $pages; $x++) {
+    if ($page === $x) {
+        $selected = "selected";
+    } else {
+        $selected = "";
+    }
+    echo '<a href="?type=' . $_GET['type'] . '&page=' . $x . '" style="font-size: 2rem; margin: 1rem;" class="' . $selected . '">' . $x . '</a>';
+}
+echo '</div>';
 }
 
 

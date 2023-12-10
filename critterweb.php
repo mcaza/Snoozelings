@@ -15,7 +15,7 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code of Conduct</title>
+    <title>World Wide Critter Web</title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -81,7 +81,7 @@ require_once '../includes/verifySinglePet.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
-            <?php require_once '../includes/conduct.inc.php'; ?>
+            <?php require_once '../includes/critterweb.inc.php'; ?>
         </div></div>
     </div>
     <!--End of All Main Content-->

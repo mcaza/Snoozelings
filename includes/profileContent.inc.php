@@ -71,7 +71,7 @@ if ($id === $userId) {
     //Insert Status Here
     echo "<p>" . $result["status"] . "</p>";
     
-echo '<div class="profilebox">';
+echo '<div class="profilebox box" style="overflow-y: auto;">';
 echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info</h4>';
     echo '<p class="snoozelinginfo"><strong>Player ID: </strong>' . $result['id'];
     echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>' . $result['pronouns'];
@@ -115,7 +115,7 @@ echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font
     echo '<p class="snoozelinginfo"><strong>Farm Name: </strong>' . $result['farmName'];
     } else {
         if ($id === "4") {
-              echo '<p class="snoozelinginfo"><strong>Job: </strong>Seed Shopkeeper</p>';
+              echo '<p class="snoozelinginfo" style="overflow-y: auto;"><strong>Job: </strong>Seed Shopkeeper</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Trail Mix</p>';
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Responsible & Hard Working</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Crossbreeding Plants</p>';
@@ -134,7 +134,7 @@ echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Loving & Sincere</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Braiding Hair</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>Finding Homes for Homeless Snoozelings</p>';
-              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Miss Lulu and Minky are often <br>seen together. They\'re platonic soulmates.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Miss Lulu and Minky are often seen together. They\'re platonic soulmates.</p>';
         } elseif ($id === "6") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Runs Sewing Shop</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Honeycomb</p>';
@@ -148,40 +148,40 @@ echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Determined & 	Pro-active</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Shadow Puppets</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To find joy in simple things.</p>';
-              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Even with their prosthetic leg, Cole always delivers the mail on time. Their favorite part of the job is seeing the excitement on <br>every customer\'s face.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Even with their prosthetic leg, Cole always delivers the mail on time. Their favorite part of the job is seeing the excitement on every customer\'s face.</p>';
         } elseif ($id === "8") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Kindness Shopkeeper</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Cream Cheese Bagels</p>';
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Generous & Warmhearted</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Counting Backwards</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To encourage unity</p>';
-              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Melody is on the autism spectrum and doesn\'t like to hugged. Instead, they<br> prefer forehead to forehead contact.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Melody is on the autism spectrum and doesn\'t like to hugged. Instead, they prefer forehead to forehead contact.</p>';
         } elseif ($id === "9") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Baking Pies</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Whipped Cream</p>';
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Patient & Messy</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Touching Nose with Tongue</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>Opening a Bakery</p>';
-              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Pudding can sense free food from miles away. He will show up at random <br>parties and events just for the food.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Pudding can sense free food from miles away. Pudding will show up at random parties and events just for the food.</p>';
         }
     }
     echo '</div>';
     echo '</div>';
 echo '<div class="displaycontainerright" >';
 if ($id === "4") {
-    echo '<img src="resources/seedNPC.png" style="width: 37rem;margin-left: 3rem;">';
+    echo '<img src="resources/seedNPC.png" style="height: 40rem;margin-left: 6rem;">';
 } elseif ($id === "3") {
-    echo '<img src="resources/snowNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 3rem;">';
+    echo '<img src="resources/snowNPC.png" style="height: 40rem;margin-left: .5rem;">';
 } elseif ($id === "5") {
-    echo '<img src="resources/adoptNPC.png" style="width: 37rem;margin-left: 3rem;">';
+    echo '<img src="resources/adoptNPC.png" style="height: 40rem;margin-left: 5.5rem;">';
 } elseif ($id === "6") {
-    echo '<img src="resources/sewingNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 3rem;">';
+    echo '<img src="resources/sewingNPC.png" style="height: 38rem;margin-left: .5rem;margin-bottom: 2rem;">';
 } elseif ($id === "7") {
-    echo '<img src="resources/postmanNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 2rem;">';
+    echo '<img src="resources/postmanNPC.png" style="height: 39rem;margin-left: 1rem; margin-bottom: 1rem;">';
 } elseif ($id === "8") {
-    echo '<img src="resources/kindnessNPC.png" style="width: 35rem;margin-left: 5.5rem;">';
+    echo '<img src="resources/kindnessNPC.png" style="height: 40rem;margin-left: 5.5rem;">';
 } elseif ($id === "9") {
-    echo '<img src="resources/bakerNPC.png" style="width: 39rem;margin-left: 1rem;margin-bottom: 2rem;">';
+    echo '<img src="resources/bakerNPC.png" style="height: 40rem;margin-left: 1rem;">';
 } else {
     displayPet($pet, "artlarge");
     echo "<p><strong>Bonded Snoozeling:</strong> " . "<a href='pet?id=" . $pet['id'] . "'>" . htmlspecialchars($pet["name"]) . "</a></p>";

@@ -9,12 +9,12 @@ unset($_SESSION['post']);
 
  //Back to Pack Arrows
  echo '<div class="leftRightButtons">';
-echo '<a href="boards"><<</a>';
+echo '<a href="critterweb"><<</a>';
 echo '</div>';
 
 //Title
 echo '<h3>Post a Bulletin</h3>';
-echo '<p style="margin-top:1.2rem">You can only post 1 bulletin each day.</p>';
+echo '<p style="margin-top:1.2rem">You may only post a new topic in the Critter Web once a day.</p>';
 
 //Check for Post
 $query = 'SELECT * FROM posts WHERE user_id = :id ORDER BY datetime DESC LIMIT 1';
@@ -29,22 +29,24 @@ $num = $result['new'];
 if (!$result) {
     
     //Form
-    echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 bulletin board per day.');\">";  
+    echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 topic in the critter web per day.');\">";  
 
     //Pick Category
     echo '<label style="margin-top: 2rem;" for="type" class="form" required>Category:</label><br>';
     echo '<select class="input"  name="type" style="width: 8rem;">';
     echo '<option value=""></option>';
-    echo '<option value="general">General</option>';
-    echo '<option value="media">Media</option>';
-    echo '<option value="freebies">Giveaways</option>';
-    echo '<option value="artwork">Artwork</option>';
-    echo '<option value="guides">Guides</option>';
-    
-    //Edit to 1 After Testing
     if ($userId === "1") {
-        echo '<option value="official">Official</option>';
+    echo '<option value="news">News</option>';
+    echo '<option value="submissions">Submissions</option>';
     }
+    echo '<option value="general">General</option>';
+    echo '<option value="fandom">Fandom</option>';
+    echo '<option value="artwork">Artwork</option>';
+    echo '<option value="roleplay">Roleplay</option>';
+    echo '<option value="giveaways">Giveaways</option>';
+    echo '<option value="guides">Guides</option>';
+    echo '<option value="questions">Questions</option>';
+    
     
     echo '</select><br>';
     
@@ -79,11 +81,17 @@ if (!$result) {
     echo '<label style="margin-top: 2rem;" for="type" class="form" required>Category:</label><br>';
     echo '<select class="input"  name="type" style="width: 8rem;">';
     echo '<option value=""></option>';
+    if ($userId === "1") {
+    echo '<option value="news">News</option>';
+    echo '<option value="submissions">Submissions</option>';
+    }
     echo '<option value="general">General</option>';
-    echo '<option value="media">Media</option>';
-    echo '<option value="freebies">Giveaways</option>';
+    echo '<option value="fandom">Fandom</option>';
     echo '<option value="artwork">Artwork</option>';
+    echo '<option value="roleplay">Roleplay</option>';
+    echo '<option value="giveaways">Giveaways</option>';
     echo '<option value="guides">Guides</option>';
+    echo '<option value="questions">Questions</option>';
     
     //Edit to 1 After Testing
     if ($userId === "1") {

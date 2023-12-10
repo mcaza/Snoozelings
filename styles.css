@@ -753,6 +753,7 @@ html::-webkit-scrollbar-thumb:hover {
 .snoozelinginfo {
     text-align: left;
     margin-left: 1.6rem;
+    margin-right: 1.6rem;
 }
 
 
@@ -864,7 +865,7 @@ a.selected {
 
 .journalEntries {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     column-gap: 2rem;
     row-gap: 2rem;
@@ -873,13 +874,27 @@ a.selected {
 
 .journalEntry {
     border: 2px dashed #827188;
-    width: 27%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
     border-radius: 10px;
     padding: 1.5rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .journalInfo {
+    display: flex;
+    flex-direction: row;
     text-align: left;
+
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.journalInfo {
+    
 }
 
 /* Trendy Tails Styles */
@@ -922,6 +937,7 @@ a.selected {
     flex-wrap: wrap;
     margin-top: 2.5rem;
     justify-content: space-evenly;
+    row-gap: 2rem;
 }
 
 .shopBox {
@@ -1089,6 +1105,21 @@ a.selected {
 }
 
 /* Boards Styles */
+
+.critterbox {
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+    justify-content: center;
+}
+
+a.critterbox:hover{
+    background-color: lavender;
+}
 
 .filterBoxes {
     display: flex;
@@ -1276,7 +1307,7 @@ a.selected {
     border-radius: 20px;
 }
 
-a .recipe:hover {
+a.recipe:hover {
     background-color: lavender;
 }
 

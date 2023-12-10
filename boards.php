@@ -4,8 +4,20 @@ require_once '../includes/dbh-inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
+$type = $_GET['type'];
 
-
+//Title
+if ($type === "Submissions") {
+    $title = 'Monthly Submissions';
+} elseif ($type === "Giveaways") {
+    $title = 'Giveaways & Freebies';
+} elseif ($type === "Guides") {
+    $title = 'User Made Guides';
+} elseif ($type === "Questions") {
+    $title = 'Questions & Answers';
+} else {
+    $title = $type;
+}
 
 ?>
 
@@ -15,7 +27,7 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bulletin Boards</title>
+    <title><?=$title?></title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>

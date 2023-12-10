@@ -52,6 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (alphaEmail($pdo, $email)) {
             $errors["alpha_email"] = "That email is not registered for alpha testing.";
         }
+        if (!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them" || $pronouns === "She/Him")) {
+            $errors["pronouns"] = "Please do not enter custom pronouns.";
+        }
         
         require_once '../../includes/config_session.inc.php';
         

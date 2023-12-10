@@ -50,6 +50,9 @@ switch ($result['pronouns']) {
     case "They/Them":
         $theyThem = "selected";
         break;
+    case "She/Him":
+        $sheHim = "selected";
+        break;
 }
 //Form "Pronouns"
 echo '<label for="pronouns"  class="form">Snoozeling\'s Pronouns:</label><br>';
@@ -60,6 +63,7 @@ echo '<option value="He/Him"' . $heHim . '>He/Him</option>';
 echo '<option value="They/Them"' . $theyThem . '>They/Them</option>';
 echo '<option value="She/Them"' . $sheThem . '>She/Them</option>';
 echo '<option value="He/Them"' . $heThem . '>He/Them</option>';
+echo '<option value="She/Him"' . $sheHim . '>She/Him</option>';
 echo '</select><br>';
 
 //Title

@@ -189,7 +189,7 @@
         
         I brought you something. I believe it\'s a raffle prize?
         
-        Oh yes!!!. It\'s a ' . $raffles[$count]['display'] . '!
+        Oh yes!!! It\'s a ' . $raffles[$count]['display'] . '!
         
         Maybe I\'ll win next time. I could really use a new hat.';
         $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
