@@ -100,7 +100,7 @@ foreach ($items as $item) {
 }
 
 //Set Time
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $minutes = 15;
 $modified = (clone $now)->add(new DateInterval("PT{$minutes}M")); 
 $formatted = $modified->format('Y-m-d H:i:s');

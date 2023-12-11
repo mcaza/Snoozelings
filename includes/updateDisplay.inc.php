@@ -3,6 +3,10 @@
 //Grab User ID
 $userId = $_SESSION['user_id'];
 $id = $_GET['id'];
+if ($_SESSION['reply']) {
+    $reply = $_SESSION['reply'];
+    unset($_SESSION['reply']);
+}
 
 //Grab Pet Info from Database
 $query = "SELECT * FROM snoozelings WHERE id = :id";
@@ -21,6 +25,11 @@ $titles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 echo '<div class="leftRightButtons">';
 echo '<a href="pet?id=' . $id . '"><<</a>';
 echo '</div>';
+
+//Session Reply Area
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 1rem;"><p>' . $reply . '</p></div>';
+}
 
 echo '<h3 style="margin-bottom: 2rem">Edit ' . htmlspecialchars($result['name']) . "'s Information</h3>";
 echo '<form action="../includes/editPet.inc.php" method="post">';
@@ -184,9 +193,9 @@ if ($closed === "selected") {
     echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any users can use this pet as inspiration.</p></div>';
 }
 
-
-
-
+echo '<label for="bio"  class="form">Pet Bio:</label><br>';
+echo '<textarea id="bio" class="input" name="bio" rows="6" cols="50">' . htmlspecialchars($result['bio']) . '</textarea>';
+echo '<p>Bios Cannot be Longer than 500 Characters</p>';
 
 //Submit Button
 echo '<div>';

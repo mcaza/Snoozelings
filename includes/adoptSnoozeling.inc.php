@@ -63,6 +63,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $pet['owner_id']);
     $stmt->execute();
     
+    //Daily Records
+    $query = 'UPDATE dailyRecords SET kindnessCoins = kindnessCoins + 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    
     //Send Letter to Donator
     $message = "What a beautiful day for an adoption!!!
     

@@ -35,7 +35,7 @@ if ($pet['job'] === 'jack' && $type) {
 }
 
 //Date
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $future_date = new DateTime($result['finishtime']);
 $interval = $future_date->diff($now);
 

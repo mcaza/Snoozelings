@@ -25,7 +25,7 @@ if (in_array($username, $likers)) {
     $stmt->bindParam(":id", $id);
     $stmt->execute();
 
-
+$list = $users['likers'];
 $list .= " " . $username;
 $list = trim($list);
 

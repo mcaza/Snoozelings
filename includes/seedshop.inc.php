@@ -17,7 +17,7 @@ $stmt->execute();
 $seeds = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Get Date
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $formatted = $now->format('m-d');
 
 //Get Player Birthdate & Coins

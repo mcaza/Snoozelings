@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $likes = 0;
     $new = 0;
     
-    if (!($type === 'general' || $type === 'fandom' || $type === 'artwork' || $type === 'roleplay' || $type === 'giveaways' || $type === 'guides' || $type === 'questions' || ($type === 'news' && $userId === "1") || ($type === 'submissions' && $userId === "1"))) {
+    if (!($type === 'general' || $type === 'fandom' || $type === 'artwork' || $type === 'roleplay' || $type === 'giveaways' || $type === 'guides' || $type === 'questions' || ($type === 'news' && $userId === "1") || ($type === 'submissions' && $userId === "1" || ($type === 'hidden' && $userId === "1")))) {
         $_SESSION['title'] = $title;
         $_SESSION['post'] = $post;
         header("Location: ../newPost");
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Get Date
-    $now = new DateTime();
+    $now = new DateTime(null, new DateTimezone('UTC'));
     $formatted = $now->format('Y-m-d H:i:s');
     
     //Post Bulletin

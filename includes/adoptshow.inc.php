@@ -2,7 +2,7 @@
 
 require_once 'dbh-inc.php';
 
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 $num = 0;
 $one = 1;

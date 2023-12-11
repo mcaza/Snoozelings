@@ -2,8 +2,24 @@
     require_once 'dbh-inc.php';
 
     //Date Stuff
-    $now = new DateTime();
-    $date = $now->format('Y-m-d');
+    $hours = 24;
+    $now = new DateTime(null, new DateTimezone('UTC'));
+    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
+    $rotime = $modified->format('Y-m-d H:i:s');
+    $hours = 5;
+    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
+    $mailone = $modified->format('Y-m-d H:i:s');
+    $hours = 16;
+    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
+    $mailtwo = $modified->format('Y-m-d H:i:s');
+
+    //Reset Rollover Time
+    $query = 'UPDATE times SET rotime = :time, mailone = :one, mailtwo = :two';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":time", $rotime);
+    $stmt->bindParam(":one", $mailone);
+    $stmt->bindParam(":two", $mailtwo);
+    $stmt->execute();
 
     //Grab All Info
     $one = "1";
@@ -65,7 +81,7 @@
             $title = "Happy Birthday " . $user['username'] . '!';
             $sender = 1;
             $zero = 0;
-            $now = new DateTime();
+            $now = new DateTime(null, new DateTimezone('UTC'));
             $date = $now->format('Y-m-d H:i:s');
             $message = 'Hey there ' . $user['username'] . ', 
             
@@ -92,7 +108,7 @@
     }
 
     //Reset Daily Records
-    $query = "UPDATE dailyRecords SET journalEntries = 0, cropsHarvested = 0, snoozelingsCrafted = 0, itemsCrafted = 0, activeMembers = 0, newMembers = 0, kindnessCoins = 0 WHERE id = 1;";
+    $query = "UPDATE dailyRecords SET journalEntries = 0, cropsHarvested = 0, snoozelingsCrafted = 0, itemsCrafted = 0, activeMembers = 0, newMembers = 0, kindnessCoins = 3 WHERE id = 1;";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 
@@ -183,7 +199,7 @@
         $sender = 7;
         $zero = 0;
         $picture = "postmanNPC";
-        $now = new DateTime();
+        $now = new DateTime(null, new DateTimezone('UTC'));
         $date = $now->format('Y-m-d H:i:s');
         $message = 'Hello there fellow snoozeling!!!
         
@@ -247,7 +263,7 @@
             $sender = 8;
             $zero = 0;
             $picture = "kindnessNPC";
-            $now = new DateTime();
+            $now = new DateTime(null, new DateTimezone('UTC'));
             $date = $now->format('Y-m-d H:i:s');
             $message = 'Guess what?!?!?
             

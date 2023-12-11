@@ -71,7 +71,7 @@
         $sender = 7;
         $zero = 0;
         $picture = "postmanNPC";
-        $now = new DateTime();
+        $now = new DateTime(null, new DateTimezone('UTC'));
         $date = $now->format('Y-m-d H:i:s');
         $message = 'Hello there fellow snoozeling!!!
         
@@ -135,7 +135,7 @@
             $sender = 8;
             $zero = 0;
             $picture = "kindnessNPC";
-            $now = new DateTime();
+            $now = new DateTime(null, new DateTimezone('UTC'));
             $date = $now->format('Y-m-d H:i:s');
             $message = 'Guess what?!?!?
             

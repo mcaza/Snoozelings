@@ -2,7 +2,7 @@
 require_once 'dbh-inc.php';
 
 //Date Stuff
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $date = $now->format('Y-m-d');
 
 //Grab All Info

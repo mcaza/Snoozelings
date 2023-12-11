@@ -46,10 +46,11 @@ if ($reply) {
 echo '<div><img style="width: 35%;" src="resources/adoptNPC.png"></div>';
 if ($pets) {
     echo '<p><i>"Thank you for considering adoption. Here are the snoozelings looking for homes."</i></p>';
+    echo '<hr>';
 } else {
     echo '<p><i>"There are currently no snoozelings looking for homes. Check back soon."</i></p>';
 }
-echo '<hr>';
+
 
 if ($pets) {
 //Pet Displays

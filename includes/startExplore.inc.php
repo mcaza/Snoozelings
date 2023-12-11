@@ -45,7 +45,7 @@ $area = $_POST["area"];
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table) {
-            $now = new DateTime();
+            $now = new DateTime(null, new DateTimezone('UTC'));
             $future_date = new DateTime($result['finishtime']);
             if ($future_date <= $now) {
                 $_SESSION['error'] = "That snoozeling is currently crafting.";
@@ -110,7 +110,7 @@ $area = $_POST["area"];
     
     
     //Update Snoozeling to working and add cooldown
-    $now = new DateTime();
+    $now = new DateTime(null, new DateTimezone('UTC'));
     $hours = 2;
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $formatted = $modified->format('Y-m-d H:i:s');

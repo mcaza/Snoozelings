@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $mood = "Happy";
     $breedStatus = "Closed";
     $title = "The New One";
+    $bed = "BlueFree";
     
     $query = "SELECT * FROM blueprints WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -20,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    $query = "INSERT INTO snoozelings (owner_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials, name, pronouns, birthDate, job, mood, breedStatus, title) VALUES (:owner_id, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials, :name, :pronouns, :birthDate, :job, :mood, :breedStatus, :title);";
+    $query = "INSERT INTO snoozelings (owner_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials, name, pronouns, birthDate, job, mood, breedStatus, title, bedcolor) VALUES (:owner_id, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials, :name, :pronouns, :birthDate, :job, :mood, :breedStatus, :title, :bed);";
     $stmt = $pdo->prepare($query);
     
     $stmt->bindParam(":owner_id", $userId);
@@ -39,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":mood", $mood);
     $stmt->bindParam(":breedStatus", $breedStatus);
     $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":bed", $bed);
     $stmt->execute(); 
     
     //Get Breeding Parents
@@ -58,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $parents = [];
     array_push($parents, $breeding['one'], $breeding['two']);
     foreach ($parents as $parent) {
-        $query = 'SELECT inspire FROM parents WHERE id = :id';
+        $query = 'SELECT inspire FROM snoozelings WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $parent);
         $stmt->execute();

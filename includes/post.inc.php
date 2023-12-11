@@ -51,7 +51,12 @@ if ($post) {
     
     
     echo '<h3>' . htmlspecialchars($post['title']) . '</h3>';
-    echo '<p style="margin-top: 3rem;margin-bottom: 3rem;width: 70%;margin-left: auto;margin-right: auto;line-height: 2rem;">' . nl2br(htmlspecialchars($post['text'])) . '</p>';
+    if ($post['category'] === 'submissions' || $post['category'] === 'news') {
+        echo '<div class="staffpost" style="margin-top: 3rem;margin-bottom: 3rem;width: 70%;margin-left: auto;margin-right: auto;line-height: 2rem;">' . nl2br($post['text']) . '</div>';
+    } else {
+        echo '<p style="margin-top: 3rem;margin-bottom: 3rem;width: 70%;margin-left: auto;margin-right: auto;line-height: 2rem;">' . nl2br(htmlspecialchars($post['text'])) . '</p>';
+    }
+    
     echo '<p><i>' . $post['likes'] . ' Likes, ' . $count . ' Comments</i></p>';
     echo '</div>';
     

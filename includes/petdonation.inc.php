@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Set Adoption Release Time
-    $now = new DateTime();
+    $now = new DateTime(null, new DateTimezone('UTC'));
     $hours = rand(8, 24);
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $formatted = $modified->format('Y-m-d H:i:s');

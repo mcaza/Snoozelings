@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $mood = "Happy";
     $breedStatus = "Closed";
     $title = "The New One";
-    $bed = "BrownFree";
+    $bed = "BlueFree";
     
     $query = "SELECT * FROM blueprints WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $from = 1;
     $one = 1;
     $zero = 0;
-    $now = new DateTime();
+    $now = new DateTime(null, new DateTimezone('UTC'));
     $date = $now->format('Y-m-d H:i:s');
     $query = "INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime) VALUES (:from, :to, :title, :message, :sent, :opened, :datetime)";
     $stmt = $pdo->prepare($query);

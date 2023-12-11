@@ -71,7 +71,7 @@ if ($id === $userId) {
     //Insert Status Here
     echo "<p>" . $result["status"] . "</p>";
     
-echo '<div class="profilebox box" style="overflow-y: auto;">';
+echo '<div class="profilebox bar" style="overflow-y: auto;">';
 echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info</h4>';
     echo '<p class="snoozelinginfo"><strong>Player ID: </strong>' . $result['id'];
     echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>' . $result['pronouns'];
@@ -179,9 +179,9 @@ if ($id === "4") {
 } elseif ($id === "7") {
     echo '<img src="resources/postmanNPC.png" style="height: 39rem;margin-left: 1rem; margin-bottom: 1rem;">';
 } elseif ($id === "8") {
-    echo '<img src="resources/kindnessNPC.png" style="height: 40rem;margin-left: 5.5rem;">';
+    echo '<img src="resources/kindnessNPC.png" style="height: 40rem;margin-left: 6.8rem;">';
 } elseif ($id === "9") {
-    echo '<img src="resources/bakerNPC.png" style="height: 40rem;margin-left: 1rem;">';
+    echo '<img src="resources/bakerNPC.png" style="height: 38rem;margin-left: 1rem;margin-bottom: 2rem;">';
 } else {
     displayPet($pet, "artlarge");
     echo "<p><strong>Bonded Snoozeling:</strong> " . "<a href='pet?id=" . $pet['id'] . "'>" . htmlspecialchars($pet["name"]) . "</a></p>";

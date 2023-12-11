@@ -77,7 +77,7 @@ echo '<form method="post" action="includes/startExplore.inc.php">';
 echo '<label for="explorer"  class="form pushDown">Choose An Explorer:</label><br>';
 echo '<select  class="input" name="explorer"><br>';
 
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 foreach ($results as $pet) {
     if ($result > $pet['cooldownTime']) {

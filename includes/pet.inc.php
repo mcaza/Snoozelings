@@ -74,7 +74,7 @@ echo "<h3>" . htmlspecialchars($pet["name"]) . "</h3>";
 echo "<p>" . $pet['title'] . '</p>';
 
 //Pet Info
-echo '<div class="profilebox">';
+echo '<div class="bar profilebox" style="overflow-y: auto;">';
 echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Pet Info</h4>';
 echo '<p class="snoozelinginfo"><strong>Pet ID: </strong>' . $pet['id'];
 echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>' . $pet['pronouns'];
@@ -89,6 +89,7 @@ if ($pet['job'] === 'jack') {
 }
 echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $job;
 echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>' . $pet['breedStatus'];
+echo '<p class="snoozelinginfo"><strong>Bio:</strong><br>' . nl2br(htmlspecialchars($pet['bio'])) . '</p>';
 echo '</div>';
 echo '</div>';
 
@@ -112,8 +113,8 @@ echo '<hr>';
 echo '<div class="secondrow">';
 
 //Plushie Build
-echo '<div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px;overflow-y: auto;">';
-echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Plushie Build</h4>';
+echo '<div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px;overflow-y: auto; height: 305px;">';
+echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188; height: " >&nbsp;&nbsp;&nbsp;Plushie Build</h4>';
 $query = "SELECT * FROM snoozelings WHERE id = :id;";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $id);
@@ -241,8 +242,6 @@ echo '<hr>';
 
 //Bottom Space
 echo '<div id="bottomSpace">';
-
-
 echo '</div>';
 
 

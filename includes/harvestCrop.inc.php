@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table) {
-            $now = new DateTime();
+            $now = new DateTime(null, new DateTimezone('UTC'));
             $future_date = new DateTime($table['finishtime']);
             if ($future_date >= $now) {
                 $_SESSION['reply'] = "That snoozeling is currently crafting.";

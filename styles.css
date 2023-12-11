@@ -897,6 +897,13 @@ a.selected {
     
 }
 
+/* Front Page Styles */
+.indexBox {
+    border: 2px dashed #827188;
+    border-radius: 20px;
+    padding: .8rem;
+}
+
 /* Trendy Tails Styles */
 .trendytails {
     margin-top: 2rem;
@@ -1105,6 +1112,10 @@ a.selected {
 }
 
 /* Boards Styles */
+
+.staffpost {
+    font-size: 1.5rem;
+}
 
 .critterbox {
     display: flex;

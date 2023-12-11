@@ -40,7 +40,7 @@ echo '<div class="itemPageRow">';
 echo '<div class="itemPage">';
 
 //Post Plant Image
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 $int = intval($farm['amount']);
 if ($result < $farm['stg1'] || !$int ) {

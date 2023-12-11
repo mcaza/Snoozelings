@@ -2,7 +2,7 @@
 //Get Values
 $userId = $_SESSION['user_id'];
 $count = 1;
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $result = $now->format('Y-m-d');
 
 $query = 'SELECT * FROM users WHERE id = :id';
@@ -73,7 +73,7 @@ $stmt->bindParam(":explorer", $explorer);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $explorers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 foreach ($explorers as $pet) {
     if ($result > $pet['cooldownTime']) {
@@ -149,10 +149,19 @@ if ($user['dailyPrize'] === "0") {
     $count++;
 }
 
+//Finished Craft
+$query = 'SELECT * FROM craftingtables WHERE user_id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$crafting = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-
-
+if ($crafting['display']) {
+    if ($result > $crafting['finishtime']) {
+        echo '<div style="margin-bottom: .8rem;"><a href="crafting" class="notif">' . $count . '. Finish Craft</a></div>';
+        $count++;
+    }
+}
 
 
 

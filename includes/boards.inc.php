@@ -88,7 +88,12 @@ foreach ($posts as $post) {
 
     echo '<div class="postContent" style="margin-right: auto; margin-left: auto;">';
     echo '<h3>' . htmlspecialchars($post['title']) . '</h3>';
-    echo '<p>' . nl2br(htmlspecialchars($post['text'])) . '</p></div>';
+    if ($post['category'] === "news" || $post['category'] === "submissions") {
+        echo '<p>' . nl2br($post['text']) . '</p></div>';
+    } else {
+        echo '<p>' . nl2br(htmlspecialchars($post['text'])) . '</p></div>';
+    }
+    
     echo '</div>';
     echo '<div class="readMore"><a href="post?id=' . $post['id'] . '"><h4>Read More >></h4></a></div>';
     echo '</div>';

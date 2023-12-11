@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table) {
-            $now = new DateTime();
+            $now = new DateTime(null, new DateTimezone('UTC'));
             $future_date = new DateTime($table['finishtime']);
             if ($future_date >= $now) {
                 $_SESSION['reply'] = "That snoozeling is currently crafting.";
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 //Calculate Times
     //Update Snoozeling to working and add cooldown
-    $now = new DateTime();
+    $now = new DateTime(null, new DateTimezone('UTC'));
     
     $time1 = (clone $now)->add(new DateInterval("PT{$stg1}M")); 
     $format1 = $time1->format('Y-m-d H:i:s');

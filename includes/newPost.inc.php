@@ -38,6 +38,7 @@ if (!$result) {
     if ($userId === "1") {
     echo '<option value="news">News</option>';
     echo '<option value="submissions">Submissions</option>';
+    echo '<option value="hidden">Hidden</option>';
     }
     echo '<option value="general">General</option>';
     echo '<option value="fandom">Fandom</option>';
@@ -84,6 +85,7 @@ if (!$result) {
     if ($userId === "1") {
     echo '<option value="news">News</option>';
     echo '<option value="submissions">Submissions</option>';
+    echo '<option value="hidden">Hidden</option>';
     }
     echo '<option value="general">General</option>';
     echo '<option value="fandom">Fandom</option>';

@@ -26,7 +26,7 @@ foreach ($farms as $farm) {
 }
 
 //Update Water User Time to Time + 2 Hours
-    $now = new DateTime();
+    $now = new DateTime(null, new DateTimezone('UTC'));
     $hours = 2;
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $formatted = $modified->format('Y-m-d H:i:s');

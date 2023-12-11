@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $closed = 0;
     
         //Get Date
-    $now = new DateTime();
+    $now = new DateTime(null, new DateTimezone('UTC'));
     $formatted = $now->format('Y-m-d');
     
     //Grab Form Variables

@@ -13,6 +13,7 @@ $title = $_POST["title"];
 $id = $_POST['id'];
 $bed = $_POST['bed'];
 $showbed = $_POST['showbed'];
+$bio = $_POST['bio'];
 $userId = $_SESSION['user_id'];
     
     //Snoozeling Info
@@ -255,6 +256,21 @@ $userId = $_SESSION['user_id'];
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":bed", $showbed);
+            $stmt->execute();
+        }
+    }
+    
+    //Update Bio
+    if ($bio) {
+        if (strlen($bio) > 500) {
+            $_SESSION['reply'] = "The bio entered is longer than 500 characters.";
+            header("Location: ../editPet?id=" . $id);
+            die();
+        } else {
+            $query = 'UPDATE snoozelings SET bio = :bio WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":bio", $bio);
             $stmt->execute();
         }
     }

@@ -39,7 +39,7 @@ $query = "SELECT lastWater FROM users WHERE id = :id";
 
 
 //Date Stuff
-$now = new DateTime();
+$now = new DateTime(null, new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 
 //Go Back Arrow

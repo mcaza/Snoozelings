@@ -56,9 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($_POST["productivity"]) {
         $produce = $_POST["productivity"];
-        if ($productivity > 10 || $productivity < 1) {
+        if ($produce > 10 || $produce < 1) {
         header("Location: ../index");
-            die();
+        die();
     }
         
         $query = "UPDATE mentalHealthEntries SET productivity = :pain WHERE id = :id";
