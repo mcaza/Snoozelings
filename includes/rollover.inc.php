@@ -1,5 +1,5 @@
  <?php
-    require_once 'dbh-inc.php';
+    require_once '../includes/dbh-inc.php';
 
     //Date Stuff
     $hours = 24;
@@ -12,13 +12,17 @@
     $hours = 16;
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $mailtwo = $modified->format('Y-m-d H:i:s');
+    $hours = 29;
+    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
+    $mailthree = $modified->format('Y-m-d H:i:s');
 
     //Reset Rollover Time
-    $query = 'UPDATE times SET rotime = :time, mailone = :one, mailtwo = :two';
+    $query = 'UPDATE times SET rotime = :time, mailone = :one, mailtwo = :two, mailthree = :three';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":time", $rotime);
     $stmt->bindParam(":one", $mailone);
     $stmt->bindParam(":two", $mailtwo);
+    $stmt->bindParam(":three", $mailthree);
     $stmt->execute();
 
     //Grab All Info

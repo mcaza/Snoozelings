@@ -1,5 +1,7 @@
 <?php
 
+ini_set('session.gc_maxlifetime', 30*60);
+
 ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
 

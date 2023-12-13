@@ -4,6 +4,11 @@ $userId = $_SESSION['user_id'];
 $jack = "jack";
 $explorer = "Explorer";
 
+if ($_SESSION['area']) {
+$temp = $_SESSION['area'];
+} else {
+    $temp = "Farmland";
+}
 $coins = intval($_SESSION['coins']);
 $items = $_SESSION['items'];
 $error = $_SESSION['error'];
@@ -36,7 +41,16 @@ echo '<div class="leftRightButtons">';
 echo '<a href="snoozeland"><<</a>';
 echo '</div>';
 
-echo '<div><img id="exploreImage" class="wideImage" src="resources/Farmland.png"></div>';
+if ($temp === "Farmland") {
+    echo '<div><img id="exploreImage" class="wideImage" src="resources/Farmland.png"></div>';
+    $optionone = "selected";
+} elseif ($temp === "Forest") {
+    echo '<div><img id="exploreImage" class="wideImage" src="resources/Forest.png"></div>';
+    $optiontwo = "selected";
+} elseif ($temp === "Beach") {
+    echo '<div><img id="exploreImage" class="wideImage" src="resources/Beach.png"></div>';
+    $optionthree = "selected";
+}
 echo '<div class="returnItems">';
 
 //Item Display After
@@ -89,13 +103,14 @@ echo '</select></br>';
 
 echo '<label for="area"  class="form">Choose An Area:</label><br>';
 echo '<select  class="input" name="area" id="exploreArea"><br>';
-echo '<option value="Farmland">Snoozeling Ranch</option>';
-echo '<option value="Forest">Wistful Woods</option>';
-echo '<option value="Beach">Dazzling Coast</option>';
+echo '<option value="Farmland" ' . $optionone . '>Snoozeling Ranch</option>';
+echo '<option value="Forest" ' . $optiontwo . '>Wistful Woods</option>';
+echo '<option value="Beach" ' . $optionthree . '>Dazzling Coast</option>';
 echo '</select></br>';
 echo '<button  class="fancyButton editButton">Send Exploring</button>';
 echo '</form>';
 echo '<h4>We are testing exploring and the bottom values are not accurate</h4>';
+//if ($temp === "Farmland") {
 echo '<div id="Farmland">';
 echo '<h6>Snoozeling Ranch Items</h6>';
 echo '<h6></h6>';
@@ -147,7 +162,7 @@ echo '<td></td>';
 echo '</tr>';
 echo '</table>';
 echo '</div>';
-
+//} elseif ($temp === "Forest") {
 echo '<div id="Forest">';
 echo '<h6>Wistful Woods Items</h6>';
 echo '<h6></h6>';
@@ -199,7 +214,7 @@ echo '<td></td>';
 echo '</tr>';
 echo '</table>';
 echo '</div>';
-
+//} elseif ($temp === "Beach") {
 echo '<div id="Beach">';
 echo '<h6>Dazzling Coast Items</h6>';
 echo '<h6></h6>';
@@ -251,5 +266,6 @@ echo '<td></td>';
 echo '</tr>';
 echo '</table>';
 echo '</div>';
+//}
 echo '<p>**Remaining Percentage For All Biomes is Seeds</p>';
 echo '</div>';

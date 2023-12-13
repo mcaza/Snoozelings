@@ -10,6 +10,16 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($pet['job'] === "jack") {
+    $jack = "checked";
+} elseif ($pet['job'] === "Explorer") {
+    $explorer = "checked";
+} elseif ($pet['job'] === "Crafter") {
+    $crafter = "checked";
+} elseif ($pet['job'] === "Farmer") {
+    $farmer = "checked";
+}
+
 //Get Job Levels
 $exp = $pet['farmEXP'];
     if ($exp < 50) {
@@ -68,43 +78,46 @@ echo '<h3 style="margin-bottom: 2rem;">Job Selection Page</h3>';
 echo '<form method="POST" action="includes/changeJob.inc.php">';
 
 //Jack of All Trades
-echo '<input type="radio" id="jack" value="jack" name="job"><label for="jack" class="jobtitle">   Jack of All Trades</label><br>';
+echo '<input type="radio" id="jack" value="jack" name="job" ' . $jack . '><label for="jack" class="jobtitle">   Jack of All Trades</label><br>';
 echo '<p style="margin-bottom: 2.5rem;">Can Perform all Jobs, but Earns No Experience Points</p>';
 
 //Farmer Job
+$input = "";
 $percent = ceil($pet['farmEXP'] / 10);
 if ($percent > 5) {
     $input = $percent . '%';
 }
-echo '<input type="radio" id="Farmer" value="Farmer" name="job" required><label for="Farmer" class="jobtitle">' . $farmname . '</label><br>';
+echo '<input type="radio" id="Farmer" value="Farmer" name="job" required ' . $farmer . '><label for="Farmer" class="jobtitle">' . $farmname . '</label><br>';
 echo '<p>Higher Level Makes Crops Grow Faster</p>';
 //Calculate Values for Each Job. Display Radio Button then Job
-echo '<div class="progressbar">';
-echo '<div class="innerbar" style="width:' . $percent . '%;">' . $input . '</div>';
+echo '<div class="progressbar" title="' . ceil($pet['farmEXP']) . '/1000">';
+echo '<div class="innerbar" style="width:' . $percent . '%;" title="' . ceil($pet['farmEXP']) . '/1000">' . $input . '</div>';
 echo '</div>';
 
 //Explorer Job
+$input = "";
 $percent = ceil($pet['exploreEXP'] / 10);
 if ($percent > 5) {
     $input = $percent . '%';
 }
-echo '<input type="radio" id="Explorer" value="Explorer" name="job"><label for="Explorer" class="jobtitle">' . $explorename . '</label><br>';
+echo '<input type="radio" id="Explorer" value="Explorer" name="job" ' . $explorer . '><label for="Explorer" class="jobtitle">' . $explorename . '</label><br>';
 echo '<p>Higher Level Gives Better Chances to find Multiple Items</p>';
 //Calculate Values for Each Job. Display Radio Button then Job
-echo '<div class="progressbar">';
-echo '<div class="innerbar" style="width:' . $percent . '%;">' . $input . '</div>';
+echo '<div class="progressbar"title="' . ceil($pet['exploreEXP']) . '/1000">';
+echo '<div class="innerbar" style="width:' . $percent . '%;"title="' . ceil($pet['exploreEXP']) . '/1000">' . $input . '</div>';
 echo '</div>';
 
 //Crafter Job
+$input = "";
 $percent = ceil($pet['craftEXP'] / 10);
 if ($percent > 5) {
     $input = $percent . '%';
 }
-echo '<input type="radio" id="Crafter" value="Crafter" name="job"><label for="Crafter" class="jobtitle">' . $craftname . '</label><br>';
+echo '<input type="radio" id="Crafter" value="Crafter" name="job" ' . $crafter . '><label for="Crafter" class="jobtitle">' . $craftname . '</label><br>';
 echo '<p>Higher Level Unlocks More Recipes</p>';
 //Calculate Values for Each Job. Display Radio Button then Job
-echo '<div class="progressbar">';
-echo '<div class="innerbar" style="width:' . $percent . '%;">' . $input . '</div>';
+echo '<div class="progressbar"title="' . ceil($pet['craftEXP']) . '/1000">';
+echo '<div class="innerbar" style="width:' . $percent . '%;"title="' . ceil($pet['craftEXP']) . '/1000">' . $input . '</div>';
 echo '</div>';
 
 //Hidden Pet Value

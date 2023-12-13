@@ -110,7 +110,7 @@ $userId = $_SESSION['user_id'];
                     $final = "";
                     $list = "";
                     $newList = "";
-            } elseif ($clothes === "clothesHoodie") {
+            } elseif ($type === "clothesHoodie") {
                     $list = explode(" ", $snooze["clothesHoodie"]);
                 //Check if Still Equipt
                     $temp = $items[$i-1]['name'];

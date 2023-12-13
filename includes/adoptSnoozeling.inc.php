@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     $adopt = $_POST['pet'];
     $list = 27;
+    $maxpets = 3;
     
     //Get Adoption Info
     $query = 'SELECT * FROM adopts WHERE id = :id';
@@ -16,6 +17,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    //Check Max Pets
+    $query = 'SELECT * FROM snoozelings WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $allpets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (count($allpets) >= $maxpets) {
+        $_SESSION['reply'] = 'You already have the max number of snoozelings.';
+        header("Location: ../adoption");
+        die(); 
+    }
+    
     //Check Coins
     $query = 'SELECT coinCount FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
@@ -23,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $coins = $stmt->fetch(PDO::FETCH_ASSOC);
     if (intval($coins['coinCount']) < intval($pet['cost'])) {
-        $_SESSION['reply'] = '<p>You do not have enough coins to adopt that snoozeling.</p>';
+        $_SESSION['reply'] = 'You do not have enough coins to adopt that snoozeling.';
         header("Location: ../adoption");
         die();        
     }
@@ -37,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $bed = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$bed) {
-            $_SESSION['reply'] = '<p>You need a pet bed to adopt this snoozeling.</p>';
+            $_SESSION['reply'] = 'You need a pet bed to adopt this snoozeling.';
             header("Location: ../adoption");
             die();        
         }

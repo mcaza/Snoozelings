@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Job
     $query = "SELECT job, name FROM snoozelings WHERE id = :id";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":id", $result['pet_id']);
     $stmt->execute();
     $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -50,11 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":null", $null);
     $stmt->execute();
     
-    if ($snooze['job'] != "jack") {
+    if ($snooze['job'] === "Crafter") {
         //Add EXP to Pet
         $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":id", $result['pet_id']);
         $stmt->execute();
     }
     

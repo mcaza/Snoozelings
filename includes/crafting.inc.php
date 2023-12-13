@@ -124,12 +124,34 @@ foreach ($recipes as $recipe) {
     
     //Box Img & Title
     if (!($result['recipe_id'])) {
-        echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe">';
+        //Check Items
+        $yes = 1;
+        foreach ($items as $item) {
+            $query = 'SELECT id FROM items WHERE name = :name AND user_id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":name", $item);
+            $stmt->bindParam(":id", $userId);
+            $stmt->execute();
+            $inv = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $key = array_search($item, $items);
+            $count = count($inv);
+            if ($count >= intval($numbers[$key])) {
+                
+            } else {
+                $yes = 0;
+            }
+        }
+        if ($yes === 1) {
+            echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe have">';
+        } else {
+            echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe">';
+        }
+        
     } else {
         echo '<div class="recipe">';
     }
         echo '<div class="recipeimg">';
-        echo '<img src="items/' . $recipe['name'] . '.png">';
+        echo '<img src="items/' . $recipe['name'] . '.png" style="height:100px">';
         echo '</div>';
         echo '<div class="recipetext">';
         echo '<p style="font-size:1.9rem;margin-bottom:.5rem;"><b>' . $recipe['display'] . '</b></p>';

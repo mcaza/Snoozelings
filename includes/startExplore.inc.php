@@ -135,6 +135,7 @@ $area = $_POST["area"];
         $stmt->execute();
     } 
     
+    $_SESSION['area'] = $area;
     $_SESSION['coins'] = $coinsWon;
     $_SESSION['items'] = $itemsWon;
     $_SESSION['petName'] = htmlspecialchars($name['name']);
@@ -209,7 +210,7 @@ function pickItem($rarity, $area) {
             $coinsWon += 2;
         } elseif ($rarity < 131) {
             $coinsWon++;
-        } elseif ($rarity < 266) {
+        } elseif ($rarity < 286) {
             $count = count($farmCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $farmCommon[$randomNum];
@@ -244,7 +245,7 @@ function pickItem($rarity, $area) {
             $coinsWon += 2;
         } elseif ($rarity < 131) {
             $coinsWon++;
-        } elseif ($rarity < 266) {
+        } elseif ($rarity < 286) {
             $count = count($woodsCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $woodsCommon[$randomNum];
@@ -279,7 +280,7 @@ function pickItem($rarity, $area) {
             $coinsWon += 2;
         } elseif ($rarity < 131) {
             $coinsWon++;
-        } elseif ($rarity < 266) {
+        } elseif ($rarity < 286) {
             $count = count($oceanCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $oceanCommon[$randomNum];

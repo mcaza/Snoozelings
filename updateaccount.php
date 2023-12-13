@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
+require_once '../includes/logincheck.inc.php';
 
 
 

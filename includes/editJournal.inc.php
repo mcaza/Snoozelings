@@ -162,7 +162,7 @@ echo '</div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="teeth" value="teeth"><label for="teeth">Brushed Your Teeth</label></div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="chore" value="chore"><label for="chore">Done a Chore</label></div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="walk" value="walk"><label for="walk">Went for a Walk</label></div>';
-        echo '<div class="checkboxJournal"><input type="checkbox" name="excercise" value="excercise"><label for="excercise">Had Excercise</label></div>';
+        echo '<div class="checkboxJournal"><input type="checkbox" name="excercise" value="excercise"><label for="excercise">Had Exercise</label></div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="talk" value="talk"><label for="talk">Talked to Friends/Family</label></div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="creative" value="creative"><label for="creative">Made Art or Wrote</label></div>';
         echo '<div class="checkboxJournal"><input type="checkbox" name="therapy" value="therapy"><label for="therapy">Went to Therapy</label></div>';

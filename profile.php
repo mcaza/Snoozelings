@@ -13,6 +13,10 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if (!$result) {
+    header("Location: ../doesnotexist");
+    die(); 
+}
 
 ?>
 
@@ -107,7 +111,25 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <!-- Script Link -->
    <script src="main.js"></script>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
+        
+        const before = id - 1;
+        const after = parseInt(id) + 1;
 
+        document.onkeydown = arrowChecker;
+
+function arrowChecker(e) {  
+    e = e || window.event;
+    if (e.keyCode == '37') { //left
+        document.location.href = "profile?id=" + before;
+    }
+    else if (e.keyCode == '39') { //right
+        document.location.href = "profile?id=" + after;
+    }
+}</script>
 
 </body>
 

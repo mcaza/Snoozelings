@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
+require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
@@ -102,10 +103,8 @@ require_once '../includes/verifySinglePet.inc.php';
    <script src="main.js"></script>
     <script>//Explore Change Banner
 var exploreSelect = document.getElementById('exploreArea');
-document.getElementById('exploreArea').addEventListener('change', function() {
-  var value = exploreSelect.value;
-     document.getElementById('exploreImage').src = "/resources/" + value + ".png";
-    if (value === "Beach") {
+        var value = exploreSelect.value;
+        if (value === "Beach") {
         document.getElementById('Beach').style.display = "block";
         document.getElementById('Forest').style.display = "none";
         document.getElementById('Farmland').style.display = "none";
@@ -117,7 +116,23 @@ document.getElementById('exploreArea').addEventListener('change', function() {
         document.getElementById('Beach').style.display = "none";
         document.getElementById('Forest').style.display = "block";
         document.getElementById('Farmland').style.display = "none";
-    }
+    } 
+document.getElementById('exploreArea').addEventListener('change', function() {
+  var value = exploreSelect.value;
+     document.getElementById('exploreImage').src = "/resources/" + value + ".png";
+   if (value === "Beach") {
+        document.getElementById('Beach').style.display = "block";
+        document.getElementById('Forest').style.display = "none";
+        document.getElementById('Farmland').style.display = "none";
+    } else if (value === "Farmland") {
+        document.getElementById('Beach').style.display = "none";
+        document.getElementById('Forest').style.display = "none";
+        document.getElementById('Farmland').style.display = "block";
+    } else if (value === "Forest") {
+        document.getElementById('Beach').style.display = "none";
+        document.getElementById('Forest').style.display = "block";
+        document.getElementById('Farmland').style.display = "none";
+    } 
 });</script>
 </body>
 

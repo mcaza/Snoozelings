@@ -80,7 +80,7 @@ echo '<li style="margin-bottom:.5rem">Tell People how to run Giveaways</li>';
 echo '<li style="margin-bottom:.5rem">Give Life Advice</li>';
 echo '<li style="margin-bottom:.5rem">Tell Moderators how to Moderate</li>';
 echo '<li style="margin-bottom:.5rem">Be Rude to Roleplayers</li>';
-echo '<li style="margin-bottom:.5rem">Tell Roleplayers Their RP is Non-Canons/Wrong/Etc</li>';
+echo '<li style="margin-bottom:.5rem">Tell Roleplayers Their RP is Non-Canon/Wrong/Etc</li>';
 echo '<li style="margin-bottom:.5rem">Telling People to not Create new Snoozeings Based on Past Inspires</li>';
 echo '</ul>';
 echo '<h4 id="artwork">2. Artwork Rules</h4><br>';

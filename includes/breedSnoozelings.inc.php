@@ -4,6 +4,8 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $maxpets = 3;
+    
     //Get Values
     $userId = $_SESSION['user_id'];
     $first = $_POST['first'];
@@ -32,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $count = count($snoozelings);
     
-    if ($count > 9) {
+    if ($count >= $maxpets) {
         $_SESSION['reply'] = 'You currently have the max number of snoozelings.';
         header("Location: ../stitcher?page=new");
         die();

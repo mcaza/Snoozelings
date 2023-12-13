@@ -1,11 +1,8 @@
 <?php
 require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
-require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
-
-
 
 
 ?>
@@ -16,7 +13,7 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adoption House</title>
+    <title></title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -82,7 +79,9 @@ require_once '../includes/verifySinglePet.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
-            <?php require_once '../includes/adoption.inc.php'; ?>
+            <img src="resources/lostpageNPC.png" style="width: 45%;">
+            <h3>This Page Does Not Exist</h3>
+            
         </div></div>
     </div>
     <!--End of All Main Content-->

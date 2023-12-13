@@ -6,6 +6,25 @@ require_once '../includes/verifySinglePet.inc.php';
 
 $username = $_SESSION['user_username'];
 
+$id = $_GET['id'];
+
+//User Name
+$query = 'SELECT id FROM users WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $id);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$result) {
+    header("Location: ../doesnotexist");
+    die(); 
+}
+
+if ($id > 2 && $id <10) {
+    header("Location: ../doesnotexist");
+    die(); 
+}
+
 
 ?>
 
@@ -108,6 +127,25 @@ if (!leftArrow) {
 
     <!-- Script Link -->
    <script src="main.js"></script>
+        <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
+        
+        const before = id - 1;
+        const after = parseInt(id) + 1;
+
+        document.onkeydown = arrowChecker;
+
+function arrowChecker(e) {  
+    e = e || window.event;
+    if (e.keyCode == '37') { //left
+        document.location.href = "collection?id=" + before;
+    }
+    else if (e.keyCode == '39') { //right
+        document.location.href = "collection?id=" + after;
+    }
+}</script>
     
 
 </body>

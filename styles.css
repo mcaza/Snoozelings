@@ -904,6 +904,14 @@ a.selected {
     padding: .8rem;
 }
 
+.adimage {
+    width: 90%;
+}
+
+.adimage:hover {
+    width: 100%;
+}
+
 /* Trendy Tails Styles */
 .trendytails {
     margin-top: 2rem;
@@ -1253,13 +1261,8 @@ a.critterbox:hover{
     margin-left: auto;
 }
 
-#Beach {
-    display: none;
-}
 
-#Forest {
-    display: none;
-}
+
 
 /* Adoption House Styles */
 .adoptionPets {
@@ -1316,6 +1319,10 @@ a.critterbox:hover{
     width: 45%;
     border: 1px silver solid;
     border-radius: 20px;
+}
+
+.have {
+    background-color: #D1FFBD;
 }
 
 a.recipe:hover {

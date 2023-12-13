@@ -27,12 +27,20 @@ if (!($result['display'] === "")) {
     die();
 }
 
+
 //Check if Pet is High Enough Level for Recipe
-$query = 'SELECT job, craftEXP FROM snoozelings WHERE id = :id';
+$query = 'SELECT job, craftEXP, name FROM snoozelings WHERE id = :id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $result['pet_id']);
 $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//Check if Pet is Crafter or Jack
+if (!($pet['job'] === "jack" || $pet['job'] === "Crafter")) {
+    $_SESSION['reply'] = $pet['name'] . ' needs the crafter or jack of all trades profession to craft.';
+    header("Location: ../crafting");
+    die();
+}
 
 if ($pet['job'] === 'jack' && $recipe['level'] > 1) {
     header("Location: ../index");
