@@ -178,8 +178,8 @@ echo '</div>';
     echo '<h4 href="https://discord.gg/HDs66g7QeJ">Click to Join Our Discord Server</h4>';
     echo '<a href="https://discord.gg/HDs66g7QeJ"><img style="width: 10%;"src="https://static-00.iconduck.com/assets.00/discord-icon-2048x2048-nnt62s2u.png"></a>';
     echo '<h4>Sign Up for Email Updates</h4>';
-    echo '<form method="post" action="includes/newsletter.inc.php">';
-    echo '<input type="text" class="input"><br>';
+    echo '<form method="post" action="includes/addemailnewsletter.inc.php">';
+    echo '<input type="text" class="input" name="email"><br>';
     echo '<button  class="fancyButton">Join Email List</button>';
     echo '</form>';
 }

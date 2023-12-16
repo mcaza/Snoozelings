@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!$bp) {
         $_SESSION['reply'] = "You must pick a snoozeling.";
         header("Location: ../blueprints?id=" . $result['id']);
+        die();
     }
     
     $query = 'UPDATE breedings SET blueprint = :blueprint WHERE id = :id';
