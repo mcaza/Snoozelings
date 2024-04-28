@@ -1,6 +1,7 @@
 <?php 
 
-$loggedInBar = '<div class="dropdown">
+    if (isset($_SESSION["user_id"])) {
+        echo '<div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s Abode</a></button>
             <div class="dropdown-content">
                 <a href="collection?id=' . $_SESSION['user_id'] . '">Snoozeling Nests</a>
@@ -42,9 +43,8 @@ $loggedInBar = '<div class="dropdown">
         <div>
             <a href="/includes/logout.inc.php" class="menu">Log Out</a>
         </div>';
-
-$loggedOutBar = 
-        '<div>
+    } else {
+        echo '<div>
             <a href="signup" class="menu">Sign Up</a>
         </div>
         <div>
@@ -53,11 +53,5 @@ $loggedOutBar =
         <div>
             <a href="helpme" class="menu">Help Me</a>
         </div>';
-        
-
-    if (isset($_SESSION["user_id"])) {
-        echo $loggedInBar;
-    } else {
-        echo $loggedOutBar;
     }
 

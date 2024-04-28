@@ -3,6 +3,8 @@
 $userId = $_SESSION['user_id'];
 $name = $_SESSION['petName'];
 
+
+
 echo '<h3>Snooze Land</h3>';
 
 echo '<div class="shopRows" style="justify-content: center;column-gap: 6rem;margin-bottom: 6rem;">';

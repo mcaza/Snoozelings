@@ -57,6 +57,10 @@ if ($result < $farm['stg1'] || !$int ) {
 $to_time = strtotime($farm['stg3']);
 $from_time = strtotime($result);
 $diff = round(abs($to_time - $from_time) / 60,0);
+//Date Stuff
+$now = new DateTime(null, new DateTimezone('UTC'));
+$future_date = new DateTime($farm['stg3']);
+$interval = $future_date->diff($now);
 
 
 //Post Plant Name & Info
@@ -103,12 +107,9 @@ if ($int === 0) {
         echo "<button class='fancyButton'>Harvest</button>";
         echo '</form>';
         
-    } elseif ($diff === 1) {
-        echo '<h4>' . $farm['plantName'] . ' Plant</h4>';
-        echo '<p><i>1 Minute Remaining</i></p>';
     } else {
         echo '<h4>' . $farm['plantName'] . ' Plant</h4>';
-        echo '<p><i>' . $diff . ' Minutes Remaining</i></p>';
+        echo '<p><i>' . $interval->format("%h Hours, %i Minutes") . ' Remaining</i></p>';
     }
 }
 

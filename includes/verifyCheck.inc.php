@@ -1,5 +1,6 @@
 <?php
 
+if (isset($_SESSION['user_id'])) {
 function verifyEmail($pdo) {
 $userId = $_SESSION['user_id'];
 
@@ -45,3 +46,5 @@ function logCheck($pdo) {
 logCheck($pdo);
 
 verifyEmail($pdo);
+    
+}

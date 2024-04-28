@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         $newSessionId = session_create_id();
         $sessionId = $newSessionId . "_" . $results["id"];
-        session_id($sessionId);
+        //session_id($sessionId);
         
         //Set Bonded Pet Name
         $name = petName($pdo, $results['bonded']);

@@ -101,6 +101,36 @@ require_once '../includes/verifySinglePet.inc.php';
 
     <!-- Script Link -->
    <script src="main.js"></script>
+    <script>
+     document.getElementById('hairChoice').onchange = (event) => {
+         var inputText = event.target.value;
+         if (inputText === 'Floof') {
+             document.getElementById('HairLayer').src = "resources/Trendypoof.png";
+         } else if (inputText === "Wave") {
+             document.getElementById('HairLayer').src = "resources/Trendywave.png";
+         } else if (inputText === "Forelock") {
+             document.getElementById('HairLayer').src = "resources/Trendyforelock.png";
+         } else if (inputText === "Mohawk") {
+             document.getElementById('HairLayer').src = "resources/Trendymohawk.png";
+         } else if (inputText === "Mane") {
+             document.getElementById('HairLayer').src = "resources/Trendymane.png";
+         }   
+     }
+     
+     document.getElementById('TailChoice').onchange = (event) => {
+         var inputText = event.target.value;
+         if (inputText === 'Dragon') {
+             document.getElementById('TailLayer').src = "resources/Trendydragon.png";
+         } else if (inputText === "Long") {
+             document.getElementById('TailLayer').src = "resources/Trendylong.png";
+         } else if (inputText === "Nub") {
+             document.getElementById('TailLayer').src = "resources/Trendynub.png";
+         } else if (inputText === "Pom") {
+             document.getElementById('TailLayer').src = "resources/Trendypom.png";
+         }  
+     }
+    
+    </script>
 
 </body>
 

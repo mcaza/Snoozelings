@@ -38,4 +38,7 @@ if ($count == 0) {
     echo '</select>';
     echo '<div><button class="fancyButton">Choose Snoozeling</button></div>';
     echo "</form>";
+    if ($userId === "2") {
+        echo '<div style="margin-top:2rem;"><button class="fancyButton" onClick="window.location.href=\'../includes/resetStarters.inc.php\'">Reset Starters</button></div>';
+    }
 }

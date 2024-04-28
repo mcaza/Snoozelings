@@ -1,9 +1,11 @@
 <?php
 
-$userId = $_SESSION['user_id'];
-$username = $_SESSION['user_username'];
 
-if ($userId) {
+
+if (isset($_SESSION['user_id'])) {
+    
+    $userId = $_SESSION['user_id'];
+$username = $_SESSION['user_username'];
 
 //Rollover Time Stuff
 $query = 'SELECT * FROM times';
@@ -12,7 +14,7 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Date Stuff
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $future_date = new DateTime($result['rotime']);
 $interval = $future_date->diff($now);
 
@@ -111,13 +113,9 @@ echo '</div>';
 echo '</div>';
     
 } else {
-    if ($_SESSION['reply']) {
+    if (isset($_SESSION['reply'])) {
     $reply = $_SESSION['reply'];
     unset($_SESSION['reply']);
-    }
-    
-    //Session Reply Area
-    if ($reply) {
         echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;"><p>' . $reply . '</p></div>';
     }
     echo '<h3 style="font-size:4rem;border-bottom: 2px dashed #827188;padding-bottom:1.5rem;margin-top:1.5rem;">Coming Soon to All Browsers</h3>';

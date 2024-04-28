@@ -204,8 +204,14 @@ $userId = $_SESSION['user_id'];
         if(!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them" || $pronouns === "She/Him")) {
             header("Location: ../editprofile?id=" . $userId);
             die();
-        }
+        } else {
+        $query = 'UPDATE snoozelings SET pronouns = :pronouns WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":pronouns", $pronouns);
+            $stmt->execute();
     }
+    } 
     //Snoozeling Title
     if ($title) {
         $query = 'SELECT * FROM titles';
@@ -221,15 +227,29 @@ $userId = $_SESSION['user_id'];
         if ($check === 0) {
             header("Location: ../editPet?id=" . $id);
             die();
-        }
-    }
+        } else {
+        $query = 'UPDATE snoozelings SET title = :title WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":title", $title);
+            $stmt->execute();
+    } 
+    } 
     //Pet Inspiration
     if ($status) {
         if (!($status === "Closed" || $status === "Open")) {
             header("Location: ../editPet?id=" . $id);
             die();
-        }
+        } else {
+        $query = 'UPDATE snoozelings SET breedStatus = :breedStatus WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":breedStatus", $status);
+            $stmt->execute();
     }
+    } 
+    
+    
     
     //Bed
     if ($bed) {
@@ -274,16 +294,14 @@ $userId = $_SESSION['user_id'];
             $stmt->execute();
         }
     }
-
-    //Insert into Pet Table
-    $query = "UPDATE snoozelings SET name = :name, pronouns = :pronouns, breedStatus = :status, title = :title WHERE id = :id";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->bindParam(":name", $name);
-    $stmt->bindParam(":pronouns", $pronouns);
-    $stmt->bindParam(":status", $status);
-    $stmt->bindParam(":title", $title);
-    $stmt->execute();
+    
+    if ($name) {
+        $query = 'UPDATE snoozelings SET name = :name WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":name", $name);
+            $stmt->execute();
+    }
     
     //Check if Bonded and Adjust Session Name
     $query = "SELECT bonded FROM users WHERE id = :id";

@@ -36,6 +36,9 @@ if ($item['type'] === 'clothesTop') {
 if ($item['type'] === 'clothesHoodie') {
     $type = "Clothes [Hoodie]";
 }
+if ($item['type'] === 'clothesBoth') {
+    $type = "Clothes [Both]";
+}
 
 //Back to Pack Arrows
  echo '<div class="leftRightButtons">';

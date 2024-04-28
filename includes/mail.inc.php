@@ -36,7 +36,7 @@ echo '</div>';
 //Box with Message and Info
 echo '<div class="letterDisplay">';
 echo '<h3>' . htmlspecialchars($letter['title']) . '</h3>';
-echo '<p style="font-size: 2rem;"><i>Sent By <a href="' . $letter['sender'] . '">' . htmlspecialchars($sender['username']) . '</a></i></p>';
+echo '<p style="font-size: 2rem;"><i>Sent By <a href="profile?id=' . $letter['sender'] . '">' . htmlspecialchars($sender['username']) . '</a></i></p>';
 if ($letter['picture']) {
     echo '<img src="resources/' . $letter['picture'] . '.png" style="width: 200px;">';
 } else {

@@ -2,10 +2,17 @@
 
 $userId = $_SESSION['user_id'];
 $itemCount = [0];
-$type = $_GET['type'];
+if (isset($_GET['type'])) {
+    $type = $_GET['type'];
+} else {
+    $type = null;
+}
+if (isset($_SESSION['reply'])) {
+    $reply = $_SESSION['reply'];
+    unset($_SESSION['reply']);
+}
 $name = $_SESSION['bonded'];
-$reply = $_SESSION['reply'];
-unset($_SESSION['reply']);
+
 
 if (!$name) {
 //Get Bonded ID
@@ -62,7 +69,7 @@ echo '</div>';
 
 
 //Notification
-if ($reply) {
+if (isset($reply)) {
     echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 2rem;">';
     echo '<p>' . $reply . '</p>';
     echo '</div>';
@@ -109,6 +116,7 @@ echo '</form>';
 
 //Inventory System
 echo "<div id='inventory'>";
+$round = 0;
 foreach ($itemCount as $item) {
     if ($itemCount[$round] > 0) {
         if ($items[$round -1]['type'] === $type || $type === "all" || !$type) {

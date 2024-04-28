@@ -1,10 +1,12 @@
 <?php
 
-$query = "SELECT * FROM dailyRecords WHERE id = 1";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+//Get Records
+$query = "SELECT * FROM dailyRecords ORDER BY id DESC LIMIT 1";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//Display Records
 if ($result['journalEntries'] === "1") {
     echo "<p>" . $result['journalEntries'] . " Journal Entry</p>";
 } else {

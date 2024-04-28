@@ -1,5 +1,7 @@
 <?php
 
+
+
 ini_set('session.gc_maxlifetime', 30*60);
 
 ini_set('session.use_only_cookies', 1);
@@ -13,7 +15,18 @@ session_set_cookie_params([
     'httponly' => true
 ]);
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (isset($_SESSION['user_id'])) {
+if (intval($_SESSION['user_id']) > 10) {
+    session_unset();
+    session_destroy();
+    header("Location: ../login.php");
+    die();
+}
+}
 
 /* if (isset($_SESSION["user_id"])) {
     if (!isset($_SESSION['last_regeneration'])) {

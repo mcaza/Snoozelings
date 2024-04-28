@@ -47,7 +47,19 @@ if ($reply) {
 
 
 //Will have cute snoozeling for alpha. Custom art later
-echo '<div><img style="width: 35%;" src="resources/trendyNPC.png"></div>';
+echo '<div class="art-container">';
+    echo "<div class='artlarge'>";
+    echo "<img src='resources/trendyNPC.png' id='Base'>";
+    echo "</div>";
+    echo "<div class='artlarge'>";
+    echo "<img src='resources/Trendypoof.png' id='HairLayer'>";
+    echo "</div>";
+echo "<div class='artlarge'>";
+    echo "<img src='resources/Trendydragon.png' id='TailLayer'>";
+    echo "</div>";
+echo "</div>";
+//echo '<div><img style="width: 50%;" src="resources/trendyNPC.png"></div>';
+//echo "<img src='Layers/MainLines/Amethyst.png' id = 'Mainlinesdesigner'>";
 
 //Text. Her talking or something
  echo '<p><i>Fancy a New Look?</i></p>';
@@ -72,8 +84,9 @@ echo '</select><br>';
 
 //List All Hairstyles
 echo '<label for="hair" class="form">Hairstyle:</label><br>';
-echo '<select class="input"  name="hair">';
+echo '<select class="input"  name="hair" id="hairChoice">';
 echo '<option value="Floof">No Hair</option>';
+echo '<option value="Forelock">Forelock</option>';
 echo '<option value="Mane">Mane</option>';
 echo '<option value="Mohawk">Mohawk</option>';
 echo '<option value="Wave">Wave</option>';
@@ -103,7 +116,7 @@ echo '</select><br>';
 
 //List All Hairstyles
 echo '<label for="tails" class="form">Tailstyle:</label><br>';
-echo '<select class="input"  name="tails">';
+echo '<select class="input"  name="tails" id="TailChoice">';
 echo '<option value="Dragon">Dragon</option>';
 echo '<option value="Long">Long</option>';
 echo '<option value="Nub">Nub</option>';

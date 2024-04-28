@@ -85,7 +85,7 @@ echo '<hr>';
 echo '<div class="craftbuttons">';
 echo '<a href="crafting?type=ingredient" class="craftbutton">Ingredients</a>';
 echo '<a href="crafting?type=clothes" class="craftbutton">Clothing</a>';
-if ($pet['job'] === 'Crafter' && intval($pet['craftEXP']) > 50) {
+if (intval($pet['craftEXP']) > 49) {
     echo '<a href="crafting?type=dye" class="craftbutton">Dyes</a>';
     echo '<a href="crafting?type=dyedclothes" class="craftbutton">Staining</a>';
 }

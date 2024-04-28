@@ -2,8 +2,7 @@
 require_once 'dbh-inc.php';
 
 //Date Stuff
-$now = new DateTime(null, new DateTimezone('UTC'));
-$date = $now->format('Y-m-d');
+$date = 1;
 
 //Grab All Info
 $query = "SELECT * FROM users WHERE lastLog = :date";

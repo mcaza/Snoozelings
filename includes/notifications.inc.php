@@ -2,7 +2,7 @@
 //Get Values
 $userId = $_SESSION['user_id'];
 $count = 1;
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d');
 
 $query = 'SELECT * FROM users WHERE id = :id';
@@ -73,7 +73,7 @@ $stmt->bindParam(":explorer", $explorer);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $explorers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 foreach ($explorers as $pet) {
     if ($result > $pet['cooldownTime']) {

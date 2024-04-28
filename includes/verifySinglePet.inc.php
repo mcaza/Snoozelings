@@ -1,5 +1,6 @@
 <?php
 
+if (isset($_SESSION['user_id'])) {
 function verifySinglePet($pdo) {
 $userId = $_SESSION['user_id'];
 
@@ -18,3 +19,5 @@ if (isset($_SESSION["user_id"])) {
 }
 
 verifySinglePet($pdo);
+    
+}

@@ -1,10 +1,9 @@
 <?php
 require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
+require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
-require_once '../includes/userRedirect.inc.php';
-
 
 
 
@@ -16,8 +15,9 @@ require_once '../includes/userRedirect.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Edit User Profile</title>
     <link rel="stylesheet" href="styles.css">
+    <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
 
 <body>
@@ -55,9 +55,6 @@ require_once '../includes/userRedirect.inc.php';
                 <!-- Snoozeling Display Box. Currently Generates Random Snoozeling -->
                 <div class="bar-container">
                     <?php require '../includes/leftPet.inc.php'; ?>
-                    <p id="mood" onClick="showForm()"><strong>Mood:</strong> Happy</p>
-                    <form id="moodForm">
-                        <label for="mood">Choose a Mood:</label>
                 </div>
             </div>
 
@@ -69,8 +66,8 @@ require_once '../includes/userRedirect.inc.php';
                 <?php if(isset($_SESSION['user_id'])) {
                echo '<div class="bar-container">
                     <h2>To Do</h2>
-                    <?php require_once "../includes/notifications.inc.php"; ?>
-                    <button onclick="window.location.href="../includes/clearNotifications.inc.php";" class="taskList" id="clearNotifs">Clear Notifications</button><br><br>
+                    ';  require_once "../includes/notifications.inc.php"; 
+                    echo '<br>
                 </div>';
                 } ?>
 
