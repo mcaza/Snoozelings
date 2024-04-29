@@ -81,7 +81,7 @@ require_once '../includes/verifySinglePet.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div class="bottomPush">
-            <?php require_once '../includes/updateProfile.inc.php'; ?>
+            <?php require_once '../includes/editProfile.inc.php'; ?>
         </div></div>
     </div>
     <!--End of All Main Content-->

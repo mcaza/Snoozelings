@@ -100,7 +100,7 @@ if ($id > 2 && $id <10) {
 
         <!-- All Main Content -->
         <div class="main-container"><div>
-            <?php require_once '../includes/nestContent.php'; ?>
+            <?php require_once '../includes/collection.php'; ?>
             <script>
     //Profile / Snoozeling / Collection Fix When Only Right Arrow
 var leftArrow = document.getElementById('leftArrow');

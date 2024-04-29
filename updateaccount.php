@@ -80,7 +80,7 @@ require_once '../includes/logincheck.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
-            <?php require_once '../includes/updateaccount.inc.php'; ?>
+            <?php require_once '../includes/updateAccount.inc.php'; ?>
         </div></div>
     </div>
     <!--End of All Main Content-->
