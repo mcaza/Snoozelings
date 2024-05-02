@@ -134,6 +134,14 @@ require_once '../includes/verifySinglePet.inc.php';
             document.getElementById('TopWingdesigner').src = "Layers/Wings/Pegasus/Top/" + inputText + ".png";
             document.getElementById('BottomWingdesigner').src = "Layers/Wings/Pegasus/Bottom/" + inputText + ".png";
         }
+     var checkBox = document.getElementById("sublimation");
+        if (checkBox.checked == true) {
+            document.getElementById('Sublimationdesigner').src = "Layers/Markings/Sublimation/" + inputText + ".png";
+        }
+     var checkBox = document.getElementById("cupid");
+        if (checkBox.checked == true) {
+            document.getElementById('Cupiddesigner').src = "Layers/Markings/Cupid/" + inputText + ".png";
+        }
  }
  
  document.getElementById('skinColor').onchange = (event) => {
@@ -229,6 +237,26 @@ require_once '../includes/verifySinglePet.inc.php';
             document.getElementById('Spotsdesigner').src = "Layers/Markings/Spots/" + mainColor + ".png";
         } else {
             document.getElementById('Spotsdesigner').src = "";
+        }
+ }
+    
+    document.getElementById('cupid').onchange = (event) => {
+        var mainColor = document.getElementById('mainColor').value;
+        var checkBox = document.getElementById("cupid");
+        if (checkBox.checked == true) {
+            document.getElementById('Cupiddesigner').src = "Layers/Markings/Cupid/" + mainColor + ".png";
+        } else {
+            document.getElementById('Cupiddesigner').src = "";
+        }
+ }
+    
+    document.getElementById('sublimation').onchange = (event) => {
+        var mainColor = document.getElementById('mainColor').value;
+        var checkBox = document.getElementById("sublimation");
+        if (checkBox.checked == true) {
+            document.getElementById('Sublimationdesigner').src = "Layers/Markings/Sublimation/" + mainColor + ".png";
+        } else {
+            document.getElementById('Sublimationdesigner').src = "";
         }
  }
     

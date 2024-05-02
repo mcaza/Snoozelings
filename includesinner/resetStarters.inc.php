@@ -48,6 +48,17 @@ function randomCommon($pdo, $results, $userId, $count) {
         $tempSpecials .= "Boots ";
     }
     
+    $randomNum = rand(1,2); 
+    if ($randomNum === 1) {
+        $tempSpecials .= "Cupid ";
+    }
+    
+    $randomNum = rand(1,2); 
+    if ($randomNum === 1) {
+        $tempSpecials .= "Sublimation ";
+    }
+    
+    
     $finalSpecials = substr($tempSpecials, 0, -1);
     
     //Determine Hair and Tail Type

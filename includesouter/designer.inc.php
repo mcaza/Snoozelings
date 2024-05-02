@@ -30,19 +30,27 @@ echo '<h3 style="margin-top: 1rem; margin-bottom: 2rem;">Snoozelings Maker</h3>'
         echo "<div class='artlarge'>";
         echo "<img src='Layers/Primary/Amethyst.png' id = 'Primarydesigner'>";
         echo "</div>";
+        echo "<div class='artlarge'>";
+            echo "<img src='' id = 'Cupiddesigner'>";
+            echo "</div>";  
+   
             echo "<div class='artlarge'>";
             echo "<img src='' id = 'Spotsdesigner'>";
             echo "</div>";
-            echo "<div class='artlarge'>";
-            echo "<img src='' id = 'Bellydesigner'>";
-            echo "</div>";
+            
 
             echo "<div class='artlarge'>";
             echo "<img src='' id = 'Bootsdesigner'>";
             echo "</div>";
+     echo "<div class='artlarge'>";
+            echo "<img src='' id = 'Sublimationdesigner'>";
+            echo "</div>";  
         echo "<div class='artlarge'>";
         echo "<img src='Layers/Ear/Amethyst.png' id = 'Eardesigner'>";
         echo "</div>";
+    echo "<div class='artlarge'>";
+            echo "<img src='' id = 'Bellydesigner'>";
+            echo "</div>";
         echo "<div class='artlarge'>";
         echo "<img src='Layers/MainLines/Amethyst.png' id = 'Mainlinesdesigner'>";
         echo "</div>";
@@ -140,6 +148,7 @@ echo '<label for="hairType" class="form">Hair Style:</label><br>';
 echo '<select id="hairType"  class="input">';
 echo '<option value="Floof">Floof</option>';
 echo '<option value="Forelock">Forelock</option>';
+echo '<option value="Knitted">Knitted</option>';
 echo '<option value="Mane">Mane</option>';
 echo '<option value="Mohawk">Mohawk</option>';
 echo '<option value="Wave">Wave</option>';
@@ -156,6 +165,7 @@ echo '</select><br>';
 echo '<label for="tailType" class="form">Tail Style:</label><br>';
 echo '<select id="tailType"  class="input">';
 echo '<option value="Dragon">Dragon</option>';
+echo '<option value="Knitted">Knitted</option>';
 echo '<option value="Long">Long</option>';
 echo '<option value="Mermaid">Mermaid</option>';
 echo '<option value="Nub">Nub</option>';
@@ -167,6 +177,10 @@ echo '</div>';
 
 echo '<div>';
 echo '<label style="margin-bottom: 1rem;" class="form">Markings:</label><br>';
+echo '<div class="checkBoxDes">';
+echo '<input type="checkbox" id="wings"><label class="designerCheck" for="wings">Wings</label><br>';
+echo '</div>';
+
 echo '<div class="checkBoxDes">';
 echo '<input  type="checkbox" id="belly"><label class="designerCheck" for="belly">Belly</label><br>';
 echo '</div>';
@@ -180,8 +194,13 @@ echo '<input type="checkbox" id="spots"><label class="designerCheck" for="spots"
 echo '</div>';
 
 echo '<div class="checkBoxDes">';
-echo '<input type="checkbox" id="wings"><label class="designerCheck" for="wings">Wings</label><br>';
+echo '<input type="checkbox" id="cupid"><label class="designerCheck" for="cupid">Cupid</label><br>';
 echo '</div>';
+
+echo '<div class="checkBoxDes">';
+echo '<input type="checkbox" id="sublimation"><label class="designerCheck" for="sublimation">Sublimation</label><br>';
+echo '</div>';
+
 echo '</div>';
 echo '</div>';
 

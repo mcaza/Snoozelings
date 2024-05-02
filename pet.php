@@ -133,10 +133,10 @@ if (!leftArrow) {
 function arrowChecker(e) {  
     e = e || window.event;
     if (e.keyCode == '37') { //left
-        document.location.href = "profile?id=" + before;
+        document.location.href = "pet?id=" + before;
     }
     else if (e.keyCode == '39') { //right
-        document.location.href = "profile?id=" + after;
+        document.location.href = "pet?id=" + after;
     }
 }</script>
 

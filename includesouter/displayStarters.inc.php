@@ -33,6 +33,12 @@ function displayStarter($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Primary/" . $pet["mainColor"] . ".png' id = 'Primaryone'>";
         echo "</div>";
+    if (strpos($pet["specials"], "Cupid") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Cupid/" . $pet["mainColor"] . ".png' id = 'Cupidone'>";
+            echo "</div>";
+        }
+    
     if (strpos($pet["specials"], "Spots") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Markings/Spots/" . $pet["mainColor"] . ".png' id = 'Spotsone'>";
@@ -46,6 +52,11 @@ function displayStarter($pet, $class) {
     if (strpos($pet["specials"], "Boots") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Markings/Boots/" . $pet["mainColor"] . ".png' id = 'Bootsone'>";
+            echo "</div>";
+        }
+    if (strpos($pet["specials"], "Sublimation") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Sublimation/" . $pet["mainColor"] . ".png' id = 'Sublimationone'>";
             echo "</div>";
         }
         echo "<div class='${class}'>";

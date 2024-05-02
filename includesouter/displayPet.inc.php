@@ -27,24 +27,46 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Primary/" . $pet["mainColor"] . ".png' id = 'Primaryone'>";
         echo "</div>";
+        if (strpos($pet["specials"], "Cupid") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Cupid/" . $pet["mainColor"] . ".png' id = 'Cupidone'>";
+            echo "</div>";
+        }
+    
     if (strpos($pet["specials"], "Spots") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Markings/Spots/" . $pet["mainColor"] . ".png' id = 'Spotsone'>";
             echo "</div>";
         }
-    if (strpos($pet["specials"], "Belly") !== false) {
+        if (strpos($pet["specials"], "Hearts") !== false) {
             echo "<div class='${class}'>";
-            echo "<img src='Layers/Markings/Belly/" . $pet["mainColor"] . ".png' id = 'Bellyone'>";
+            echo "<img src='Layers/Markings/Hearts/" . $pet["mainColor"] . ".png' id = 'Heartsone'>";
             echo "</div>";
         }
+    
     if (strpos($pet["specials"], "Boots") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Markings/Boots/" . $pet["mainColor"] . ".png' id = 'Bootsone'>";
             echo "</div>";
         }
+        if (strpos($pet["specials"], "Sublimation") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Sublimation/" . $pet["mainColor"] . ".png' id = 'Sublimationone'>";
+            echo "</div>";
+        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/Ear/" . $pet["noseColor"] . ".png' id = 'Earone'>";
         echo "</div>";
+        if (strpos($pet["specials"], "Stitches") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Stitches/" . $pet["mainColor"] . ".png' id = 'Stitchesone'>";
+            echo "</div>";
+        }
+        if (strpos($pet["specials"], "Belly") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Belly/" . $pet["mainColor"] . ".png' id = 'Bellyone'>";
+            echo "</div>";
+        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
         echo "</div>";
