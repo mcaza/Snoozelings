@@ -209,68 +209,18 @@ if ($pet['clothesHoodie']) {
     }
 }
 echo '<div style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; justify-content: center;">';
-foreach ($clothes as $item) {
-    //Item Display Name
-    $query = "SELECT * FROM itemList WHERE name = :name;";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $id);
-    $stmt->execute();
-    $itemName = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+foreach ($clothes as $item) {    
     //Color Check
-    $colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Black', 'Brown', 'Pink', 'PastelPink', 'PastelBlue', 'PastelBrown', 'PastelPurple', 'Gooseberry', 'Blueberry', 'Teal', 'RainbowLove', 'FemaleLove', 'MaleLove', 'DoubleLove', 'AnyLove', 'AceLove', 'AroLove', 'NewSelf', 'UniqueSelf', 'FluidSelf'];
+    $query = "SELECT * FROM dyes";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $colors = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $ending = "";
     $itemName = "";
     foreach ($colors as $x) {
-        if (str_ends_with($item, $x)) {
-            $tempColor = $x;
-            $itemName = str_replace($tempColor, "", $item);
-            switch ($tempColor) {
-                case "PastelPink":
-                    $ending = "Pastel Pink";
-                    break;
-                case "PastelBrown":
-                    $ending = "Pastel Brown";
-                    break;
-                case "PastelPurple":
-                    $ending = "Pastel Purple";
-                    break;
-                case "PastelBlue":
-                    $ending = "Pastel Blue";
-                    break;
-                case "RainbowLove":
-                    $ending = "Rainbow Love";
-                    break;
-                case "FemaleLove":
-                    $ending = "Female Love";
-                    break;
-                case "MaleLove":
-                    $ending = "Male Love";
-                    break;
-                case "DoubleLove":
-                    $ending = "Double Love";
-                    break;
-                case "AnyLove":
-                    $ending = "Any Love";
-                    break;
-                case "AceLove":
-                    $ending = "Ace Love";
-                    break;
-                case "AroLove":
-                    $ending = "Ace Love";
-                    break;
-                case "NewSelf":
-                    $ending = "New Self";
-                    break;
-                case "UniqueSelf":
-                    $ending = "Unique Self";
-                    break;
-                case "FluidSelf":
-                    $ending = "Fluid Self";
-                    break;
-                default:
-                    $ending = $tempColor;
-            }
+        if (str_ends_with($item, $x['name'])) {
+            $itemName = str_replace($x['name'], "", $item);
+            $ending = $x['display'];
         }
     }
     
@@ -282,7 +232,7 @@ foreach ($clothes as $item) {
         $stmt->execute();
         $displayName = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        echo '<img src="items/' . $item . '.png" style="width: 25%;" title="' . $displayName['display'] . ' [' . $ending . '] ' . '">';
+        echo '<img src="items/' . $item . '.png" style="width: 25%;border-radius:20px;border: 2px solid silver;" title="' . $displayName['display'] . ' [' . $ending . '] ' . '">';
     } else {
         //Item Display Name
         $query = "SELECT * FROM itemList WHERE name = :name;";
@@ -291,7 +241,7 @@ foreach ($clothes as $item) {
         $stmt->execute();
         $displayName = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        echo '<img src="items/' . $item . '.png" style="width: 25%;" title="' . $displayName['display'] . '">';
+        echo '<img src="items/' . $item . '.png" style="width: 25%;border-radius:20px;border: 2px solid silver;" title="' . $displayName['display'] . '">';
     }
     
 }

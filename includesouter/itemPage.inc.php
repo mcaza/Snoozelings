@@ -25,6 +25,27 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Get Dyes
+$dyelist = [];
+for ($i = 0; $i < $count; $i++) {
+    foreach ($results as $dye) {
+        if ($dye['dye']) {
+            array_push($dyelist, $dye['dye']);
+        }
+    }
+}
+
+$dyefix = array_unique($dyelist);
+$dyedisplays = [];
+foreach ($dyefix as $word) {
+    $query = "SELECT * FROM dyes WHERE name = :name";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $word);
+    $stmt->execute();
+    $dyeName = $stmt->fetch(PDO::FETCH_ASSOC);
+    array_push($dyedisplays, $dyeName['display']);
+}
+
 //Type Edit
 $type = ucfirst($item['type']);
 if ($item['type'] === 'clothesBottom') {
@@ -47,8 +68,15 @@ echo '</div>';
 
 echo '<div class="itemPageRow">';
 echo '<div class="itemPage">';
-echo '<img src="items/' . $item['name'] . '.png" style="width: 150px;">';
-echo '<h4>' . $item['display'] . '</h4>';
+if ($dyefix) {
+    echo '<img id="itemicon" src="items/' . $item['name'] . $dyefix[0] . '.png" style="width: 150px;border-radius:50px;border:4px solid silver;">';
+    echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
+} else {
+    echo '<img id="itemicon" src="items/' . $item['name'] . '.png" style="width: 150px;">';
+    echo '<h4 id="colortitle">' . $item['display'] . '</h4>';
+}
+
+
 echo '<p><i>' . $item['description'] . '</i></p>';
 echo '</div>';
 echo '<div class="itemPageRight">';
@@ -70,6 +98,60 @@ if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item
     echo '<select  class="input" name="pet" id="pet"><br>';
     foreach ($snoozelings as $pet) {
         echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+    }
+    echo '</select><br>';
+    if (count($dyefix) > 1) {
+        echo '<label for="area"  class="form">Choose A Color:</label><br>';
+        echo '<select  class="input" name="color" id="color"><br>';
+        foreach ($dyefix as $dye) {
+            switch ($dye) {
+                case "PastelPink":
+                    $ending = "Pastel Pink";
+                    break;
+                case "PastelBrown":
+                    $ending = "Pastel Brown";
+                    break;
+                case "PastelPurple":
+                    $ending = "Pastel Purple";
+                    break;
+                case "PastelBlue":
+                    $ending = "Pastel Blue";
+                    break;
+                case "RainbowLove":
+                    $ending = "Rainbow Love";
+                    break;
+                case "FemaleLove":
+                    $ending = "Female Love";
+                    break;
+                case "MaleLove":
+                    $ending = "Male Love";
+                    break;
+                case "DoubleLove":
+                    $ending = "Double Love";
+                    break;
+                case "AnyLove":
+                    $ending = "Any Love";
+                    break;
+                case "AceLove":
+                    $ending = "Ace Love";
+                    break;
+                case "AroLove":
+                    $ending = "Ace Love";
+                    break;
+                case "NewSelf":
+                    $ending = "New Self";
+                    break;
+                case "UniqueSelf":
+                    $ending = "Unique Self";
+                    break;
+                case "FluidSelf":
+                    $ending = "Fluid Self";
+                    break;
+                default:
+                    $ending = $dye;
+            }
+            echo '<option value="' . $dye . '">' . $ending . '</option>';
+        }
     }
     echo '</select>';
     echo '<div><button class="fancyButton">Wear Item</button></div>';

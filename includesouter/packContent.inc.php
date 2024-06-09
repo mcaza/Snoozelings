@@ -132,7 +132,12 @@ foreach ($itemCount as $item) {
     } else {
         $name = $items[$round-1]['display'];
     }
-    echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="height:100px">';
+        if (str_contains($items[$round-1]['type'], "clothes")) {
+                echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="height:100px;border-radius: 25px; border: 2px silver solid;">';
+            } else {
+                echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="height:100px">';
+            }
+    
     echo '<p>' . $itemCount[$round] . ' ' . $name . '</p>';
         echo '</div></a>';
         }

@@ -7,12 +7,24 @@ require_once '../includes/verifySinglePet.inc.php';
 
 $id = $_GET['id'];
 
-//Get Pet Name
-    $query = "SELECT display FROM itemList WHERE id = :id";
+//Get Item Name
+    $query = "SELECT * FROM itemList WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->execute();
     $name = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//Get Dyes
+$dyelist = [];
+for ($i = 0; $i < $count; $i++) {
+    foreach ($results as $dye) {
+        if ($dye['dye']) {
+            array_push($dyelist, $dye['dye']);
+        }
+    }
+}
+
+$dyefix = array_unique($dyelist);
 
 
 ?>
@@ -109,6 +121,21 @@ $id = $_GET['id'];
 
     <!-- Script Link -->
    <script src="main.js"></script>
+    
+    <script>
+     document.getElementById('color').onchange = (event) => {
+         var inputText = event.target.value;
+         var text1 = "items/";
+         var text2 = ".png";
+         var item = "<?php echo $name['name']; ?>";
+         var final = text1 + item + inputText + text2;
+         
+
+             document.getElementById('itemicon').src = final;
+     }
+
+    
+    </script>
 
 </body>
 

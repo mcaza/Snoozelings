@@ -230,6 +230,21 @@ require_once '../includes/verifySinglePet.inc.php';
         }
  }
     
+    document.getElementById('mothFluff').onchange = (event) => {
+        var mothColor = document.getElementById('mothFluff').value;
+        if (checkBox.checked == true) {
+            document.getElementById('Bootsdesigner').src = "Layers/Markings/Boots/" + mainColor + ".png";
+        } else {
+            document.getElementById('Bootsdesigner').src = "";
+        }
+ }
+    
+    document.getElementById('mothFluff').onchange = (event) => {
+     var inputText = event.target.value;
+     document.getElementById('TopMothdesigner').src = "Layers/Other/MothFluff/" + inputText + ".png";
+     document.getElementById('BottomMothdesigner').src = "Layers/Other/MothFluff/Behind/" + inputText + ".png";
+ }
+    
     document.getElementById('spots').onchange = (event) => {
         var mainColor = document.getElementById('mainColor').value;
         var checkBox = document.getElementById("spots");

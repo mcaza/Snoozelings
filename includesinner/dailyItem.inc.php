@@ -25,6 +25,46 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //Roll Items
 $count = count($items);
 $randomNum = rand(0, $count - 1);
+    
+//Select Color if Bandana
+if ($items[$randomNum]['name'] === "Bandana") {
+    $colors = ['White', 'Yellow', 'Orange', 'Red', 'Green', 'Purple', 'Blue', 'Brown', 'Black', 'Pink', 'PastelBrown', 'PastelPink', 'PastelBlue', 'PastelPurple', 'Gooseberry', 'Blueberry', 'Teal'];
+    $colcount = count($colors);
+    $colnum = rand(0, $colcount - 1);
+    $color = $colors[$colnum];
+    if ($color === "White") {
+        $bandana = "Bandana";
+        $name = "Bandana";
+    } else {
+        if ($color === "PastelBrown") {
+            $bandana = "Bandana [Pastel Brown]";
+        } else if ($color === "PastelPink") {
+            $bandana = "Bandana [Pastel Pink]";
+        } else if ($color === "PastelBlue") {
+            $bandana = "Bandana [Pastel Blue]";
+        } else if ($color === "PastelPurple") {
+            $bandana = "Bandana [Pastel Purple]";
+        } else {
+            $bandana = "Bandana [" . $color . "]";
+        }
+        $name = 'Bandana' . $color;
+    }
+    
+    //Insert Items
+    $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate, dye) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate, :dye);";
+        $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":list", $items[$randomNum]['id']);
+    $stmt->bindParam(":user", $userId);
+    $stmt->bindParam(":name", $items[$randomNum]['name']);
+    $stmt->bindParam(":display", $items[$randomNum]['display']);
+    $stmt->bindParam(":description", $items[$randomNum]['description']);
+    $stmt->bindParam(":type", $items[$randomNum]['type']);
+    $stmt->bindParam(":rarity", $items[$randomNum]['rarity']);
+    $stmt->bindParam(":canDonate", $items[$randomNum]['canDonate']);
+    $stmt->bindParam(":dye", $items[$randomNum]['canDonate']);
+    $stmt->execute(); 
+    
+}
 
 //Insert Items
 $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";

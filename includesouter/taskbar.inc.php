@@ -6,6 +6,7 @@
             <div class="dropdown-content">
                 <a href="collection?id=' . $_SESSION['user_id'] . '">Snoozeling Nests</a>
                 <a href="crafting">Crafting Table</a>
+                <a href="dyes">Dye Station</a>
                 <a href="farm">Farm Plots</a>
                 <a href="pack">Fanny Pack</a>
             </div>

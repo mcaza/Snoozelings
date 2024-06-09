@@ -27,13 +27,6 @@ $stmt->bindParam(":id", $result['pet_id']);
 $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 
-//Double Check Job
-if ($pet['job'] === 'jack' && $type) {
-    if ($type === "dye" || $type === "staining") {
-        $type = "ingredient";
-    }
-}
-
 //Date
 $now = new DateTime(null, new DateTimezone('UTC'));
 $future_date = new DateTime($result['finishtime']);
@@ -85,10 +78,8 @@ echo '<hr>';
 echo '<div class="craftbuttons">';
 echo '<a href="crafting?type=ingredient" class="craftbutton">Ingredients</a>';
 echo '<a href="crafting?type=clothes" class="craftbutton">Clothing</a>';
-if (intval($pet['craftEXP']) > 49) {
-    echo '<a href="crafting?type=dye" class="craftbutton">Dyes</a>';
-    echo '<a href="crafting?type=dyedclothes" class="craftbutton">Staining</a>';
-}
+echo '<a href="crafting?type=dye" class="craftbutton">Dyes</a>';
+echo '<a href="crafting?type=design" class="craftbutton">Designs</a>';
 echo '<a href="crafting?type=special" class="craftbutton">Special</a>';
 echo '</div>';
 
@@ -158,13 +149,13 @@ foreach ($recipes as $recipe) {
     
         //Display Items Needed
        foreach ($items as $item) {
-            $query = 'SELECT display FROM itemList WHERE name = :name';
+            $query = 'SELECT * FROM itemList WHERE name = :name';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":name", $item);
             $stmt->execute();
             $itemname = $stmt->fetch(PDO::FETCH_ASSOC);
             $key = array_search($item, $items);
-            echo '<p style="margin-top:0;margin-bottom:.4rem;">' . $numbers[$key] . ' x ' . $itemname['display'] . '</p>';
+            echo '<p style="margin-top:0;margin-bottom:.4rem;" title="' . $itemname['tooltip'] . '">' . $numbers[$key] . ' x ' . $itemname['display'] . '</p>';
         }
         echo '</div>';
     if (!($result['recipe_id'])) {   
