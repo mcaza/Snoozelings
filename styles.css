@@ -89,7 +89,7 @@ body {
     background-size: 290px;
     background-attachment: fixed;
     text-align: center;
-    margin-top: 11.4rem;
+    margin-top: 14rem;
     flex-direction: column;
     margin-bottom: -5px;
 }
@@ -261,7 +261,7 @@ td {
 .nav-container {
     top: 0;
     position: fixed;
-    height: 6rem;
+    height: 8.5rem;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -289,17 +289,27 @@ td {
     height: auto;
 }
 
-#logo a {
+#logo {
+    margin-left: 2rem;
+    width: 18%;
+    margin-top: 0;
+}
+
+#logo:hover {
+    width:17%;
+}
+
+#logo img {
     font-family: 'Lilita One';
     font-size: 4rem;
     color: #ABCCD4;
-    margin-left: 1.5rem;
+    width: 100%;
 }
 
 /* Navigation Bar Styles (White) */
 
 nav {
-    margin-top: 6rem;
+    margin-top: 8.5rem;
     background-color: #f0f0f0;
     position: fixed;
     width: 100%;

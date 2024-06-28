@@ -2,6 +2,7 @@
 
 $userId = $_SESSION['user_id'];
 
+
 //Get Journal Type
 //Check for Journals
 $query = 'SELECT * FROM journals WHERE user_id = :id';
@@ -25,9 +26,10 @@ $type = $result ['type'];
         $stmt->execute();
         $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
     }
-if (!$latestEntry || $latestEntry['closed'] === "1") {
+
+ if (!$latestEntry || $latestEntry['closed'] == "1") {
     //Back to Pack Arrows
- echo '<div class="leftRightButtons">';
+  echo '<div class="leftRightButtons">';
 echo '<a href="journal"><<</a>';
 echo '</div>';
     //Check Type of Journal
@@ -366,7 +368,7 @@ echo '</div>';
         echo '<input class="input" type="text" name="notes"><br>';
         
         echo '<button  class="fancyButton">Submit</button>';
-        echo '</form>';
+        echo '</form>'; 
     }
 } else {
     header("Location: ../journal.php");

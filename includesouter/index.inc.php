@@ -118,6 +118,7 @@ echo '</div>';
     unset($_SESSION['reply']);
         echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;"><p>' . $reply . '</p></div>';
     }
+    echo '<img src="resources/wipwhitebg.png" style="width:90%;">';
     echo '<h3 style="font-size:4rem;border-bottom: 2px dashed #827188;padding-bottom:1.5rem;margin-top:1.5rem;">Coming Soon to All Browsers</h3>';
     
     //Collect Snoozelings
@@ -170,8 +171,8 @@ echo '</div>';
     echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem; margin-bottom: 2rem;"></p>';
     
     echo '<p style="font-size: 2rem"><b>Early Access Code Sales:</b> Late Dec 2023</p>';
-    echo '<p style="font-size: 2rem"><b>Early Access Launch:</b> Spring 2024</p>';
-    echo '<p style="font-size: 2rem; border-bottom: 2px dashed #827188;padding-bottom:2rem; margin-bottom: 2rem;"><b>Free Launch:</b> Spring 2025</p>';
+    echo '<p style="font-size: 2rem"><b>Estimated Early Access Launch:</b> August 31st, 2024</p>';
+    echo '<p style="font-size: 2rem; border-bottom: 2px dashed #827188;padding-bottom:2rem; margin-bottom: 2rem;"><b>Free Launch:</b> Summer 2025</p>';
     
     echo '<h4 href="https://discord.gg/HDs66g7QeJ">Click to Join Our Discord Server</h4>';
     echo '<a href="https://discord.gg/HDs66g7QeJ"><img style="width: 10%;"src="https://static-00.iconduck.com/assets.00/discord-icon-2048x2048-nnt62s2u.png"></a>';

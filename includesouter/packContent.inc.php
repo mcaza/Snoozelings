@@ -81,18 +81,18 @@ echo '<h3>' . $name . '\'s Fanny Pack</h3>';
 //Display Coin Count Top Right
 echo '<div>';
 if ($player['coinCount'] === "1") {
-    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Gold Coin</p>';
+    echo '<h1>Currency:</h1><p>' . $player['coinCount'] . ' Snooze Coin</p>';
 } else {
-    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Gold Coins</p>';
+    echo '<h1>Currency:</h1><p>' . $player['coinCount'] . ' Snooze Coins</p>';
 }
 echo '</div>';
 
 //Display Coin Count Top Right
 echo '<div>';
 if ($player['coinCount'] === "1") {
-    echo '<p><strong>Inventory: </strong>' . $player['kindnessCount'] . ' Kindness Coin</p>';
+    echo '<p><strong></strong>' . $player['kindnessCount'] . ' Kindness Coin</p>';
 } else {
-    echo '<p><strong>Inventory: </strong>' . $player['kindnessCount'] . ' Kindness Coins</p>';
+    echo '<p><strong></strong>' . $player['kindnessCount'] . ' Kindness Coins</p>';
 }
 echo '</div>';
 

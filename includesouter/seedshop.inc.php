@@ -49,9 +49,9 @@ echo '</div>';
 //Display Coin Count Top Right
 echo '<div>';
 if ($player['coinCount'] === "1") {
-    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Gold Coin</p>';
+    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Snooze Coin</p>';
 } else {
-    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Gold Coins</p>';
+    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Snooze Coins</p>';
 }
 
 echo '</div>';
@@ -88,7 +88,7 @@ foreach ($seeds as $seed) {
     echo '<div class="seedItem">';
     echo '<img style="margin-top:.3rem;height:100px;" src="items/' . $seed['name'] . '.png" title="' . $seed['description'] . '">';
     echo '<p><strong>' . $seed['plantName'] . ' Seed</strong></p>';
-    echo '<p>' . $seed['price'] . ' Gold Coins</p>';
+    echo '<p>' . $seed['price'] . ' Snooze Coins</p>';
     echo "<form method='POST' action='includes/buySeed.inc.php' onsubmit=\"return confirm('This will cost " . $seed['price'] . " coins.');\">";   
     echo '<input type="hidden" name="seed" value="' . $seed['item_id'] . '">';
     echo '<input type="hidden" name="price" value="' . $seed['price'] . '">';

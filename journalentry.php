@@ -76,7 +76,7 @@ $formatted = $now->format('Y-m-d');
                 <!-- Daily Stats -->
                 <div class="bar-container">
                     <h2>Daily Records</h2>
-                    <?php require_once '../includes/dailyRecords.inc.php' ?>
+                    <?php require_once '../includes/dailyRecords.inc.php'; ?>
                 </div>
             </div>
         </div>
