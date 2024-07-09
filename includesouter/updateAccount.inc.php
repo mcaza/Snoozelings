@@ -8,6 +8,7 @@ if ($_SESSION['reply']) {
     unset($_SESSION['reply']);
 }
 
+
 //Newsletter Status
 $query = 'SELECT * FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
@@ -19,6 +20,7 @@ if ($user['newsletter'] === 1) {
 } else {
     $no = "selected";
 }
+
 
 //Back Arrow & Title
 echo '<div class="leftRightButtons">';

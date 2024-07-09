@@ -3,6 +3,8 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //Grab Form Variables
     $pronouns = $_POST["pronouns"];
@@ -13,6 +15,58 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     $farmName = $_POST['farm'];
     $mailbox = $_POST['mailbox'];
+    $shortcutArray = "";
+    
+     //Update Shortcuts
+    $shortCount = 0;
+    
+    if (isset($_POST['Crafting'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Crafting'] . " ";
+    }
+    if (isset($_POST['Dyes'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Dyes'] . " ";
+    }
+    if (isset($_POST['Explore'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Explore'] . " ";
+    }
+    if (isset($_POST['Garden'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Garden'] . " ";
+    }
+    if (isset($_POST['Journal'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Journal'] . " ";
+    }
+    if (isset($_POST['Mailbox'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Mailbox'] . " ";
+    }
+    if (isset($_POST['Penpals'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Penpals'] . " ";
+    }
+    if (isset($_POST['Snoozeling'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Snoozeling'] . " ";
+    }
+    
+    if ($shortCount > 5) {
+        $_SESSION['error'] = "You Cannot Have More Than 5 Shortcuts";
+        header("Location: ../editprofile");
+        die(); 
+    }
+    
+    if ($shortCount > 0) {
+        $finalShorts = trim($shortcutArray);
+        $query = "UPDATE users SET shortcuts = :shortcuts WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":shortcuts", $finalShorts);
+        $stmt->execute();
+    }
     
     //Variable Checks
     //Pronouns

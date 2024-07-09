@@ -28,7 +28,7 @@ $query = "SELECT * FROM snoozelings WHERE id = :id;";
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($id === $userId) {
+if ($id == $userId) {
     //User Navigation
             echo '<div id="onlyOne" class="leftRightButtons">';
             if ($id > 1) {
