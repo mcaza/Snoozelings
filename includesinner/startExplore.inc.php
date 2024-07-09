@@ -115,6 +115,7 @@ $area = $_POST["area"];
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $formatted = $modified->format('Y-m-d H:i:s');
 
+    //Set Cooldown
     $query = "UPDATE snoozelings SET cooldownTime = :datetime WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":datetime", $formatted);
@@ -135,7 +136,13 @@ $area = $_POST["area"];
         $stmt->execute();
     } 
     
-    $_SESSION['area'] = $area;
+    //Update lastExplore
+    $query = 'UPDATE users SET lastExplore = :last WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":last", $area);
+    $stmt->execute();
+    
     $_SESSION['coins'] = $coinsWon;
     $_SESSION['items'] = $itemsWon;
     $_SESSION['petName'] = htmlspecialchars($name['name']);

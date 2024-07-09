@@ -8,7 +8,7 @@ echo '<p>Here at Snoozelings, we believe giving artists full credit for their wo
 echo '<h4>Developers</h4>';
 echo '<ul style="font-size:1.6rem"><li><a href="https://snoozelings.com/profile?id=1">Slothie</a> - <i>Founder, Lead Developer, and Main Coder</i></li></ul>';
 echo '<h4>Website Art</h4>';
-echo '<ul style="font-size:1.6rem"><li><a href="https://snoozelings.com/profile?id=38">Sleepy Time Studios</a> - <i>Main Artist (Snoozeling Base, Items)</i></li><li><a href="https://x.com/AisuAsai">Aisu Asai</a> - <i>Logo Creator</i></a></li><li><a href="https://www.etsy.com/shop/KoraArtStudio">Kora Art Studio</a> - <i>Background Image</i></li><li><a href="">Various Websites</a> - <i>Placeholder Vector Artwork</i></li></ul>';
+echo '<ul style="font-size:1.6rem"><li><a href="https://snoozelings.com/profile?id=38">Sleepy Time Studios</a> - <i>Main Artist (Snoozeling Base, Items)</i></li><li><a href="https://x.com/AisuAsai">Aisu Asai</a> - <i>Logo Creator</i></a></li><li><a href="https://www.etsy.com/shop/KoraArtStudio">Kora Art Studio</a> - <i>Background Image, Various Patterns</i></li><li><a href="">Various Websites</a> - <i>Placeholder Vector Artwork</i></li></ul>';
 echo '<h4>Merchandise Art</h4>';
 echo '<ul style="font-size:1.6rem"><li><a href="https://twitter.com/mr_tiaa">Mr Tia</a> - <i>Pin Artwork</i></li></ul>';
 echo '</div>';

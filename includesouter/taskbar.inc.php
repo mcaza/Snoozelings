@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="menu dropdown dropbtn" id="drop"><a href="snoozeland">Snooze Land</a></button>
+            <button class="menu dropdown dropbtn" id="drop"><a href="snoozeland">Snooze Village</a></button>
             <div class="dropdown-content">
                 <a href="explore">Exploring</a>
                 <a href="adoption">Adoption House</a>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="menu dropdown dropbtn" id="drop"><a href="games">Mini Games</a></button>
+            <button class="menu dropdown dropbtn" id="drop"><a href="games">Fun Stuff</a></button>
             <div class="dropdown-content">
                 <a href="raffle">Daily Raffle</a>
                 <a href="randomitem">Random Item</a>

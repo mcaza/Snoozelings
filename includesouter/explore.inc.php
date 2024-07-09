@@ -1,14 +1,23 @@
 <?php
 
+//Basic Info
 $userId = $_SESSION['user_id'];
 $jack = "jack";
 $explorer = "Explorer";
 
-if ($_SESSION['area']) {
-$temp = $_SESSION['area'];
+//Check if Area
+$query = "SELECT lastExplore FROM users WHERE id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$lastexplore = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($lastexplore['lastExplore']) {
+$temp = $lastexplore['lastExplore'];
 } else {
     $temp = "Farmland";
 }
+
 $coins = intval($_SESSION['coins']);
 $items = $_SESSION['items'];
 $error = $_SESSION['error'];
@@ -22,13 +31,12 @@ unset($_SESSION['petName']);
 $itemString = "";
 
 $query = "SELECT * FROM snoozelings WHERE (job = :jack OR job = :explorer) && owner_id = :id";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":jack", $jack);
-    $stmt->bindParam(":explorer", $explorer);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":jack", $jack);
+$stmt->bindParam(":explorer", $explorer);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Get Items
     $query = "SELECT * FROM itemList";
