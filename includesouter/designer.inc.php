@@ -155,6 +155,7 @@ echo '<select id="hairType"  class="input">';
 echo '<option value="Floof">Floof</option>';
 echo '<option value="Forelock">Forelock</option>';
 echo '<option value="Knitted">Knitted</option>';
+echo '<option value="LizardSpikes">Lizard Spikes</option>';
 echo '<option value="Mane">Mane</option>';
 echo '<option value="Mohawk">Mohawk</option>';
 echo '<option value="Wave">Wave</option>';
