@@ -19,7 +19,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //Count Plots and Return Plot Number 
 $count = 1;
 foreach ($result as $farm) {
-    if ($farm['id'] === $id) {
+    if ($farm['id'] == $id) {
         break;
     }
     $count++;

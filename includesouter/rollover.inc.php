@@ -27,6 +27,13 @@
     $stmt->execute();
     echo "Rollover Times Set! \n";
 
+    //Reset Daily Records
+    $query = "INSERT INTO dailyRecords SET journalEntries = 0, cropsHarvested = 0, snoozelingsCrafted = 0, itemsCrafted = 0, activeMembers = 0, newMembers = 0, kindnessCoins = 3, rotime = :rotime";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":rotime", $rotime);
+    $stmt->execute();
+    echo "Daily Records Reset! \n";
+
     //Grab Today's User Count
     $query = "SELECT * FROM dailyRecords ORDER BY id DESC LIMIT 1";
     $stmt = $pdo->prepare($query);
@@ -124,13 +131,6 @@
         }
     }
     echo "Birthday Gifts Sent: " . $loopcount . "\n";
-
-
-    //Reset Daily Records
-    $query = "INSERT INTO dailyRecords SET journalEntries = 0, cropsHarvested = 0, snoozelingsCrafted = 0, itemsCrafted = 0, activeMembers = 0, newMembers = 0, kindnessCoins = 3";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    echo "Daily Records Reset! \n";
     
 
     //Close All Journal Entries

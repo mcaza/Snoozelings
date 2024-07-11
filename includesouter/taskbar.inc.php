@@ -15,9 +15,8 @@
             <button class="menu dropdown dropbtn" id="drop"><a href="snoozeland">Snooze Village</a></button>
             <div class="dropdown-content">
                 <a href="explore">Exploring</a>
-                <a href="adoption">Adoption House</a>
                 <a href="shops">Snooze Shops</a>
-                <a href="trendytails">Trendy Tails</a>
+                <a href="requests">Request Boards</a>
             </div>
         </div>
         <div class="dropdown">

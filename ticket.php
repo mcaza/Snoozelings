@@ -3,6 +3,9 @@ require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
 require_once '../includes/ticketcheck.inc.php';
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +14,7 @@ require_once '../includes/ticketcheck.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Support Ticket #<?php $ticket = $_GET['ticketid']; echo $ticket ?></title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -91,3 +94,59 @@ require_once '../includes/ticketcheck.inc.php';
 </body>
 
 </html>
+
+<script>
+    
+    function closeticket() {
+        console.log('test');
+  var x = document.getElementById("closeform");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+    
+    function escalate() {
+  var x = document.getElementById("escalateform");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+    
+    function reply() {
+  var x = document.getElementById("replyform");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+    
+    function notes() {
+  var x = document.getElementById("notesform");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+    
+    function addinformation() {
+  var x = document.getElementById("informationform");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+    
+
+    
+     
+     
+     
+    
+    </script>

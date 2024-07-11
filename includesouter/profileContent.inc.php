@@ -243,7 +243,7 @@ if ($id === "4") {
     echo '</div></div></div> ';
     
     //Nav section
-    if ($id === $userId) {
+    if ($id == $userId) {
     echo '<hr>';
     echo '<div class="profilenav">';
     echo '<a href="crafting"><img src="resources/desk.png" style="height: 150px; width: auto;"></a>';

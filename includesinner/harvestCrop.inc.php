@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table) {
-            $now = new DateTime(null, new DateTimezone('UTC'));
+            $now = new DateTime('now');
             $future_date = new DateTime($table['finishtime']);
             if ($future_date >= $now) {
                 $_SESSION['reply'] = "That snoozeling is currently crafting.";
@@ -109,17 +109,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     
+    //Reset Farm
+    $query = 'UPDATE farms SET name = NULL, stg1 = NULL, stg2 = NULL, stg3 = NULL, amount = NULL, water= NULL, plantNAME = NULL WHERE id = :plot';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":plot", $plot);
+    $stmt->execute();
+    
     //Set Session Variables
     $_SESSION['amount'] = $amount;
     $_SESSION['item'] = $farm['plantName'];
     $_SESSION['name'] = htmlspecialchars($snooze['name']);
-    
-    
-    //Reset Farm
-        $query = 'UPDATE farms SET name = NULL, stg1 = NULL, stg2 = NULL, stg3 = NULL, amount = NULL, water= NULL, plantNAME = NULL WHERE id = :plot';
-                              $stmt = $pdo->prepare($query);
-                              $stmt->bindParam(":plot", $plot);
-                              $stmt->execute();
                    
     //Return
     header("Location: ../farm");

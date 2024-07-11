@@ -10,17 +10,16 @@ $petId = $_POST["explorer"];
 if ($petId) {
 $area = $_POST["area"];
     $userId = $_SESSION['user_id'];
-    $farmCommon = ['2', '3', '4', '1', '5', '116'];
-    $farmUncommon = ['15', '16'];
-    $farmRare = ['96', '87', '93'];
-    $cowArray = ['87', '90', '88', '89'];
-    $woodsCommon = ['3', '6', '7', '8', '9', '116'];
-    $woodsUncommon = ['17', '25'];
-    $woodsRare = ['97', '94', '91'];
-    $oceanCommon = ['10', '11', '12', '13', '14', '116'];
-    $oceanUncommon = ['18', '19'];
-    $oceanRare = ['98', '95', '92'];
-    $seeds = ['29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43'];
+    $farmCommon = ['28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39'];
+    $farmUncommon = ['64', '65', '66', '74', '75'];
+    $farmRare = ['78', '79', '80', '92', '93', '94', '95', '98'];
+    $woodsCommon = ['40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51'];
+    $woodsUncommon = ['68', '67', '69', '76'];
+    $woodsRare = ['81', '82', '83', '84', '85', '96', '99'];
+    $oceanCommon = ['52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63'];
+    $oceanUncommon = ['70', '72', '73', '74', '77'];
+    $oceanRare = ['86', '87', '88', '89', '90', '91', '97', '100'];
+    $seeds = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
     $itemsWon = [];
     $coinsWon = 0;
     
@@ -196,10 +195,10 @@ function pickItem($rarity, $area) {
     if ($area === "Farmland") {
         //Farm Rolls
         if ($rarity === 1) {
-            $item = '20';
+            $item = '209';
             array_push($itemsWon, $item);
         } elseif ($rarity < 6) {
-            $item = '21';
+            $item = '137';
             array_push($itemsWon, $item);
         } elseif ($rarity < 21) {
             $count = count($farmRare) - 1;
@@ -231,10 +230,10 @@ function pickItem($rarity, $area) {
     } elseif ($area === "Forest") {
         //Forest Rolls
         if ($rarity === 1) {
-            $item = '20';
+            $item = '209';
             array_push($itemsWon, $item);
         } elseif ($rarity < 6) {
-            $item = '21';
+            $item = '137';
             array_push($itemsWon, $item);
         } elseif ($rarity < 21) {
             $count = count($woodsRare) - 1;
@@ -266,10 +265,10 @@ function pickItem($rarity, $area) {
     } elseif ($area === "Beach") {
         //Beach Rolls
         if ($rarity === 1) {
-            $item = '20';
+            $item = '209';
             array_push($itemsWon, $item);
         } elseif ($rarity < 6) {
-            $item = '21';
+            $item = '137';
             array_push($itemsWon, $item);
         } elseif ($rarity < 21) {
             $count = count($oceanRare) - 1;

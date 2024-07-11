@@ -2,7 +2,7 @@
 
 echo '<div class="nav-container">
         <div id="logo" >
-            <a href="index"><img src="resources/wip.png"></a>
+            <a href="/"><img src="resources/wip.png"></a>
         </div>
         <div class="social-container">
             <ul>';
