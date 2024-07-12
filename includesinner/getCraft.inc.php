@@ -44,7 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Reset Table
     $null = "";
-    $query = 'UPDATE craftingtables SET recipe_id = :null, display = :null, name = :null, finishtime = :null WHERE id = :id';
+    $datetime = new datetime('0-0-0 0:0:0');
+    $query = 'UPDATE craftingtables SET recipe_id = 0, display = :null, name = :null, finishtime = NULL WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->bindParam(":null", $null);

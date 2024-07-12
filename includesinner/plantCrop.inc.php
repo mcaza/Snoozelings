@@ -26,12 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table) {
-            $now = new DateTime(null, new DateTimezone('UTC'));
+            $now = new DateTime('now');
             $future_date = new DateTime($table['finishtime']);
-            if ($future_date >= $now) {
-                $_SESSION['reply'] = "That snoozeling is currently crafting.";
-                header("Location: ../farm");
-                die(); 
+            if ($table['finishtime']) {
+                if ($future_date >= $now) {
+                    $_SESSION['reply'] = "That snoozeling is currently crafting.";
+                    header("Location: ../farm");
+                    die(); 
+                }
             }
         }
     }
