@@ -15,8 +15,8 @@ echo '</div>';
 //Title
 echo '<h3 style="margin-bottom: 3rem">World Wide Critter Web</h3>';
 
-$topics = ['News', 'Submissions', 'General', 'Fandom', 'Artwork', 'Roleplay', 'Giveaways', 'Guides', 'Questions'];
-$descriptions = ['The Official Hub for all Snoozelings News', 'Help Improve Snoozelings and Earn Kindness Coins', 'For Any Kind of Discussion that Doesn\'t Fit Elsewhere', 'Books, Television, Movies. It all goes here. Just be Sure to Mark Spoilers', 'For Art Discussion, Art Commissions, and Art Trades', 'Find Roleplay Buddies and Start a Roleplay Post', 'For Free Art, Free Items, and Other Giveaways', 'Create Snoozelings Guides for Other Players Here', 'Need Help? Ask your Question Here'];
+$topics = ['News', 'Submissions' /*, 'General', 'Fandom', 'Artwork', 'Roleplay', 'Giveaways', 'Guides', 'Questions' */];
+$descriptions = ['The Official Hub for all Snoozelings News', 'Help Improve Snoozelings and Earn Kindness Coins'/* , 'For Any Kind of Discussion that Doesn\'t Fit Elsewhere', 'Books, Television, Movies. It all goes here. Just be Sure to Mark Spoilers', 'For Art Discussion, Art Commissions, and Art Trades', 'Find Roleplay Buddies and Start a Roleplay Post', 'For Free Art, Free Items, and Other Giveaways', 'Create Snoozelings Guides for Other Players Here', 'Need Help? Ask your Question Here' */];
 $count = count($topics);
 
 $round = 1;

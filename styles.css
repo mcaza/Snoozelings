@@ -1096,11 +1096,17 @@ a.selected {
 }
 
 .invItem {
-    width: 110px;
+    width: 120px;
     padding: 8px;
     border: 2px dashed #827188;
     border-radius: 5px;
-    height: 145px;
+    height: 150px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Shop Styles */

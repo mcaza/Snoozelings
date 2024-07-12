@@ -23,17 +23,8 @@ $formatted = $now->format('Y-m-d');
 </head>
 
 <body>
-    <!-- Dark Top Bar, Snoozeling Text Logo, and Social Media Icons */ -->
-    <div class="nav-container">
-        <div id="logo">
-            <a href="index">Snoozelings</a>
-        </div>
-        <div class="social-container">
-            <ul>
-                <?php require_once '../includes/socialIcons.inc.php'; ?>
-            </ul>
-        </div>
-    </div>
+     <!-- Dark Top Bar, Snoozeling Text Logo, and Social Media Icons */ -->
+    <?php require_once "../includes/logo.inc.php"; ?>
 
     <!-- White Secondary Top Bar. Includes Menu and Drop Down Menus -->
     <nav>

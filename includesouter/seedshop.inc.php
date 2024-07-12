@@ -35,9 +35,6 @@ $birthday = date('m-d', $date);
 $date = strtotime(2/14);
 $valentines = date('m-d', $date);
 
-
-
-
 //Top Div
 echo '<div class="topShop">';
 

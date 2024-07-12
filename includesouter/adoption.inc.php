@@ -24,7 +24,7 @@ echo '<div class="topShop">';
 
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
-echo '<a href="snoozeland"><<</a>';
+echo '<a href="shops"><<</a>';
 echo '</div>';
     
 //Display Coin Count Top Right

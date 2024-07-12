@@ -53,10 +53,10 @@ if ($id == $userId) {
     echo '</div>';
     //Right Side Buttons
     echo '<div class="button-bar">';
-    $count = intval($result['blockRequests']);
+    /* $count = intval($result['blockRequests']);
        if (!$count) {
            echo '<button class="fancyButton" onClick="window.location.href=\'/includes/addFriend.inc.php?id=' . $id . '\'">Add Friend</button>';
-       }   
+       }   */
     $count = intval($result['blockMessages']);
     if (!$count) {
            echo '<button class="fancyButton" onClick="window.location.href=\'sendmessage?id=' . $id . '\'">Send Message</button>';

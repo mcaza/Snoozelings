@@ -68,7 +68,7 @@ echo '</div>';
 
 echo '<div class="itemPageRow">';
 echo '<div class="itemPage">';
-if ($dyefix) {
+if ($dyefix || $item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
     echo '<img id="itemicon" src="items/' . $item['name'] . $dyefix[0] . '.png" style="width: 150px;border-radius:50px;border:4px solid silver;">';
     echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
 } else {
