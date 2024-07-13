@@ -25,7 +25,7 @@ $query = "SELECT owner_id FROM snoozelings WHERE id = :id;";
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Buttons
-if ($_SESSION["user_id"] === $result["owner_id"]) { 
+if ($_SESSION["user_id"] == $result["owner_id"]) { 
     echo '<div class="button-bar">
                 <button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Edit Profile</button>
                 <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Change Job</button>

@@ -100,7 +100,7 @@ if ($exp < 50 || $pet['job'] === "jack") {
 }
 
 //Show Recipes
-$query = 'SELECT * FROM recipes WHERE type = :type AND level <= :level';
+$query = 'SELECT * FROM recipes WHERE type = :type AND level <= :level ORDER BY level, id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":level", $level);
 $stmt->bindParam(":type", $type);

@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Daily Records
-    $query = 'UPDATE dailyRecords SET kindnessCoins = kindnessCoins + 1';
+    $query = 'UPDATE dailyRecords SET kindnessCoins = kindnessCoins + 1 ORDER BY id DESC LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     

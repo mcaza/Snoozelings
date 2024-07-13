@@ -82,31 +82,32 @@ echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font
           echo '<p class="snoozelinginfo"><strong>Join Date: </strong>' . $monthArray[$joinMonth -1] . " " . $joinDay;
     echo '<p class="snoozelinginfo"><strong>User Records: </strong>';
     echo '<ul style="text-align: left;margin-top: 0;padding-bottom: 0;font-size:1.6rem;">';
-        if ($result['journalEntries'] === "1") {
+        if ($result['journalEntries'] == "1") {
                         echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['journalEntries'] . ' Journal Entry</p>';
 
         } else {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['journalEntries'] . ' Journal Entries</p>';
         }
-        if ($result['cropsHarvested'] === "1") {
+        if ($result['cropsHarvested'] == "1") {
                                     echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['cropsHarvested'] . ' Crop Harvested</p>';
 
         } else {
                         echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['cropsHarvested'] . ' Crops Harvested</p>';
 
         }
-        if ($result['snoozelingsCrafted'] === "1") {
-                        echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['snoozelingsCrafted'] . ' Snoozeling Crafted</p>';
-
-        } else {
-            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['snoozelingsCrafted'] . ' Snoozelings Crafted</p>';
-        }
-        if ($result['itemsCrafted'] === "1") {
+        if ($result['itemsCrafted'] == "1") {
                         echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['itemsCrafted'] . ' Item Crafted</p>';
 
         } else {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['itemsCrafted'] . ' Items Crafted</p>';
         }
+        if ($result['requestsFilled'] == "1") {
+                        echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['snoozelingsCrafted'] . ' Request Fulfilled</p>';
+
+        } else {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['snoozelingsCrafted'] . ' Requests Fulfilled</p>';
+        }
+        
     
     
     

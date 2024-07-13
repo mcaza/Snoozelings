@@ -16,7 +16,7 @@ if (!$result) {
 }
 
 //Check if User_id matches session id
-if ($result['user_id'] === $userId) {
+if ($result['user_id'] == $userId) {
     
 } else {
     header("Location: ../index.php");

@@ -24,7 +24,7 @@ $userId = $_SESSION['user_id'];
             $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Snoozeling Own Check
-    if (!($snooze['owner_id'] === $userId)) {
+    if (!($snooze['owner_id'] == $userId)) {
         header("Location: ../index");
         die();
     }
@@ -219,8 +219,8 @@ $userId = $_SESSION['user_id'];
         $stmt->execute();
         $titles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $check = 0;
-        foreach ($titles as $titl) {
-            if ($title === $titl['title']) {
+        foreach ($titles as $titlecheck) {
+            if ($title === $titlecheck['title']) {
                 $check = 1;
             }
         }

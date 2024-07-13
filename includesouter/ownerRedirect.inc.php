@@ -12,7 +12,7 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check if they Match. If not, redirect
-if ($userId === $result['owner_id']) {
+if ($userId == $result['owner_id']) {
     
 } else {
     header("Location: ../pet?id=" . $id);

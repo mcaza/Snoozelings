@@ -27,10 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($table) {
             $now = new DateTime('now');
             $future_date = new DateTime($table['finishtime']);
-            if ($future_date >= $now) {
-                $_SESSION['reply'] = "That snoozeling is currently crafting.";
-                header("Location: ../farm");
-                die(); 
+            if ($table['finishtime']) {
+                if ($future_date >= $now) {
+                    $_SESSION['reply'] = "That snoozeling is currently crafting.";
+                    header("Location: ../farm");
+                    die(); 
+                }
             }
         }
     }
@@ -105,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Increase Daily Records +1
-    $query = 'UPDATE dailyRecords SET cropsHarvested = cropsHarvested + 1';
+    $query = 'UPDATE dailyRecords SET cropsHarvested = cropsHarvested + 1 ORDER BY id DESC LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     

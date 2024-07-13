@@ -13,7 +13,7 @@ $query = "SELECT owner_id, name FROM snoozelings WHERE id = :id;";
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
              
-if ($_SESSION["user_id"] === $result["owner_id"]) { 
+if ($_SESSION["user_id"] == $result["owner_id"]) { 
     $query = "UPDATE users SET bonded = :id WHERE id = :ownerID";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);

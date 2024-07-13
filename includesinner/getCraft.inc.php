@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Add +1 Journal to Daily Record
-    $query = 'UPDATE dailyRecords SET itemsCrafted = itemsCrafted + 1';
+    $query = 'UPDATE dailyRecords SET itemsCrafted = itemsCrafted + 1 ORDER BY id DESC LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     

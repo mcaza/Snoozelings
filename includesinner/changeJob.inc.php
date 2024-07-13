@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $id);
     $stmt->execute();
     $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!($userId === $snooze['owner_id'])) {
+    if (!($userId == $snooze['owner_id'])) {
         header("Location: ../petJob?id=" . $id);
         die();
     }

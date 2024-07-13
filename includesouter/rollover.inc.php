@@ -28,7 +28,7 @@
     echo "Rollover Times Set! \n";
 
     //Reset Daily Records
-    $query = "INSERT INTO dailyRecords SET journalEntries = 0, cropsHarvested = 0, snoozelingsCrafted = 0, itemsCrafted = 0, activeMembers = 0, newMembers = 0, kindnessCoins = 3, rotime = :rotime";
+    $query = "INSERT INTO dailyRecords SET journalEntries = 0, cropsHarvested = 0, snoozelingsCrafted = 0, itemsCrafted = 0, activeMembers = 0, newMembers = 0, kindnessCoins = 3, requestsFilled = 0, rotime = :rotime";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":rotime", $rotime);
     $stmt->execute();
@@ -59,13 +59,11 @@
     
     $loopcount = 0;
     foreach ($users as $user) {
-        //Assign Affirmations & Reset lastLog & DailyItem
+        //Assign Affirmations & Reset lastLog & DailyItem & Reset Requests
         $randomNum = rand(1, $affirmlength);
-        $query = "UPDATE users SET affirmation = :affirmation, lastLog = :num, dailyPrize = :zero WHERE id = :id";
+        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0 WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":affirmation", $affirmresults[$randomNum]["affirmation"]);
-        $stmt->bindParam(":num", $zero);
-        $stmt->bindParam(":zero", $zero);
         $stmt->bindParam(":id", $user["id"]);
         $stmt->execute();
         $loopcount++;
@@ -337,6 +335,29 @@ if (intval($usercount['activeMembers']) > 2) {
 } else {
     echo "Not Enough Users to Run Raffle. \n";
 }
+
+//Expire Old Requests
+$query = 'SELECT * FROM requests WHERE fulfilled = 0 AND expired = 0';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$requestcount = 0;
+foreach ($requests as $request) {
+    $hours = 168;
+    $now = new DateTime($request['datetime'], new DateTimezone('UTC'));
+    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
+    $newtime = $modified->format('Y-m-d');
+    if ($now > $newtime) {
+        $query = 'UPDATE requests SET expired = 1 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $request['id']);
+        $stmt->execute();
+        $requestcount++;
+    }
+}
+
+echo $requestcount . ' Trades Cancelled. \n';
 
     
     echo "Rollover Finished!";

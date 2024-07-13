@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Increase Daily Records +1
-    $query = 'UPDATE dailyRecords SET snoozelingsCrafted = snoozelingsCrafted + 1';
+    $query = 'UPDATE dailyRecords SET snoozelingsCrafted = snoozelingsCrafted + 1 ORDER BY id DESC LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     
