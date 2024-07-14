@@ -119,7 +119,14 @@ $dyefix = array_unique($dyelist);
          var text1 = "items/";
          var text2 = ".png";
          var item = "<?php echo $name['name']; ?>";
-         var final = text1 + item + inputText + text2;
+         if (inputText == "White" || inputText == "") {
+             console.log('test1');
+            var final = text1 + item + text2;
+         } else {
+             console.log('test2');
+            var final = text1 + item + inputText + text2;
+
+         }
          
 
              document.getElementById('itemicon').src = final;

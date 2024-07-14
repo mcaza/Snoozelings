@@ -348,7 +348,7 @@ foreach ($requests as $request) {
     $now = new DateTime($request['datetime'], new DateTimezone('UTC'));
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $newtime = $modified->format('Y-m-d');
-    if ($now > $newtime) {
+    if ($now < $newtime) {
         $query = 'UPDATE requests SET expired = 1 WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $request['id']);

@@ -12,7 +12,7 @@ if ($_SESSION['reply']) {
 echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
-echo '<a href="snoozeland"><<</a>';
+echo '<a href="snoozevillage"><<</a>';
 echo '</div>';
 
 //Post Button (Right)

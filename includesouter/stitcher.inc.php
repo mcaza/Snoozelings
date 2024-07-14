@@ -36,18 +36,18 @@ if ($page === "questions") {
     echo '<a href="stitcher?page=design"><h4>"I want to use a tail design on a snoozeling."</h4></a>';
     echo '<a href="stitcher?page=new"><h4>"I want to create a new snoozeling."</h4></a>';
 } elseif ($page === "fabric") {
-    echo '<p><i>"Yes yes! Let\'s take a look at your fabrics. New fabrics for a new you."</i></p>';
+    echo '<p><i>"Yes yes! Let\'s take a look at your fabrics. New fabrics for a new you."</i></p><br>';
+    
     //Grab Fabrics
-    $fabric = "fabric";
-    $query = "SELECT * FROM items WHERE type = :fabric AND user_id = :id GROUP BY name";
+    $query = "SELECT * FROM items WHERE type = :fabric AND user_id = :id GROUP BY name, id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->bindParam(":fabric", $fabric);
+    $stmt->bindParam(":fabric", $page);
     $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+    $fabrics = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+
     //Show Form if there are results. Else show "no results" 
-    if ($results) {
+    if ($fabrics) {
         //Get All Snoozelings
         $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
         $stmt = $pdo->prepare($query);
@@ -58,14 +58,14 @@ if ($page === "questions") {
         echo '<h4>Fabrics You Currently Own</h4>';
         echo "<form method='POST' action='includes/applyFabric.inc.php' onsubmit=\"return confirm('Are you sure you want to apply this fabric? This action cannot be reversed.');\">";    
         echo '<div class="fabricItems">';
-        foreach ($results as $result) {
+        foreach ($fabrics as $result) {
             
             echo '<img src="items/' . $result['name'] . '.png">';
         }
         echo '</div>';
         echo '<label style="margin-top: 3rem;" for="fabric" class="form">Which Fabric Would You Like to Use?</label><br>';
         echo '<select class="input"  name="fabric">';
-        foreach ($results as $result) {
+        foreach ($fabrics as $result) {
             echo '<option value="' . $result['id'] . '">' . $result['display'] . '</option>';
         }
         echo '</select><br>';
@@ -81,10 +81,10 @@ if ($page === "questions") {
         echo '<p><strong>You do not have any fabrics to use.</strong></p>';
     }
 } elseif ($page === "design") {
-    echo '<p><i>"A new tail? That\'s very exciting. Should be no problem at all."</i></p>';
+    echo '<p><i>"A new tail? That\'s very exciting. Should be no problem at all."</i></p><br>';
     //Grab Designs
     $design = "design";
-    $query = "SELECT * FROM items WHERE type = :design AND user_id = :id GROUP BY name";
+    $query = "SELECT * FROM items WHERE type = :design AND user_id = :id GROUP BY name, id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":design", $design);
@@ -134,7 +134,7 @@ if ($page === "questions") {
     $breedingstatus = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Count Sewing Kits
-    $sewingid = 20;
+    $sewingid = 209;
     $query = "SELECT * FROM items WHERE list_id = :id AND user_id = :user";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $sewingid);
@@ -144,7 +144,7 @@ if ($page === "questions") {
     $kitcount = count($kits);
     
     //Count Blueprints
-    $bpid = 21;
+    $bpid = 137;
     $query = "SELECT * FROM items WHERE list_id = :id  AND user_id = :user";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user", $userId);
@@ -157,7 +157,7 @@ if ($page === "questions") {
         
         
 }  elseif (!$kitcount) {
-        if ($bpcount === 0) {
+        if ($bpcount == 0) {
             echo '<p><strong>You do not have any sewing kits or blueprints.</strong></p>';
         } else {
             echo '<p><strong>You do not have any sewing kits.</strong></p>';

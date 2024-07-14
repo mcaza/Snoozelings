@@ -2,7 +2,7 @@
 
 //Grab User ID
 $userId = $_SESSION['user_id'];
-$petName = $_SESSION['bonded'];
+
 if ($_SESSION['finish']) {
     $finish = $_SESSION['finish'];
     unset($_SESSION['finish']);
@@ -20,10 +20,15 @@ if ($journal) {
 
 
 //Grab Bonded Pet
-$query = 'SELECT * FROM snoozelings WHERE name = :name AND owner_id = :id';
+$query = 'SELECT * FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":name", $petName);
 $stmt->bindParam(":id", $userId);
+$stmt->execute();
+$bonded = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$query = 'SELECT * FROM snoozelings WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $bonded['bonded']);
 $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 

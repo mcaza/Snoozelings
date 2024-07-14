@@ -33,9 +33,9 @@ if ($result['newMembers'] == "1") {
     echo "<p>" . $result['newMembers'] . " New Members</p>";
 }
 if ($result['requestsFilled'] == "1") {
-    echo "<p>" . $result['newMembers'] . " Request Fulfilled</p>";
+    echo "<p>" . $result['requestsFilled'] . " Request Fulfilled</p>";
 } else {
-    echo "<p>" . $result['newMembers'] . " Requests Fulfilled</p>";
+    echo "<p>" . $result['requestsFilled'] . " Requests Fulfilled</p>";
 }
 if ($result['kindnessCoins'] == "1") {
     echo "<p>" . $result['kindnessCoins'] . " Kindness Coin Earned</p>";

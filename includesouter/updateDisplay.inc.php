@@ -21,10 +21,23 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $titles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//FetchDyes
+$query = "SELECT * FROM dyes";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$dyelist = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="pet?id=' . $id . '"><<</a>';
 echo '</div>';
+
+if (!function_exists('str_ends_with')) {
+    function str_ends_with($haystack, $needle)
+    {
+        return $needle !== '' ? substr($haystack, -strlen($needle)) === $needle : true;
+    }
+}
 
 //Session Reply Area
 if ($reply) {
@@ -115,50 +128,135 @@ echo '</select><br>';
 //List of Current Clothes (Adding Later)
 echo '<label for="status"  class="form">Remove Clothes:</label><br>';
 if ($result['clothesTop'] || $result['clothesBottom'] || $result['clothesHoodie'] || $result['clothesBoth']) {
-if ($result['clothesTop']) {
-    $clothes = explode(" ", $result['clothesTop']);
-    foreach ($clothes as $clothing) {
-        $query = 'SELECT * FROM itemList WHERE name = :name';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":name", $clothing);
-        $stmt->execute();
-        $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+    if ($result['clothesTop']) {
+        $clothes = explode(" ", $result['clothesTop']);
+            foreach ($clothes as $clothing) {
+            $newname = "";
+                foreach ($dyelist as $dye) {
+                    if (str_ends_with($clothing, $dye['name'])) {
+                        $newname = str_replace($dye['name'],"",$clothing);
+                        $color = $dye['name'];
+                        $colordisplay = $dye['display'];
+                    } else {
+
+                    }
+                }
+
+            $query = 'SELECT * FROM itemList WHERE name = :name';
+            $stmt = $pdo->prepare($query);
+            if ($newname) {
+                $stmt->bindParam(":name", $newname);
+            } else {
+                $stmt->bindParam(":name", $clothing);
+            }
+            $stmt->execute();
+            $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($newname) {
+                echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothing . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . ' [' . $colordisplay . ']</label><br><br>';
+            } else {
+                echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothe['name'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+            }
+
+        }
     }
-}
-if ($result['clothesBottom']) {
-    $clothes = explode(" ", $result['clothesBottom']);
-    foreach ($clothes as $clothing) {
-        $query = 'SELECT * FROM itemList WHERE name = :name';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":name", $clothing);
-        $stmt->execute();
-        $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+    if ($result['clothesBottom']) {
+        $clothes = explode(" ", $result['clothesBottom']);
+            foreach ($clothes as $clothing) {
+            $newname = "";
+            foreach ($dyelist as $dye) {
+                    if (str_ends_with($clothing, $dye['name'])) {
+                        $newname = str_replace($dye['name'],"",$clothing);
+                        $color = $dye['name'];
+                        $colordisplay = $dye['display'];
+                    } else {
+
+                    }
+                }
+
+            $query = 'SELECT * FROM itemList WHERE name = :name';
+            $stmt = $pdo->prepare($query);
+            if ($newname) {
+                $stmt->bindParam(":name", $newname);
+            } else {
+                $stmt->bindParam(":name", $clothing);
+            }
+            $stmt->execute();
+            $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($newname) {
+                echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothing . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . ' [' . $colordisplay . ']</label><br><br>';
+            } else {
+                echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothe['name'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+            }
+
+        }
     }
-}
-if ($result['clothesHoodie']) {
-    $clothes = explode(" ", $result['clothesHoodie']);
-    foreach ($clothes as $clothing) {
-        $query = 'SELECT * FROM itemList WHERE name = :name';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":name", $clothing);
-        $stmt->execute();
-        $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+    if ($result['clothesHoodie']) {
+        $clothes = explode(" ", $result['clothesHoodie']);
+            foreach ($clothes as $clothing) {
+            $newname = "";
+            foreach ($dyelist as $dye) {
+                    if (str_ends_with($clothing, $dye['name'])) {
+                        $newname = str_replace($dye['name'],"",$clothing);
+                        $color = $dye['name'];
+                        $colordisplay = $dye['display'];
+                    } else {
+
+                    }
+                }
+            $query = 'SELECT * FROM itemList WHERE name = :name';
+            $stmt = $pdo->prepare($query);
+            if ($newname) {
+                $stmt->bindParam(":name", $newname);
+            } else {
+                $stmt->bindParam(":name", $clothing);
+            }
+            $stmt->execute();
+            $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($newname) {
+                echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothing . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . ' [' . $colordisplay . ']</label><br><br>';
+            } else {
+                echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothe['name'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+            }
+
+        }
     }
-}
-if ($result['clothesBoth']) {
-    $clothes = explode(" ", $result['clothesBoth']);
-    foreach ($clothes as $clothing) {
-        $query = 'SELECT * FROM itemList WHERE name = :name';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":name", $clothing);
-        $stmt->execute();
-        $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+    if ($result['clothesBoth']) {
+        $clothes = explode(" ", $result['clothesBoth']);
+        foreach ($clothes as $clothing) {
+        $newname = "";
+            foreach ($dyelist as $dye) {
+                    if (str_ends_with($clothing, $dye['name'])) {
+                        $newname = str_replace($dye['name'],"",$clothing);
+                        $color = $dye['name'];
+                        $colordisplay = $dye['display'];
+                    } else {
+
+                    }
+                }
+
+            $query = 'SELECT * FROM itemList WHERE name = :name';
+            $stmt = $pdo->prepare($query);
+            if ($newname) {
+                $stmt->bindParam(":name", $newname);
+            } else {
+                $stmt->bindParam(":name", $clothing);
+            }
+            $stmt->execute();
+            $clothe = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($newname) {
+                echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothing . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . ' [' . $colordisplay . ']</label><br><br>';
+            } else {
+                echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothe['name'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
+            }
+
+        }
     }
-}
+   
+    
 
 echo '<br>';
 } else {

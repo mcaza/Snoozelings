@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         mail($address, $title, $msg, $headers);
         
-        header("Location: ../login.php");
+        header("Location: ../login");
         
         $pdo = null;
         $stmt = null;
@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Query Failed:" . $e->getMessage()); 
     }
 } else {
-    header("Location: ../signup.php?signup=success");
+    header("Location: ../");
     die();
 }
 

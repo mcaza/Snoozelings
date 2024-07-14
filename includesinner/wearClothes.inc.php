@@ -8,7 +8,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     $id = $_POST["item"];
     $petid = $_POST["pet"];
-    
+    if ($_POST["color"]) {
+        $color = $_POST["color"];
+    }
+     
     //Fetch Type of Clothes Item
     $query = 'SELECT * FROM itemList WHERE id = :id';
     $stmt = $pdo->prepare($query);
@@ -18,11 +21,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $type = $result['type'];
     
     //Fetch Items
-    $query = 'SELECT * FROM items WHERE list_id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($color) {
+        $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user AND dye = :dye';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":user", $userId);
+        $stmt->bindParam(":dye", $color);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $name = $result['name'] . $color;
+        
+        $query = 'SELECT * FROM dyes WHERE name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $color);
+        $stmt->execute();
+        $dyedisplay = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $display = $result['display'] . ' [' . $dyedisplay['display'] . ']';
+        
+    } else {
+        $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":user", $userId);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $name = $result['name'];
+        
+        $display = $result['display'];
+    }
     
     //Make sure item is in user inventory
     if (!$results) {
@@ -44,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Check if Pet is already wearing that item
-    $name = $result['name'];
     if ($type === 'clothesTop') {
         $clothes = $pet['clothesTop'];
     } elseif ($type === 'clothesBottom') {
@@ -62,23 +88,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Add to Clothes String. Update Clothes String of that Type
     if ($type === 'clothesTop') {
         $string = $pet['clothesTop'];
-        $string .= ' ' . $result['name'];
+        $string .= ' ' . $name;
         $string = trim($string);
         $query = 'UPDATE snoozelings SET clothesTop = :clothes WHERE id = :id';
     } elseif ($type === 'clothesBottom') {
         $string = $pet['clothesBottom'];
-        $string .= ' ' . $result['name'];
+        $string .= ' ' . $name;
         $string = trim($string);
         $query = 'UPDATE snoozelings SET clothesBottom = :clothes WHERE id = :id';
     } elseif ($type === 'clothesHoodie') {
         $string = $pet['clothesHoodie'];
-        $string .= ' ' . $result['name'];
+        $string .= ' ' . $name;
         $string = trim($string);
         $query = 'UPDATE snoozelings SET clothesHoodie = :clothes WHERE id = :id';
     } 
     elseif ($type === 'clothesBoth') {
         $string = $pet['clothesBoth'];
-        $string .= ' ' . $result['name'];
+        $string .= ' ' . $name;
         $string = trim($string);
         $query = 'UPDATE snoozelings SET clothesBoth = :clothes WHERE id = :id';
     }
@@ -95,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Message & Reroute to Items
-    $_SESSION['reply'] = "Your pet is now wearing the following item: " . $result['display'];
+    $_SESSION['reply'] = "Your pet is now wearing the following item: " . $display;
     header("Location: ../pack");
     
 } else {

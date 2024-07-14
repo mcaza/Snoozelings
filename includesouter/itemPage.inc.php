@@ -26,25 +26,50 @@ $stmt->execute();
 $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Get Dyes
-$dyelist = [];
-for ($i = 0; $i < $count; $i++) {
-    foreach ($results as $dye) {
-        if ($dye['dye']) {
-            array_push($dyelist, $dye['dye']);
+if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
+    $dyelist = [];
+    for ($i = 0; $i < $count; $i++) {
+        foreach ($results as $dye) {
+            if ($dye['dye']) {
+                array_push($dyelist, $dye['dye']);
+            } else {
+                array_push($dyelist, "White");
+            }
         }
     }
+    
+    $dyefix = array_unique($dyelist);
+    
+    
+    //Move White to Front
+    $notwhite = [];
+    if(in_array("White", $dyefix)) {
+        foreach ($dyefix as $fix) {
+            if ($fix == "White") {
+                
+            } else {
+                array_push($notwhite, $fix);
+            }
+            $white = ["White"];
+            $dyefix = array_merge($white, $notwhite);
+        }
+    }
+    
+    $dyedisplays = [];
+    foreach ($dyefix as $word) {
+        $query = "SELECT * FROM dyes WHERE name = :name";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $word);
+        $stmt->execute();
+        $dyeName = $stmt->fetch(PDO::FETCH_ASSOC);
+        array_push($dyedisplays, $dyeName['display']);
+    }
+        
 }
 
-$dyefix = array_unique($dyelist);
-$dyedisplays = [];
-foreach ($dyefix as $word) {
-    $query = "SELECT * FROM dyes WHERE name = :name";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $word);
-    $stmt->execute();
-    $dyeName = $stmt->fetch(PDO::FETCH_ASSOC);
-    array_push($dyedisplays, $dyeName['display']);
-}
+
+
+
 
 //Type Edit
 $type = ucfirst($item['type']);
@@ -69,8 +94,13 @@ echo '</div>';
 echo '<div class="itemPageRow">';
 echo '<div class="itemPage">';
 if ($dyefix || $item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
-    echo '<img id="itemicon" src="items/' . $item['name'] . $dyefix[0] . '.png" style="width: 150px;border-radius:50px;border:4px solid silver;">';
-    echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
+    if ($dyefix[0] == "White") {
+        echo '<img id="itemicon" src="items/' . $item['name'] . '.png" style="width: 150px;">';
+        echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
+    } else {
+        echo '<img id="itemicon" src="items/' . $item['name'] . $dyefix[0] . '.png" style="width: 150px;border-radius:50px;border:4px solid silver;">';
+        echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
+    }
 } else {
     echo '<img id="itemicon" src="items/' . $item['name'] . '.png" style="width: 150px;">';
     echo '<h4 id="colortitle">' . $item['display'] . '</h4>';
@@ -93,6 +123,7 @@ if ($item['name'] === "PlanterBox") {
 
 if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
     echo '<form method="post" action="includes/wearClothes.inc.php">';
+    echo '<input type="hidden" name="item" value="' . $id . '">';
     echo '<input type="hidden" name="item" value="' . $id . '">';
     echo '<label for="area"  class="form">Choose A Pet:</label><br>';
     echo '<select  class="input" name="pet" id="pet"><br>';

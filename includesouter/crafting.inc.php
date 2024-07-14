@@ -6,12 +6,27 @@ if ($_SESSION['reply']) {
     unset($_SESSION['reply']);
 }
 
-//Get Type
+//Set Type
 if ($_GET['type']) {
     $type = $_GET['type'];
-    $_SESSION['type'] = $type;
-} elseif ($_SESSION['type']) {
-    $type = $_SESSION['type'];
+    $query = 'UPDATE users SET lastCraft = :lastcraft WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":lastcraft", $type);
+    $stmt->execute();
+} else {
+    //Get Last Type
+    $query = 'SELECT lastCraft FROM users WHERE id = :id AND lastCraft IS NOT NULL';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $lastCraft = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($lastCraft) {
+        $type = $lastCraft['lastCraft'];
+    } else {
+        $type = "ingredient";
+    }
 }
 
 //Get Pet 

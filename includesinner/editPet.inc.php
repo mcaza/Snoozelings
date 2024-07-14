@@ -31,6 +31,7 @@ $userId = $_SESSION['user_id'];
     
     //Remove Clothing
     $clothesarray = [];
+    $namearray = [];
     $query = 'SELECT * FROM itemList';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
@@ -38,10 +39,16 @@ $userId = $_SESSION['user_id'];
     $itemcount = count($items) + 2;
     for ($i = 1; $i < $itemcount; $i++) {
         if ($_POST[$i]) {
-            $item = $_POST[$i];
+            $temp = $_POST[$i];
+            $item = (int)filter_var($temp, FILTER_SANITIZE_NUMBER_INT);
+            $name = str_replace($item,"",$temp);
             array_push($clothesarray, $item);
+            array_push($namearray, $name);
             $item = "";
-        } }
+            $name = "";
+        } 
+    }
+    $count = 0;
         foreach ($clothesarray as $item) {
             
             //Snoozeling Info
@@ -57,7 +64,7 @@ $userId = $_SESSION['user_id'];
             if ($type === "clothesBottom") {
                     $list = explode(" ", $snooze["clothesBottom"]);
                     //Check if Still Equipt
-                    $temp = $items[$i-1]['name'];
+                    $temp = $namearray[$count];
                     if(!in_array($temp, $list)) {
                         header("Location: ../index");
                         die();
@@ -65,7 +72,7 @@ $userId = $_SESSION['user_id'];
                     if (count($list) === 1) {
                         $final = "";
                     } else {
-                        $key = array_search($items[$i-1]['name'], $list);
+                        $key = array_search($namearray[$count], $list);
                         unset($list[$key]);
                         $newList = array_values($list);
                         if (count($newList) === 1) {
@@ -85,7 +92,7 @@ $userId = $_SESSION['user_id'];
             } elseif ($type === "clothesTop") {
                     $list = explode(" ", $snooze["clothesTop"]);
                 //Check if Still Equipt
-                    $temp = $items[$i-1]['name'];
+                    $temp = $namearray[$count];
                     if(!in_array($temp, $list)) {
                         header("Location: ../index");
                         die();
@@ -93,7 +100,7 @@ $userId = $_SESSION['user_id'];
                     if (count($list) === 1) {
                         $final = "";
                     } else {
-                        $key = array_search($items[$i-1]['name'], $list);
+                        $key = array_search($namearray[$count], $list);
                         unset($list[$key]);
                         $newList = array_values($list);
                         if (count($newList) === 1) {
@@ -113,7 +120,7 @@ $userId = $_SESSION['user_id'];
             } elseif ($type === "clothesHoodie") {
                     $list = explode(" ", $snooze["clothesHoodie"]);
                 //Check if Still Equipt
-                    $temp = $items[$i-1]['name'];
+                    $temp = $namearray[$count];
                     if(!in_array($temp, $list)) {
                         header("Location: ../index");
                         die();
@@ -121,7 +128,7 @@ $userId = $_SESSION['user_id'];
                     if (count($list) === 1) {
                         $final = "";
                     } else {
-                        $key = array_search($items[$i-1]['name'], $list);
+                        $key = array_search($namearray[$count], $list);
                         unset($list[$key]);
                         $newList = array_values($list);
                         if (count($newList) === 1) {
@@ -141,7 +148,7 @@ $userId = $_SESSION['user_id'];
             } elseif ($type === "clothesBoth") {
                     $list = explode(" ", $snooze["clothesBoth"]);
                 //Check if Still Equipt
-                    $temp = $items[$i-1]['name'];
+                    $temp = $namearray[$count];
                     if(!in_array($temp, $list)) {
                         header("Location: ../index");
                         die();
@@ -149,7 +156,7 @@ $userId = $_SESSION['user_id'];
                     if (count($list) === 1) {
                         $final = "";
                     } else {
-                        $key = array_search($items[$i-1]['name'], $list);
+                        $key = array_search($namearray[$count], $list);
                         unset($list[$key]);
                         $newList = array_values($list);
                         if (count($newList) === 1) {
@@ -169,14 +176,35 @@ $userId = $_SESSION['user_id'];
             }
             
         
-      //Return Item
+            //FetchDyes
+            $query = "SELECT * FROM dyes";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            $dyelist = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $newname = "";
+            $color = "";
+            foreach ($dyelist as $dye) {
+                    if (str_ends_with($namearray[$count], $dye['name'])) {
+                        $newname = str_replace($dye['name'],"",$namearray[$count]);
+                        $color = $dye['name'];
+                    } else {
+
+                    }
+                }
+            
+            //Return Item
             $query = 'SELECT * FROM itemList WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $item);
             $stmt->execute();
             $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+            if ($newname) {
+                $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate, dye) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate, :dye);";
+            } else {
+                $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+            }
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":list", $item);
             $stmt->bindParam(":user", $userId);
@@ -186,15 +214,15 @@ $userId = $_SESSION['user_id'];
             $stmt->bindParam(":type", $iteminfo['type']);
             $stmt->bindParam(":rarity", $iteminfo['rarity']);
             $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
+            if ($newname) {
+                $stmt->bindParam(":dye", $color);
+            }
             $stmt->execute(); 
+            
+            $count++;
         } 
             
-            
-     
-            
-                
-            //Reset $item
-            $item = "";
+
         
     
 

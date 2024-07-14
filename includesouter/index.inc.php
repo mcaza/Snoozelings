@@ -84,8 +84,9 @@ echo '</div>';
 //Important Dates
 echo '<div class="indexBox">';
 echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Important Dates</h4>';
-echo '<p><b>December 18th</b><br>News Update</p><br>';
-echo '<p><b>December 20th</b><br>Alpha Test Last Day</p><br>';
+echo '<p>Coming Soon</p>';
+/* echo '<p><b>December 18th</b><br>News Update</p><br>';
+echo '<p><b>December 20th</b><br>Alpha Test Last Day</p><br>'; */
 echo '</div>';
 
 echo '</div>';

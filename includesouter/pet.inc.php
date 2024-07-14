@@ -3,10 +3,17 @@ $id = $_GET['id'];
 
 //Navigation
 echo '<div id="onlyOne" class="leftRightButtons">';
-if ($id > 1) {
+if ($id == 10) {
+    echo '<a href="pet?id=2">>></a>';
+} else if ($id > 1) {
     echo '<a id="leftArrow" href="pet?id=' . ($id - 1) . '"><<</a>';
 }
-echo '<a href="pet?id=' . ($id + 1) . '">>></a>';
+if ($id == 2) {
+    echo '<a href="pet?id=10">>></a>';
+} else {
+    echo '<a href="pet?id=' . ($id + 1) . '">>></a>';
+}
+
 echo '</div>';
 
 /*

@@ -46,7 +46,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
-echo '<a href="snoozeland"><<</a>';
+echo '<a href="snoozevillage"><<</a>';
 echo '</div>';
 
 if ($temp === "Farmland") {

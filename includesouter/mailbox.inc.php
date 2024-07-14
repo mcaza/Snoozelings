@@ -73,7 +73,7 @@ foreach ($mail as $letter) {
     $sender = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<a href="mail?id=' . $letter['id'] . '" >';
     echo '<div class="mail">';
-    if ($letter['opened'] === "1") {
+    if ($letter['opened'] == "1") {
         echo '<img src="resources/openletter.png" style="width: 80px;">';
     } else {
         echo '<img src="resources/closedletter.png" style="width: 80px;">';

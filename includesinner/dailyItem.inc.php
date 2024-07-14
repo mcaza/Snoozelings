@@ -27,27 +27,25 @@ $count = count($items);
 $randomNum = rand(0, $count - 1);
     
 //Select Color if Bandana
-if ($items[$randomNum]['name'] === "Bandana") {
+if ($items[$randomNum]['name'] == "Bandana") {
     $colors = ['White', 'Yellow', 'Orange', 'Red', 'Green', 'Purple', 'Blue', 'Brown', 'Black', 'Pink', 'PastelBrown', 'PastelPink', 'PastelBlue', 'PastelPurple', 'Gooseberry', 'Blueberry', 'Teal'];
     $colcount = count($colors);
     $colnum = rand(0, $colcount - 1);
     $color = $colors[$colnum];
-    if ($color === "White") {
-        $bandana = "Bandana";
-        $name = "Bandana";
+    $itemshort = "Bandana";
+    if ($color == "White") {
+        $itemname = "Bandana";
+        $itemdisplay = "Bandana";
+        $dye = "";
     } else {
-        if ($color === "PastelBrown") {
-            $bandana = "Bandana [Pastel Brown]";
-        } else if ($color === "PastelPink") {
-            $bandana = "Bandana [Pastel Pink]";
-        } else if ($color === "PastelBlue") {
-            $bandana = "Bandana [Pastel Blue]";
-        } else if ($color === "PastelPurple") {
-            $bandana = "Bandana [Pastel Purple]";
-        } else {
-            $bandana = "Bandana [" . $color . "]";
-        }
-        $name = 'Bandana' . $color;
+        //Get Dye Info
+        $query = "SELECT * FROM dyes WHERE name = :name";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $colors[$colnum]);
+        $stmt->execute();
+        $dye = $stmt->fetch(PDO::FETCH_ASSOC);
+        $itemname = "Bandana" . $dye['name'];
+        $itemdisplay = "Bandana [" . $dye['display'] . "]";
     }
     
     //Insert Items
@@ -55,20 +53,21 @@ if ($items[$randomNum]['name'] === "Bandana") {
         $stmt = $pdo->prepare($query);
     $stmt->bindParam(":list", $items[$randomNum]['id']);
     $stmt->bindParam(":user", $userId);
-    $stmt->bindParam(":name", $items[$randomNum]['name']);
-    $stmt->bindParam(":display", $items[$randomNum]['display']);
+    $stmt->bindParam(":name", $itemshort);
+    $stmt->bindParam(":display", $itemdisplay);
     $stmt->bindParam(":description", $items[$randomNum]['description']);
     $stmt->bindParam(":type", $items[$randomNum]['type']);
     $stmt->bindParam(":rarity", $items[$randomNum]['rarity']);
     $stmt->bindParam(":canDonate", $items[$randomNum]['canDonate']);
-    $stmt->bindParam(":dye", $items[$randomNum]['canDonate']);
+    $stmt->bindParam(":dye", $color);
     $stmt->execute(); 
     
-}
-
-//Insert Items
-$query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
-        $stmt = $pdo->prepare($query);
+} else {
+    $itemdisplay = $items[$randomNum]['display'];
+    
+    //Insert Items
+    $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+    $stmt = $pdo->prepare($query);
     $stmt->bindParam(":list", $items[$randomNum]['id']);
     $stmt->bindParam(":user", $userId);
     $stmt->bindParam(":name", $items[$randomNum]['name']);
@@ -78,8 +77,11 @@ $query = "INSERT INTO items (list_id, user_id, name, display, description, type,
     $stmt->bindParam(":rarity", $items[$randomNum]['rarity']);
     $stmt->bindParam(":canDonate", $items[$randomNum]['canDonate']);
     $stmt->execute(); 
+}
+
+
     
- //Change User dailyPrize to 1
+//Change User dailyPrize to 1
 $query = "UPDATE users SET dailyPrize = :num WHERE id = :id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
@@ -87,7 +89,7 @@ $stmt->bindParam(":num", $num);
 $stmt->execute(); 
 
 //Redirect
-    $_SESSION['reply'] = "You have received the following item: " . $items[$randomNum]['display'];
+    $_SESSION['reply'] = "You have received the following item: " . $itemdisplay;
     header("Location: ../randomitem");
 } else {
     header("Location: ../randomitem");

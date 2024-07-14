@@ -43,7 +43,7 @@ if ($reply) {
 }
 
 //Title & Photo
-echo '<div><img style="width: 35%;" src="resources/adoptNPC.png"></div>';
+echo '<div><img style="width: 35%;" src="resources/adoptshopNPC.png"></div>';
 if ($pets) {
     echo '<p><i>"Thank you for considering adoption. Here are the snoozelings looking for homes."</i></p>';
     echo '<hr>';
