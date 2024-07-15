@@ -256,6 +256,26 @@ td {
     font-size: 1.5rem;
 }
 
+/* Shop Styles */
+
+.shop {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    row-gap: 30px;
+}
+
+.product {
+    border: #827188 2px dashed;
+    border-radius: 20px;
+    width: 35%;
+    padding: 15px;
+}
+
+.product img {
+    width: 80%;
+}
+
 /* Navigation Bar Styles (Black) */
 
 .nav-container {

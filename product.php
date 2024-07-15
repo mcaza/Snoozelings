@@ -1,11 +1,16 @@
 <?php
 require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
-require_once '../includes/logincheck.inc.php';
-require_once '../includes/verifyCheck.inc.php'; 
-require_once '../includes/verifySinglePet.inc.php'; 
 
 
+$id = $_GET['id'];
+
+//Grab Name of Product
+$query = 'SELECT title FROM products WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $id);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -16,7 +21,7 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dye Station</title>
+    <title><?php echo $result['title']; ?></title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -73,7 +78,7 @@ require_once '../includes/verifySinglePet.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
-            <?php require_once '../includes/dyes.inc.php' ?>
+            <?php require_once '../includes/product.inc.php' ?>
         </div></div>
     </div>
     <!--End of All Main Content-->
@@ -96,4 +101,3 @@ require_once '../includes/verifySinglePet.inc.php';
 </body>
 
 </html>
-

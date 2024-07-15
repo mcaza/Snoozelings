@@ -19,7 +19,7 @@ function displayPet($pet, $class) {
     if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if($clothing === "AngelSet") {
+            if($clothing === "AngelSet" || $clothing === "AngelWings") {
             echo "<div class='${class}'>";
          echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
             echo "</div>";
@@ -92,7 +92,7 @@ function displayPet($pet, $class) {
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if(!($clothing === "AngelSet")) {
+            if(!($clothing === "AngelSet" || $clothing === "AngelWings")) {
             echo "<div class='${class}'>";
          echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
             echo "</div>";
@@ -147,7 +147,7 @@ function displayPet($pet, $class) {
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if (!($clothing === "AngelSet")) {
+            if (!($clothing === "AngelSet" || $clothing === "AngelWings")) {
             echo "<div class='${class}'>";
          echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
@@ -168,7 +168,7 @@ function displayPet($pet, $class) {
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if ($clothing === "AngelSet") {
+            if ($clothing === "AngelSet" || $clothing === "AngelWings") {
             echo "<div class='${class}'>";
          echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";

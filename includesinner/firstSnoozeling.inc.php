@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":breedStatus", $breedStatus);
     $stmt->bindParam(":title", $title);
     $stmt->bindParam(":bed", $bed);
-
     $stmt->execute(); 
     
     $query = "DELETE FROM blueprints WHERE owner_id = :id";
@@ -71,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Add Bed to Account (Account bound)
-    $bed = 27;
+    $bed = 155;
     $zero = 0;
     
     $query = 'SELECT * FROM itemList WHERE id = :id';
@@ -139,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $from = 1;
     $one = 1;
     $zero = 0;
-    $now = new DateTime(null, new DateTimezone('UTC'));
+    $now = new DateTime('now');
     $date = $now->format('Y-m-d H:i:s');
     $query = "INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime) VALUES (:from, :to, :title, :message, :sent, :opened, :datetime)";
     $stmt = $pdo->prepare($query);

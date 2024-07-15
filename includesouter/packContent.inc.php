@@ -38,6 +38,18 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Get all Item Categories
+$categories = [];
+foreach ($results as $item) {
+    if (in_array($item['type'], $categories)) {
+        
+    } else {
+        array_push($categories, $item['type']);
+    }
+}
+
+rsort($categories);
+
 //Fetch Item List Count
 $query = "SELECT * FROM itemList";
 $stmt = $pdo->prepare($query);
@@ -114,34 +126,41 @@ echo '</select><br>';
 echo '<button class="fancyButton">Filter</button>';
 echo '</form>';
 
-//Inventory System
+//Display as Categories
 echo "<div id='inventory'>";
-$round = 0;
-foreach ($itemCount as $item) {
-    if ($itemCount[$round] > 0) {
-        if ($items[$round -1]['type'] === $type || $type === "all" || !$type) {
-        echo '<a href="item?id=' . $round  . '">';
-    echo '<div class="invItem">';
-        if ($itemCount[$round] > 1) {
-            if ($items[$round-1]['multiples']) {
-                $name = $items[$round-1]['multiples'];
+foreach ($categories as $cat) {
+
+    //Inventory System
+    $round = 0;
+    foreach ($itemCount as $item) {
+        if ($cat == $items[$round -1]['type']) {
+            if ($itemCount[$round] > 0) {
+                if ($items[$round -1]['type'] === $type || $type === "all" || !$type) {
+                echo '<a href="item?id=' . $round  . '">';
+            echo '<div class="invItem">';
+                if ($itemCount[$round] > 1) {
+                    if ($items[$round-1]['multiples']) {
+                        $name = $items[$round-1]['multiples'];
+                    } else {
+                        $name = $items[$round-1]['display'];
+                    }
+
             } else {
                 $name = $items[$round-1]['display'];
             }
-        
-    } else {
-        $name = $items[$round-1]['display'];
-    }
-        if (str_contains($items[$round-1]['type'], "clothes")) {
-                echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="width:100px;border-radius: 25px; border: 2px silver solid;">';
-            } else {
-                echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="width:100px">';
+                if (str_contains($items[$round-1]['type'], "clothes")) {
+                        echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="width:100px;border-radius: 25px; border: 2px silver solid;">';
+                    } else {
+                        echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="width:100px">';
+                    }
+
+            echo '<p>' . $itemCount[$round] . ' ' . $name . '</p>';
+                echo '</div></a>';
+                }
             }
-    
-    echo '<p>' . $itemCount[$round] . ' ' . $name . '</p>';
-        echo '</div></a>';
         }
+        $round++;
     }
-    $round++;
 }
+
 echo "</div>";
