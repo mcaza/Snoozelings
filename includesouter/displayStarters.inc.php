@@ -59,6 +59,11 @@ function displayStarter($pet, $class) {
             echo "<img src='Layers/Markings/Sublimation/" . $pet["mainColor"] . ".png' id = 'Sublimationone'>";
             echo "</div>";
         }
+    if (strpos($pet["specials"], "EarTip") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Other/EarTip.png' id = 'EarTipone'>";
+            echo "</div>";
+        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/Ear/" . $pet["noseColor"] . ".png' id = 'Earone'>";
         echo "</div>";

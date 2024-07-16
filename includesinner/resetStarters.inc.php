@@ -58,6 +58,11 @@ function randomCommon($pdo, $results, $userId, $count) {
         $tempSpecials .= "Sublimation ";
     }
     
+    $randomNum = rand(1,2); 
+    if ($randomNum === 1) {
+        $tempSpecials .= "EarTip ";
+    }
+    
     
     $finalSpecials = substr($tempSpecials, 0, -1);
     

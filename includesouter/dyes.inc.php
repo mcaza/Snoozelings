@@ -2,6 +2,18 @@
 
 $userId = $_SESSION['user_id'];
 
+if ($_SESSION['reply']) {
+    $reply = $_SESSION['reply'];
+    unset($_SESSION['reply']);
+}
+
+//Get Dye Batch
+$query = 'SELECT * FROM dyebatches WHERE user_id = :id AND finished = 0';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$dyebatch = $stmt->fetch(PDO::FETCH_ASSOC);
+
 //Get Pet 
 $query = 'SELECT * FROM craftingtables WHERE user_id = :id';
 $stmt = $pdo->prepare($query);
@@ -34,6 +46,13 @@ echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $userId . '"><<</a>';
 echo '</div>';
 
+//Notification
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 2rem;">';
+    echo '<p>' . $reply . '</p>';
+    echo '</div><br><br>';
+}
+
 //Desk and Snoozeling
 echo '<div class="craftimages" style="align-items:flex-end;">';
 echo '<img src="resources/dyePot.png" style="width:200px; height: auto;transform: scaleX(-1);">';
@@ -42,11 +61,52 @@ echo '</div>';
 echo '<hr>';
 
 //Display Current Dye
+if ($dyebatch) {
+    //Get ItemName
+    $query = 'SELECT * FROM itemList WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $dyebatch['item_id']);
+    $stmt->execute();
+    $itemid = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Get Dye Display Name
+    $query = 'SELECT * FROM dyes WHERE name = :name';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $dyebatch['dye']);
+    $stmt->execute();
+    $dyename = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo '<img src="/items/' . $itemid['name'] . $dyebatch['dye'] . '.png" style="width:130px;border-radius: 25px; border: 2px silver solid;">';
+    echo '<p style="font-size: 2rem"><strong>Current Dye Batch: </strong>' . $itemid['display'] . ' [' . $dyename['display'] . ']</p>';
+    
+    //Get Minutes Remaining
+    $result = $now->format('Y-m-d H:i:s');
+    $to_time = strtotime($dyebatch['endtime']);
+    $from_time = strtotime($result);
+    $diff = round(abs($to_time - $from_time) / 60,0);
+    //Date Stuff
+    $now = new DateTime("now", new DateTimezone('UTC'));
+    $future_date = new DateTime($dyebatch['endtime']);
+    $interval = $future_date->diff($now);
+    
+    if ($result > $dyebatch['endtime']) {
+        echo '<form method="post" action="includes/finishDye.inc.php">';
+        echo '<input type="hidden" name="color" value="' . $dyebatch['dye'] . '">';
+        echo '<input type="hidden" name="item" value="' . $itemid['name'] . '">';
+        echo "<button class='fancyButton'>Fetch Item</button>";
+        echo '</form>';
+    } else {
+        echo '<p><i>' . $interval->format("%h Hours, %i Minutes") . ' Remaining</i></p>';
+    }
+    
+}
 
 echo '<hr>';
-echo '<form method="post" action="includes/applyDye.inc.php">';
+if (!$dyebatch) {
+    echo '<form method="post" action="includes/applyDye.inc.php">';
+}
 
-echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:25px;margin: auto;margin-bottom:20px;">';
+echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:15px;padding-bottom: 25px;margin: auto;margin-bottom:20px;">';
+echo '<h1>Available Dyes</h1>';
 echo '<div style="display:flex;wrap:wrap;gap:20px;justify-content:space-evenly;">';
 foreach ($dyes as $dye) {
     echo '<div>';
@@ -57,20 +117,23 @@ foreach ($dyes as $dye) {
 }
 echo '</div>';
 
-//Show Dyes
-echo '<h1>Select Your Dye:</h1>';
+if (!$dyebatch) {
+    //Show Dyes
+    echo '<h1>Select Your Dye:</h1>';
 
-//Dye Selection
-echo '<select name="color" id="color">';
-echo '<option value="" default selected>Select an Option</option>';
-foreach ($dyes as $dye) {
-    echo '<option value="' . $dye['name'] . '">' . $dye['display'] . '</option>';
+    //Dye Selection
+    echo '<select name="color" id="color">';
+    echo '<option value="" default selected>Select an Option</option>';
+    foreach ($dyes as $dye) {
+        echo '<option value="' . $dye['name'] . '">' . $dye['display'] . '</option>';
+    }
+    echo '</select>';
 }
-echo '</select>';
 echo '</div>';
 
 //Dyable Items Section
-echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:25px;margin: auto;">';
+echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:15px;padding-bottom: 25px;margin: auto;margin-bottom:20px;">';
+echo '<h1>Available Items</h1>';
 echo '<div style="display:flex;wrap:wrap;gap:20px;justify-content:space-evenly;">';
 
 $clothesarray = [];
@@ -95,33 +158,42 @@ foreach ($items as $item) {
 }
 echo '</div>';
 
-echo '<h1>Select Your Item:</h1>';
+if (!$dyebatch) {
+    echo '<h1>Select Your Item:</h1>';
 
-$clothesarray2 = [];
-echo '<select name="color" id="color">';
-echo '<option value="" default selected>Select an Option</option>';
-foreach ($items as $item) {
-        //Select All Dyable Items
-    $query = 'SELECT * FROM itemList WHERE id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $item['list_id']);
-    $stmt->execute();
-    $check = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($check['canDye'] == 1) {
-            if (in_array($item['name'], $clothesarray2)) {
-            
-        } else {
-            echo '<option value="' . $item['name'] . '">' . $item['display'] . '</option>';
-            array_push($clothesarray2,$item['name']);
+    $clothesarray2 = [];
+    echo '<select name="item" id="item">';
+    echo '<option value="" default selected>Select an Option</option>';
+    foreach ($items as $item) {
+            //Select All Dyable Items
+        $query = 'SELECT * FROM itemList WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $item['list_id']);
+        $stmt->execute();
+        $check = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($check['canDye'] == 1) {
+                if (in_array($item['name'], $clothesarray2)) {
+
+            } else {
+                echo '<option value="' . $item['name'] . '">' . $item['display'] . '</option>';
+                array_push($clothesarray2,$item['name']);
+            }
         }
+
     }
-    
+    echo '</select>';
 }
-echo '</select>';
+
 echo '</div>';
 
-echo "<button class='fancyButton' style='margin-top:20px;width:200px;' >Dye Item</button>";
+if ($dyebatch) {
+    echo '<br><p><b>You already have an item in the dye pot</b></p>';
+} else {
+    echo "<button class='fancyButton' style='margin-top:20px;width:200px;' >Dye Item</button>";
+}
+
 echo '</div>';
 
-
-echo '</form>';
+if (!$dyebatch) {
+    echo '</form>';
+}

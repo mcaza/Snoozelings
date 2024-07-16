@@ -19,7 +19,7 @@ $stmt->execute();
 $sender = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Mark Mail as Opened
-if ($letter['opened'] === "0") {
+if ($letter['opened'] == "0") {
     $one = 1;
     $query = "UPDATE mail SET opened = :one WHERE id = :id";
     $stmt = $pdo->prepare($query);
