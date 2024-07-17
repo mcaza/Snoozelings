@@ -116,79 +116,96 @@ echo '<p><strong>Quantity: </strong>' . $count . '</p>';
 echo '</div>';
 
 if ($results) {
-//Planter Box - Add Farm Plot
-if ($item['name'] === "PlanterBox") {
-    echo '<button class="fancyButton" onClick="window.location.href=\'includes/useBox.inc.php\'">Add Farm Plot</button>';
-}
-
-if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
-    echo '<form method="post" action="includes/wearClothes.inc.php">';
-    echo '<input type="hidden" name="item" value="' . $id . '">';
-    echo '<input type="hidden" name="item" value="' . $id . '">';
-    echo '<label for="area"  class="form">Choose A Pet:</label><br>';
-    echo '<select  class="input" name="pet" id="pet"><br>';
-    foreach ($snoozelings as $pet) {
-        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+    //Planter Box - Add Farm Plot
+    if ($item['name'] === "PlanterBox") {
+        echo '<form method="post" action="includes/useBox.inc.php">';
+        echo '<button class="fancyButton">Add Farm Plot</button>';
+        echo '</form>';
     }
-    echo '</select><br>';
-    if (count($dyefix) > 1) {
-        echo '<label for="area"  class="form">Choose A Color:</label><br>';
-        echo '<select  class="input" name="color" id="color"><br>';
-        foreach ($dyefix as $dye) {
-            switch ($dye) {
-                case "PastelPink":
-                    $ending = "Pastel Pink";
-                    break;
-                case "PastelBrown":
-                    $ending = "Pastel Brown";
-                    break;
-                case "PastelPurple":
-                    $ending = "Pastel Purple";
-                    break;
-                case "PastelBlue":
-                    $ending = "Pastel Blue";
-                    break;
-                case "RainbowLove":
-                    $ending = "Rainbow Love";
-                    break;
-                case "FemaleLove":
-                    $ending = "Female Love";
-                    break;
-                case "MaleLove":
-                    $ending = "Male Love";
-                    break;
-                case "DoubleLove":
-                    $ending = "Double Love";
-                    break;
-                case "AnyLove":
-                    $ending = "Any Love";
-                    break;
-                case "AceLove":
-                    $ending = "Ace Love";
-                    break;
-                case "AroLove":
-                    $ending = "Ace Love";
-                    break;
-                case "NewSelf":
-                    $ending = "New Self";
-                    break;
-                case "UniqueSelf":
-                    $ending = "Unique Self";
-                    break;
-                case "FluidSelf":
-                    $ending = "Fluid Self";
-                    break;
-                default:
-                    $ending = $dye;
-            }
-            echo '<option value="' . $dye . '">' . $ending . '</option>';
+    
+    if ($item['name'] === "PetBed") {
+        echo '<form method="post" action="includes/usePetBed.inc.php">';
+        echo '<button class="fancyButton">Add Pet Bed</button>';
+        echo '</form>';
+    }
+    
+    if ($item['name'] === "FarmChest" || $item['name'] === "BeachChest" || $item['name'] === "ForestChest") {
+        //echo '<p><b>Chests require 1 key to open</b></p>';
+        echo '<form method="post" action="includes/openChest.inc.php" onclick="return confirm(\'This action will consume a single key. Are you sure you want to continue?\')" >';
+        echo '<input type="hidden" name="type" value="' . $item['name'] . '">';
+        echo '<button class="fancyButton">Open Chest</button>';
+        echo '</form>';
+    }
+
+
+    if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
+        echo '<form method="post" action="includes/wearClothes.inc.php">';
+        echo '<input type="hidden" name="item" value="' . $id . '">';
+        echo '<input type="hidden" name="item" value="' . $id . '">';
+        echo '<label for="area"  class="form">Choose A Pet:</label><br>';
+        echo '<select  class="input" name="pet" id="pet"><br>';
+        foreach ($snoozelings as $pet) {
+            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
         }
-    }
-    echo '</select>';
-    echo '<div><button class="fancyButton">Wear Item</button></div>';
-    echo '</form>';
+        echo '</select><br>';
+        if (count($dyefix) > 1) {
+            echo '<label for="area"  class="form">Choose A Color:</label><br>';
+            echo '<select  class="input" name="color" id="color"><br>';
+            foreach ($dyefix as $dye) {
+                switch ($dye) {
+                    case "PastelPink":
+                        $ending = "Pastel Pink";
+                        break;
+                    case "PastelBrown":
+                        $ending = "Pastel Brown";
+                        break;
+                    case "PastelPurple":
+                        $ending = "Pastel Purple";
+                        break;
+                    case "PastelBlue":
+                        $ending = "Pastel Blue";
+                        break;
+                    case "RainbowLove":
+                        $ending = "Rainbow Love";
+                        break;
+                    case "FemaleLove":
+                        $ending = "Female Love";
+                        break;
+                    case "MaleLove":
+                        $ending = "Male Love";
+                        break;
+                    case "DoubleLove":
+                        $ending = "Double Love";
+                        break;
+                    case "AnyLove":
+                        $ending = "Any Love";
+                        break;
+                    case "AceLove":
+                        $ending = "Ace Love";
+                        break;
+                    case "AroLove":
+                        $ending = "Ace Love";
+                        break;
+                    case "NewSelf":
+                        $ending = "New Self";
+                        break;
+                    case "UniqueSelf":
+                        $ending = "Unique Self";
+                        break;
+                    case "FluidSelf":
+                        $ending = "Fluid Self";
+                        break;
+                    default:
+                        $ending = $dye;
+                }
+                echo '<option value="' . $dye . '">' . $ending . '</option>';
+            }
+        }
+        echo '</select>';
+        echo '<div><button class="fancyButton">Wear Item</button></div>';
+        echo '</form>';
 
-}
+    }
 }
 
 echo '</div>';

@@ -22,6 +22,11 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$extraBeds = intval($result['petBeds']) - intval(count($results));
+$beds = ['BlueFree','BrownFree','GreenFree','PinkFree','RedFree'];
+$nestcount = 1;
+
+
 //User Navigation
             echo '<div id="onlyOne" class="leftRightButtons">';
             if ($id > 1) {
@@ -46,7 +51,17 @@ foreach ($results as $pet) {
     echo '<h5><a href="pet?id=' . $pet['id'] . '">'. htmlspecialchars($pet['name']) . '</a></h5>';
     echo '<p class="slogan">' . $pet['title'] . '</p>';
     echo "</div>";
-    
+    $nestcount++;
+}
+
+for ($i=$extraBeds; $i>0;$i--) {
+    $rand = rand(0,4);
+    echo "<div class='nestpet'>";
+    echo '<img src="Layers/Beds/Back/' . $beds[$rand] . '.png" style="width: 90%;">';
+    echo '<h5>Nest #' . $nestcount . '</h5>';
+    echo '<p class="slogan">Empty Nest</p>';
+    echo "</div>";
+    $nestcount++;
 }
 
 

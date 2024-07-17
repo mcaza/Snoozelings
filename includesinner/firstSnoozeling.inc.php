@@ -108,13 +108,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Welcome Mail Message
-    $message = "Welcome newest Snooze Land citizen!!
+    $message = "Welcome newest Snooze Village citizen!!
     
-    Read through this letter for important Snooze Land information.
+    Read through this letter for important Snooze Village information.
     
     <b style='font-size: 2rem;'>Mail System</b>
     
-    Here in Snooze Land, we don't want to overwhelm our postman. We also feel that it's important to not be checking our inboxes all the time. Because of these two reasons, the postman only delivers your mail twice a day at 6 AM EST and 7PM EST.
+    Here in Snooze Village, we don't want to overwhelm our postman. We also feel that it's important to not be checking our inboxes all the time. Because of these two reasons, the postman only delivers your mail twice a day at 6 AM EST and 7PM EST.
     
     Please keep this in mind when sending messages to your friends. They aren't ignoring you. Postman Penn is just making sure to take plenty of breaks on his route.
     
@@ -133,8 +133,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     That's everything for today. Hope you enjoy the game. <3
     
-    ~From Slothie";
-    $title = "Welcome to Snooze Land!";
+    ~From Slothie (Lead Developer)";
+    $title = "Welcome to Snooze Village!";
     $from = 1;
     $one = 1;
     $zero = 0;

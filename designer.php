@@ -277,7 +277,17 @@ require_once '../includes/verifySinglePet.inc.php';
             document.getElementById('TopWingdesigner').src = "";
             document.getElementById('BottomWingdesigner').src = "";
         }
- }
+    }
+        
+        document.getElementById('eartip').onchange = (event) => {
+        var checkBox = document.getElementById("eartip");
+        if (checkBox.checked == true) {
+            document.getElementById('Eartipdesigner').src = "Layers/Other/EarTip.png";
+        } else {
+            document.getElementById('Eartipdesigner').src = "";
+        }
+    }
+ 
     
     </script>
 

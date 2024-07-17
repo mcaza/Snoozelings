@@ -30,10 +30,5 @@ foreach ($pets as $pet) {
     echo '<option value="' . $pet['id'] . '">#' . $pet['id'] . ' - ' . $pet['name'] . '</option>'; 
 }
 echo '</select><br>';
-echo '<label for="bed" class="form" >Pet Bed:</label><br>';
-echo '<select class="input"  name="bed">';
-echo '<option value="0">I want my pet bed returned to me.</option>';
-echo '<option value="1">The new owner can have my pet\'s bed.</option>';
-echo '</select><br>';
 echo '<button  class="fancyButton">Donate Pet</button>';
 echo '</form>';

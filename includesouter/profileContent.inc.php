@@ -299,6 +299,7 @@ if ($id === "4") {
     echo '<a href="crafting"><img src="resources/desk.png" style="height: 150px; width: auto;"></a>';
     echo '<a href="farm"><img src="resources/plantbox.png" style="height: 150px; width: auto;"></a>';
     echo '<a href="pack"><img src="resources/backpack.jpg" style="height: 150px; width: auto;"></a>';
+    echo '<a href="pack"><img src="resources/dyePot.png" style="height: 150px; width: auto;"></a>';
     echo '</div>';
     }
 

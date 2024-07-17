@@ -7,8 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
     $userId = $_SESSION['user_id'];
     $adopt = $_POST['pet'];
-    $list = 27;
-    $maxpets = 3;
+    $maxpets = 6;
     
     //Get Adoption Info
     $query = 'SELECT * FROM adopts WHERE id = :id';
@@ -17,43 +16,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    //Check Max Pets
-    $query = 'SELECT * FROM snoozelings WHERE id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $allpets = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    if (count($allpets) >= $maxpets) {
-        $_SESSION['reply'] = 'You already have the max number of snoozelings.';
-        header("Location: ../adoption");
-        die(); 
-    }
-    
     //Check Coins
-    $query = 'SELECT coinCount FROM users WHERE id = :id';
+    $query = 'SELECT coinCount, petBeds FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $coins = $stmt->fetch(PDO::FETCH_ASSOC);
     if (intval($coins['coinCount']) < intval($pet['cost'])) {
-        $_SESSION['reply'] = 'You do not have enough coins to adopt that snoozeling.';
+        $_SESSION['reply'] = 'You do not have enough coins to adopt that snoozeling';
         header("Location: ../adoption");
         die();        
     }
-    
-    //Check Bed
-    if ($pet['bed'] === "0") {
-        $query = 'SELECT * FROM items WHERE list_id = :list AND user_id = :id';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":list", $list);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute();
-        $bed = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$bed) {
-            $_SESSION['reply'] = 'You need a pet bed to adopt this snoozeling.';
-            header("Location: ../adoption");
-            die();        
-        }
+
+    //Check Empty Beds
+    $query = 'SELECT * FROM snoozelings WHERE owner_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $petcheck = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $emptybeds = intval($coins['petBeds']) - count($petchecl);
+    if ($emptybeds < 1) {
+        $_SESSION['reply'] = 'You do not have an empty bed available';
+        header("Location: ../adoption");
     }
     
     //Take Coins & Bed
@@ -62,13 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":coins", $pet['cost']);
     $stmt->execute();
-    if ($pet['bed'] === "0") {
-        $query = 'DELETE FROM items WHERE list_id = :list AND user_id = :id LIMIT 1';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":list", $list);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute(); 
-    }
     
     //Give Kindness Coin to Donator
     $query = 'UPDATE users SET kindnessCount = kindnessCount + 1 WHERE id = :id';

@@ -46,6 +46,9 @@ echo '<h3 style="margin-top: 1rem; margin-bottom: 2rem;">Snoozelings Maker</h3>'
      echo "<div class='artlarge'>";
             echo "<img src='' id = 'Sublimationdesigner'>";
             echo "</div>";  
+    echo "<div class='artlarge'>";
+            echo "<img src='' id = 'Eartipdesigner'>";
+            echo "</div>";
         echo "<div class='artlarge'>";
         echo "<img src='Layers/Ear/Amethyst.png' id = 'Eardesigner'>";
         echo "</div>";
@@ -219,6 +222,10 @@ echo '<div>';
 echo '<label style="margin-bottom: 1rem;" class="form">Markings:</label><br>';
 echo '<div class="checkBoxDes">';
 echo '<input type="checkbox" id="wings"><label class="designerCheck" for="wings">Wings</label><br>';
+echo '</div>';
+
+echo '<div class="checkBoxDes">';
+echo '<input type="checkbox" id="eartip"><label class="designerCheck" for="eartip">Ear Tip</label><br>';
 echo '</div>';
 
 echo '<div class="checkBoxDes">';

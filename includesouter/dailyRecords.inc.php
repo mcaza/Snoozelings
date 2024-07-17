@@ -22,16 +22,6 @@ if ($result['itemsCrafted'] == "1") {
 } else {
     echo "<p>" . $result['itemsCrafted'] . " Items Crafted</p>";
 }
-if ($result['snoozelingsCrafted'] == "1") {
-    echo "<p>" . $result['snoozelingsCrafted'] . " Snoozeling Sewn</p>";
-} else {
-    echo "<p>" . $result['snoozelingsCrafted'] . " Snoozelings Sewn</p>";
-}
-if ($result['newMembers'] == "1") {
-    echo "<p>" . $result['newMembers'] . " New Member</p>";
-} else {
-    echo "<p>" . $result['newMembers'] . " New Members</p>";
-}
 if ($result['requestsFilled'] == "1") {
     echo "<p>" . $result['requestsFilled'] . " Request Fulfilled</p>";
 } else {

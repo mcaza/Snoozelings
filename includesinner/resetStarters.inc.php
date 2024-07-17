@@ -13,9 +13,8 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 
 //Grab all the Common Color Info
-$query = "SELECT * FROM colors WHERE rarity = :rarity";
+$query = 'SELECT * FROM colors WHERE rarity = ("Common" OR "Uncommon")';
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":rarity", $common);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $count = count($results) - 1;

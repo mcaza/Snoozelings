@@ -65,7 +65,7 @@ $dayNum = substr($birthday, -2);
 $dayNum = intval($dayNum);
 $monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-if (!($pet['gotchaDate'] === '0000-00-00')) {
+if (!($pet['gotchaDate'] === null)) {
     $join = substr($pet['gotchaDate'], 5);
     $joinMonth = $join.substr(0, 3);
     $joinMonth = intval($joinMonth);
@@ -86,7 +86,7 @@ echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font
 echo '<p class="snoozelinginfo"><strong>Pet ID: </strong>' . $pet['id'];
 echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>' . $pet['pronouns'];
 echo '<p class="snoozelinginfo"><strong>Birthday: </strong>' . $monthArray[$monthNum -1] . " " . $dayNum;
-if (!($pet['gotchaDate'] === '0000-00-00')) {
+if (!($pet['gotchaDate'] === null)) {
     echo '<p class="snoozelinginfo"><strong>Gotcha Day: </strong>' . $monthArray[$joinMonth -1] . " " . $joinDay;
 }
 if ($pet['job'] === 'jack') {

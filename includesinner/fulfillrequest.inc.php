@@ -101,6 +101,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     
+    //Send Mail
+    
+    $message = "Great news for you!!
+    
+    Your request for " . $check['display'] . " has been fulfilled.
+    
+    It has been added to your inventory.
+    
+    Also sorry if it has slobber on it. I don't have hands.
+    
+    ~Simon";
+
+    $title = "Your request has been fulfilled!";
+    $from = 7;
+    $one = 1;
+    $zero = 0;
+    $now = new DateTime('now');
+    $date = $now->format('Y-m-d H:i:s');
+    $query = "INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime) VALUES (:from, :to, :title, :message, :sent, :opened, :datetime)";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":from", $from);
+    $stmt->bindParam(":to", $request['user_id']);
+    $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":message", $message);
+    $stmt->bindParam(":sent", $one);
+    $stmt->bindParam(":opened", $zero);
+    $stmt->bindParam(":datetime", $date);
+    $stmt->execute();
+    
     //Redirect
     header("Location: ../requests");
     

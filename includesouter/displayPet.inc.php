@@ -4,7 +4,7 @@ function displayPet($pet, $class) {
     
     echo '<div class="art-container">';
     if ($pet['mainColor']) {
-    if($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] === "1")) {
+    if($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] == "1")) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Beds/Back/" . $pet['bedcolor'] . ".png'>";
         echo "</div>";
@@ -113,7 +113,7 @@ function displayPet($pet, $class) {
             echo '<img src="Layers/Hair/' . $pet['hairType'] . "/" . $pet['hairColor'] . '.png" id="Hairone">';
         } }
             echo "</div>";
-        if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] === "1")) {
+        if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
         echo "</div>";
@@ -174,7 +174,7 @@ function displayPet($pet, $class) {
             echo "</div>";
         } } }
     }
-    if(($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] === "1"))) {
+    if(($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] == "1"))) {
         if ($pet['tailType'] === "Dragon" || $pet['tailType'] === "Panther" || $pet['tailType'] === "Mermaid") {
             
         } else {
