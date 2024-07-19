@@ -2,6 +2,11 @@
 
 if ($_SESSION['user_id']) {
     $userId = $_SESSION['user_id'];
+    $query = 'SELECT * FROM modtickets WHERE submitter = :id AND (status = 1 OR status = NULL) ORDER BY ticketid';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 if ($_SESSION['reply']) {
@@ -131,3 +136,7 @@ echo '</div>';
 
 //End Form
 echo '</form>';
+
+if ($userId) {
+    echo var_dump($tickets);
+}

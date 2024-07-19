@@ -10,8 +10,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bed = $_POST['bed'];
     
     //Check Pet Confirmation
-    if (!($one === $two)) {
+    if (!($one == $two)) {
         $_SESSION['reply'] = '<p>You have selected two different pets. Please try again.</p>';
+        header("Location: ../adoption");
+        die(); 
+    }
+    
+    //Check if Pet is Bonded
+    $query = 'SELECT bonded FROM users WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $bonded = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($bonded['bonded'] == $one) {
+        $_SESSION['reply'] = '<p>You can not donate the pet you are currently bonded to.</p>';
         header("Location: ../adoption");
         die(); 
     }
@@ -34,17 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die(); 
     }
     
-    //Check if Pet is Bonded
-    $query = 'SELECT bonded FROM users WHERE id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $bonded = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($bonded['bonded'] === $one) {
-        $_SESSION['reply'] = '<p>You can not donate the pet you are currently bonded to.</p>';
-        header("Location: ../adoption");
-        die(); 
-    }
+    
     
     //Check if Pet is crafter
     $query = 'SELECT pet_id FROM craftingtables WHERE user_id = :id';

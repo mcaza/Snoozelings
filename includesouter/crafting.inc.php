@@ -80,7 +80,7 @@ if (!($result['recipe_id'])) {
         echo '</form>';
     } else {
         echo '<p style="font-size: 2rem"><strong>Currently Crafting: </strong>' . $result['display'] . '</p>';
-        echo '<img src="items/' . $result['name'] . '.png">';
+        echo '<img src="items/' . $result['name'] . '.png" style="width:125px;">';
         //echo '<p style="margin-top: 0;"><i>' . $interval->format("%a days, %h hours, %i minutes, %s seconds") . ' Remaining</i></p>';
         echo '<p style="margin-top: 0;"><i>' . $interval->format("%h hours, %i minutes, %s seconds") . ' Remaining</i></p>';
     }
@@ -147,7 +147,7 @@ foreach ($recipes as $recipe) {
                 $yes = 0;
             }
         }
-        if ($yes === 1) {
+        if ($yes == 1) {
             echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe have">';
         } else {
             echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe">';

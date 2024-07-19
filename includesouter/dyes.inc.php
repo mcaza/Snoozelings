@@ -35,7 +35,7 @@ $stmt->execute();
 $dyes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Select All Dyable Items
-$query = 'SELECT * FROM items WHERE user_id = :id AND dye IS NULL AND (type = "clothesHoodie" OR type = "clothesTop" OR type = "clothesBottom" OR type = "clothesBoth" OR type = "design")';
+$query = 'SELECT * FROM items WHERE user_id = :id AND dye IS NULL AND (type = "clothesHoodie" OR type = "clothesTop" OR type = "clothesBottom" OR type = "clothesBoth" OR name = "DesignMothFeathers")';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
@@ -90,8 +90,6 @@ if ($dyebatch) {
     
     if ($result > $dyebatch['endtime']) {
         echo '<form method="post" action="includes/finishDye.inc.php">';
-        echo '<input type="hidden" name="color" value="' . $dyebatch['dye'] . '">';
-        echo '<input type="hidden" name="item" value="' . $itemid['name'] . '">';
         echo "<button class='fancyButton'>Fetch Item</button>";
         echo '</form>';
     } else {

@@ -22,10 +22,11 @@ $stmt->execute();
 $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
     
 //Check if User is Crafting    
-if (!($result['display'] === "")) {
-    header("Location: ../index");
+if ($result['display']) {
+    echo 'test';
+    //header("Location: ../index");
     die();
-}
+} 
 
 
 //Check if Pet is High Enough Level for Recipe
