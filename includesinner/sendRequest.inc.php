@@ -52,7 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Get Datetime
-    $now = date_create('now')->format('Y-m-d H:i:s');
+    $now = new DateTime("now", new DateTimezone('UTC'));
+    $stg1 = 168;
+    
+    $time1 = (clone $now)->add(new DateInterval("PT{$stg1}M")); 
+    $format1 = $time1->format('Y-m-d H:i:s');
+    
+    
     
     //Post Request
     $query = "INSERT INTO requests (user_id, item_id, name, displayname, points, datetime) VALUES (:userid, :itemid, :name, :displayname, :points, :datetime)";
@@ -62,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":name", $itemcheck['name']);
     $stmt->bindParam(":displayname", $itemcheck['display']);
     $stmt->bindParam(":points", $itemcheck['points']);
-    $stmt->bindParam(":datetime", $now);
+    $stmt->bindParam(":datetime", $format1);
     $stmt->execute();
     
     //Update Daily Requests for User

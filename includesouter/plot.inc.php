@@ -40,7 +40,7 @@ echo '<div class="itemPageRow">';
 echo '<div class="itemPage">';
 
 //Post Plant Image
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 $int = intval($farm['amount']);
 if ($result < $farm['stg1'] || !$int ) {
@@ -58,7 +58,7 @@ $to_time = strtotime($farm['stg3']);
 $from_time = strtotime($result);
 $diff = round(abs($to_time - $from_time) / 60,0);
 //Date Stuff
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $future_date = new DateTime($farm['stg3']);
 $interval = $future_date->diff($now);
 
@@ -93,7 +93,12 @@ if ($int === 0) {
 } else {
     
     if ($diff === 0 || $result > $farm['stg3']) {
-        echo '<h4>Ready To Harvest</h4>';
+        if ($farm['name'] == "MysterySeed") {
+            echo '<h4>Mystery Plant</h4>';
+        } else {
+            echo '<h4>' . $farm['plantName'] . ' Plant</h4>';
+        }
+        echo '<p>Ready To Harvest</p>';
         //Harvest Plant
         echo '<form method="POST" action="includes/harvestCrop.inc.php">';
         echo '<label for="farmer"  class="form pushDown">Choose A Farmer:</label><br>';
@@ -108,7 +113,12 @@ if ($int === 0) {
         echo '</form>';
         
     } else {
-        echo '<h4>' . $farm['plantName'] . ' Plant</h4>';
+        if ($farm['name'] == "MysterySeed") {
+            echo '<h4>Mystery Plant</h4>';
+        } else {
+            echo '<h4>' . $farm['plantName'] . ' Plant</h4>';
+        }
+        
         echo '<p><i>' . $interval->format("%h Hours, %i Minutes") . ' Remaining</i></p>';
     }
 }

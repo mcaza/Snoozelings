@@ -102,7 +102,7 @@
             $title = "Happy Birthday " . $user['username'] . '!';
             $sender = 1;
             $zero = 0;
-            $now = new DateTime(null, new DateTimezone('UTC'));
+            $now = new DateTime("now", new DateTimezone('UTC'));
             $date = $now->format('Y-m-d H:i:s');
             $message = 'Hey there ' . $user['username'] . ', 
             
@@ -342,13 +342,12 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$now = new DateTime('now', new DateTimezone('UTC'));
+$result = $now->format('Y-m-d H:i:s');
+
 $requestcount = 0;
 foreach ($requests as $request) {
-    $hours = 168;
-    $now = new DateTime($request['datetime'], new DateTimezone('UTC'));
-    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
-    $newtime = $modified->format('Y-m-d');
-    if ($now < $newtime) {
+    if ($result > $request['datetime']) {
         $query = 'UPDATE requests SET expired = 1 WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $request['id']);

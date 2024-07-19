@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $premium = 0;
     
     //Get Date
-    $now = new DateTime(null, new DateTimezone('UTC'));
+    $now = new DateTime("now", new DateTimezone('UTC'));
     $formatted = $now->format('Y-m-d');
     
     //Insert New Journal into type of journal

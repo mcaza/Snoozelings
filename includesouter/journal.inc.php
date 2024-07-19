@@ -33,7 +33,7 @@ $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Get Date
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $formatted = $now->format('Y-m-d');
 $now = date("M jS, Y", strtotime($formatted));
 

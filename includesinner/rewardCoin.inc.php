@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $one = 1;
     $zero = 0;
     $picture = "kindnessNPC";
-    $now = new DateTime(null, new DateTimezone('UTC'));
+    $now = new DateTime("now", new DateTimezone('UTC'));
     $date = $now->format('Y-m-d H:i:s');
     $query = "INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:from, :to, :title, :message, :sent, :opened, :datetime, :picture)";
     $stmt = $pdo->prepare($query);

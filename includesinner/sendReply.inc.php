@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $message = $_POST['reply'];
     $zero = 0;
     
-    $now = new DateTime(null, new DateTimezone('UTC'));
+    $now = new DateTime("now", new DateTimezone('UTC'));
     $result = $now->format('Y-m-d H:i:s');
     
     $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime)';

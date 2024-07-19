@@ -57,16 +57,21 @@ if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
     
     $dyedisplays = [];
     foreach ($dyefix as $word) {
-        $query = "SELECT * FROM dyes WHERE name = :name";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":name", $word);
-        $stmt->execute();
-        $dyeName = $stmt->fetch(PDO::FETCH_ASSOC);
-        array_push($dyedisplays, $dyeName['display']);
+        if ($word == "Silver") {
+            array_push($dyedisplays, "Silver");
+        } else if ($word == "Gold") {
+            array_push($dyedisplays, "Gold");
+        } else {
+            $query = "SELECT * FROM dyes WHERE name = :name";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":name", $word);
+            $stmt->execute();
+            $dyeName = $stmt->fetch(PDO::FETCH_ASSOC);
+            array_push($dyedisplays, $dyeName['display']);
+        }
     }
         
 }
-
 
 
 
@@ -148,7 +153,7 @@ if ($results) {
             echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
         }
         echo '</select><br>';
-        if (count($dyefix) > 1) {
+        if (count($dyefix) > 0) {
             echo '<label for="area"  class="form">Choose A Color:</label><br>';
             echo '<select  class="input" name="color" id="color"><br>';
             foreach ($dyefix as $dye) {

@@ -106,6 +106,7 @@ foreach ($plants as $plant) {
         break;
     }
 }
+
 //Water Crops Check
 if ($result > $user['lastWater']) {
     echo '<div style="margin-bottom: .8rem;"><a href="farm" class="notif">' . $count . '. Water Plants</a></div>';
@@ -163,10 +164,31 @@ if ($crafting['display']) {
     }
 }
 
+//Finished Dye
+$query = 'SELECT * FROM dyebatches WHERE user_id = :id AND finished = 0';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$dyebatch = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($dyebatch) {
+    if ($result > $dyebatch['endtime']) {
+        echo '<div style="margin-bottom: .8rem;"><a href="dyes" class="notif">' . $count . '. Check Dye Pot</a></div>';
+        $count++;
+    }
+}
 
+//Check ModMail
+$query = 'SELECT * FROM modtickets WHERE submitter = :id AND waitingreply = 1 AND (status = 1 OR status = 0 OR status IS NULL)';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$modmail = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
+if ($modmail) {
+    echo '<div style="margin-bottom: .8rem;"><a href="moderatormail" class="notif">' . $count . '. Moderator Mail</a></div>';
+    $count++;
+}
 
 
 

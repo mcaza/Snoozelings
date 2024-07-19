@@ -2,7 +2,7 @@
 
 if ($_SESSION['user_id']) {
     $userId = $_SESSION['user_id'];
-    $query = 'SELECT * FROM modtickets WHERE submitter = :id AND (status = 1 OR status = NULL) ORDER BY ticketid';
+    $query = 'SELECT * FROM modtickets WHERE submitter = :id ORDER BY ticketid';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
@@ -137,6 +137,82 @@ echo '</div>';
 //End Form
 echo '</form>';
 
-if ($userId) {
-    echo var_dump($tickets);
+if ($tickets) {
+    echo '<h1>Open Tickets</h1>';
+    echo '<table style="width: 80%">';
+    echo '<tr>';
+    echo '<th>Ticket #ID</th>';
+    echo '<th>Ticket Type</th>';
+    echo '<th>Status</th>';
+    echo '</tr>';
+    $opencount = 0;
+    foreach ($tickets as $ticket) {
+        if (intval($ticket['status']) < 2) {
+            $opencount++;
+                if ($ticket['waitingreply'] == 1) {
+                $backgroundcolor = "#D7EED7";
+                echo '<tr style="background-color: #D7EED7;">';
+            } else {
+                $backgroundcolor = "#FFCCCB";
+                echo '<tr style="background-color: #FFCCCB;">';
+            }
+            if ($ticket['waitingreply'] == 1) {
+                $notes = "Waiting on Reply";
+            } else {
+                $notes = "Waiting for Staff Member";
+            }
+            echo "<td style='background-color:" . $backgroundcolor . "' ><a href='ticket?ticketid=" . $ticket['ticketid'] . "' style='display: block; width: 100%; height: 100%;'>" . $ticket['ticketid'] . "</a></td>";
+            echo "<td style='background-color:" . $backgroundcolor . "' ><a href='ticket?ticketid=" . $ticket['ticketid'] . "' style='display: block; width: 100%; height: 100%;'>" . $ticket['topic'] . "</a></td>";
+            echo "<td style='background-color:" . $backgroundcolor . "' ><a href='ticket?ticketid=" . $ticket['ticketid'] . "' style='display: block; width: 100%; height: 100%;'>" . $notes . "</a></td>";
+            echo "</tr>";
+        }
+    }
+    if ($opencount == 0) {
+        echo '<tr><td>There are no open tickets</td></tr>';
+    }
+    echo '</table>';
+    
+    echo '<h1>Closed Tickets</h1>';
+    echo '<table style="width: 80%">';
+    echo '<tr>';
+    echo '<th>Ticket #ID</th>';
+    echo '<th>Ticket Type</th>';
+    echo '<th>Status</th>';
+    echo '</tr>';
+    $closedcount = 0;
+    foreach ($tickets as $ticket) {
+        if (intval($ticket['status']) == 2) {
+            $closedcount++;
+                $backgroundcolor = "#FFCCCB";
+                echo '<tr style="background-color: #FFCCCB;">';
+            $notes = "Closed Ticket";
+            echo "<td style='background-color:" . $backgroundcolor . "' ><a href='ticket?ticketid=" . $ticket['ticketid'] . "' style='display: block; width: 100%; height: 100%;'>" . $ticket['ticketid'] . "</a></td>";
+            echo "<td style='background-color:" . $backgroundcolor . "' ><a href='ticket?ticketid=" . $ticket['ticketid'] . "' style='display: block; width: 100%; height: 100%;'>" . $ticket['topic'] . "</a></td>";
+            echo "<td style='background-color:" . $backgroundcolor . "' ><a href='ticket?ticketid=" . $ticket['ticketid'] . "' style='display: block; width: 100%; height: 100%;'>" . $notes . "</a></td>";
+            echo "</tr>";
+        }
+    }
+     if ($closedcount == 0) {
+        echo '<tr><td>There are no open tickets</td></tr>';
+    }
+    echo '</table>';
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

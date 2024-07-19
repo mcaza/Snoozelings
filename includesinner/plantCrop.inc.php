@@ -63,21 +63,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $reduce = .50;
     }
 
-//Get Seed Info
-    $query = "SELECT * FROM seeds WHERE name = :name";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $seed);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $name = $result['name'];
-    $temp1 = intval($result['stg1']) * $reduce;
-    $temp2 = intval($result['stg2']) * $reduce;
-    $temp3 = intval($result['stg3']) * $reduce;
-    $stg1 = round($temp1, 0);
-    $stg2 = round($temp2, 0);
-    $stg3 = round($temp3, 0);
-    $amount = $result['amount'];
-    $plantName = $result['plantName'];
+    //Get Seed Info
+    if ($seed == "MysterySeed") {
+        $query = "SELECT * FROM seeds";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = count($results)-1;
+        $rand = rand(0,$count);
+        $name = "MysterySeed";
+        $temp1 = intval($results[$rand]['stg1']) * $reduce;
+        $temp2 = intval($results[$rand]['stg2']) * $reduce;
+        $temp3 = intval($results[$rand]['stg3']) * $reduce;
+        $stg1 = round($temp1, 0);
+        $stg2 = round($temp2, 0);
+        $stg3 = round($temp3, 0);
+        $amount = $results[$rand]['amount'];
+        $plantName = $results[$rand]['plantName'];
+    } else {
+        $query = "SELECT * FROM seeds WHERE name = :name";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $seed);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $name = $result['name'];
+        $temp1 = intval($result['stg1']) * $reduce;
+        $temp2 = intval($result['stg2']) * $reduce;
+        $temp3 = intval($result['stg3']) * $reduce;
+        $stg1 = round($temp1, 0);
+        $stg2 = round($temp2, 0);
+        $stg3 = round($temp3, 0);
+        $amount = $result['amount'];
+        $plantName = $result['plantName'];
+    }
+    
+    
     
     //Get First Seed ID
     $query = "SELECT id FROM items WHERE name = :name && user_id = :id ORDER BY id LIMIT 1";
@@ -95,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 //Calculate Times
     //Update Snoozeling to working and add cooldown
-    $now = new DateTime(null, new DateTimezone('UTC'));
+    $now = new DateTime("now", new DateTimezone('UTC'));
     
     $time1 = (clone $now)->add(new DateInterval("PT{$stg1}M")); 
     $format1 = $time1->format('Y-m-d H:i:s');
@@ -131,7 +151,7 @@ if ($snooze['job'] === "Farmer") {
     $query = 'DELETE FROM items WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $seedId['id']);
-    $stmt->execute();
+    $stmt->execute(); 
 
 //Redirect
     header("Location: ../farm.php");

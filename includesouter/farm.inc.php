@@ -39,7 +39,7 @@ $query = "SELECT lastWater FROM users WHERE id = :id";
 
 
 //Date Stuff
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 
 //Go Back Arrow
@@ -82,7 +82,11 @@ foreach ($farms as $farm) {
     if (!$farm['name'] || $result < $farm['stg1']) {
         echo '<img src="resources/emptyBox.png" class="farmBox">';
         if ($farm['name']) {
+            if ($farm['name'] == "MysterySeed") {
+            echo '<h4 style="margin-top:0;">Mystery Plant</h4>';
+        } else {
             echo '<h4 style="margin-top:0;">' . $farm['plantName'] . ' Plant</h4>';
+        }
         } else {
             echo '<h4 style="margin-top:0;">Empty Plot</h4>';
         }

@@ -10,10 +10,16 @@ function displayPet($pet, $class) {
         echo "</div>";
     } 
     
-    if (strpos($pet["specials"], "Wings") !== false) {
+    if (strpos($pet["specials"], "FeatheredWings") !== false) {
         
             echo "<div class='${class}'>";
             echo "<img src='Layers/Wings/Pegasus/Bottom/" . $pet["mainColor"] . ".png' id = 'BottomWingone'>";
+            echo "</div>";
+        }
+        if (strpos($pet["specials"], "BugWings") !== false) {
+        
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Wings/BugWingBottom.png' id = 'BottomWingone'>";
             echo "</div>";
         }
     if (strlen($pet['clothesBoth']) > 1) {
@@ -152,9 +158,15 @@ function displayPet($pet, $class) {
          echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
         } } }
-        if (strpos($pet["specials"], "Wings") !== false) {
+        if (strpos($pet["specials"], "FeatheredWings") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";
+            echo "</div>";
+        }
+        if (strpos($pet["specials"], "BugWings") !== false) {
+        
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Wings/BugWingTop.png' id = 'TopWingone'>";
             echo "</div>";
         }
         if ($pet['clothesHoodie']) {

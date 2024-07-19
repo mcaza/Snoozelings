@@ -33,7 +33,7 @@ echo '<img src="resources/sewingNPC.png" style="width: 40%;">';
 if ($page === "questions") {
     echo '<p><i>"Welcome to my sewing studio. How can I help you?"</i></p>';
     echo '<a href="stitcher?page=fabric"><h4>"I want to apply fabric to a snoozeling."</h4></a>';
-    echo '<a href="stitcher?page=design"><h4>"I want to use a tail design on a snoozeling."</h4></a>';
+    echo '<a href="stitcher?page=design"><h4>"I want to apply a design to a snoozeling."</h4></a>';
     echo '<a href="stitcher?page=new"><h4>"I want to create a new snoozeling."</h4></a>';
 } elseif ($page === "fabric") {
     echo '<p><i>"Yes yes! Let\'s take a look at your fabrics. New fabrics for a new you."</i></p><br>';
@@ -59,8 +59,11 @@ if ($page === "questions") {
         echo "<form method='POST' action='includes/applyFabric.inc.php' onsubmit=\"return confirm('Are you sure you want to apply this fabric? This action cannot be reversed.');\">";    
         echo '<div class="fabricItems">';
         foreach ($fabrics as $result) {
-            
-            echo '<img src="items/' . $result['name'] . '.png">';
+            echo '<div>';
+            echo '<img src="items/' . $result['name'] . '.png" style="width:120px;" id="' . $result['name'] . '">';
+            echo '<p><b>' . $result['display'] . '</b></p>';
+            echo '</div>';
+            //echo '<img src="items/' . $result['name'] . '.png">';
         }
         echo '</div>';
         echo '<label style="margin-top: 3rem;" for="fabric" class="form">Which Fabric Would You Like to Use?</label><br>';
@@ -81,7 +84,7 @@ if ($page === "questions") {
         echo '<p><strong>You do not have any fabrics to use.</strong></p>';
     }
 } elseif ($page === "design") {
-    echo '<p><i>"A new tail? That\'s very exciting. Should be no problem at all."</i></p><br>';
+    echo '<p><i>"What will it be? New tail? New hair? Wings? The sky is the limit."</i></p><br>';
     //Grab Designs
     $design = "design";
     $query = "SELECT * FROM items WHERE type = :design AND user_id = :id GROUP BY name, id";
@@ -104,8 +107,10 @@ if ($page === "questions") {
         echo "<form method='POST' action='includes/applyDesign.inc.php' onsubmit=\"return confirm('Are you sure you want to apply this design? This action cannot be reversed.');\">";    
         echo '<div class="fabricItems">';
         foreach ($results as $result) {
-            
-            echo '<img src="items/' . $result['name'] . '.png">';
+                echo '<div>';
+                echo '<img src="items/' . $result['name'] . '.png" style="width:150px;" id="' . $result['name'] . '">';
+                echo '<p><b>' . $result['display'] . '</b></p>';
+                echo '</div>';
         }
         echo '</div>';
         echo '<label style="margin-top: 3rem;" for="design" class="form">Which Fabric Would You Like to Use?</label><br>';

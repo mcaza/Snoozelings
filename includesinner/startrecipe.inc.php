@@ -23,8 +23,7 @@ $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
     
 //Check if User is Crafting    
 if ($result['display']) {
-    echo 'test';
-    //header("Location: ../index");
+    header("Location: ../index");
     die();
 } 
 
@@ -109,7 +108,7 @@ foreach ($items as $item) {
 }
 
 //Set Time
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $minutes = 15;
 $modified = (clone $now)->add(new DateInterval("PT{$minutes}M")); 
 $formatted = $modified->format('Y-m-d H:i:s');

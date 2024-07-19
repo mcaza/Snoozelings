@@ -43,7 +43,7 @@ $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Date
-$now = new DateTime(null, new DateTimezone('UTC'));
+$now = new DateTime("now", new DateTimezone('UTC'));
 $future_date = new DateTime($result['finishtime']);
 $interval = $future_date->diff($now);
 

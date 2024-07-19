@@ -250,18 +250,19 @@ if ($id === "4") {
 <h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Achievements</h4>
                                    <div  >';
     if ($result['trophies']) {
-        $trophies = explode(" ", $result['trophies']);
-        array_shift($trophies);
-        foreach ($trophies as $trophy) {
-        echo '<img style="height: 60px;" src="trophies/' . $trophy . '.png" title="' . $trophy . '">';
-    }
+            $trophies = explode(" ", $result['trophies']);
+            array_shift($trophies);
+            foreach ($trophies as $trophy) {
+            echo '<img style="height: 60px;" src="trophies/' . $trophy . '.png" title="' . $trophy . '">';
+        }
     }
 
 
              echo   '</div>';
              echo   '</div>
-                <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;">
-                    <h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" ><a href="friends?id=' . $id . '">&nbsp;&nbsp;&nbsp;Friends</a></h4>';
+                <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;">';
+                 echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Friends</h4>';
+                /* echo   '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" ><a href="friends?id=' . $id . '">&nbsp;&nbsp;&nbsp;Friends</a></h4>';
     
                  //Friend Display
                 echo '<div style="display: flex; flex-direction: row; column-gap: 3rem;">';
@@ -290,7 +291,8 @@ if ($id === "4") {
                      }
                      
                  }
-    echo '</div></div></div> ';
+    echo '</div>'; */
+    echo '</div></div> ';
     
     //Nav section
     if ($id == $userId) {

@@ -55,7 +55,7 @@ echo '</div>';
 
 //Session Reply Area
 if ($reply) {
-    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 1rem;"><p>' . $reply . '</p></div>';
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 1rem;"><p>' . $reply . '</p></div><br>';
 }
 
 echo '<h3>Daily Raffle #' . $day['id'] . '</h3>';
@@ -160,25 +160,38 @@ echo '<hr>';
 echo '<h3>Donate an Item</h3>';
 echo '<p><i>Raffle items are randomly drawn from the donation pool everyday.</i></p>';
 echo '<p><i>You will recieve 1 Kindness Coin if your item is used.</i></p>';
-$one = 1;
-$query = 'SELECT * FROM items WHERE user_id = :id AND canDonate = :one GROUP BY list_id';
+
+$query = 'SELECT * FROM items WHERE user_id = :id AND canDonate = 1 GROUP BY list_id, id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
-$stmt->bindParam(":one", $one);
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-echo "<form method='POST' action='includes/donateItem.inc.php' onsubmit=\"return confirm('Are you sure you want to donate this item?');\">";
-foreach ($items as $item) {
-    echo '<div style="margin-bottom:1rem;"><input type="radio" id="' . $item['name'] . '" name="donation" value="' . $item['list_id'] . '" required><label style="font-size: 1.8rem;" for="' . $item['name'] . '">' . $item['display'] . '</label><br></div>';
-}
-if (!$items) {
-    echo '<h4>You don\'t have any items that can be donated.';
-} else {
+
+if ($items) {
+    echo "<form method='POST' action='includes/donateItem.inc.php' onsubmit=\"return confirm('Are you sure you want to donate this item?');\">";
+    echo '<label for="topic"  class="form">Select an Item to Donate:</label><br>';
+    echo '<select name="donation" id="donation">';
+    echo '<option value="" default selected>Select an Item</option>';
+    
+        foreach ($items as $item) {
+            echo '<option value="' . $item['list_id'] . '" default selected>' . $item['display'] . '</option>';
+    }
+    
+    echo '</select><br><br>';
     echo '<button  class="fancyButton">Donate Item</button>';
+    echo '</form>';
+} else {
+    echo '<h4>You don\'t have any items that can be donated.';
 }
 
-echo '</form>';
+if (!$items) {
+    
+} else {
+   
+}
+
+
 
 
 

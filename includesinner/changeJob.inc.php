@@ -26,18 +26,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Check if Snoozeling is crafting
-    $query = 'SELECT * FROM craftingtables WHERE pet_id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    $table = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($table) {
-        if ($table['display']) {
-            $_SESSION['reply'] = "Your snoozeling cannot change jobs because they are currently crafting.";
-            header("Location: ../crafting");
-            die(); 
+    if ($job === 'Crafter') {
+        
+    } else {
+        $query = 'SELECT * FROM craftingtables WHERE pet_id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $table = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($table) {
+            if ($table['display']) {
+                $_SESSION['reply'] = "Your snoozeling cannot change jobs because they are currently crafting.";
+                header("Location: ../crafting");
+                die(); 
+            }
         }
     }
+    
     
     //Change Job
     $query = "UPDATE snoozelings SET job = :job WHERE id = :id";
