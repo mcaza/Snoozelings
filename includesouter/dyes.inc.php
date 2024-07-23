@@ -55,7 +55,7 @@ if ($reply) {
 
 //Desk and Snoozeling
 echo '<div class="craftimages" style="align-items:flex-end;">';
-echo '<img src="resources/dyePot.png" style="width:200px; height: auto;transform: scaleX(-1);">';
+echo '<img src="resources/dyePot.png" id="dyepotimage">';
 displayPet($pet, "artcrafting");
 echo '</div>';
 echo '<hr>';

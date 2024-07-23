@@ -168,7 +168,7 @@ if ($tickets) {
         }
     }
     if ($opencount == 0) {
-        echo '<tr><td>There are no open tickets</td></tr>';
+        echo '<tr><td colspan="3">There are no open tickets</td></tr>';
     }
     echo '</table>';
     
@@ -193,7 +193,7 @@ if ($tickets) {
         }
     }
      if ($closedcount == 0) {
-        echo '<tr><td>There are no open tickets</td></tr>';
+        echo '<tr><td colspan="3">There are no closed tickets</td></tr>';
     }
     echo '</table>';
 }

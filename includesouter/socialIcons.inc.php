@@ -18,12 +18,15 @@ if ($userId) {
 
     //If no shortcuts, default
     if (!$results['shortcuts']) {
+        echo '<li id="homeshortcut"><a href="/" ><img src="resources/IconHome.png"></a></li>';
         echo '<li><a href="journal" ><img src="resources/IconJournal.png"></a></li>';
         echo '<li><a href="farm" ><img src="resources/IconGarden.png"></a></li>';
         echo '<li><a href="explore" ><img src="resources/IconExplore.png"></a></li>';
         echo '<li><a href="crafting" ><img src="resources/IconCrafting.png"></a></li>';
         echo '<li><a href="mailbox" ><img src="resources/IconMailbox.png"></a></li>';
     } else {
+        echo '<li id="homeshortcut"><a href="/" ><img src="resources/IconHome.png"></a></li>';
+            
         //Get Bonded ID
         $bonded = $results['bonded'];
 
@@ -61,6 +64,7 @@ if ($userId) {
         }
     }
 } else {
+     echo '<li id="homeshortcut"><a href="/" ><img src="resources/IconHome.png"></a></li>';
     echo '<li><a href="https://ko-fi.com/slothiestudios/goal?g=0" target="_blank"><img src="resources/Kofi.png"></a></li>
                 <li><a href="https://discord.gg/bKBzUMwTKh" target="_blank"><img src="resources/Discord.png"></a></li>
                 <li><a href="https://twitter.com/SnoozelingsGame" target="_blank"><img src="resources/Twitter.png"></a></li>

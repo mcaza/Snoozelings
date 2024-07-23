@@ -61,7 +61,7 @@ if ($num < 3 || $num > 9) {
 echo '<hr>';
 echo '<form method="POST" action="includes/sendReply.inc.php">';
 echo '<label style="margin-top: 1rem;" for="reply" class="form">Send Reply</label><br>';
-echo '<textarea name="reply" cols="72" class="input" style="height: 20rem;"></textarea><br>';
+echo '<textarea name="reply" cols="72" class="input" style="height: 20rem;" id="bio"></textarea><br>';
 echo '<input type="hidden" name="to" value="' . $letter['sender'] . '">';
 echo '<input type="hidden" name="title" value="' . $letter['title'] . '">';
 echo '<button  class="fancyButton">Send Reply</button>';

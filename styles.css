@@ -111,10 +111,21 @@ body {
     row-gap: 1rem;
 }
 
+.content {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+}
+
 .main-container p {
     margin-top: 0.5rem;
     margin-bottom: 0.8rem;
     font-size: 1.55rem;
+}
+
+.notificationbox {
+    margin-bottom: .8rem;
 }
 
 .info {
@@ -204,6 +215,10 @@ hr {
     justify-content: center;
     column-span: 2rem;
 }
+
+ .profilenavimage {
+        width: 150px;
+    }
 
 .profilecontainerleft {
     width: 40%;
@@ -307,6 +322,10 @@ td {
 .social-container img:hover {
     width: 3.575rem;
     height: auto;
+}
+
+#homeshortcut {
+    display: none;
 }
 
 #logo {
@@ -934,6 +953,20 @@ a.selected {
     padding: .8rem;
 }
 
+.leftColumnHome {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    row-gap:2rem;
+}
+
+.rightColumnHome {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    row-gap:2rem;
+}
+
 .adimage {
     width: 90%;
 }
@@ -1297,7 +1330,9 @@ a.critterbox:hover{
     margin-left: auto;
 }
 
-
+#craftingdesk {
+    width: 300px;
+}
 
 
 /* Adoption House Styles */
@@ -1379,6 +1414,18 @@ a.recipe:hover {
     margin-bottom: 1rem;
 }
 
+#dyepotimage {
+    width:200px;
+    height: auto;
+    transform: scaleX(-1);
+}
+
+/* Explore Styles */
+
+.exploretable {
+    width: 90%;
+}
+
 /* Pet Job Page */
 .progressbar {
     background-color: silver;
@@ -1406,6 +1453,16 @@ a.recipe:hover {
     font-size: 2rem;
     font-weight: bold;
     
+}
+
+.shopRows {
+    justify-content: center;
+    column-gap: 6rem;
+    margin-bottom: 6rem;
+}
+
+.trendybox {
+    width: 30%;
 }
 
 /* Profile Styles */
@@ -1452,7 +1509,6 @@ a.recipe:hover {
     display: inline-block;
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    font-weight: bold;
 }
 
 .input {
@@ -1572,38 +1628,92 @@ select {
     }
 }
 
-@media only screen and (max-width: 925px) {
+@media only screen and (max-width: 950px) {
     .body-container {
         flex-direction: column-reverse;
         row-gap: 1.5rem;
         align-items: center;
     }
 
-    .left-container {
-        width: 95%;
-
+    
+    .social-container {
+        margin: auto;
     }
-
+    
+    .social-container ul {
+        padding-left: 0;
+    }
+    
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .indexBox {
+        width: 95%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .content div {
+        width: 95%;
+    }
+    
+    #bulletinBoard {
+        display: none;
+    }
+    
+    #homeshortcut {
+        display: block;
+    }
+    
+    nav {
+        flex-wrap: wrap;
+        height: auto;
+        grid-row-gap: 5px;
+    }
+    
     .main-container {
         width: 95%;
-
+    }
+    
+    body {
+        margin-top: 15em;
     }
 
     .left-container {
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: column;
         column-gap: 2rem;
         justify-items: center;
-        align-items: flex-start;
+        align-items: center;
+        width: 105%;
     }
-
-    .left-container div {
-        flex: 45%;
+    
+    .leftColumnHome {
+     margin-bottom: 15px;   
+    }
+    
+    .rightColumnHome { .profilenavimage {
+        width: 50px;
+    }
+        width: 95%;
+    }
+    
+    .notificationbox {
+        height: 20px;
     }
 
     .bar-container {
         height: auto;
-        
+        padding: 1.7rem;
+        width: 90%;
+    }
+    
+    .bar-container p {
+        margin: auto;
+        width:90%;
+        margin-bottom: 10px;
     }
     
     .tinyX {
@@ -1613,9 +1723,135 @@ select {
         row-gap: 2rem;
         display: flex;
         flex-direction: column-reverse;
+        width: 100%;
     }
 
     .art-container img {
         width: 78%;
+    }
+    
+    #logo {
+        display: none;
+    }
+    
+    .footer-container {
+        height: 33px;
+        font-size:1.3rem;
+        width: 99.9vw;
+    }
+    
+    .footer-texts ul {
+        padding: 0;
+    }
+    
+    .footer-texts ul li {
+        margin-bottom: 5px;
+    }
+    
+    .profilerow {
+        flex-direction: column-reverse;
+        margin-bottom: 68px;
+    }
+    
+    .profilecontainerleft {
+        width: 95%;
+        margin: auto;
+    }
+    
+    .secondrow {
+        flex-direction: column;
+        row-gap:25px;
+    }
+    
+    .profilerowtwo {
+        width: 95%;
+        margin: auto;
+    }
+    
+    #bottomSpace {
+        min-height: 50px;
+        margin: auto;
+    }
+    
+    .profilenav {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .profilenavimage {
+        width: 75px;
+    }
+    
+    .newsletter {
+        width: 88%;
+    }
+    
+    #craftingdesk {
+        width:  170px;
+        margin-bottom: -60px;
+        margin-right: -70px;
+    }
+    
+    .recipe {
+        width: 90%;
+    }
+    
+    .farm {
+        width: 45%;
+    }
+    
+    .farm h4 {
+        font-size: 1.8rem;
+    }
+    
+    .itemPageRow {
+        margin-top: 10px;
+    }
+    
+    #bio {
+        width: 80%;
+    }
+    
+    #dyepotimage {
+        width: 130px;
+        margin-right: -50px;
+    }
+    
+    .shopBox {
+        width: 65%;
+    }
+    
+    .shopRows {
+        margin-bottom: 0px;
+    }
+    
+    #requestitle {
+        margin-top:10px;
+    }
+    
+    .raffleitems {
+        flex-wrap: wrap;
+        row-gap: 15px;
+    }
+    
+    .raffleitem {
+        width: 45%;
+    }
+    
+    .journalRow {
+        flex-direction: column;
+    }
+    
+    .journalDisplay {
+        width: 90%;
+    }
+    
+    .critterbox {
+        width: 90%;
+    }
+    
+    #information1, #information2, #information3, #information4, #information5, #information6 {
+        width: 90%;
     }
 }

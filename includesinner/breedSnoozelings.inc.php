@@ -575,16 +575,16 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
         $count = count($fabrics);
         if ($count > 1) {
             $num = rand(0,4);
-            if ($num === 0) {
+            if ($num == 0) {
                 $noseColor = $one['noseColor'];
-            } elseif ($num === 1) {
+            } elseif ($num == 1) {
                 $noseColor = $two['noseColor'];
             } else {
                 $noseColor =  chooseNose($categories, $pdo);
             }
-        } elseif ($count === 1) {
+        } elseif ($count == 1) {
             $num = rand(0,4);
-            if ($num === 1) {
+            if ($num == 1) {
                 if ($fabricone) {
                     $noseColor = $one['noseColor'];
                 } elseif ($fabrictwo) {
@@ -809,7 +809,7 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
     $newspec = "";
     foreach ($specials as $special) {
         $num = rand(0, 1);
-        if ($num === 0) {
+        if ($num == 0) {
             $newspec .= $special . " ";
         }
     }

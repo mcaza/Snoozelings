@@ -177,7 +177,14 @@ echo '<p class="snoozelinginfo box" id="pbmaincolor" title="' . $mainColorResult
         <ul style="text-align: left;margin-top: 0;padding-bottom: 0;font-size:1.6rem;">';
 $specialArray = explode(" ", $result["specials"]);
     foreach ($specialArray as $special) {
+        if ($special == "FeatheredWings") {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Wings</li>';
+        } else if ($special == "BugWings") {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Bug Wings</li>';
+        } else {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $special . '</li>';
+        }
+            
         }
 echo  '</ul>';
 echo '</div>';

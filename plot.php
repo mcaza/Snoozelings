@@ -53,7 +53,7 @@ foreach ($result as $farm) {
 
         <!-- Container for all Left Page Elements -->
         <div class="left-container">
-            <div class="mobile-left">
+
                 <div class="bar-container">
                     <h2>Daily Affirmation</h2>
                     
@@ -66,9 +66,7 @@ foreach ($result as $farm) {
                 <div class="bar-container">
                     <?php require '../includes/leftPet.inc.php'; ?>
                 </div>
-            </div>
 
-            <div class="mobile-right">
                 <!-- Daily Affirmation Box -->
 
 
@@ -87,7 +85,7 @@ foreach ($result as $farm) {
                     <?php require_once '../includes/dailyRecords.inc.php' ?>
                 </div>
             </div>
-        </div>
+
 
         <!-- All Main Content -->
         <div class="main-container"><div class="bottomPush">

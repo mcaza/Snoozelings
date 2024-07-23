@@ -30,7 +30,7 @@ echo '<option value="3">3 Days</option>';
 echo '<option value="7">7 Days</option>';
 echo '<option value="14">14 Days</option>';
 echo '<option value="21">21 Days</option>';
-echo '<option value="facts">Quick Facts</option>';
+//echo '<option value="facts">Quick Facts</option>';
 echo '</select><br><button class="fancyButton">Update</button></form>';
 
 //Grab all Journal Entries For User of that Type Limit $days

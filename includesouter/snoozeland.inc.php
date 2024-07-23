@@ -7,7 +7,7 @@ $name = $_SESSION['petName'];
 
 echo '<h3>Snooze Village</h3>';
 
-echo '<div class="shopRows" style="justify-content: center;column-gap: 6rem;margin-bottom: 6rem;">';
+echo '<div class="shopRows">';
 
 echo '<a href="explore" class="shopBox">';
 echo '<div>';
@@ -25,7 +25,7 @@ echo '</a>';
 
 echo '</div>';
 
-echo '<div class="shopRows" style="justify-content: center;column-gap: 6rem;margin-bottom: 6rem;">';
+echo '<div class="shopRows">';
 
 echo '<a href="requests" class="shopBox">';
 echo '<div>';

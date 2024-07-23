@@ -13,7 +13,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Pick Starter Snoozeling
 if (!$user['bonded']) {
-    echo '<div style="margin-bottom: .8rem;"><a href="welcome" class="notif">' . $count . '. Pick 1st Snoozeling</a></div>';
+    echo '<div class="notificationbox"><a href="welcome" class="notif">' . $count . '. Pick 1st Snoozeling</a></div>';
     $count++;
 }
 
@@ -24,7 +24,7 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($letters) {
-    echo '<div style="margin-bottom: .8rem;"><a href="mailbox" class="notif">' . $count . '. Check Mail</a></div>';
+    echo '<div class="notificationbox"><a href="mailbox" class="notif">' . $count . '. Check Mail</a></div>';
     $count++;
 }
 
@@ -42,7 +42,7 @@ if ($journal['type'] === "pain") {
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($journal['id']) {
         if ($journal['closed'] === "1") {
-            echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
+            echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
             $count++; 
         }
     }
@@ -54,12 +54,12 @@ if ($journal['type'] === "pain") {
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($journal['id']) {
         if ($journal['closed'] === "1") {
-            echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
+            echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
             $count++; 
         }
     }
 } else {
-    echo '<div style="margin-bottom: .8rem;"><a href="journal" class="notif">' . $count . '. Create Journal</a></div>';
+    echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Create Journal</a></div>';
     $count++;
 }
 
@@ -77,7 +77,7 @@ $now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 foreach ($explorers as $pet) {
     if ($result > $pet['cooldownTime']) {
-        '<div style="margin-bottom: .8rem;"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
+        '<div class="notificationbox"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
         break;
     }
 }
@@ -91,7 +91,7 @@ $plants = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($plants as $plant) {
     if ($plant['plantName']) {
         if ($result > $plant['stg3']) {
-            echo '<div style="margin-bottom: .8rem;"><a href="plot?id=' . $plant['id'] . '" class="notif">' . $count . '. Harvest Crop</a></div>';
+            echo '<div class="notificationbox"><a href="plot?id=' . $plant['id'] . '" class="notif">' . $count . '. Harvest Crop</a></div>';
             $count++;
             break;
         }
@@ -101,7 +101,7 @@ foreach ($plants as $plant) {
 //Crops Plant Check
 foreach ($plants as $plant) {
     if (!$plant['plantName']) {
-        echo '<div style="margin-bottom: .8rem;"><a href="plot?id=' . $plant['id'] . '" class="notif">' . $count . '. Plant Seeds</a></div>';
+        echo '<div class="notificationbox"><a href="plot?id=' . $plant['id'] . '" class="notif">' . $count . '. Plant Seeds</a></div>';
         $count++;
         break;
     }
@@ -109,7 +109,7 @@ foreach ($plants as $plant) {
 
 //Water Crops Check
 if ($result > $user['lastWater']) {
-    echo '<div style="margin-bottom: .8rem;"><a href="farm" class="notif">' . $count . '. Water Plants</a></div>';
+    echo '<div class="notificationbox"><a href="farm" class="notif">' . $count . '. Water Plants</a></div>';
     $count++;
 }
 
@@ -125,7 +125,7 @@ $stmt->execute();
 $explorers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($explorers as $explorer) {
     if ($result > $explorer['cooldownTime']) {
-        echo '<div style="margin-bottom: .8rem;"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
+        echo '<div class="notificationbox"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
         $count++;
         break;
     }
@@ -140,13 +140,13 @@ $raffle = explode(" ", $entries['entries']);
 $str = strval($userId);
 
 if (!in_array($str, $raffle)) {
-    echo '<div style="margin-bottom: .8rem;"><a href="raffle" class="notif">' . $count . '. Enter Raffle</a></div>';
+    echo '<div class="notificationbox"><a href="raffle" class="notif">' . $count . '. Enter Raffle</a></div>';
     $count++;
 }
 
 //Get Free Item
 if ($user['dailyPrize'] === "0") {
-    echo '<div style="margin-bottom: .8rem;"><a href="randomitem" class="notif">' . $count . '. Collect Free Item</a></div>';
+    echo '<div class="notificationbox"><a href="randomitem" class="notif">' . $count . '. Collect Free Item</a></div>';
     $count++;
 }
 
@@ -159,7 +159,7 @@ $crafting = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($crafting['display']) {
     if ($result > $crafting['finishtime']) {
-        echo '<div style="margin-bottom: .8rem;"><a href="crafting" class="notif">' . $count . '. Finish Craft</a></div>';
+        echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Finish Craft</a></div>';
         $count++;
     }
 }
@@ -173,7 +173,7 @@ $dyebatch = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($dyebatch) {
     if ($result > $dyebatch['endtime']) {
-        echo '<div style="margin-bottom: .8rem;"><a href="dyes" class="notif">' . $count . '. Check Dye Pot</a></div>';
+        echo '<div class="notificationbox"><a href="dyes" class="notif">' . $count . '. Check Dye Pot</a></div>';
         $count++;
     }
 }
@@ -186,7 +186,7 @@ $stmt->execute();
 $modmail = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($modmail) {
-    echo '<div style="margin-bottom: .8rem;"><a href="moderatormail" class="notif">' . $count . '. Moderator Mail</a></div>';
+    echo '<div class="notificationbox"><a href="moderatormail" class="notif">' . $count . '. Moderator Mail</a></div>';
     $count++;
 }
 

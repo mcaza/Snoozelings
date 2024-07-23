@@ -31,7 +31,7 @@ if ($post) {
     
     
     echo '<div class="leftRightButtons">';
-    echo '<a href="boards"><<</a>';
+    echo '<a href="critterweb"><<</a>';
     echo '</div>';
         echo '<div class="button-bar">';
     if (!$check)  {

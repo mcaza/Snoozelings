@@ -54,6 +54,7 @@ if ($journalCheck) {
     }
 }
 
+
 //Title
 echo '<h3>Daily Journal</h3>';
 
@@ -72,11 +73,11 @@ echo '<div class="journalDisplay">';
 if (!$journalCheck) {
     //Journal Creation Title & Information
     echo '<h4  style="margin-top: 2rem;">Creating Your First Journal</h4>';
-    echo '<p style="margin-top: 2rem;">One of the best things you can do for your health is keep a journal. This gives doctors a better understanding of your condition which makes appointments much less stressful. <br><br>Here in Snooze Land, we want you to take care of yourself. Therefore, everytime you fill out your journal you\'ll recieve 5 gold coins and help contribute to our daily records.</p>';
+    echo '<p style="margin-top: 2rem;">One of the best things you can do for your health is keep a journal. This gives doctors a better understanding of your condition which makes appointments much less stressful. <br><br>Here in Snooze Village, we want you to take care of yourself. Therefore, everytime you fill out your journal you\'ll recieve 5 gold coins and help contribute to our daily records.</p>';
     echo '<p style="margin-top: 2rem; width: 90%;margin-right: auto;margin-left: auto;margin-bottom: 1rem;"><i>"It\'s easy. And I\'ll be here to help you every step of the way. Let\'s start by choosing a journal type. Then click the button."</i></p>';
     
     //Form to Create Journal
-    echo "<form method='POST' action='../includes/createJournal.inc.php' onsubmit=\"return confirm('Please do not put identifying information in your journals. This includes doctor names, city names, hospital names, etc'. Also please no one can access your journals. They are private and for your use only.);\">";
+    echo "<form method='POST' action='../includes/createJournal.inc.php' onsubmit=\"return confirm('Are you sure this is the journal type you want? Once chosen, it cannot be changed without erasing all past journal data.');\">";
     echo '<label for="type" class="form">Journal Type:</label><br>';
     echo '<select class="input"  name="type">';
     echo '<option value="mentalHealth">Mental Health</option>';
@@ -85,7 +86,7 @@ if (!$journalCheck) {
     echo '<button  class="fancyButton">Create Journal</button>';
     echo '</form>';
     
-} elseif (!$latestEntry || $latestEntry['closed'] === 1) {
+} elseif (!$latestEntry || $latestEntry['closed'] == 1) {
     //Journal Display if there's no active entry
 
     //Get Journal Messages
@@ -108,11 +109,11 @@ if (!$journalCheck) {
     //Journal Button
     echo '<button class="fancyButton" onClick="window.location.href=\'/journalentry\'">Write Journal</button>';
     
-} elseif ($latestEntry['closed'] === "0") {
+} elseif ($latestEntry['closed'] == "0") {
     //Check if Any Messages (Earn Coins OR Journal Edit)
-    if ($finish === 1) {
+    if ($finish == 1) {
         echo '<div class="returnBar" style="margin-top: 1rem;"><p>You earned 5 coins.</p></div>';
-    } elseif ($finish === 2) {
+    } elseif ($finish == 2) {
         echo '<div class="returnBar" style="margin-top: 1rem;"><p>Your journal has been edited.</p></div>';
     }
     
@@ -125,7 +126,7 @@ if (!$journalCheck) {
     } else {
         echo '<p>You have filled out your journal 1 time.</p>';
     }
-    echo '<p>' . htmlspecialchars($petName) . ' is super proud of you!</p>';
+    echo '<p>' . htmlspecialchars($pet['name']) . ' is super proud of you!</p>';
     echo '<img src="resources/journal.png" style="width: 300px;"><br>';
     
     //Edit Journal Button

@@ -46,13 +46,13 @@ $stmt->bindParam(":cat", $cat);
 $stmt->execute();
 $submissions = $stmt->fetch(PDO::FETCH_ASSOC);
 
-echo '<div style="display: flex;flex-direction:row;justify-content: space-evenly;margin-top: 1rem;">';
+echo '<div class="content">';
 
 //Left Column
-echo '<div style="width: 30%; display: flex;flex-direction: column;row-gap:2rem;">';
+echo '<div class="leftColumnHome">';
 
 //Bulletin Board Image
-echo '<div class="indexBox">';
+echo '<div class="indexBox" id="bulletinBoard">';
 echo '<img src="resources/bulletinboard.png" class="shopImg" style="height: 150px;width: auto;">';
 echo '</div>';
 
@@ -92,7 +92,7 @@ echo '</div>';
 echo '</div>';
 
 //Right Column
-echo '<div style="width: 60%; display: flex;flex-direction: column;row-gap:2rem;">';
+echo '<div class="rightColumnHome">';
 
 //Recent News
 echo '<div class="indexBox">';

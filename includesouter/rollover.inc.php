@@ -77,11 +77,11 @@
         $secondDate = substr($user['birthdate'], 5);
         if ($firstDate === $secondDate) {
             //Add Item
-            $list = 111;
+            $list = 222;
             $one = 1;
             $name = "FabricPurplePlaid";
             $display = "Fabric: Purple Plaid";
-            $description = "Use this fabric as an applicator or breeding item. It changes the nose and ear insides of the snoozeling.";
+            $description = "Take to Minky to give your snoozeling purple plaid nose and ear insides.";
             $type = "fabric";
             $rarity = "special";
             $query = 'INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :donate)';

@@ -86,7 +86,7 @@ if ($count === 0 || !in_array($userId, $explode)) {
 
 echo '<p style="font-size: 2rem; margin-top: 3rem;"><strong>Total Entries: </strong>' . $count  . '</p>';
 
-if (!($day['id'] === "1")) {
+if (!($day['id'] == "1")) {
     //Grab Raffle Count
     $query = 'SELECT * FROM rafflecount';
     $stmt = $pdo->prepare($query);

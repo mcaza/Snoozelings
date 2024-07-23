@@ -61,7 +61,7 @@ if ($reply) {
 
 //Desk and Snoozeling
 echo '<div class="craftimages">';
-echo '<img src="resources/deskFull.png" style="width:300px; height: auto;">';
+echo '<img src="resources/deskFull.png" id="craftingdesk">';
 displayPet($pet, "artcrafting");
 echo '</div>';
 echo '<hr>';

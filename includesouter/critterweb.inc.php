@@ -9,8 +9,11 @@ echo '<a href="community"><<</a>';
 echo '</div>';
 
 //Post Button (Right)
-echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newPost\'">New Post</button></div>';
-echo '</div>';
+if ($userId == 1) {
+    echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newPost\'">New Post</button></div>';
+    echo '</div>';
+}
+
 
 //Title
 echo '<h3 style="margin-bottom: 3rem">World Wide Critter Web</h3>';

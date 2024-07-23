@@ -56,25 +56,82 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $newsnooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    
+    
     //Add to Parent's Inspire
     $parents = [];
     array_push($parents, $breeding['one'], $breeding['two']);
     foreach ($parents as $parent) {
-        $query = 'SELECT inspire FROM snoozelings WHERE id = :id';
+        $query = 'SELECT * FROM snoozelings WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $parent);
         $stmt->execute();
         $inspire = $stmt->fetch(PDO::FETCH_ASSOC);
         
         $add = ' ' . $newsnooze['id'];
-        $temp = $inspire .= $add;
+        $temp = $inspire['inspire'] .= $add;
         $temp = trim($temp);
-        
+
         $query = 'UPDATE snoozelings SET inspire = :inspire WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $parent);
         $stmt->bindParam(":inspire", $temp);
         $stmt->execute();
+
+        
+        if ($inspire['owner_id'] == $userId) {
+            
+        } else {
+            //Message
+        if ($pronouns == "Any" || $pronouns == "They/Them" || $pronouns == "She/Them" || $pronouns == "He/Them") {
+            $message = 'You\'re snoozeling has been used as inspiration!!!
+
+            Their name is ' . $name . ' and their pronouns are ' . $pronouns . '.
+
+            <strong style="font-size: 2.5rem"><a href="pet?id=' . $newsnooze['id'] . '">Click Here to View Them</a></strong>';
+        } else if ($pronouns == "She/Her") {
+              $message = 'You\'re snoozeling has been used as inspiration!!!
+
+            Her name is ' . $name . ' and her pronouns are ' . $pronouns . '.
+
+            <strong style="font-size: 2.5rem"><a href="pet?id=' . $newsnooze['id'] . '">Click Here to View Her</a></strong>';  
+        } else if ($pronouns == "He/Him") {
+               $message = 'You\'re snoozeling has been used as inspiration!!!
+
+            His name is ' . $name . ' and his pronouns are ' . $pronouns . '.
+
+            <strong style="font-size: 2.5rem"><a href="pet?id=' . $newsnooze['id'] . '">Click Here to View Him</a></strong>'; 
+        } else {
+            $message = 'You\'re snoozeling has been used as inspiration!!!
+
+            Their name is ' . $name . ' and their pronouns are ' . $pronouns . '.
+
+            <strong style="font-size: 2.5rem"><a href="pet?id=' . $newsnooze['id'] . '">Click Here to View Them</a></strong>'; 
+            }
+            
+            //Send Mail to Owner
+            $title = 'Notice of Inspiration';
+            $sender = 6;
+            $zero = 0;
+            $picture = "sewingNPC";
+            $now = new DateTime();
+            $date = $now->format('Y-m-d H:i:s');
+
+
+            $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":sender", $sender);
+            $stmt->bindParam(":reciever", $inspire['owner_id']);
+            $stmt->bindParam(":title", $title);
+            $stmt->bindParam(":message", $message);
+            $stmt->bindParam(":sent", $zero);
+            $stmt->bindParam(":opened", $zero);
+            $stmt->bindParam(":sendtime", $date);
+            $stmt->bindParam(":picture", $picture);
+            $stmt->execute();
+        }
+        
+        
     }
     
     //Delete Blueprints 

@@ -35,7 +35,7 @@ $user = $_SESSION['user_username'];
 
         <!-- Container for all Left Page Elements -->
         <div class="left-container">
-            <div class="mobile-left">
+
                 <div class="bar-container">
                     <h2>Daily Affirmation</h2>
                     
@@ -48,9 +48,7 @@ $user = $_SESSION['user_username'];
                 <div class="bar-container">
                     <?php require '../includes/leftPet.inc.php'; ?>
                 </div>
-            </div>
 
-            <div class="mobile-right">
                 <!-- Daily Affirmation Box -->
 
 
@@ -69,7 +67,7 @@ $user = $_SESSION['user_username'];
                     <?php require_once '../includes/dailyRecords.inc.php' ?>
                 </div>
             </div>
-        </div>
+
 
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
