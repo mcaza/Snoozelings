@@ -145,8 +145,8 @@ if (!in_array($str, $raffle)) {
 }
 
 //Get Free Item
-if ($user['dailyPrize'] === "0") {
-    echo '<div class="notificationbox"><a href="randomitem" class="notif">' . $count . '. Collect Free Item</a></div>';
+if ($user['dailyPrize'] == "0") {
+    echo '<div class="notificationbox"><a href="randomitem" class="notif">' . $count . '. Collect Gift</a></div>';
     $count++;
 }
 

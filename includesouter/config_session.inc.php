@@ -19,14 +19,15 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_SESSION['user_id'])) {
+//Code to Keep All Non Staff Out
+/* if (isset($_SESSION['user_id'])) {
 if (intval($_SESSION['user_id']) > 10) {
     session_unset();
     session_destroy();
     header("Location: ../login.php");
     die();
 }
-}
+} */
 
 /* if (isset($_SESSION["user_id"])) {
     if (!isset($_SESSION['last_regeneration'])) {

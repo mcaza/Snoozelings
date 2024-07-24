@@ -11,9 +11,10 @@ echo '</div>';
 //Post Button (Right)
 if ($userId == 1) {
     echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newPost\'">New Post</button></div>';
-    echo '</div>';
+    
 }
 
+echo '</div>';
 
 //Title
 echo '<h3 style="margin-bottom: 3rem">World Wide Critter Web</h3>';

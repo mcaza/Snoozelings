@@ -13,7 +13,7 @@ $count = count($results);
 
 if ($count == 0) {
     echo '<div><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>';
-    echo '<h3 style="margin-top: 2rem;" >Welcome to Snooze Land</h3>';
+    echo '<h3 style="margin-top: 2rem;" >Welcome to Snooze Village</h3>';
     echo '<p class="description" style="margin-top: 2rem; width: 70%; margin-right: auto; margin-left: auto;">Great things await you here. <br><br>Whether or not you\'ve played a pet game like this before, you belong. <br><br>Whether or not you have health journaled before, you are able.<br><br>Whether you play solo or interact with others, you are accepted. <br><br>Everyone has the same goal as you. Taking care of themselves and being kind.<br><br> Life is precious. Thank you for using a bit of your time to play our game.<br><br>We hope you love it as much as we loved making it.</p>';
     echo '<h4>Click the Button Below to See Some Snoozelings</h4>';
     //Display Button

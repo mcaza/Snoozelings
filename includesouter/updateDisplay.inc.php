@@ -292,7 +292,7 @@ if ($closed === "selected") {
 }
 
 echo '<label for="bio"  class="form">Pet Bio:</label><br>';
-echo '<textarea id="bio" name="information6" rows="12" cols="70" name="bio">' . htmlspecialchars($result['bio']) . '</textarea>';
+echo '<textarea id="bio" name="bio" rows="12" cols="70" name="bio">' . htmlspecialchars($result['bio']) . '</textarea>';
 echo '<p>Bios Cannot be Longer than 500 Characters</p>';
 
 //Submit Button

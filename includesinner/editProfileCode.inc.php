@@ -131,23 +131,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
         }
     }
-    //Check if Bonded Pet is Owned by Person
+    
+    //Bonded Update
     if ($bonded) {
-        $query = 'SELECT * FROM snoozelings WHERE owner_id = :id';
+        $query = 'SELECT * FROM snoozelings WHERE owner_id = :id AND id = :petid';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":petid", $bonded);
         $stmt->execute();
-        $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $check = 0;
-        foreach ($pets as $pet) {
-            if ($bonded === $pet['id']) {
-                $check = 1;
-            }
+        $bondedpet = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($bondedpet) {
+            $query = "UPDATE users SET bonded = :bonded WHERE id = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":bonded", $bonded);
+            $stmt->bindParam(":id", $userId);
+            $stmt->execute();
+        } else {
+            header("Location: ../");
         }
-        if ($check === 0) {
-            header("Location: ../editprofile?id=" . $userId);
-            die();
-        }
+
     }
     
     
@@ -159,23 +161,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":messages", $messages);
     $stmt->bindParam(":friends", $friends);
     $stmt->execute();
-    
-    //Updated Bonded Pet
-    if ($bonded) {
-        $query = "UPDATE users SET bonded = :bonded WHERE id = :id";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":bonded", $bonded);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute();
-        
-        $query = "SELECT name FROM snoozelings WHERE id = :bonded";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":bonded", $bonded);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        $_SESSION['bonded'] = htmlspecialchars($result['name']);
-    }
     
     //Update Mailbox Color
     if ($mailbox) {
@@ -209,5 +194,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
 } else {
-    header("Location: ../index.php");
+    header("Location: ../");
 }

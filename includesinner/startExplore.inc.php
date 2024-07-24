@@ -31,7 +31,7 @@ $area = $_POST["area"];
     $name = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Check if Pet is Owned by Account
-    if (!($userId === $name['owner_id'])) {
+    if (!($userId == $name['owner_id'])) {
         header("Location: ../index");
         die(); 
     }
@@ -127,7 +127,7 @@ $area = $_POST["area"];
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     
-    if ($name['job'] === "Explorer") {
+    if ($name['job'] == "Explorer") {
         //Update +1 to User Records
         $query = 'UPDATE snoozelings SET exploreEXP = exploreEXP + 1 WHERE id = :id';
         $stmt = $pdo->prepare($query);

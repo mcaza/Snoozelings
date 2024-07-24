@@ -6,7 +6,7 @@ require_once '../../includes/config_session.inc.php';
 $userId = $_SESSION['user_id'];
 
 //Grab all the Common Color Info
-$query = 'SELECT * FROM colors WHERE rarity = ("Common" OR "Uncommon")';
+$query = 'SELECT * FROM colors WHERE rarity = "Common" OR rarity = "Uncommon"';
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
