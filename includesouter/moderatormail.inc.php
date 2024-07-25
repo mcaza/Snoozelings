@@ -39,7 +39,7 @@ echo '<select name="topic" id="topic">';
 echo '<option value="" default selected>Select an Option</option>';
 echo '<option value="Account">Account Issues</option>';
 echo '<option value="Rules">Rule Breaking</option>';
-echo '<option value="Purchase">Digitial Purchases</option>';
+echo '<option value="Purchase">Digital Purchases</option>';
 echo '<option value="Merch">Merchandise Order</option>';
 echo '<option value="Bugs">Bug Report</option>';
 echo '<option value="Other">Other</option>';
@@ -153,6 +153,7 @@ if ($tickets) {
                 $backgroundcolor = "#D7EED7";
                 echo '<tr style="background-color: #D7EED7;">';
             } else {
+                $backgroundcolor = "#FFCCCB";
                 $backgroundcolor = "#FFCCCB";
                 echo '<tr style="background-color: #FFCCCB;">';
             }

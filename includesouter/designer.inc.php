@@ -165,7 +165,7 @@ echo '<option value="Wave">Wave</option>';
 echo '</select><br>';
 echo '<label for="mothFluff" class="form">Moth Fluff:</label><br>';
 echo '<select id="mothFluff"  class="input">';
-echo '<option value="">No Fluff</option>';
+echo '<option value="NoFluff">No Fluff</option>';
 echo '<option value="MothFluff">White</option>';
 echo '<option value="MothFluffRed">Red</option>';
 echo '<option value="MothFluffOrange">Orange</option>';

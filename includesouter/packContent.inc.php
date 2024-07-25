@@ -11,25 +11,22 @@ if (isset($_SESSION['reply'])) {
     $reply = $_SESSION['reply'];
     unset($_SESSION['reply']);
 }
-$name = $_SESSION['bonded'];
 
 
-if (!$name) {
+
 //Get Bonded ID
-$query = "SELECT bonded FROM users WHERE id = :id";
+$query = "SELECT * FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $bonded = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Get Bonded Name
-$query = 'SELECT name FROM snoozelings WHERE id = :id';
+$query = 'SELECT * FROM snoozelings WHERE id = :id';
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":id", $bonded);
+$stmt->bindParam(":id", $bonded['bonded']);
 $stmt->execute();
-$bonded = $stmt->fetch(PDO::FETCH_ASSOC);
-    $name = $bonded['name'];
-}
+$bondedname = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Fetch All Items
 $query = "SELECT * FROM items WHERE user_id = :id";
@@ -88,7 +85,7 @@ if (isset($reply)) {
 }
 
 //Title
-echo '<h3>' . $name . '\'s Fanny Pack</h3>';
+echo '<h3>' . $bondedname['name'] . '\'s Fanny Pack</h3>';
 
 //Display Coin Count Top Right
 echo '<div>';

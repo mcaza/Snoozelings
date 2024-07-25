@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     } else {
         //If no results, throw error and redirect
-        $_SESSION['reply'] = "You have enterred an incorrect code. Please try again.";
+        $_SESSION['reply'] = "You have entered an incorrect code. Please try again.";
         header("Location: ../coderedemption");
 
     }

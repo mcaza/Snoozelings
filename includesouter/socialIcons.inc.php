@@ -7,7 +7,7 @@ if ($_SESSION['user_id']) {
 
 
 //Grab Shortcut
-$query = 'SELECT shortcuts FROM users WHERE id = :id';
+$query = 'SELECT shortcuts, bonded FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
@@ -57,7 +57,7 @@ if ($userId) {
                 $link = "penpals";
                 break;
                 case "Snoozeling":
-                $link = "pet?id=" . $bonded;
+                $link = "pet?id=" . $results['bonded'];
                 break;
             }
             echo '<li><a href="' . $link . '" ><img src="resources/Icon' . $short . '.png"></a></li>';

@@ -21,7 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $type = $result['type'];
     
     //Fetch Items
-    if ($color) {
+    if ($color == "White") {
+        $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":user", $userId);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $name = $result['name'];
+        
+        $display = $result['display'];
+
+    } else if ($color) {
         $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user AND dye = :dye';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -39,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         $display = $result['display'] . ' [' . $dyedisplay['display'] . ']';
         
-    } else {
+    }else {
         $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -113,12 +124,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":clothes", $string);
     $stmt->execute();
     
+    
     //Remove Item from Inventory
-    $query = 'DELETE FROM items WHERE list_id = :id AND user_id = :user LIMIT 1'; 
+    if ($color && $color != "White") {
+        $query = 'DELETE FROM items WHERE list_id = :id AND user_id = :user AND dye = :color LIMIT 1'; 
+    } else {
+        $query = 'DELETE FROM items WHERE list_id = :id AND user_id = :user AND dye IS NULL LIMIT 1'; 
+    }
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->bindParam(":user", $userId);
-    $stmt->execute();
+    if ($color && $color != "White") {
+        $stmt->bindParam(":color", $color);
+    }
+    $stmt->execute(); 
     
     //Message & Reroute to Items
     $_SESSION['reply'] = "Your pet is now wearing the following item: " . $display;

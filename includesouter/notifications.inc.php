@@ -40,24 +40,22 @@ if ($journal['type'] === "pain") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($journal['id']) {
-        if ($journal['closed'] === "1") {
+        if ($journal['closed'] == "1" || !$journal) {
             echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
             $count++; 
         }
-    }
+
 } elseif ($journal['type'] === "mentalHealth") {
     $query = 'SELECT * FROM mentalHealthEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($journal['id']) {
-        if ($journal['closed'] === "1") {
+        if ($journal['closed'] == "1" || !$journal) {
             echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
             $count++; 
         }
-    }
+    
 } else {
     echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Create Journal</a></div>';
     $count++;

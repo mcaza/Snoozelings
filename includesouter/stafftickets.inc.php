@@ -63,7 +63,7 @@ echo '</table>';
 
 //Get All Other Tickets
 $admin = null;
-$query = 'SELECT * FROM modtickets WHERE status IS NULL ORDER BY ticketid';
+$query = 'SELECT * FROM modtickets WHERE status = 0 ORDER BY ticketid';
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);

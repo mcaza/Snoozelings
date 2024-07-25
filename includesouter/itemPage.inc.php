@@ -135,11 +135,24 @@ if ($results) {
     }
     
     if ($item['name'] === "FarmChest" || $item['name'] === "BeachChest" || $item['name'] === "ForestChest") {
-        //echo '<p><b>Chests require 1 key to open</b></p>';
-        echo '<form method="post" action="includes/openChest.inc.php" onclick="return confirm(\'This action will consume a single key. Are you sure you want to continue?\')" >';
-        echo '<input type="hidden" name="type" value="' . $item['name'] . '">';
-        echo '<button class="fancyButton">Open Chest</button>';
-        echo '</form>';
+        //Check for Key
+        //Check for Key
+        $query = 'SELECT * FROM items WHERE user_id = :id AND name = "Key"';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $keycheck = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($keycheck) {
+            echo '<form method="post" action="includes/openChest.inc.php" onclick="return confirm(\'This action will consume a single key. Are you sure you want to continue?\')" >';
+            echo '<input type="hidden" name="type" value="' . $item['name'] . '">';
+            echo '<button class="fancyButton">Open Chest</button>';
+            echo '</form>';
+        } else {
+            echo '<p>Chests require 1 key to open</p>';
+        }
+        
+        
     }
 
 

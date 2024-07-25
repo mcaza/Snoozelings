@@ -12,7 +12,7 @@ $stmt->execute();
 $reciever = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check if Reciever Matches User
-if ($userId === $reciever['reciever']) {
+if ($userId == $reciever['reciever']) {
 
 } else {
     header("Location: mailbox");

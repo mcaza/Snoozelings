@@ -80,7 +80,7 @@ if ($id > 2 && $id <10) {
 
                 <!-- Daily Stats -->
                 <div class="bar-container">
-                    <h2>Daily Records</h2>
+                    
                     <?php require_once '../includes/dailyRecords.inc.php' ?>
                 </div>
         </div>
@@ -127,10 +127,23 @@ if (!leftArrow) {
 function arrowChecker(e) {  
     e = e || window.event;
     if (e.keyCode == '37') { //left
-        document.location.href = "collection?id=" + before;
+        if (id == 10) {
+            document.location.href = "collection?id=2";
+        } else if (id == 1) {
+            
+        } else {
+            document.location.href = "collection?id=" + before;
+        }
+        
     }
     else if (e.keyCode == '39') { //right
-        document.location.href = "collection?id=" + after;
+        if (id == 2) {
+            console.log('10');
+            document.location.href = "collection?id=10";
+        } else {
+            document.location.href = "collection?id=" + before;
+        }
+
     }
 }</script>
     

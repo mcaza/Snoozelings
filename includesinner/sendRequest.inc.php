@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ../requests");
     }
     
-    //Double Check the Item is not manually enterred
+    //Double Check the Item is not manually entered
     $query = "SELECT * FROM itemList WHERE name = :name";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":name", $item);
@@ -52,12 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Get Datetime
+
     $now = new DateTime("now", new DateTimezone('UTC'));
-    $stg1 = 168;
-    
-    $time1 = (clone $now)->add(new DateInterval("PT{$stg1}M")); 
-    $format1 = $time1->format('Y-m-d H:i:s');
-    
+    $hours = 168;
+    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
+    $formatted = $modified->format('Y-m-d H:i:s');
     
     
     //Post Request
@@ -68,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":name", $itemcheck['name']);
     $stmt->bindParam(":displayname", $itemcheck['display']);
     $stmt->bindParam(":points", $itemcheck['points']);
-    $stmt->bindParam(":datetime", $format1);
+    $stmt->bindParam(":datetime", $formatted);
     $stmt->execute();
     
     //Update Daily Requests for User

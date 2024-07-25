@@ -140,8 +140,8 @@ if ($id == $userId) {
         } else {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['itemsCrafted'] . ' Items Crafted</p>';
         }
-        if ($result['requestsFilled'] == "1") {
-                        echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['snoozelingsCrafted'] . ' Request Fulfilled</p>';
+        if ($result['requestsFilled'] == 1) {
+                        echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['requestsFilled'] . ' Request Fulfilled</p>';
 
         } else {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $result['requestsFilled'] . ' Requests Fulfilled</p>';

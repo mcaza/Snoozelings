@@ -60,7 +60,7 @@ require_once '../includes/verifySinglePet.inc.php';
 
                 <!-- Daily Stats -->
                 <div class="bar-container">
-                    <h2>Daily Records</h2>
+                    
                     <?php require_once '../includes/dailyRecords.inc.php' ?>
                 </div>
             </div>
@@ -228,8 +228,14 @@ require_once '../includes/verifySinglePet.inc.php';
     
     document.getElementById('mothFluff').onchange = (event) => {
      var inputText = event.target.value;
-     document.getElementById('TopMothdesigner').src = "Layers/Other/MothFluff/" + inputText + ".png";
-     document.getElementById('BottomMothdesigner').src = "Layers/Other/MothFluff/Behind/" + inputText + ".png";
+        if (inputText == "NoFluff") {
+            document.getElementById('TopMothdesigner').src = "";
+            document.getElementById('BottomMothdesigner').src = "";
+        } else {
+            document.getElementById('TopMothdesigner').src = "Layers/Other/MothFluff/" + inputText + ".png";
+            document.getElementById('BottomMothdesigner').src = "Layers/Other/MothFluff/Behind/" + inputText + ".png";
+        }
+     
  }
     
     document.getElementById('spots').onchange = (event) => {

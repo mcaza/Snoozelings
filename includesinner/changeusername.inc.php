@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check Password
     if(!password_verify($pwd, $result['password'])) {
-        $_SESSION['reply'] = "Password enterred is not correct.";
+        $_SESSION['reply'] = "Password entered is not correct.";
         header("Location: ../updateaccount");
         die();
     }

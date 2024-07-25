@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
     
-    //Check if No Custom Values are Enterred
+    //Check if No Custom Values are Entered
     if(!(($job === 'jack') || ($job === "Farmer") || ($job === "Explorer") || ($job === "Crafter"))) {
         header("Location: ../petJob?id=" . $id);
         die();

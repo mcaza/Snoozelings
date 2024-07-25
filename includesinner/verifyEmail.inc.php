@@ -44,7 +44,7 @@ if ($result["tempCode"] === $code) {
     
     header("Location: ../index.php");
 } else {
-    $_SESSION["reply"] = "The code you enterred is incorrect.";
+    $_SESSION["reply"] = "The code you entered is incorrect.";
     header("Location: ../verify.php");
 }
 

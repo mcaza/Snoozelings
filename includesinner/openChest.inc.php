@@ -30,20 +30,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
     } else {
         header("Location: ../");
+        die();
     }
     
     //Check for Key
-    $query = 'SELECT * FROM items WHERE user_id = :id AND name = "key"';
+    $query = 'SELECT * FROM items WHERE user_id = :id AND name = "Key"';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $keycheck = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if ($keycheck) {
-        
-    } else {
+    
+    
+    if ($keycheck == false) {
         header("Location: ../");
-    }
+        die ();
+    } 
     
     //Roll for Coins
     $rand = rand(1,100);
@@ -63,12 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $itemsWon = [];
     array_push($itemsWon, $small[$rand1], $large[$rand2]);
     
+    
     //Remove Chest
     $query = 'DELETE FROM items WHERE user_id = :id AND name = :name LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":name", $name);
-    $stmt->execute();
+    $stmt->execute(); 
     
     //Remove Key
     $query = 'DELETE FROM items WHERE user_id = :id AND name = "Key" LIMIT 1';

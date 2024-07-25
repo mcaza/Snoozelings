@@ -6,6 +6,8 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+echo '<h2>Community Tasks</h2>';
+
 //Display Records
 if ($result['journalEntries'] == "1") {
     echo "<p>" . $result['journalEntries'] . " Journal Entry</p>";

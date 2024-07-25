@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pwd = $_POST["password"];
     $two = $_POST["two"];
     
-    //Check Code is Enterred
+    //Check Code is Entered
     if (!$code || !$pwd || !$two) {
         $_SESSION["reply"] = "You must enter both the code, password, and confirm your password.";
         header("Location: ../helpme");
@@ -23,14 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$user) {
-        $_SESSION["reply"] = "The temporary code you enterred is incorrect.";
+        $_SESSION["reply"] = "The temporary code you entered is incorrect.";
         header("Location: ../helpme");
         die();
     }
     
     //Check if Passwords Match
     if (!($pwd === $two)) {
-        $_SESSION["reply"] = "The passwords enterred do not match.";
+        $_SESSION["reply"] = "The passwords entered do not match.";
         header("Location: ../helpme?code=" . $code);
         die();
     }

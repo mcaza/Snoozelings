@@ -28,11 +28,19 @@ $nestcount = 1;
 
 
 //User Navigation
-            echo '<div id="onlyOne" class="leftRightButtons">';
-            if ($id > 1) {
-                echo '<a id="leftArrow" href="collection?id=' . ($id - 1) . '"><<</a>';
-            }
+echo '<div id="onlyOne" class="leftRightButtons">';
+if ($id == 10) {
+    echo '<a id="leftArrow" href="collection?id=2"><<</a>';
+} else if ($id > 1) {
+    echo '<a id="leftArrow" href="collection?id=' . ($id - 1) . '"><<</a>';
+}
+if ($id == 2) {
+    echo '<a href="collection?id=10">>></a>';
+} else {
     echo '<a href="collection?id=' . ($id + 1) . '">>></a>';
+}
+            
+    
     echo '</div>';
 
 if ($userId === $id) {

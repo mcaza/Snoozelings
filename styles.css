@@ -1628,7 +1628,7 @@ select {
     }
 }
 
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1081px) {
     .body-container {
         flex-direction: column-reverse;
         row-gap: 1.5rem;
@@ -1853,5 +1853,9 @@ select {
     
     #information1, #information2, #information3, #information4, #information5, #information6 {
         width: 90%;
+    }
+    
+    .dropdown-content {
+        display: none !important;
     }
 }

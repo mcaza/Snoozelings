@@ -52,7 +52,7 @@ require_once '../includes/loginRedirect.inc.php';
 
                 <!-- Daily Stats -->
                 <div class="bar-container">
-                    <h2>Daily Records</h2>
+                    
                     <?php require_once '../includes/dailyRecords.inc.php' ?>
                 </div>
             </div>

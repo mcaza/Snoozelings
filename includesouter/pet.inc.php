@@ -3,16 +3,11 @@ $id = $_GET['id'];
 
 //Navigation
 echo '<div id="onlyOne" class="leftRightButtons">';
-if ($id == 10) {
-    echo '<a href="pet?id=2">>></a>';
-} else if ($id > 1) {
+if ($id > 1) {
     echo '<a id="leftArrow" href="pet?id=' . ($id - 1) . '"><<</a>';
 }
-if ($id == 2) {
-    echo '<a href="pet?id=10">>></a>';
-} else {
-    echo '<a href="pet?id=' . ($id + 1) . '">>></a>';
-}
+echo '<a href="pet?id=' . ($id + 1) . '">>></a>';
+
 
 echo '</div>';
 
@@ -34,7 +29,7 @@ $query = "SELECT owner_id FROM snoozelings WHERE id = :id;";
 //Buttons
 if ($_SESSION["user_id"] == $result["owner_id"]) { 
     echo '<div class="button-bar">
-                <button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Edit Profile</button>
+                <button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Edit Pet</button>
                 <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Change Job</button>
                 <button class="fancyButton" onClick="window.location.href=\'../includes/bondSoul.inc.php?id=' . $id . '\'">Bond Souls</button>
             </div>';
@@ -181,6 +176,8 @@ $specialArray = explode(" ", $result["specials"]);
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Wings</li>';
         } else if ($special == "BugWings") {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Bug Wings</li>';
+        } else if ($special == "EarTip") {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Ear Tip</li>';
         } else {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $special . '</li>';
         }
@@ -193,7 +190,7 @@ echo '</div>';
 echo '<div class="profilerowtwo">';
 
 //Clothes Box
-echo '<div class="itemsapplied box" style="height: 45%; width: 90%; border: 2px dashed #827188; border-radius: 20px;margin-bottom: 2.1rem; overflow-y: auto;">';
+echo '<div class="itemsapplied box" style="height: 140px; width: 90%; border: 2px dashed #827188; border-radius: 20px;margin-bottom: 2.1rem; overflow-y: auto;">';
 echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Snooze Clothes</h4>';
 $clothes = [];
 $list = "";
@@ -263,7 +260,7 @@ echo '</div>';
 echo '</div>';
 
 //Inspired Snoozelings
-echo '<div class="itemsapplied bar" style="height: 45%; width: 90%; border: 2px dashed #827188; border-radius: 20px;overflow-y: auto;">';
+echo '<div class="itemsapplied bar" style="height: 140px; width: 90%; border: 2px dashed #827188; border-radius: 20px;overflow-y: auto;">';
 echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Inspired Snoozelings</h4>';
 echo '<div style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; " >';
 if ($pet['inspire']) {

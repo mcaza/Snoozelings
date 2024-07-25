@@ -64,8 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     
     //Grab Item Info
-    $name = substr($farm['name'], 0, -4);
-    $query = "SELECT * FROM itemList WHERE name = :name";
+    $name = $farm['plantName'];
+    $query = "SELECT * FROM itemList WHERE display = :name";
      $stmt = $pdo->prepare($query);
     $stmt->bindParam(":name", $name);
     $stmt->execute();
