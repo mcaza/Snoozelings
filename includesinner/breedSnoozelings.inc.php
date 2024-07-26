@@ -4,7 +4,6 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $maxpets = 3;
     
     //Get Values
     $userId = $_SESSION['user_id'];
@@ -26,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
     }
     
-    //Check if person has max snoozelings
+    //Check if person has open slot
     $query = 'SELECT * FROM snoozelings WHERE owner_id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
@@ -34,11 +33,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $count = count($snoozelings);
     
-    if ($count >= $maxpets) {
-        $_SESSION['reply'] = 'You currently have the max number of snoozelings.';
+    $query = 'SELECT * FROM users WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $bedscheck = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (intval($bedscheck['petBeds']) <= $count) {
+        $_SESSION['reply'] = 'You do not have any empty pet beds.';
         header("Location: ../stitcher?page=new");
         die();
     }
+    
+    
     
     //If using an ID, check permissions
     if ($breedid) {
@@ -55,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Check for Blueprints
-    $bpid = 21;
+    $bpid = 137;
     $query = 'SELECT * FROM items WHERE list_id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $bpid);
@@ -67,21 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ../stitcher?page=new");
         die();
     }
-    
-    //Check for bed
-    $bed = 27;
-    $query = "SELECT * FROM items WHERE list_id = :id AND user_id = :user LIMIT 1";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $bed);
-    $stmt->bindParam(":user", $userId);
-    $stmt->execute();
-    $bed = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if (!$bed) {
-        $_SESSION['reply'] = 'You need a Pet Bed for the new snoozeling to sleep in.';
-            header("Location: ../stitcher?page=new");
-            die();
-    }   
     
     //Create a Breeding ID
     $query = "INSERT INTO breedings (user_id, one, two, blueprints) VALUES (:user, :one, :two, :blueprints)";
@@ -111,9 +103,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Remove Items (Sewing Kit, Blueprints, Bed)
-    $itemArray = [27, 20];
+    $itemArray = [209];
     for ($i = 0; $i < $blueprints; $i++) {
-        array_push($itemArray, 21);
+        array_push($itemArray, 137);
     }
     foreach ($itemArray as $item) {
         $query = 'DELETE FROM items WHERE list_id = :id AND user_id = :user LIMIT 1';

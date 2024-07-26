@@ -119,7 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $zero = 0;
     $now = new DateTime('now');
     $date = $now->format('Y-m-d H:i:s');
-    $query = "INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime) VALUES (:from, :to, :title, :message, :sent, :opened, :datetime)";
+    $picture = "simonNPC";
+    $query = "INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:from, :to, :title, :message, :sent, :opened, :datetime, :picture)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":from", $from);
     $stmt->bindParam(":to", $request['user_id']);
@@ -128,6 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":sent", $one);
     $stmt->bindParam(":opened", $zero);
     $stmt->bindParam(":datetime", $date);
+    $stmt->bindParam(":picture", $picture);
     $stmt->execute();
     
     //Redirect
