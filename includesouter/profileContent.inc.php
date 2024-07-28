@@ -98,16 +98,16 @@ if ($id == $userId) {
         $winter = new DateTime('December 21');
 
         if ($today >= $spring && $today < $summer) {
-            echo '<p class="snoozelinginfo"><strong>Pronouns: She/Her</strong>';
+            echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>She/Her';
             $tempnoun = "Her ";
         } else if ($today >= $summer && $today < $fall) {
-            echo '<p class="snoozelinginfo"><strong>Pronouns: She/Her</strong>';
+            echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>She/Her>';
             $tempnoun = "Her ";
         } else if ($today >= $fall && $today < $winter) {
-            echo '<p class="snoozelinginfo"><strong>Pronouns: He/Him</strong>';
+            echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>He/Him';
             $tempnoun = "His ";
         } else {
-            echo '<p class="snoozelinginfo"><strong>Pronouns: He/Him</strong>';
+            echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>He/Him';
             $tempnoun = "His ";
         }
     } else {
@@ -164,7 +164,7 @@ if ($id == $userId) {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Code Redemption Employee</p>';
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Playful & Worry Free</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>Spreading Joy</p>';
-              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Simliar to the snowshoe hair, Snow\'s fur changes depending on the season. ' . $tempnoun . 'gender fluidity is heavily influenced by these physical changes.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Similar to the snowshoe hare, Cozy\'s fur changes depending on the season. ' . $tempnoun . 'gender fluidity is heavily influenced by these physical changes.</p>';
         } elseif ($id === "5") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Adoption Director</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Cucumber Sandwiches</p>';

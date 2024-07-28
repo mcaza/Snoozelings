@@ -50,6 +50,12 @@ $interval = $future_date->diff($now);
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $userId . '"><<</a>';
+if ($pet['job'] == "Crafter") {
+    echo '<p><b>Crafting EXP:</b> Activated</p>';
+} else {
+    echo '<p><b>Crafting EXP:</b> Off</p>';
+}
+
 echo '</div>';
 
 //Notification

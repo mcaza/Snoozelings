@@ -134,7 +134,7 @@ if ($results) {
         echo '</form>';
     }
     
-    if ($item['name'] === "FarmChest" || $item['name'] === "BeachChest" || $item['name'] === "ForestChest") {
+    if ($item['name'] === "FarmChest" || $item['name'] === "BeachChest" || $item['name'] === "WoodsChest") {
         //Check for Key
         //Check for Key
         $query = 'SELECT * FROM items WHERE user_id = :id AND name = "Key"';

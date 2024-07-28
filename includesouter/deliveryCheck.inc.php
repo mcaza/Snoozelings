@@ -13,12 +13,12 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check if There is a blueprint under that id
 if (!$result) {
-    header("Location: ../index.php");
+    header("Location: ../");
 }
 
 //Check if user id matches blueprint id
-if (!($userId === $result['owner_id'])) {
-    header("Location: ../index.php");
+if (!($userId == $result['owner_id'])) {
+    header("Location: ../");
 }
 
 //Check if mail has been delivered
@@ -39,6 +39,6 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!($id === $result['blueprint'])) {
+if (!($id == $result['blueprint'])) {
     header("Location: ../index.php");
 }

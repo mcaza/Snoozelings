@@ -74,7 +74,7 @@ $area = $_POST["area"];
     
     for($i = 0; $i < $rolls; $i++) {
         $rarity = rollRarity();
-        $item = pickItem($rarity, $area);
+        pickItem($rarity, $area);
     }
     
    //Insert Items Into Player's Table
@@ -145,7 +145,7 @@ $area = $_POST["area"];
     $_SESSION['coins'] = $coinsWon;
     $_SESSION['items'] = $itemsWon;
     $_SESSION['petName'] = htmlspecialchars($name['name']);
-    header("Location: ../explore");
+    header("Location: ../explore"); 
 } else {
     $_SESSION['error'] = 'You must select an explorer.';
         header("Location: ../explore");

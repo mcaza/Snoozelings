@@ -88,29 +88,7 @@ function displayPet($pet, $class) {
         echo "<img src='Layers/tear.png' id = 'Tearone'>";
         echo "</div>";
     }
-        if (strlen($pet['clothesBottom']) > 1) {
-        $clothesBottom = explode(' ', $pet['clothesBottom']);
-        foreach ($clothesBottom as $clothing) {
-            echo "<div class='${class}'>";
-         echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
-            echo "</div>";
-        } }
-        if (strlen($pet['clothesBoth']) > 1) {
-    $clothesBoth = explode(' ', $pet['clothesBoth']);
-        foreach ($clothesBoth as $clothing) {
-            if(!($clothing === "AngelSet" || $clothing === "AngelWings")) {
-            echo "<div class='${class}'>";
-         echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
-            echo "</div>";
-        } } }
-        if ($pet['clothesHoodie']) {
-            $clothesHoodies = explode(' ', $pet['clothesHoodie']);
-        foreach ($clothesHoodies as $clothing) {
-            echo "<div class='${class}'>";
-         echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
-            echo "</div>";
-        } 
-        }
+        
         echo "<div class='${class}'>";
         if (!$pet['clothesHoodie']) {
         if ($pet["hairType"] === "Floof") {
@@ -119,12 +97,37 @@ function displayPet($pet, $class) {
             echo '<img src="Layers/Hair/' . $pet['hairType'] . "/" . $pet['hairColor'] . '.png" id="Hairone">';
         } }
             echo "</div>";
-        if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
-        echo "<div class='${class}'>";
-        echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
-        echo "</div>";
-    } 
+        
+        
         if ($pet["tailType"] === "Dragon") {
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+            $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings")) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    echo "<div class='${class}'>";
+                 echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                    echo "</div>";
+                } 
+            }
+            if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            }
             echo "<div class='${class}'>";
             echo "<img src='Layers/Tail/Dragon/End/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
             echo "</div>";
@@ -132,14 +135,139 @@ function displayPet($pet, $class) {
             echo "<img src='Layers/Tail/Dragon/" . $pet["mainColor"] . ".png' id = 'TailTopone'>";
             echo "</div>";
         } elseif ($pet['tailType'] === "Mermaid" ) {
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+            $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings")) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    echo "<div class='${class}'>";
+                 echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                    echo "</div>";
+                } 
+            }
+            if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            }
             echo "<div class='${class}'>";
             echo "<img src='Layers/Tail/Mermaid/" . $pet["mainColor"] . ".png' id = 'TailTopone'>";
             echo "</div>";
-        }else {
+        } else if ($pet['tailType'] == "Pom" ) {
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+        $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings")) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    echo "<div class='${class}'>";
+                 echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                    echo "</div>";
+                } 
+            }
+        echo "<div class='${class}'>";
+            echo "<img src='Layers/Tail/" . $pet["tailType"] . "/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
+            echo "</div>";
+            if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            }
+            
+        } else if ($pet['tailType'] == "Panther") {
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+        $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings")) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    echo "<div class='${class}'>";
+                 echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                    echo "</div>";
+                } 
+            }
+            if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            }
             echo "<div class='${class}'>";
-        echo "<img src='Layers/Tail/" . $pet["tailType"] . "/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
-        echo "</div>";
+            echo "<img src='Layers/Tail/" . $pet["tailType"] . "/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
+            echo "</div>";
+        
+        }else {
+        if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+        $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings")) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    echo "<div class='${class}'>";
+                 echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                    echo "</div>";
+                } 
+            }
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Tail/" . $pet["tailType"] . "/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
+            echo "</div>";
+        if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            }
         }
+            
+        }
+
         echo "<div class='${class}'>";
         echo "<img src='Layers/Noses/" . $pet["noseColor"] . ".png' id = 'Noseone'>";
         echo "</div>";
@@ -184,18 +312,9 @@ function displayPet($pet, $class) {
             echo "<div class='${class}'>";
          echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
-        } } }
+        } }
     }
-    if(($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] == "1"))) {
-        if ($pet['tailType'] === "Dragon" || $pet['tailType'] === "Panther" || $pet['tailType'] === "Mermaid") {
-            
-        } else {
-            echo "<div class='${class}'>";
-        echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
-        echo "</div>";
-        }
-        
-    } 
+
     if ($class === 'tinyPet') {
         echo "<div class='${class}'>";
         echo "<a href='profile?id=" . $pet['owner_id'] . "'><img src='Layers/transparentSquare.png'></a>";

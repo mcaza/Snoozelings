@@ -93,7 +93,7 @@ if ($int === 0) {
 } else {
     
     if ($diff === 0 || $result > $farm['stg3']) {
-        if ($farm['name'] == "MysterySeed") {
+        if ($farm['mystery'] == 1) {
             echo '<h4>Mystery Plant</h4>';
         } else {
             echo '<h4>' . $farm['plantName'] . ' Plant</h4>';
@@ -105,7 +105,12 @@ if ($int === 0) {
         echo '<input type="hidden" name="plot" value="' . $plot . '">';
         echo '<select  class="input" name="farmer"><br>';
         foreach ($results as $pet) {
-        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+            if ($pet['job']== "Farmer") {
+                echo '<option value="' . $pet['id'] . '">*' . htmlspecialchars($pet['name']) . '*</option>';
+            } else {
+                echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+            }
+        
         
     }
     echo '</select></br>';
@@ -113,7 +118,7 @@ if ($int === 0) {
         echo '</form>';
         
     } else {
-        if ($farm['name'] == "MysterySeed") {
+        if ($farm['mystery'] == 1) {
             echo '<h4>Mystery Plant</h4>';
         } else {
             echo '<h4>' . $farm['plantName'] . ' Plant</h4>';

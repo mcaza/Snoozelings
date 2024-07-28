@@ -11,7 +11,7 @@ $stmt->execute();
 $status = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check Ticket Access
-$query = 'SELECT * FROM modtickets WHERE id = :id LIMIT 1';
+$query = 'SELECT * FROM modtickets WHERE ticketid = :id LIMIT 1';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $id);
 $stmt->execute();

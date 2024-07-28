@@ -82,7 +82,7 @@ foreach ($farms as $farm) {
     if (!$farm['name'] || $result < $farm['stg1']) {
         echo '<img src="resources/emptyBox.png" class="farmBox">';
         if ($farm['name']) {
-            if ($farm['name'] == "MysterySeed") {
+            if ($farm['mystery'] == 1) {
             echo '<h4 style="margin-top:0;">Mystery Plant</h4>';
         } else {
             echo '<h4 style="margin-top:0;">' . $farm['plantName'] . ' Plant</h4>';

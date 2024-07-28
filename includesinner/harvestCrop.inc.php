@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table) {
-            $now = new DateTime('now');
+            $now = new DateTime("now", new DateTimezone('UTC'));
             $future_date = new DateTime($table['finishtime']);
             if ($table['finishtime']) {
                 if ($future_date >= $now) {
@@ -64,8 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     
     //Grab Item Info
-    $name = $farm['plantName'];
-    $query = "SELECT * FROM itemList WHERE display = :name";
+    $name = substr($farm['name'], 0, -4);
+    $query = "SELECT * FROM itemList WHERE name = :name";
      $stmt = $pdo->prepare($query);
     $stmt->bindParam(":name", $name);
     $stmt->execute();
@@ -84,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $amount = 1;
         }
     }
+    
     
     //Add Item to Inventory
     for ($i = 0; $i < $amount; $i++) {
@@ -111,11 +112,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     
+    
     //Reset Farm
-    $query = 'UPDATE farms SET name = NULL, stg1 = NULL, stg2 = NULL, stg3 = NULL, amount = NULL, water= NULL, plantNAME = NULL WHERE id = :plot';
+    $query = 'UPDATE farms SET name = NULL, stg1 = NULL, stg2 = NULL, stg3 = NULL, amount = NULL, water= NULL, plantNAME = NULL, mystery = 0 WHERE id = :plot';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":plot", $plot);
-    $stmt->execute();
+    $stmt->execute(); 
     
     //Set Session Variables
     $_SESSION['amount'] = $amount;

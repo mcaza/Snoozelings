@@ -103,7 +103,12 @@ $now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 foreach ($results as $pet) {
     if ($result > $pet['cooldownTime']) {
-    echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+        if ($pet['job'] == "Explorer") {
+            echo '<option value="' . $pet['id'] . '">*' . htmlspecialchars($pet['name']) . '*</option>';
+        } else {
+            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+        }
+    
     }
 }
 echo '</select></br>';
@@ -136,7 +141,7 @@ echo '<td>Hay</td>';
 echo '<td>Flower</td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Bees Wax</td>';
+echo '<td>Beeswax</td>';
 echo '<td>Egg Carton</td>';
 echo '<td>Empty Bottle</td>';
 echo '<td>Old Can</td>';

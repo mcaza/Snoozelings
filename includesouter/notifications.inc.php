@@ -11,6 +11,27 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Check for New Mod Tickets
+if ($userId == 1) {
+    
+    $query = 'SELECT * FROM modtickets WHERE status = 0 OR status = 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $ticketcheck = false;
+    foreach ($tickets as $ticket) {
+        if ($ticket['waitingreply'] == NULL or $ticket['waitingreply'] == 0) {
+            $ticketcheck = true;
+            break;
+        }
+    }
+    if ($ticketcheck == true) {
+        echo '<div class="notificationbox"><a href="stafftickets" class="notif" style="color:red;">' . $count . '. Moderator Ticket</a></div>';
+        $count++;
+    }
+}
+
 //Pick Starter Snoozeling
 if (!$user['bonded']) {
     echo '<div class="notificationbox"><a href="welcome" class="notif">' . $count . '. Pick 1st Snoozeling</a></div>';

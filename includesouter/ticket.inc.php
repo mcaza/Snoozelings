@@ -170,9 +170,13 @@ if (count($results) > 1) {
 //Response Buttons
 echo '<hr>';
 echo '<div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;">';
-echo '<button style="width: 100px;" class="fancyButton" id="reply" onclick="reply()">Reply</button>';
-echo '<button style="width: 100px;" class="fancyButton" id="notes" onclick="notes()">Notes</button>';
+if ($results[0]['status'] == 0 || $results[0]['status'] == 1) {
+    echo '<button style="width: 100px;" class="fancyButton" id="reply" onclick="reply()">Reply</button>';
+}
+
+
 if ($position == "admin" || $position == "moderator") {
+    echo '<button style="width: 100px;" class="fancyButton" id="notes" onclick="notes()">Notes</button>';
     echo '<button style="width: 130px;" class="fancyButton" id="notes" onclick="addinformation()">Information</button>';
     echo '<button style="width: 100px;" class="fancyButton" id="escalate" onclick="escalate()">Escalate</button>';
     echo '<button style="width: 100px;" class="fancyButton" id="close" onclick="closeticket()">Close</button>';
@@ -240,7 +244,7 @@ if ($position == "admin" || $position == "moderator") {
         echo '</form>';
         echo '</div>';
     
-} else {
+} else if ($results[0]['status'] == 0 || $results[0]['status'] == 1) {
     echo '<div id="replyform" style="text-align: center;" >';
     echo '<form method="post" action="includes/replyTicket.inc.php">';
     echo '<input type="hidden" name="userid" id="userid" value="' . $userId . '">';

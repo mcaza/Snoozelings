@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table) {
-            $now = new DateTime('now');
+            $now = new DateTime("now", new DateTimezone('UTC'));
             $future_date = new DateTime($table['finishtime']);
             if ($table['finishtime']) {
                 if ($future_date >= $now) {
@@ -62,6 +62,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $reduce = .50;
     }
+    
+    //Get First Seed ID
+    $query = "SELECT id FROM items WHERE name = :name && user_id = :id ORDER BY id LIMIT 1";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $seed);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $seedId = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if(!$seedId) {
+        $_SESSION["reply"] = "You do not own any of that seed.";
+        header("Location: ../farm");
+        die();
+    }
 
     //Get Seed Info
     if ($seed == "MysterySeed") {
@@ -71,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $count = count($results)-1;
         $rand = rand(0,$count);
-        $name = "MysterySeed";
+        $name = $results[$rand]['name'];
         $temp1 = intval($results[$rand]['stg1']) * $reduce;
         $temp2 = intval($results[$rand]['stg2']) * $reduce;
         $temp3 = intval($results[$rand]['stg3']) * $reduce;
@@ -99,20 +113,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     
-    //Get First Seed ID
-    $query = "SELECT id FROM items WHERE name = :name && user_id = :id ORDER BY id LIMIT 1";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $name);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $seedId = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if(!$seedId) {
-        $_SESSION["reply"] = "You do not own any of that seed.";
-        header("Location: ../farm");
-        die();
-    }
-    
 //Calculate Times
     //Update Snoozeling to working and add cooldown
     $now = new DateTime("now", new DateTimezone('UTC'));
@@ -127,7 +127,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $format3 = $time3->format('Y-m-d H:i:s');
 
 //Update Seed into Farm
-    $query = "UPDATE farms SET name = :name, stg1 = :stg1, stg2 = :stg2, stg3 = :stg3, amount = :amount, plantName = :plantName WHERE id = :id";
+    if ($seed == "MysterySeed") {
+        $query = "UPDATE farms SET name = :name, stg1 = :stg1, stg2 = :stg2, stg3 = :stg3, amount = :amount, plantName = :plantName, mystery = 1 WHERE id = :id";
+    } else {
+        $query = "UPDATE farms SET name = :name, stg1 = :stg1, stg2 = :stg2, stg3 = :stg3, amount = :amount, plantName = :plantName WHERE id = :id";
+    }
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":name", $name);
     $stmt->bindParam(":stg1", $format1);
@@ -151,7 +155,7 @@ if ($snooze['job'] === "Farmer") {
     $query = 'DELETE FROM items WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $seedId['id']);
-    $stmt->execute(); 
+    $stmt->execute();  
 
 //Redirect
     header("Location: ../farm.php");

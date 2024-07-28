@@ -1,4 +1,5 @@
 <?php
+
 $userId = $_SESSION['user_id'];
 $reply = $_SESSION['reply'];
 unset($_SESSION['reply']);
