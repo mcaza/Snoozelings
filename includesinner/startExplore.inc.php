@@ -43,14 +43,10 @@ $area = $_POST["area"];
         $stmt->bindParam(":id", $petId);
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($table) {
-            $now = new DateTime("now", new DateTimezone('UTC'));
-            $future_date = new DateTime($result['finishtime']);
-            if ($future_date <= $now) {
-                $_SESSION['error'] = "That snoozeling is currently crafting.";
+        if ($table['name']) {
+            $_SESSION['error'] = "That snoozeling is currently crafting.";
                 header("Location: ../explore");
                 die(); 
-            }
         }
     }
     
@@ -87,24 +83,24 @@ $area = $_POST["area"];
          
         $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
         $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":list", $item);
-    $stmt->bindParam(":user", $userId);
-    $stmt->bindParam(":name", $iteminfo['name']);
-    $stmt->bindParam(":display", $iteminfo['display']);
-    $stmt->bindParam(":description", $iteminfo['description']);
-    $stmt->bindParam(":type", $iteminfo['type']);
-    $stmt->bindParam(":rarity", $iteminfo['rarity']);
-    $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
-    $stmt->execute();
+        $stmt->bindParam(":list", $item);
+        $stmt->bindParam(":user", $userId);
+        $stmt->bindParam(":name", $iteminfo['name']);
+        $stmt->bindParam(":display", $iteminfo['display']);
+        $stmt->bindParam(":description", $iteminfo['description']);
+        $stmt->bindParam(":type", $iteminfo['type']);
+        $stmt->bindParam(":rarity", $iteminfo['rarity']);
+        $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
+        $stmt->execute();
     } 
     
     if ($coinsWon) {
-    //Add Coins to User
-    $query = "UPDATE users SET coinCount = coinCount + :coins WHERE id = :id";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->bindParam(":coins", $coinsWon);
-    $stmt->execute();
+        //Add Coins to User
+        $query = "UPDATE users SET coinCount = coinCount + :coins WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":coins", $coinsWon);
+        $stmt->execute();
     }
     
     
