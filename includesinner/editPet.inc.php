@@ -193,6 +193,15 @@ $userId = $_SESSION['user_id'];
                     }
                 }
             
+            $othercolors = ['Gold', 'Silver'];
+                foreach ($othercolors as $x) {
+                    if (str_ends_with($namearray[$count], $x)) {
+                        $newname = str_replace($x,"",$namearray[$count]);
+                        $color = $x;
+                        $colordisplay = $x;
+                    }
+                }
+            
             //Return Item
             $query = 'SELECT * FROM itemList WHERE id = :id';
             $stmt = $pdo->prepare($query);

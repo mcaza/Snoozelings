@@ -59,6 +59,9 @@ if ($userId) {
                 case "Snoozeling":
                 $link = "pet?id=" . $results['bonded'];
                 break;
+                case "Pack":
+                $link = "pack";
+                break;
             }
             echo '<li><a href="' . $link . '" ><img src="resources/Icon' . $short . '.png"></a></li>';
         }

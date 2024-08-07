@@ -1,8 +1,5 @@
 <?php
 
-header("Location: ../");
-    die();
-
 //Get Values
 $id = $_GET['id'];
 $userId = $_SESSION['user_id'];

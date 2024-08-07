@@ -42,13 +42,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $name = $result['name'] . $color;
         
-        $query = 'SELECT * FROM dyes WHERE name = :name';
+        if ($color == "Gold" || $color == "Silver") {
+            $display = $result['display'] . ' [' . $color . ']';
+        } else {
+            $query = 'SELECT * FROM dyes WHERE name = :name';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":name", $color);
         $stmt->execute();
         $dyedisplay = $stmt->fetch(PDO::FETCH_ASSOC);
         
         $display = $result['display'] . ' [' . $dyedisplay['display'] . ']';
+        }
+        
         
     }else {
         $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user';

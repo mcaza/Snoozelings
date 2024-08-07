@@ -15,7 +15,7 @@ $area = $_POST["area"];
     $farmRare = ['78', '79', '80', '92', '93', '94', '95', '98'];
     $woodsCommon = ['40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51'];
     $woodsUncommon = ['68', '67', '69', '76','14'];
-    $woodsRare = ['81', '82', '83', '84', '85', '96', '99'];
+    $woodsRare = ['81', '82', '83', '84', '85', '96', '99', '223'];
     $oceanCommon = ['52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63'];
     $oceanUncommon = ['70', '72', '73', '74', '77'];
     $oceanRare = ['86', '87', '88', '89', '90', '91', '97', '100'];
@@ -50,6 +50,15 @@ $area = $_POST["area"];
         }
     }
     
+    //Check if Pet can Explore
+    $now = new DateTime("now", new DateTimezone('UTC'));
+    $result = $now->format('Y-m-d H:i:s');
+    if ($result < $pet['cooldownTime']) {
+        $_SESSION['error'] = "That snoozeling is unable to explore at this time.";
+        header("Location: ../explore");
+        die(); 
+    } 
+    
     //Get Items
     $query = "SELECT * FROM itemList";
     $stmt = $pdo->prepare($query);
@@ -72,6 +81,34 @@ $area = $_POST["area"];
         $rarity = rollRarity();
         pickItem($rarity, $area);
     }
+    
+    //Insert into exploredrops
+    if ($coinsWon && $itemsWon) {
+        $query = "INSERT INTO exploredrops (user_id, coins, drops) VALUES (:user_id, :coins, :drops);";
+    } else if ($coinsWon) {
+        $query = "INSERT INTO exploredrops (user_id, coins) VALUES (:user_id, :coins);";
+    } else if ($itemsWon) {
+        $query = "INSERT INTO exploredrops (user_id, drops) VALUES (:user_id, :drops);";
+    }
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    if ($coinsWon && $itemsWon) {
+        $stmt->bindParam(":coins", $coinsWon);
+        $itemstring = "";
+        foreach ($itemsWon as $itemWon) {
+            $itemstring = $itemstring . $itemWon . " ";
+        }
+        $stmt->bindParam(":drops", $itemstring);
+    } else if ($coinsWon) {
+        $stmt->bindParam(":coins", $coinsWon);
+    } else if ($itemsWon) {
+        $itemstring = "";
+        foreach ($itemsWon as $itemWon) {
+            $itemstring = $itemstring . $itemWon . " ";
+        }
+        $stmt->bindParam(":drops", $itemstring);
+    }
+    $stmt->execute();
     
    //Insert Items Into Player's Table
     foreach ($itemsWon as $item) {
@@ -121,7 +158,7 @@ $area = $_POST["area"];
     $query = 'UPDATE users SET explores = explores + 1 WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->execute();
+    $stmt->execute(); 
     
     if ($name['job'] == "Explorer") {
         //Update +1 to User Records

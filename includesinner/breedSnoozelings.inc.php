@@ -325,11 +325,8 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
     if ((in_array("Green", $mainone) && in_array("Brown", $maintwo)) || (in_array("Green", $maintwo) && in_array("Brown", $mainone))) {
         array_push($rare, "Sloth");
     }
-    if ((in_array("Black", $mainone) && in_array("Pink", $maintwo)) || (in_array("White", $mainone) && in_array("Pink", $maintwo)) || (in_array("Black", $maintwo) && in_array("Pink", $mainone)) || (in_array("White", $maintwo) && in_array("Pink", $mainone))) {
-        array_push($rare, "ColliePink");
-    }
     if ((in_array("Black", $mainone) && in_array("Blue", $maintwo)) || (in_array("White", $mainone) && in_array("Blue", $maintwo)) || (in_array("Black", $maintwo) && in_array("Blue", $mainone)) || (in_array("White", $maintwo) && in_array("Blue", $mainone))) {
-        array_push($rare, "CollieBlue");
+        array_push($rare, "Collie");
     }
     if ($one['mainColor'] === "Oatmeal" || $two['mainColor'] === "Oatmeal") {
         if (in_array("Red", $mainone) || in_array("Green", $mainone) || in_array("Blue", $mainone) || in_array("Red", $maintwo) || in_array("Green", $maintwo) || in_array("Blue", $maintwo)) {

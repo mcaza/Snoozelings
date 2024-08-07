@@ -54,8 +54,6 @@ function signupInputs() {
     echo '</select><br>';
     echo '<input  type="checkbox" class="checkBox" name="terms" required>';
     echo '<label class="conditions" for="terms" >I agree to the <a href="terms" target="_blank">Terms and Conditions</a> and <a href="conduct" target="_blank">Code of Conduct</a><label><br>';
-    echo '<div class="newsletter"><h4>Newsletter</h4><input type="checkbox" class="checkBox" name="newsletter">';
-    echo '<label  class="conditions" for="newsletter">I would like to subscribe to the email newsletter.<br> It may contain snoozelings merchandise, sneak peeks, progress pictures, and general news.<br><strong>The newsletter is optional to all players.</strong><label></div><br>';
     
     unset($_SESSION['signupData']);
      

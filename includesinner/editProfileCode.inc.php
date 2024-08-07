@@ -53,6 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $shortcutArray = $shortcutArray . $_POST['Snoozeling'] . " ";
     }
     
+    if (isset($_POST['Pack'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Pack'] . " ";
+    }
+    
     if ($shortCount > 5) {
         $_SESSION['error'] = "You Cannot Have More Than 5 Shortcuts";
         header("Location: ../editprofile");

@@ -38,9 +38,17 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $farmNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
+//Top Bar. Back Error Left. Request Button Right
+echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
+
 //Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $userId . '"><<</a>';
+echo '</div>';
+
+//Post Button (Right)
+echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newsletter\'">Newsletter</button></div>';
 echo '</div>';
 
 //Error
@@ -208,6 +216,8 @@ echo '<input type="checkbox" id="Penpals" name="Penpals" value="Penpals">';
 echo '<label style="font-size: 1.7rem;" for="Penpals">Find Penpal</label><br><br>';
 echo '<input type="checkbox" id="Snoozeling" name="Snoozeling" value="Snoozeling">';
 echo '<label style="font-size: 1.7rem;" for="Snoozeling">Bonded Snoozeling</label><br><br>';
+echo '<input type="checkbox" id="Pack" name="Pack" value="Pack">';
+echo '<label style="font-size: 1.7rem;" for="Pack">Fanny Pack</label><br><br>';
 
 //Blank Field Warning
 echo '<p><i>Any Blank Fields Will Not Be Changed</i></p>';

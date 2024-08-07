@@ -235,6 +235,15 @@ foreach ($clothes as $item) {
         }
     }
     
+    $othercolors = ['Gold', 'Silver'];
+    foreach ($othercolors as $x) {
+        if (str_ends_with($item, $x)) {
+            $itemName = str_replace($x, "", $item);
+            $ending = $x;
+        }
+    }
+    
+    
     if ($ending) {
         //Item Display Name
         $query = "SELECT * FROM itemList WHERE name = :name;";

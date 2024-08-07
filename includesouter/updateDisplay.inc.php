@@ -141,6 +141,14 @@ if ($result['clothesTop'] || $result['clothesBottom'] || $result['clothesHoodie'
 
                     }
                 }
+                $othercolors = ['Gold', 'Silver'];
+                foreach ($othercolors as $x) {
+                    if (str_ends_with($clothing, $x)) {
+                        $newname = str_replace($x,"",$clothing);
+                        $color = $x;
+                        $colordisplay = $x;
+                    }
+                }
 
             $query = 'SELECT * FROM itemList WHERE name = :name';
             $stmt = $pdo->prepare($query);
@@ -171,6 +179,14 @@ if ($result['clothesTop'] || $result['clothesBottom'] || $result['clothesHoodie'
                         $colordisplay = $dye['display'];
                     } else {
 
+                    }
+                }
+            $othercolors = ['Gold', 'Silver'];
+                foreach ($othercolors as $x) {
+                    if (str_ends_with($clothing, $x)) {
+                        $newname = str_replace($x,"",$clothing);
+                        $color = $x;
+                        $colordisplay = $x;
                     }
                 }
 
@@ -205,6 +221,15 @@ if ($result['clothesTop'] || $result['clothesBottom'] || $result['clothesHoodie'
 
                     }
                 }
+                
+                $othercolors = ['Gold', 'Silver'];
+                foreach ($othercolors as $x) {
+                    if (str_ends_with($clothing, $x)) {
+                        $newname = str_replace($x,"",$clothing);
+                        $color = $x;
+                        $colordisplay = $x;
+                    }
+                }
             $query = 'SELECT * FROM itemList WHERE name = :name';
             $stmt = $pdo->prepare($query);
             if ($newname) {
@@ -234,6 +259,15 @@ if ($result['clothesTop'] || $result['clothesBottom'] || $result['clothesHoodie'
                         $colordisplay = $dye['display'];
                     } else {
 
+                    }
+                }
+            
+            $othercolors = ['Gold', 'Silver'];
+                foreach ($othercolors as $x) {
+                    if (str_ends_with($clothing, $x)) {
+                        $newname = str_replace($x,"",$clothing);
+                        $color = $x;
+                        $colordisplay = $x;
                     }
                 }
 

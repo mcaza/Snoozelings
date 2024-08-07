@@ -105,7 +105,7 @@ if (!$dyebatch) {
 
 echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:15px;padding-bottom: 25px;margin: auto;margin-bottom:20px;">';
 echo '<h1>Available Dyes</h1>';
-echo '<div style="display:flex;wrap:wrap;gap:20px;justify-content:space-evenly;">';
+echo '<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-evenly;">';
 foreach ($dyes as $dye) {
     echo '<div>';
     $name = str_replace(" Dye", "", $dye['display']);
@@ -132,7 +132,7 @@ echo '</div>';
 //Dyable Items Section
 echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:15px;padding-bottom: 25px;margin: auto;margin-bottom:20px;">';
 echo '<h1>Available Items</h1>';
-echo '<div style="display:flex;wrap:wrap;gap:20px;justify-content:space-evenly;">';
+echo '<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-evenly;">';
 
 $clothesarray = [];
 foreach ($items as $item) {

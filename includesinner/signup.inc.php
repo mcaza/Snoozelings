@@ -8,11 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = strtolower($_POST["email"]);
     $birthday = $_POST["birthday"];
     $pronouns = $_POST["pronouns"];
-    if (isset($_POST['newsletter'])) {
-        $newsletter = 1;
-    } else {
+    
         $newsletter = 0;
-    }
+    
     
     try {
         

@@ -115,6 +115,7 @@ echo '<option value="clothesTop">Clothes [Top]</option>';
 echo '<option value="crafted">Crafted</option>';
 echo '<option value="design">Design</option>';
 echo '<option value="dropped">Dropped</option>';
+echo '<option value="dye">Dyes</option>';
 echo '<option value="fabric">Fabric</option>';
 echo '<option value="plant">Plant</option>';
 echo '<option value="seed">Seed</option>';

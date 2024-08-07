@@ -137,7 +137,7 @@ if ($count > 2) {
             //Send Letter
             $zero = 0;
             $one = 1;
-            $title = "You Recieved a Kindness Coin!!!";
+            $title = "You Received a Kindness Coin!!!";
             $sender = 8;
             $zero = 0;
             $picture = "kindnessNPC";
@@ -147,7 +147,7 @@ if ($count > 2) {
             
             An item you\'ve donated to the daily raffle has been randomly chosen. That means one lucky player will get a chance to win your item.
             
-            Thank you so much for your contribution. It\'s donation like these that keep the kindness flowing.
+            Thank you so much for your contribution. It\'s donations like these that keep the kindness flowing.
             
             <i>One kindness coin has been added to your bank</i>';
             $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';

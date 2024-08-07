@@ -30,6 +30,16 @@ if ($userId == 1) {
         echo '<div class="notificationbox"><a href="stafftickets" class="notif" style="color:red;">' . $count . '. Moderator Ticket</a></div>';
         $count++;
     }
+    
+    $query = 'SELECT * FROM users WHERE newsletter = 0';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $emails = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($emails) {
+        echo '<div class="notificationbox"><a href="secretemailpage" class="notif" style="color:red;">' . $count . '. Add Emails</a></div>';
+        $count++;
+    }
 }
 
 //Pick Starter Snoozeling

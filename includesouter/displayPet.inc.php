@@ -1,6 +1,11 @@
 <?php 
-function displayPet($pet, $class) {    
+function displayPet($pet, $class) {
     
+    if (!$pet['mood']) {
+        $mood = "Happy";
+    } else {
+        $mood = $pet['mood'];
+    }
     
     echo '<div class="art-container">';
     if ($pet['mainColor']) {
@@ -77,10 +82,10 @@ function displayPet($pet, $class) {
         echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
         echo "</div>";
         echo "<div class='${class}'>";
-        echo "<img src='Layers/Faces/" . $pet['mood'] . "/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
+        echo "<img src='Layers/Faces/" . $mood . "/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
         echo "</div>";
         echo "<div class='${class}'>";
-        echo "<img src='Layers/Faces/" . $pet['mood'] . "/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
+        echo "<img src='Layers/Faces/" . $mood . "/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
         echo "</div>";
     
     if ($pet['mood'] === 'Overwhelmed') {
@@ -89,14 +94,7 @@ function displayPet($pet, $class) {
         echo "</div>";
     }
         
-        echo "<div class='${class}'>";
-        if (!$pet['clothesHoodie']) {
-        if ($pet["hairType"] === "Floof") {
-            echo "<img src='Layers/Hair/" . $pet["hairType"] . "/" . $pet["mainColor"] . ".png' id = 'Hairone'>";
-        } else {
-            echo '<img src="Layers/Hair/' . $pet['hairType'] . "/" . $pet['hairColor'] . '.png" id="Hairone">';
-        } }
-            echo "</div>";
+        
         
         
         if ($pet["tailType"] === "Dragon") {
@@ -265,6 +263,19 @@ function displayPet($pet, $class) {
                 echo "</div>";
             }
         }
+        
+        echo "<div class='${class}'>";
+        if (!$pet['clothesHoodie']) {
+        if ($pet["hairType"] === "Floof") {
+            echo "<img src='Layers/Hair/" . $pet["hairType"] . "/" . $pet["mainColor"] . ".png' id = 'Hairone'>";
+        } else {
+            if (strpos($pet["specials"], "FeatheredWings") !== false && $pet["hairType"] == "Knitted") {
+                
+            } else {
+            echo '<img src="Layers/Hair/' . $pet['hairType'] . "/" . $pet['hairColor'] . '.png" id="Hairone">';
+            }
+        } }
+            echo "</div>";
             
         }
 
@@ -290,6 +301,11 @@ function displayPet($pet, $class) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";
             echo "</div>";
+            if ($pet["hairType"] === "Knitted") {
+                echo "<div class='${class}'>";
+                echo '<img src="Layers/Hair/Knitted/"' . $pet['hairColor'] . '.png" id="Hairone">';
+                echo "</div>";
+            }
         }
         if (strpos($pet["specials"], "BugWings") !== false) {
         

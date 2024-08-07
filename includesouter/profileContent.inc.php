@@ -101,7 +101,7 @@ if ($id == $userId) {
             echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>She/Her';
             $tempnoun = "Her ";
         } else if ($today >= $summer && $today < $fall) {
-            echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>She/Her>';
+            echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>She/Her';
             $tempnoun = "Her ";
         } else if ($today >= $fall && $today < $winter) {
             echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>He/Him';

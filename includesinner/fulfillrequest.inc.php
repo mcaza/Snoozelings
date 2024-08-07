@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $message = "Great news for you!!
     
-    Your request for " . $check['display'] . " has been fulfilled.
+    Your request for " . $request['displayname'] . " has been fulfilled.
     
     It has been added to your inventory.
     
