@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             //Message
         if ($pronouns == "Any" || $pronouns == "They/Them" || $pronouns == "She/Them" || $pronouns == "He/Them") {
-            $message = 'You\'re snoozeling has been used as inspiration!!!
+            $message = 'Your snoozeling has been used as inspiration!!!
 
             Their name is ' . $name . ' and their pronouns are ' . $pronouns . '.
 

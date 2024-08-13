@@ -341,7 +341,7 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
     if ((in_array("Eyeburner", $mainone) && in_array("White", $maintwo)) || (in_array("Eyeburner", $maintwo) && in_array("White", $maintwo))) {
         array_push($rare, "Paint");
     }
-    if ((in_array("Pastel", $mainone) && in_array("Black", $maintwo)) || (in_array("Pastel", $maintwo) && in_array("Black", $maintwo))) {
+    if ((in_array("Pastel", $mainone) && in_array("Black", $maintwo)) || (in_array("Pastel", $maintwo) && in_array("Black", $mainone))) {
         array_push($rare, "Chalkboard");
     }
     

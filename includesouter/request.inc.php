@@ -52,20 +52,17 @@ foreach ($check as $dyecheck) {
 
 //Display if expired, closed, or fulfill button
 if ($request['user_id'] == $userId) {
-    $hours = 168;
     $now = new DateTime($request['datetime'], new DateTimezone('UTC'));
-    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
-    $newtime = $modified->format('Y-m-d');
+    $newtime = $now->format('Y-m-d');
     echo '<h1>This request expires on ' . $newtime . '</h1>';
     echo '<form method="post" action="includes/removeRequest.inc.php" onsubmit="return confirm(\'Are you sure you want to cancel this request?\');">';
     echo '<input type="hidden" id="request" name="request" value="' . $_GET['id'] . '">';
     echo "<button class='redButton'>Cancel Request</button>";
     echo '</form>';
 } else if ($request['expired'] == 1) {
-    $hours = 168;
     $now = new DateTime($request['datetime'], new DateTimezone('UTC'));
-    $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
-    $newtime = $modified->format('Y-m-d');
+    $newtime = $now->format('Y-m-d');
+    
     echo '<h1>This request expired on ' . $newtime . '</h1>';
 } else if ($request['fulfilled'] == 1) {
     echo '<h1>This request has already been fulfilled</h1>';

@@ -15,7 +15,7 @@ $count = count($results);
 //If Below, Add New Farm Plot
 if ($count < 10) {
     //Delete Item
-    $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 28 LIMIT 1';
+    $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 114 LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();

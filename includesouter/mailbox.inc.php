@@ -74,9 +74,9 @@ foreach ($mail as $letter) {
     echo '<a href="mail?id=' . $letter['id'] . '" >';
     echo '<div class="mail">';
     if ($letter['opened'] == "1") {
-        echo '<img src="resources/openletter.png" style="width: 80px;">';
+        echo '<img src="resources/openletter.png" style="width: 80px;height: 80px;">';
     } else {
-        echo '<img src="resources/closedletter.png" style="width: 80px;">';
+        echo '<img src="resources/closedletter.png" style="width: 80px;height: 80px;">';
     }
     echo '<div class="mailInfo">';
     echo '<h4 style="margin-top: .5rem;">' . htmlspecialchars($letter['title']) . '</h4>';

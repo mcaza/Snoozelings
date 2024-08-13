@@ -10,3 +10,5 @@ $stmt = $pdo->prepare($query);
 $stmt->bindParam(":zero", $zero);
 $stmt->bindParam(":one", $one);
 $stmt->execute();
+
+echo 'Mail Delivered';

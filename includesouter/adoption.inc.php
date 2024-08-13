@@ -57,7 +57,7 @@ if ($pets) {
 echo '<div class="adoptionPets">';
 $count = 1;
 foreach ($pets as $pet) {
-    if ($pet['available'] === "1" && !($pet['owner_id'] === $userId)) {
+    if ($pet['available'] == "1" && !($pet['owner_id'] == $userId)) {
         $query = 'SELECT * FROM snoozelings WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $pet['pet_id']);
@@ -68,13 +68,9 @@ foreach ($pets as $pet) {
         $stmt->bindParam(":id", $pet['owner_id']);
         $stmt->execute();
         $name = $stmt->fetch(PDO::FETCH_ASSOC);
-        $bed = " (Pet Bed Included)";
-        if ($pet['bed'] === "0") {
-            $bed = " (Needs Pet Bed)";
-        }
         echo '<div class="adoptPet">';
         displayPet($petinfo, "art");
-        echo '<p style="font-size:1.6rem;"><b>' . $pet['cost'] . ' Coins' . $bed . '</b></p>';
+        echo '<p style="font-size:1.6rem;"><b>' . $pet['name'] . ' - ' . $pet['cost'] . ' Gold Coins' . $bed . '</b></p>';
         echo '<p style="font-size: 1.6rem;">Donated By ' . $name['username'] . '</p>';
         echo '<form method="POST" action="includes/adoptSnoozeling.inc.php" onsubmit=\'return confirm("Are you sure that you want to adopt this pet for ' . $pet['cost'] . ' coins?");\'>';
         echo '<input type="hidden" name="pet" value="' . $pet['id'] . '">';

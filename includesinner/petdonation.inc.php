@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     $one = $_POST['petone'];
     $two = $_POST['pettwo'];
-    $bed = $_POST['bed'];
     
     //Check Pet Confirmation
     if (!($one == $two)) {
@@ -36,11 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     foreach ($pets as $pet) {
-        if ($one === $pet['id']) {
+        if ($one == $pet['id']) {
             $check = 1;
         }
     }
-    if ($check === 0) {
+    if ($check == 0) {
+        $_SESSION['reply'] = '<p>You have selected a pet you do not own.</p>';
         $_SESSION['reply'] = '<p>You have selected a pet you do not own.</p>';
         header("Location: ../adoption");
         die(); 
@@ -99,18 +99,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Add to Adoption
     $zero = 0;
-    $query = 'INSERT INTO adopts (pet_id, owner_id, cost, bed, datetime, name, available) VALUES (:pet, :owner, :cost, :bed, :date, :name, :available)';
+    $query = 'INSERT INTO adopts (pet_id, owner_id, cost, datetime, name, available) VALUES (:pet, :owner, :cost, :date, :name, :available)';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":pet", $pet['id']);
     $stmt->bindParam(":owner", $pet['owner_id']);
     $stmt->bindParam(":cost", $coins);
-    $stmt->bindParam(":bed", $bed);
     $stmt->bindParam(":date", $formatted);
     $stmt->bindParam(":name", $pet['name']);
     $stmt->bindParam(":available", $zero);
     $stmt->execute();
     
-    //Return Bed
+    /* //Return Bed
     if ($bed === "0") {
         $list = 27;
         $name = "PetBed";
@@ -130,105 +129,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":rarity", $rarity);
         $stmt->bindParam(":canDonate", $canDonate);
         $stmt->execute();
-    } 
+    } */
     
     
     
-    //Remove & Return all Clothes
-    if ($pet['clothesBottom']) {
-        $clothes = explode(" ", $pet['clothesBottom']);
-        foreach ($clothes as $clothing) {
-            $query = 'SELECT * FROM itemList WHERE name = :name';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":name", $clothing);
-            $stmt->execute();
-            $item = $stmt->fetch(PDO::FETCH_ASSOC);
-            $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":list", $item['id']);
-            $stmt->bindParam(":user", $userId);
-            $stmt->bindParam(":name", $item['name']);
-            $stmt->bindParam(":display", $item['display']);
-            $stmt->bindParam(":description", $item['description']);
-            $stmt->bindParam(":type", $item['type']);
-            $stmt->bindParam(":rarity", $item['rarity']);
-            $stmt->bindParam(":canDonate", $item['canDonate']);
-            $stmt->execute();
-        }
-    }
-    if ($pet['clothesTop']) {
-        $clothes = explode(" ", $pet['clothesTop']);
-        foreach ($clothes as $clothing) {
-            $query = 'SELECT * FROM itemList WHERE name = :name';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":name", $clothing);
-            $stmt->execute();
-            $item = $stmt->fetch(PDO::FETCH_ASSOC);
-            $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":list", $item['id']);
-            $stmt->bindParam(":user", $userId);
-            $stmt->bindParam(":name", $item['name']);
-            $stmt->bindParam(":display", $item['display']);
-            $stmt->bindParam(":description", $item['description']);
-            $stmt->bindParam(":type", $item['type']);
-            $stmt->bindParam(":rarity", $item['rarity']);
-            $stmt->bindParam(":canDonate", $item['canDonate']);
-            $stmt->execute();
-        }
-    }
-    if ($pet['clothesHoodie']) {
-        $clothes = explode(" ", $pet['clothesHoodie']);
-        foreach ($clothes as $clothing) {
-            $query = 'SELECT * FROM itemList WHERE name = :name';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":name", $clothing);
-            $stmt->execute();
-            $item = $stmt->fetch(PDO::FETCH_ASSOC);
-            $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":list", $item['id']);
-            $stmt->bindParam(":user", $userId);
-            $stmt->bindParam(":name", $item['name']);
-            $stmt->bindParam(":display", $item['display']);
-            $stmt->bindParam(":description", $item['description']);
-            $stmt->bindParam(":type", $item['type']);
-            $stmt->bindParam(":rarity", $item['rarity']);
-            $stmt->bindParam(":canDonate", $item['canDonate']);
-            $stmt->execute();
-        }
-    }
-    if ($pet['clothesBoth']) {
-        $clothes = explode(" ", $pet['clothesBoth']);
-        foreach ($clothes as $clothing) {
-            $query = 'SELECT * FROM itemList WHERE name = :name';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":name", $clothing);
-            $stmt->execute();
-            $item = $stmt->fetch(PDO::FETCH_ASSOC);
-            $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":list", $item['id']);
-            $stmt->bindParam(":user", $userId);
-            $stmt->bindParam(":name", $item['name']);
-            $stmt->bindParam(":display", $item['display']);
-            $stmt->bindParam(":description", $item['description']);
-            $stmt->bindParam(":type", $item['type']);
-            $stmt->bindParam(":rarity", $item['rarity']);
-            $stmt->bindParam(":canDonate", $item['canDonate']);
-            $stmt->execute();
-        }
+    //Check for Clothes
+    if ($pet['clothesBottom'] || $pet['clothesTop'] || $pet['clothesBoth'] || $pet['clothesHoodie']) {
+        $_SESSION['reply'] = '<p>You need to remove your pet\'s clothes before donating them.</p>';
+        header("Location: ../adoption");
+        die(); 
     }
     
     //Fix Pet Values
-    $erase = "";
     $closed = "Closed";
     $jack = "jack";
     $zero = 0;
     $title = "Up for Adoption";
-    $query = 'UPDATE snoozelings SET owner_id = :erase, breedStatus = :closed, job = :jack, farmEXP = :zero, craftEXP = :zero, exploreEXP = :zero, title = :title, clothesbottom = :erase, clothesTop = :erase, clothesBoth = :erase, clothesHoodie = :erase WHERE id = :id';
+    $query = 'UPDATE snoozelings SET owner_id = :erase, breedStatus = :closed, job = :jack, farmEXP = :zero, craftEXP = :zero, exploreEXP = :zero, title = :title, clothesbottom = NULL, clothesTop = NULL, clothesBoth = NULL, clothesHoodie = NULL WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":erase", $erase);
+    $stmt->bindParam(":erase", $zero);
     $stmt->bindParam(":closed", $closed);
     $stmt->bindParam(":jack", $jack);
     $stmt->bindParam(":zero", $zero);

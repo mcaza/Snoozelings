@@ -52,6 +52,9 @@
         </div>
         <div>
             <a href="helpme" class="menu">Help Me</a>
+        </div>
+        <div>
+            <a href="premiumshop" class="menu">Code Shop</a>
         </div>';
     }
 

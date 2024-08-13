@@ -24,7 +24,7 @@ $area = $_POST["area"];
     $coinsWon = 0;
     
     //Get Pet Name
-    $query = "SELECT name, owner_id, job FROM snoozelings WHERE id = :id";
+    $query = "SELECT name, owner_id, job, cooldownTime FROM snoozelings WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $petId);
     $stmt->execute();
@@ -53,7 +53,7 @@ $area = $_POST["area"];
     //Check if Pet can Explore
     $now = new DateTime("now", new DateTimezone('UTC'));
     $result = $now->format('Y-m-d H:i:s');
-    if ($result < $pet['cooldownTime']) {
+    if ($result < $name['cooldownTime']) {
         $_SESSION['error'] = "That snoozeling is unable to explore at this time.";
         header("Location: ../explore");
         die(); 
