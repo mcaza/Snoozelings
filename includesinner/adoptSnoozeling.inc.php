@@ -34,10 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $petcheck = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $emptybeds = intval($coins['petBeds']) - count($petchecl);
+    $emptybeds = intval($coins['petBeds']) - count($petcheck);
     if ($emptybeds < 1) {
         $_SESSION['reply'] = 'You do not have an empty bed available';
         header("Location: ../adoption");
+        die();
     }
     
     //Take Coins & Bed

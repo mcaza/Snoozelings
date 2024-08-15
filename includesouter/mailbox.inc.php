@@ -73,14 +73,33 @@ foreach ($mail as $letter) {
     $sender = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<a href="mail?id=' . $letter['id'] . '" >';
     echo '<div class="mail">';
-    if ($letter['opened'] == "1") {
-        echo '<img src="resources/openletter.png" style="width: 80px;height: 80px;">';
+    if ($letter['penpalid']) {
+        if ($letter['opened'] == "1") {
+            echo '<img src="resources/penpalopenletter.png" style="width: 80px;height: 80px;">';
+        } else {
+            echo '<img src="resources/penpalclosedletter.png" style="width: 80px;height: 80px;">';
+        }
     } else {
-        echo '<img src="resources/closedletter.png" style="width: 80px;height: 80px;">';
+        if ($letter['opened'] == "1") {
+            echo '<img src="resources/openletter.png" style="width: 80px;height: 80px;">';
+        } else {
+            echo '<img src="resources/closedletter.png" style="width: 80px;height: 80px;">';
+        }
     }
+    
     echo '<div class="mailInfo">';
     echo '<h4 style="margin-top: .5rem;">' . htmlspecialchars($letter['title']) . '</h4>';
-    echo '<p>From ' . htmlspecialchars($sender['username']) . '</p>';
+    if ($letter['anon'] == 1) {
+        $query = 'SELECT * FROM penpals WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $letter['penpalid']);
+        $stmt->execute();
+        $penpal = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<p>From Anonymous Penpal ' . $penpal['sign'] . '</p>';
+    } else {
+       echo '<p>From ' . htmlspecialchars($sender['username']) . '</p>';
+    }
+    
     echo '</div>';
     echo '<input type="checkbox" href="" name="' . $count . '" value="' . $letter['id'] . '" style="width: 30px; margin-right: 1rem;">';
     echo '</div>';

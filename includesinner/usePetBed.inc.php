@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":id", $userId);
             $stmt->execute();
 
-            //Install New Farm
+            //Install New Bed
             $query = 'UPDATE users SET petBeds = petBeds + 1 WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $userId);

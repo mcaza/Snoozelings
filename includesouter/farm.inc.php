@@ -90,16 +90,16 @@ foreach ($farms as $farm) {
         } else {
             echo '<h4 style="margin-top:0;">Empty Plot</h4>';
         }
-    } elseif ($result < $farm['stg2']) {
-    echo '<img src="resources/emptyBox.png" class="farmBox">';
+    } else if ($result < $farm['stg2']) {
+    echo '<img src="resources/stg1.png" class="farmBox">';
         if ($farm['name']) {
             if ($farm['mystery'] == 1) {
             echo '<h4 style="margin-top:0;">Mystery Plant</h4>';
         } else {
             echo '<h4 style="margin-top:0;">' . $farm['plantName'] . ' Plant</h4>';
         } }
-} elseif ($result < $farm['stg3']) {
-    echo '<img src="resources/emptyBox.png" class="farmBox">';
+} else if ($result < $farm['stg3']) {
+    echo '<img src="resources/stg2.png" class="farmBox">';
         if ($farm['name']) {
             if ($farm['mystery'] == 1) {
             echo '<h4 style="margin-top:0;">Mystery Plant</h4>';

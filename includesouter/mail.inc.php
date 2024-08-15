@@ -36,9 +36,21 @@ echo '</div>';
 //Box with Message and Info
 echo '<div class="letterDisplay">';
 echo '<h3>' . htmlspecialchars($letter['title']) . '</h3>';
-echo '<p style="font-size: 2rem;"><i>Sent By <a href="profile?id=' . $letter['sender'] . '">' . htmlspecialchars($sender['username']) . '</a></i></p>';
+if ($letter['anon'] == 1) {
+    $query = 'SELECT * FROM penpals WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $letter['penpalid']);
+    $stmt->execute();
+    $penpal = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo '<p style="font-size: 2rem;"><i>Sent By Anonymous ' . $penpal['sign'] . '</i></p>';
+} else {
+    echo '<p style="font-size: 2rem;"><i>Sent By <a href="profile?id=' . $letter['sender'] . '">' . htmlspecialchars($sender['username']) . '</a></i></p>';
+}
+
 if ($letter['picture']) {
     echo '<img src="resources/' . $letter['picture'] . '.png" style="width: 200px;">';
+} else if ($letter['anon'] == 1) {
+    echo '<img src="resources/Anon.png" style="width: 200px;">';
 } else {
     //Grab Bonded Info
     $query = "SELECT * FROM snoozelings WHERE id = :bonded";
@@ -58,14 +70,17 @@ echo '</div>';
 
 //Reply Box with Button
 if ($num < 3 || $num > 9) {
-echo '<hr>';
-echo '<form method="POST" action="includes/sendReply.inc.php">';
-echo '<label style="margin-top: 1rem;" for="reply" class="form">Send Reply</label><br>';
-echo '<textarea name="reply" cols="72" class="input" style="height: 20rem;" id="bio"></textarea><br>';
-echo '<input type="hidden" name="to" value="' . $letter['sender'] . '">';
-echo '<input type="hidden" name="title" value="' . $letter['title'] . '">';
-echo '<button  class="fancyButton">Send Reply</button>';
-echo '</form>';
+    echo '<hr>';
+    echo '<form method="POST" action="includes/sendReply.inc.php">';
+    echo '<label style="margin-top: 1rem;" for="reply" class="form">Send Reply</label><br>';
+    echo '<textarea name="reply" cols="72" class="input" style="height: 20rem;" id="bio"></textarea><br>';
+    echo '<input type="hidden" name="to" value="' . $letter['sender'] . '">';
+    echo '<input type="hidden" name="title" value="' . $letter['title'] . '">';  
+    if ($letter['anon'] == 1) {
+        echo '<input type="hidden" name="penpal" value="' . $letter['penpalid'] . '">';
+    }
+    echo '<button  class="fancyButton">Send Reply</button>';
+    echo '</form>';
 }
 
 //Delete Button

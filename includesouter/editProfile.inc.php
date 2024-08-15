@@ -189,6 +189,28 @@ echo '</select><br>';
 $yes = "";
 $no = "";
 
+//Penpal Mail Setting
+echo '<label for="penpal" class="form">Penpal Intensity:</label><br>';
+switch ($result['penpal']) {
+    case "Easy":
+        $easy = "selected";
+        break;
+    case "Moderate":
+        $moderate = "selected";
+        break;
+    case "Stressful":
+        $stressful = "selected";
+        break;
+}
+echo '<select class="input" name="penpal">';
+echo '<option value="Easy"' . $easy . '>Easy</option>';
+echo '<option value="Moderate"' . $moderate . '>Moderate</option>';
+echo '<option value="Stressful"' . $stressful . '>Stressful</option>';
+echo '</select><br>';
+$easy = "";
+$moderate = "";
+$stressful = "";
+
 //Bonded Snoozeling
 echo '<label for="bonded" class="form">Change Bonded Snoozeling:</label><br>';
 echo '<select class="input" name="bonded">';

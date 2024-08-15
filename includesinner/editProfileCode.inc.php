@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     $farmName = $_POST['farm'];
     $mailbox = $_POST['mailbox'];
+    $penpal = $_POST['penpal'];
     $shortcutArray = "";
     
      //Update Shortcuts
@@ -129,9 +130,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
         }
     }
+    
     //Alow Messages
     if ($messages) {
         if (!($messages === "0" || $messages === "1")) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    
+    //Penpal Intensity
+    if ($penpal) {
+        if (!($penpal === "Easy" || $penpal === "Moderate" || $penpal === "Stressful")) {
             header("Location: ../editprofile?id=" . $userId);
             die();
         }
@@ -166,6 +176,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":messages", $messages);
     $stmt->bindParam(":friends", $friends);
     $stmt->execute();
+    
+    //Update Penpal Setting
+    if ($penpal) {
+        $query = "UPDATE users SET penpal = :penpal WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":penpal", $penpal);
+        $stmt->execute();
+    }
     
     //Update Mailbox Color
     if ($mailbox) {
