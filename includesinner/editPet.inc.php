@@ -146,6 +146,7 @@ $userId = $_SESSION['user_id'];
                     $list = "";
                     $newList = "";
             } elseif ($type === "clothesBoth") {
+                
                     $list = explode(" ", $snooze["clothesBoth"]);
                 //Check if Still Equipt
                     $temp = $namearray[$count];

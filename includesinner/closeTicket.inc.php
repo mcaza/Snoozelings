@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Reply Message
-    $_SESSION['reply'] = "Ticket has been escalated.";
+    $_SESSION['reply'] = "Ticket has been closed.";
     
     //Redirect
     header("Location: ../stafftickets");

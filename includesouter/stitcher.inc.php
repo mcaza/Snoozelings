@@ -132,7 +132,7 @@ if ($page === "questions") {
     }
 } elseif ($page === "new") {
     //Check Active Breeding
-    $query = "SELECT * FROM breedings WHERE user_id = :id ORDER BY id DESC LIMIT 1";
+    $query = "SELECT * FROM breedings WHERE user_id = :id AND completed = 0";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
@@ -157,7 +157,25 @@ if ($page === "questions") {
     $stmt->execute();
     $bp = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $bpcount = count($bp);
-    if ($breedingstatus['completed'] === "0") {
+    
+    //Count Beds
+    $query = "SELECT * FROM users WHERE id = :user";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user", $userId);
+    $stmt->execute();
+    $beds = $stmt->fetch(PDO::FETCH_ASSOC); 
+
+    
+    $query = "SELECT * FROM snoozelings WHERE owner_id = :user";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user", $userId);
+    $stmt->execute();
+    $snoozes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $bedCount = intval($beds['petBeds']) - count($snoozes);
+
+    
+    if ($breedingstatus['completed'] == "0") {
         echo '<p><strong>You need to wait until your snoozeling is delivered before you can craft another.</strong></p>';
         
         
@@ -170,6 +188,8 @@ if ($page === "questions") {
     } else {
         if (!$bpcount) {
             echo '<p><strong>You do not have any blueprints. <br><br>You need at least 1 blueprint to make a new snoozeling.</strong></p>';
+        } else if ($bedCount < 1) {
+            echo '<p><strong>You do not have any empty beds. Each snoozeling needs a bed to sleep in.</strong></p>';
         } else {
             if ($bpcount > 10) {
                 $bpcount = 10;

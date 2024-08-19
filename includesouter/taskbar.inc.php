@@ -4,8 +4,8 @@
         echo '<div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s Abode</a></button>
             <div class="dropdown-content">
-                <a href="collection?id=' . $_SESSION['user_id'] . '">Snoozeling Nests</a>
-                <a href="crafting">Crafting Table</a>
+                <a href="/collection?id=' . $_SESSION['user_id'] . '">Snoozeling Nests</a>
+                <a href="/crafting">Crafting Table</a>
                 <a href="dyes">Dye Station</a>
                 <a href="farm">Farm Plots</a>
                 <a href="pack">Fanny Pack</a>
@@ -45,16 +45,16 @@
         </div>';
     } else {
         echo '<div>
-            <a href="signup" class="menu">Sign Up</a>
+            <a href="/signup" class="menu">Sign Up</a>
         </div>
         <div>
-            <a href="login" class="menu">Log In</a>
+            <a href="/login" class="menu">Log In</a>
         </div>
         <div>
-            <a href="helpme" class="menu">Help Me</a>
+            <a href="/helpme" class="menu">Help Me</a>
         </div>
         <div>
-            <a href="premiumshop" class="menu">Code Shop</a>
+            <a href="/premiumshop" class="menu">Code Shop</a>
         </div>';
     }
 

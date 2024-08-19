@@ -5,7 +5,7 @@ $id = $_GET['id'];
 $userId = $_SESSION['user_id'];
 
 //Check if There is a Breeding
-$query = 'SELECT * FROM breedings WHERE id = :id';
+$query = 'SELECT * FROM breedings WHERE id = :id AND completed = 0';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $id);
 $stmt->execute();
@@ -37,3 +37,10 @@ if ($result['user_id'] == $userId) {
     header("Location: ../");
     die();
 }
+
+//Check if it has already been selected
+if (!empty($result['blueprint'])) {
+    $_SESSION['reply'] = 'You have already selected a blueprint for this breeding.';
+    header("Location: ../stitcher");
+    die();
+} 

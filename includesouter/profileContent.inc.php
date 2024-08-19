@@ -316,7 +316,7 @@ if ($id === "4") {
     }
     
 
-    if ($userId === "1") {
+    if ($userId == "1") {
     echo '<div style="text-align: right;"><form action="includes/rewardCoin.inc.php" method="POST"><input type="hidden" name="user" value="' . $id . '"><input name="reason" type="text" class="input"><br><button class="modButton">Kindness Coin</button></form></div>';
     }
 

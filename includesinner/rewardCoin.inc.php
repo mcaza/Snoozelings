@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $reason = $_POST['reason'];
     
     //Make sure Slothie
-    if (!($userId === "1")) {
+    if (!($userId == "1")) {
         header("Location: ../index");
         die();
     }

@@ -9,11 +9,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bp = $_POST['snoozeling'];
     
     //Grab Breeding ID
-    $query = "SELECT * FROM breedings WHERE user_id = :id ORDER BY id DESC LIMIT 1";
+    $query = "SELECT * FROM breedings WHERE user_id = :id AND completed = 0";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Check if breeding is already selected
+    if (!empty($result['blueprint'])) {
+        $_SESSION['reply'] = 'You have already selected a blueprint for this breeding.';
+        header("Location: ../stitcher");
+        die();
+    } 
     
     if (!$bp) {
         $_SESSION['reply'] = "You must pick a snoozeling.";
@@ -52,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     $_SESSION['reply'] = 'I\'ll send your new snoozeling in the mail as soon as I\'m finished.';
-    header("Location: ../stitcher?page=new");
+    header("Location: ../stitcher");
     
 } else {
 header("Location: ../index");
