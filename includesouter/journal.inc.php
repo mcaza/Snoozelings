@@ -45,15 +45,20 @@ if ($journalCheck) {
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
         $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
-    } elseif ($journal['type'] === "pain") {
+    } else if ($journal['type'] === "pain") {
         $query = 'SELECT * FROM chronicPainEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else if ($journal['type'] == "productivity") {
+        $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
         $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
-
 
 //Title
 echo '<h3>Daily Journal</h3>';
@@ -107,7 +112,10 @@ if (!$journalCheck) {
     echo '<img src="resources/journal.png" style="width: 300px;"><br>';
     
     //Journal Button
-    echo '<button class="fancyButton" onClick="window.location.href=\'/journalentry\'">Write Journal</button>';
+    echo '<button class="fancyButton" onClick="window.location.href=\'/journalentry\'" style="margin-right: 2rem;">Write Journal</button>';
+    
+    //View Journal Button
+    echo '<button class="fancyButton" onClick="hideFunctions()">Past Journals</button>';
     
 } elseif ($latestEntry['closed'] == "0") {
     //Check if Any Messages (Earn Coins OR Journal Edit)
@@ -133,7 +141,8 @@ if (!$journalCheck) {
     echo '<button class="fancyButton" onClick="window.location.href=\'/journaledit\'" style="margin-right: 2rem;">Edit Journal</button>';
     
     //View Journal Button
-    echo '<button class="fancyButton" onClick="window.location.href=\'/viewjournals\'">View Journals</button>';
+    echo '<button class="fancyButton" onClick="hideFunctions()">Past Journals</button>';
+    
 }
 
 echo '</div>';
@@ -141,6 +150,19 @@ echo '</div>';
 //End Div
 echo '</div>';
 
+
+echo '<div id="journalFunctions" style="display:none;">';
+echo '<hr>';
+
+//Title
+echo '<h3>Past Journals</h3><br><br>';
+
+//Buttons
+echo '<div style="display:flex;justify-content:space-evenly;">
+                <button class="fancyButton" onClick="window.location.href=\'/viewjournals\'">View Journals</button>
+                <button class="fancyButton" onClick="window.location.href=\'/quickFacts\'">Quick Statistics</button>';
+//echo '<button class="fancyButton" onClick="window.location.href=\'/exportJournal\'">.PDF Export</button>';
+echo '</div></div>';
 
 
 

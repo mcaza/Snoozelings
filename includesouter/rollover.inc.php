@@ -7,7 +7,7 @@
     $now = new DateTime('now', new DateTimezone('UTC'));
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $rotime = $modified->format('Y-m-d H:i:s');
-    $hours = 6;
+    $hours = 3;
     $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
     $mailone = $modified->format('Y-m-d H:i:s');
     $hours = 16;

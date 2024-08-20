@@ -5,7 +5,7 @@ require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
-$username = $_SESSION['user_username'];
+
 
 
 ?>
@@ -16,7 +16,7 @@ $username = $_SESSION['user_username'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $username ?>'s Journal</title>
+    <title>Journal Statistics</title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -71,7 +71,7 @@ $username = $_SESSION['user_username'];
 
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
-            <?php require_once '../includes/journal.inc.php'; ?>
+            <?php require_once '../includes/quickFacts.inc.php' ?>
         </div></div>
     </div>
     <!--End of All Main Content-->
@@ -94,15 +94,3 @@ $username = $_SESSION['user_username'];
 </body>
 
 </html>
-
-<script>
-function hideFunctions() {
-    var type = document.getElementById('journalFunctions').style.display;
-    if (type == "none") {
-        document.getElementById("journalFunctions").style.display = "block";
-    } else {
-        document.getElementById("journalFunctions").style.display = "none";
-    }
-    
-}
-</script>

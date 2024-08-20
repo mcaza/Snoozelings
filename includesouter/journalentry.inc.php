@@ -10,28 +10,27 @@ $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-$type = $result ['type'];
+$type = $result['type'];
 
 //Check For Open Entries
     if ($type === "mentalHealth") {
         $query = 'SELECT * FROM mentalHealthEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute();
-        $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
-    } elseif ($type === "pain") {
-        $query = 'SELECT * FROM chronicPainEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute();
-        $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else if ($type === "pain") {
+        $query = 'SELECT * FROM chronicPainEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';  
+    } else if ($type === "productivity") {
+        $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';  
     }
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
 
  if (!$latestEntry || $latestEntry['closed'] == "1") {
-    //Back to Pack Arrows
-  echo '<div class="leftRightButtons">';
+//Back to Pack Arrows
+echo '<div class="leftRightButtons">';
 echo '<a href="journal"><<</a>';
 echo '</div>';
+     
     //Check Type of Journal
     if ($type === "mentalHealth") {
         echo "<form method='POST' action='includes/entryMentalHealth.inc.php' onsubmit=\"return confirm('Please confirm there is no identifying information');\">";    
@@ -373,7 +372,155 @@ echo '</div>';
         
         echo '<button  class="fancyButton">Submit</button>';
         echo '</form>'; 
-    }
+    } else if ($type == "productivity") {
+     echo "<form method='POST' action='includes/entryProductivity.inc.php' onsubmit=\"return confirm('Please confirm there is no identifying information');\">"; 
+     if ($latestEntry) {
+         echo '<h3>Today</h3><br>';
+         echo '<h1>Most Important Task of the Day</h1>';
+         echo '<div class="checkboxJournal"><input type="checkbox" name="oneCheck" value="oneCheck" id="oneCheck"><label for="oneCheck">' . htmlspecialchars($latestEntry['taskOne']) . '</label></div><br>';
+         echo '<h1>Secondary Tasks of Importance</h1>';
+         echo '<div class="checkboxJournal"><input type="checkbox" name="twoCheck" value="twoCheck" id="twoCheck"><label for="twoCheck">' . htmlspecialchars($latestEntry['taskTwo']) . '</label></div>';
+         echo '<div class="checkboxJournal"><input type="checkbox" name="threeCheck" value="threeCheck" id="threeCheck"><label for="threeCheck">' . htmlspecialchars($latestEntry['taskThree']) . '</label></div><br>';
+         if ($latestEntry['taskFour'] || $latestEntry['taskFive']) {
+             echo '<h1>Less Important Tasks</h1>';
+             echo '<div class="checkboxJournal"><input type="checkbox" name="fourCheck" value="fourCheck" id="fourCheck"><label for="fourCheck">' . htmlspecialchars($latestEntry['taskFour']) . '</label></div>';
+             echo '<div class="checkboxJournal"><input type="checkbox" name="fiveCheck" value="fiveCheck" id="fiveCheck"><label for="fiveCheck">' . htmlspecialchars($latestEntry['taskFive']) . '</label></div><br>';
+         }
+         
+        //Rate Productivity
+        echo '<label class="form" style="margin-top: 2rem;">Rate Your Productivity:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="1" required id="pro1"><label for="pro1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="2" id="pro2"><label for="pro2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="3" id="pro3"><label for="pro3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="4" id="pro4"><label for="pro4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="5" id="pro5"><label for="pro5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="6" id="pro6"><label for="pro6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="7" id="pro7"><label for="pro7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="8" id="pro8"><label for="pro8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="9" id="pro9"><label for="pro9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="productivity" value="10" id="pro10"><label for="pro10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Not Productive to Super Productive</i></p>';
+         
+        //Rate Mood
+        echo '<label class="form" style="margin-top: 2rem;">Rate Your Mood:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="1" required id="mood1"><label for="mood1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="2" id="mood2"><label for="mood2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="3" id="mood3"><label for="mood3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="4" id="mood4"><label for="mood4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="5" id="mood5"><label for="mood5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="6" id="mood6"><label for="mood6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="7" id="mood7"><label for="mood7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="8" id="mood8"><label for="mood8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="9" id="mood9"><label for="mood9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mood" value="10" id="mood10"><label for="mood10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Horrible Mood to Spectacular Mood</i></p>';
+         
+        //Rate Physical Health
+        echo '<label class="form" style="margin-top: 2rem;">Rate Your Physical Health:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="health" value="1" required id="hea1"><label for="hea1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="2" id="hea2"><label for="hea2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="3" id="hea3"><label for="hea3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="4" id="hea4"><label for="hea4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="5" id="hea5"><label for="hea5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="6" id="hea6"><label for="hea6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="7" id="hea7"><label for="hea7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="8" id="hea8"><label for="hea8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="9" id="hea9"><label for="hea9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="health" value="10" id="hea10"><label for="hea10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Bad to Excellent</i></p>';
+         
+         //Rate Mental Health
+        echo '<label class="form" style="margin-top: 2rem;">Rate Your Physical Health:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="mental" value="1" required id="men1"><label for="men1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="2" id="men2"><label for="men2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="3" id="men3"><label for="men3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="4" id="men4"><label for="men4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="5" id="men5"><label for="men5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="6" id="men6"><label for="men6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="7" id="men7"><label for="men7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="8" id="men8"><label for="men8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="9" id="men9"><label for="men9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="10" id="men10"><label for="men10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Bad to Excellent</i></p>';
+        
+        //Check for Habits
+        $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER BY id DESC LIMIT 7'; 
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $habits = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($habits as $habit) {
+            if ($habit['habitOne']) {
+                $habitOne = $habit['habitOne'];
+                $habitTwo = $habit['habitTwo'];
+                break;
+            }
+        }
+        if ($habitOne) {
+            echo '<h1>Check All Completed Habits</h1>';
+            echo '<div class="checkboxJournal"><input type="checkbox" name="habitCheckOne" value="habitCheckOne" id="habitCheckOne"><label for="habitCheckOne"> ' . htmlspecialchars($habitOne) . '</label></div>';
+            echo '<div class="checkboxJournal"><input type="checkbox" name="habitCheckTwo" value="habitCheckTwo" id="habitCheckTwo"><label for="habitCheckTwo"> ' . htmlspecialchars($habitTwo) . '</label></div>';
+        }
+         //Notes
+         echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" for="notes" ><b>Notes:</b></label><br>';
+         echo '<input class="input" type="text" name="notes"><br>';
+         echo '<hr>';
+     }
+        
+        echo '<h3>Tomorrow</h3><br>';
+        //Task One
+        echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" for="tomorrowTaskOne" ><b>Most Important Task:</b></label><br>';
+        echo '<p><i>If this was the only thing you did tomorrow, you\'d be satisfied</i></p>';
+        echo '<input class="input" type="text" name="tomorrowTaskOne" required><br>';
+        
+        //Task Two & Three
+        echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Secondary Tasks:</b></label><br>';
+        echo '<p><i>Completion of these tasks will make the day even better</i></p>';
+        echo '<input class="input" type="text" name="tomorrowTaskTwo" required><br>';
+        echo '<input class="input" type="text" name="tomorrowTaskThree" required><br>';
+        
+        if (date('w', strtotime($date)) != 5 && date('w', strtotime($date)) != 6) {
+            //Task Four & Five
+            echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Less Important Tasks:</b></label><br>';
+            echo '<p><i>To be completed only after completing the tasks above</i></p>';
+            echo '<input class="input" type="text" name="tomorrowTaskFour" required><br>';
+            echo '<input class="input" type="text" name="tomorrowTaskFive" required><br>';
+        }
+        
+        echo '<hr>';
+        if (date('w', strtotime($date)) == 7) {
+            echo '<h3>Next Week</h3><br>';
+            echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Next Week\'s Habits:</b></label><br>';
+            echo '<input class="input" type="text" name="newHabitOne" required><br>';
+            echo '<input class="input" type="text" name="neaHabitTwo" required><br>';
+            
+            echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Weekly Wins:</b></label><br>';
+            echo '<p><i>Reflect on the past week. What wins are you proud of?</i></p>';
+            echo '<input class="input" type="text" name="weeklyWins" required><br>';
+            
+            echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Weekly Losses:</b></label><br>';
+            echo '<p><i>Reflect on the past week. What tasks fell through your planning?</i></p>';
+            echo '<input class="input" type="text" name="weeklyLoses" required><br>';
+            
+            echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Weekly Lesson:</b></label><br>';
+            echo '<p><i>Reflect on the past week. What lessons did you learn this week?</i></p>';
+            echo '<input class="input" type="text" name="weeklyLesson" required><br>';
+        }
+    echo '<button  class="fancyButton">Submit</button>';
+     echo "</form>";
+ } 
 } else {
     header("Location: ../journal.php");
     die();

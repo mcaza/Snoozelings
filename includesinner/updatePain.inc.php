@@ -202,7 +202,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST['fever']) {
         $symptoms .= "Fever, ";
     }
-    $symptoms = "";
     if ($_POST['chills']) {
         $symptoms .= "Chills, ";
     }
@@ -223,8 +222,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     $symptoms = substr($symptoms, 0, -2);
         
-    $symptoms = substr($symptoms, 0, -2);
-        $description = substr($description, 0, -2);
         $query = "UPDATE chronicPainEntries SET otherSymptoms = :symptoms WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);

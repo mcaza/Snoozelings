@@ -52,7 +52,7 @@ if ($id == 2) {
     echo '<h3>Available Codes</h3>';
     echo '<p>Use Ctrl + f to check if your wanted ID is still available</p><br>';
     echo '<div style="display:flex;justify-content:space-evenly;gap:10px;flex-wrap:wrap;width:80%;">';
-    for ($i = 101; $i < 1000; $i++) {
+    for ($i = 100; $i < 1000; $i++) {
         if (!in_array($i, $codearray)) {
             echo '<div style="border:silver 1px solid;border-radius:5px;padding:3px;"><p>' . $i . '</p></div>';
         }
@@ -63,7 +63,7 @@ if ($id == 2) {
     echo '<h3>Available Codes</h3>';
     echo '<p>Use Ctrl + f to check if your wanted ID is still available</p><br>';
     echo '<div style="display:flex;justify-content:space-evenly;gap:10px;flex-wrap:wrap;width:80%;">';
-    for ($i = 11; $i < 100; $i++) {
+    for ($i = 10; $i < 100; $i++) {
         if (!in_array($i, $codearray)) {
             echo '<div style="border:silver 1px solid;border-radius:5px;padding:3px;"><p>' . $i . '</p></div>';
         }

@@ -101,51 +101,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST['exhaustion']) {
         $symptoms .= "Exhaustion, ";
     }
-    $symptoms = "";
     if ($_POST['nausea']) {
         $symptoms .= "Nausea, ";
     }
-    $symptoms = "";
     if ($_POST['vomit']) {
         $symptoms .= "Vomiting, ";
     }
-    $symptoms = "";
     if ($_POST['poops']) {
         $symptoms .= "Bad Poops, ";
     }
-    $symptoms = "";
     if ($_POST['throat']) {
         $symptoms .= "Sore Throat, ";
     }
-    $symptoms = "";
     if ($_POST['insomnia']) {
         $symptoms .= "Insomnia, ";
     }
-    $symptoms = "";
     if ($_POST['bloating']) {
         $symptoms .= "Bloating, ";
     }
-    $symptoms = "";
     if ($_POST['fever']) {
         $symptoms .= "Fever, ";
     }
-    $symptoms = "";
     if ($_POST['chills']) {
         $symptoms .= "Chills, ";
     }
-    $symptoms = "";
     if ($_POST['congestion']) {
         $symptoms .= "Congestion, ";
     }
-    $symptoms = "";
     if ($_POST['muscle']) {
         $symptoms .= "Muscle Spasms, ";
     }
-    $symptoms = "";
     if ($_POST['fog']) {
         $symptoms .= "Brain Fog, ";
     }
-    $symptoms = "";
     if ($_POST['badmood']) {
         $symptoms .= "Bad Mood, ";
     }
