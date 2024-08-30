@@ -32,12 +32,36 @@ echo '<div id="onlyOne" class="leftRightButtons">';
 if ($id == 10) {
     echo '<a id="leftArrow" href="collection?id=2"><<</a>';
 } else if ($id > 1) {
-    echo '<a id="leftArrow" href="collection?id=' . ($id - 1) . '"><<</a>';
+    $num = $id;
+                do {
+                    $num = $num - 1;
+                    $query = "SELECT * FROM users WHERE id = :id;";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->execute();
+                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($downtest) {
+                        break;
+                    }
+                } while ($num) ;
+                echo '<a id="leftArrow" href="collection?id=' . $num . '"><<</a>';
 }
 if ($id == 2) {
     echo '<a href="collection?id=10">>></a>';
 } else {
-    echo '<a href="collection?id=' . ($id + 1) . '">>></a>';
+    $num = $id;
+                do {
+                    $num = $num + 1;
+                    $query = "SELECT * FROM users WHERE id = :id;";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->execute();
+                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($downtest) {
+                        break;
+                    }
+                } while ($num) ;
+    echo '<a href="collection?id=' . $num . '">>></a>';
 }
             
     

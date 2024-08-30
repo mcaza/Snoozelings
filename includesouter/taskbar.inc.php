@@ -37,6 +37,7 @@
             <button class="menu dropdown dropbtn" id="drop"><a href="community">Community</a></button>
             <div class="dropdown-content">
                 <a href="mailbox">Mailbox</a>
+                <a href="penpals">Penpal Board</a>
                 <a href="critterweb">Critter Web</a>
             </div>
         </div>

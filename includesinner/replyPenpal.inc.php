@@ -6,10 +6,11 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Grab Form Variables
     $reply = $_POST["post"];
-    $id = $_POST["request"];
+    $id = htmlspecialchars($_POST["request"]);
     $userId = $_SESSION['user_id'];
     $emoticons = [':‑)',':)',':-]',':]',':}',':^)','=]', '=)', ':‑D',':D','=D','=3','c:','C:',':O',':‑O',':‑o',':o',':-0',':0','=O','=o','=0',':-3',':3','=3','>:3',':‑P',':P',':‑p','>:P','>:‑)','}:)','>:)','>:3','\o/','*\0/*','._.','O_O','o_o','O-O','o‑o','O_o','o_O','\( ͡° ͜ʖ ͡°\)','\(◕‿◕✿\)','ʕ •ᴥ•ʔ','<(｀^´)>','^_^','(°o°)','=^_^=','>^_^<','^_^','\(^o^)/','＼(^o^)／'];
-    
+    $count = count($emoticons) - 1;
+    $num = rand(0,$count);
     
     //Get Request Info
     $query = "SELECT * FROM penpalRequests WHERE id = :id";
@@ -19,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $request = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$request) {
-        header("Location: ../penpals");
+        header("Location: ../index");
         die();
     }
 
@@ -30,24 +31,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
     
-    //Check Owner ID Does Not Match
-    if ($request['user'] == $userId) {
-        //header("Location: ../penpals");
-        die();
-    }
     
     //Post Penpal
-    $query = "INSERT INTO penpals (user1, user2, request) VALUES (:user1, :user2, :request)";
+    $query = "INSERT INTO penpals (user1, user2, request,sign) VALUES (:user1, :user2, :request,:sign)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user1", $request['user']);
     $stmt->bindParam(":user2", $userId);
     $stmt->bindParam(":request", $request['id']);
+    $stmt->bindParam(":sign", $emoticons[$num]);
     $stmt->execute();
     
     //Get Penpal ID
-    $query = "SELECT * FROM penpals WHERE request = :request";
+    $query = "SELECT * FROM penpals WHERE request = :request AND user2 = :id ORDER BY id DESC";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":request", $request['id']);
+    $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $newid = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -68,6 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Mark Reply as Closed
+    //Cancel Request
+    $query = 'UPDATE penpalRequests SET closed = 1 WHERE id = :ticketid';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":ticketid", $id);
+    $stmt->execute();
+    
     
     $_SESSION['reply'] = "Your reply is in the postbox and will be delivered soon.";
     

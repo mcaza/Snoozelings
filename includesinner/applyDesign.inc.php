@@ -24,7 +24,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $petname = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if (str_contains($designid['name'], "Wings")) {
+    if (str_contains($designid['name'], "Tail")) {
+        
+        $name = str_replace("Design", "", $designid['name']);
+        $name = str_replace("Tail", "", $name);
+        //Apply Fabric to Snoozeling
+        $query = "UPDATE snoozelings SET tailType = :design WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":design", $name);
+        $stmt->bindParam(":id", $pet);
+        $stmt->execute();
+        $_SESSION['reply'] = $petname['name'] . " loves their new tail!!";
+        
+    } else if (str_contains($designid['name'], "Hair") || str_contains($designid['name'], "Spikes")) {
+        $name = str_replace("Design", "", $designid['name']);
+        if (str_contains($designid['name'], "Hair")) {
+            $name = str_replace("Hair", "", $name);
+        } else if (str_contains($designid['name'], "Spikes")) {
+            
+        }
+        
+        //Apply Fabric to Snoozeling
+        $query = "UPDATE snoozelings SET hairType = :design WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":design", $name);
+        $stmt->bindParam(":id", $pet);
+        $stmt->execute();
+        $_SESSION['reply'] = $petname['name'] . " loves their new hair!!";
+    } else {
         //Get Specials String
         $specials = $petname['specials'];
         
@@ -36,6 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         //Clean String
         $clean = trim($specials);
         
+        echo $clean;
+        die();
+        
         //Update Specials
         $query = "UPDATE snoozelings SET specials = :design WHERE id = :id";
         $stmt = $pdo->prepare($query);
@@ -43,27 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":id", $pet);
         $stmt->execute();
         
-        $_SESSION['reply'] = $petname['name'] . " loves their new wings!!";
-    } else if (str_contains($designid['name'], "Hair")) {
-        $name = str_replace("Design", "", $designid['name']);
-        $name = str_replace("Hair", "", $name);
-        //Apply Fabric to Snoozeling
-        $query = "UPDATE snoozelings SET hairType = :design WHERE id = :id";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":design", $name);
-        $stmt->bindParam(":id", $pet);
-        $stmt->execute();
-        $_SESSION['reply'] = $petname['name'] . " loves their new hair!!";
-    } else {
-        $name = str_replace("Design", "", $designid['name']);
-        $name = str_replace("Tail", "", $name);
-        //Apply Fabric to Snoozeling
-        $query = "UPDATE snoozelings SET tailType = :design WHERE id = :id";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":design", $name);
-        $stmt->bindParam(":id", $pet);
-        $stmt->execute();
-        $_SESSION['reply'] = $petname['name'] . " loves their new tail!!";
+        $_SESSION['reply'] = $petname['name'] . " loves their new look!!";
     }
     
     

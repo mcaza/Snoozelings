@@ -463,8 +463,8 @@ echo '</div>';
         $habits = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($habits as $habit) {
             if ($habit['habitOne']) {
-                $habitOne = $habit['habitOne'];
-                $habitTwo = $habit['habitTwo'];
+                $habitOne = htmlspecialchars($habit['habitOne']);
+                $habitTwo = htmlspecialchars($habit['habitTwo']);
                 break;
             }
         }

@@ -18,6 +18,8 @@ if ($type == "mentalHealth") {
     $query = 'SELECT * FROM mentalHealthEntries WHERE user_id = :id ORDER by id DESC';
 } else if ($type == "pain") {
     $query = 'SELECT * FROM chronicPainEntries WHERE user_id = :id ORDER by id DESC';
+} else if ($type == "productivity") {
+    $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER by id DESC';
 }
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
@@ -113,6 +115,27 @@ function findMostFrequent($arr) {
     return $mostFrequent;
 }
 
+//Calculate Percent
+function calculatePercent($numone, $numtwo) {
+    return round(($numone / $numtwo) * 100);
+}
+
+//Check Habits / Tasks
+function countTasks($numone, $numtwo) {
+    $newnum = calculatePercent($numone, $numtwo);
+    if ($newnum < 20) {
+        echo 'Very Low <i>(' . $numone . '/' . $numtwo . ')</i>';
+    } else if ($newnum < 40) {
+        echo 'Low <i>(' . $numone . '/' . $numtwo . ')</i>';
+    } else if ($newnum < 60) {
+        echo 'Moderate <i>(' . $numone . '/' . $numtwo . ')</i>';
+    } else if ($newnum < 80) {
+        echo 'High <i>(' . $numone . '/' . $numtwo . ')</i>';
+    } else {
+        echo 'Very High <i>(' . $numone . '/' . $numtwo . ')</i>';
+    }
+}
+
 //Back to Journal Arrows
 echo '<div class="leftRightButtons">';
 echo '<a href="journal"><<</a>';
@@ -128,6 +151,7 @@ if ($type == "mentalHealth") {
         echo '<div class="journalEntry">';
         echo '<h1>Last Seven Entries</h1>';
         $count = 1;
+        $num = 7;
         $anx = 0;
         $dep = 0;
         $str = 0;
@@ -144,18 +168,18 @@ if ($type == "mentalHealth") {
             $sle += $entry['sleep'];
             $wat += $entry['water'];
             $count++;
-            if ($count == 7) {
+            if ($count == $num) {
                 break;
             }
         }
         
-        $anx = round($anx / 7, 1);
-        $dep = round($dep / 7, 1);
-        $str = round($str / 7, 1);
-        $hea = round($hea / 7, 1);
-        $pro = round($pro / 7, 1);
-        $sle = round($sle / 7, 1);
-        $wat = round($wat / 7, 1);
+        $anx = round($anx / $num, 1);
+        $dep = round($dep / $num, 1);
+        $str = round($str / $num, 1);
+        $hea = round($hea / $num, 1);
+        $pro = round($pro / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
         
         
         echo '<p style="text-align:left;">';
@@ -170,25 +194,25 @@ if ($type == "mentalHealth") {
         checkQuantity($wat,"Water Consumption");
         echo '<br><b>Good Habits: </b></p>';
         echo '<ul style="text-align:left;">';
-        countTimes("Ate a Meal","productive",7,$entries);
-        countTimes("Showered/Bathed","productive",7,$entries);
-        countTimes("Brushed Teeth","productive",7,$entries);
-        countTimes("Did a Chore","productive",7,$entries);
-        countTimes("Went for a Walk","productive",7,$entries);
-        countTimes("Did Some Excercise","productive",7,$entries);
-        countTimes("Talked To Friends/Family","productive",7,$entries);
-        countTimes("Made Some Art","productive",7,$entries);
-        countTimes("Went to Therapy","productive",7,$entries);
+        countTimes("Ate a Meal","productive",$num,$entries);
+        countTimes("Showered/Bathed","productive",$num,$entries);
+        countTimes("Brushed Teeth","productive",$num,$entries);
+        countTimes("Did a Chore","productive",$num,$entries);
+        countTimes("Went for a Walk","productive",$num,$entries);
+        countTimes("Did Some Excercise","productive",$num,$entries);
+        countTimes("Talked To Friends/Family","productive",$num,$entries);
+        countTimes("Made Some Art","productive",$num,$entries);
+        countTimes("Went to Therapy","productive",$num,$entries);
         echo '</ul>';
         echo '<p style="text-align:left;"><b>Bad Habits: </b></p>';
         echo '<ul style="text-align:left;">';
-        countTimes("Doomscrolled","destructive",7,$entries);
-        countTimes("Lashed Out at Others","destructive",7,$entries);
-        countTimes("Isolated Myself","destructive",7,$entries);
-        countTimes("Stayed Home from School/Work","destructive",7,$entries);
-        countTimes("Spent Recklessly","destructive",7,$entries);
-        countTimes("Picked at my Body","destructive",7,$entries);
-        countTimes("Hurt Myself","destructive",7,$entries);
+        countTimes("Doomscrolled","destructive",$num,$entries);
+        countTimes("Lashed Out at Others","destructive",$num,$entries);
+        countTimes("Isolated Myself","destructive",$num,$entries);
+        countTimes("Stayed Home from School/Work","destructive",$num,$entries);
+        countTimes("Spent Recklessly","destructive",$num,$entries);
+        countTimes("Picked at my Body","destructive",$num,$entries);
+        countTimes("Hurt Myself","destructive",$num,$entries);
         echo '/<ul>';
         echo '</div>';
         
@@ -201,6 +225,7 @@ if ($type == "mentalHealth") {
         echo '<div class="journalEntry">';
         echo '<h1>Last Thirty Entries</h1>';
         $count = 1;
+        $num = 30;
         $anx = 0;
         $dep = 0;
         $str = 0;
@@ -217,18 +242,18 @@ if ($type == "mentalHealth") {
             $sle += $entry['sleep'];
             $wat += $entry['water'];
             $count++;
-            if ($count == 30) {
+            if ($count == $num) {
                 break;
             }
         }
         
-        $anx = round($anx / 30, 1);
-        $dep = round($dep / 30, 1);
-        $str = round($str / 30, 1);
-        $hea = round($hea / 30, 1);
-        $pro = round($pro / 30, 1);
-        $sle = round($sle / 30, 1);
-        $wat = round($wat / 30, 1);
+        $anx = round($anx / $num, 1);
+        $dep = round($dep / $num, 1);
+        $str = round($str / $num, 1);
+        $hea = round($hea / $num, 1);
+        $pro = round($pro / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
         
         
         echo '<p style="text-align:left;">';
@@ -243,25 +268,25 @@ if ($type == "mentalHealth") {
         checkQuantity($wat,"Water Consumption");
         echo '<br><b>Good Habits: </b></p>';
         echo '<ul style="text-align:left;">';
-        countTimes("Ate a Meal","productive",30,$entries);
-        countTimes("Showered/Bathed","productive",30,$entries);
-        countTimes("Brushed Teeth","productive",30,$entries);
-        countTimes("Did a Chore","productive",30,$entries);
-        countTimes("Went for a Walk","productive",30,$entries);
-        countTimes("Did Some Excercise","productive",30,$entries);
-        countTimes("Talked To Friends/Family","productive",30,$entries);
-        countTimes("Made Some Art","productive",30,$entries);
-        countTimes("Went to Therapy","productive",30,$entries);
+        countTimes("Ate a Meal","productive",$num,$entries);
+        countTimes("Showered/Bathed","productive",$num,$entries);
+        countTimes("Brushed Teeth","productive",$num,$entries);
+        countTimes("Did a Chore","productive",$num,$entries);
+        countTimes("Went for a Walk","productive",$num,$entries);
+        countTimes("Did Some Excercise","productive",$num,$entries);
+        countTimes("Talked To Friends/Family","productive",$num,$entries);
+        countTimes("Made Some Art","productive",$num,$entries);
+        countTimes("Went to Therapy","productive",$num,$entries);
         echo '</ul>';
         echo '<p style="text-align:left;"><b>Bad Habits: </b></p>';
         echo '<ul style="text-align:left;">';
-        countTimes("Doomscrolled","destructive",30,$entries);
-        countTimes("Lashed Out at Others","destructive",30,$entries);
-        countTimes("Isolated Myself","destructive",30,$entries);
-        countTimes("Stayed Home from School/Work","destructive",30,$entries);
-        countTimes("Spent Recklessly","destructive",30,$entries);
-        countTimes("Picked at my Body","destructive",30,$entries);
-        countTimes("Hurt Myself","destructive",30,$entries);
+        countTimes("Doomscrolled","destructive",$num,$entries);
+        countTimes("Lashed Out at Others","destructive",$num,$entries);
+        countTimes("Isolated Myself","destructive",$num,$entries);
+        countTimes("Stayed Home from School/Work","destructive",$num,$entries);
+        countTimes("Spent Recklessly","destructive",$num,$entries);
+        countTimes("Picked at my Body","destructive",$num,$entries);
+        countTimes("Hurt Myself","destructive",$num,$entries);
         echo '</ul>';
         echo '</div>';
         
@@ -272,6 +297,7 @@ if ($type == "mentalHealth") {
         echo '<div class="journalEntry">';
         echo '<h1>Last Ninety Entries</h1>';
         $count = 1;
+        $num = 90;
         $anx = 0;
         $dep = 0;
         $str = 0;
@@ -288,18 +314,18 @@ if ($type == "mentalHealth") {
             $sle += $entry['sleep'];
             $wat += $entry['water'];
             $count++;
-            if ($count == 90) {
+            if ($count == $num) {
                 break;
             }
         }
         
-        $anx = round($anx / 90, 1);
-        $dep = round($dep / 90, 1);
-        $str = round($str / 90, 1);
-        $hea = round($hea / 90, 1);
-        $pro = round($pro / 90, 1);
-        $sle = round($sle / 90, 1);
-        $wat = round($wat / 90, 1);
+        $anx = round($anx / $num, 1);
+        $dep = round($dep / $num, 1);
+        $str = round($str / $num, 1);
+        $hea = round($hea / $num, 1);
+        $pro = round($pro / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
         
         
         echo '<p style="text-align:left;">';
@@ -314,25 +340,25 @@ if ($type == "mentalHealth") {
         checkQuantity($wat,"Water Consumption");
         echo '<br><b>Good Habits: </b></p>';
         echo '<ul style="text-align:left;">';
-        countTimes("Ate a Meal","productive",90,$entries);
-        countTimes("Showered/Bathed","productive",90,$entries);
-        countTimes("Brushed Teeth","productive",90,$entries);
-        countTimes("Did a Chore","productive",90,$entries);
-        countTimes("Went for a Walk","productive",90,$entries);
-        countTimes("Did Some Excercise","productive",90,$entries);
-        countTimes("Talked To Friends/Family","productive",90,$entries);
-        countTimes("Made Some Art","productive",90,$entries);
-        countTimes("Went to Therapy","productive",90,$entries);
+        countTimes("Ate a Meal","productive",$num,$entries);
+        countTimes("Showered/Bathed","productive",$num,$entries);
+        countTimes("Brushed Teeth","productive",$num,$entries);
+        countTimes("Did a Chore","productive",$num,$entries);
+        countTimes("Went for a Walk","productive",$num,$entries);
+        countTimes("Did Some Excercise","productive",$num,$entries);
+        countTimes("Talked To Friends/Family","productive",$num,$entries);
+        countTimes("Made Some Art","productive",$num,$entries);
+        countTimes("Went to Therapy","productive",$num,$entries);
         echo '</ul>';
         echo '<p style="text-align:left;"><b>Bad Habits: </b></p>';
         echo '<ul style="text-align:left;">';
-        countTimes("Doomscrolled","destructive",90,$entries);
-        countTimes("Lashed Out at Others","destructive",90,$entries);
-        countTimes("Isolated Myself","destructive",90,$entries);
-        countTimes("Stayed Home from School/Work","destructive",90,$entries);
-        countTimes("Spent Recklessly","destructive",90,$entries);
-        countTimes("Picked at my Body","destructive",90,$entries);
-        countTimes("Hurt Myself","destructive",90,$entries);
+        countTimes("Doomscrolled","destructive",$num,$entries);
+        countTimes("Lashed Out at Others","destructive",$num,$entries);
+        countTimes("Isolated Myself","destructive",$num,$entries);
+        countTimes("Stayed Home from School/Work","destructive",$num,$entries);
+        countTimes("Spent Recklessly","destructive",$num,$entries);
+        countTimes("Picked at my Body","destructive",$num,$entries);
+        countTimes("Hurt Myself","destructive",$num,$entries);
         echo '</ul>';
         echo '</div>';
         
@@ -343,6 +369,7 @@ if ($type == "mentalHealth") {
         echo '<div class="journalEntry">';
         echo '<h1>Last Three Hundred Sixty Five Entries</h1>';
         $count = 1;
+        $num = 365;
         $anx = 0;
         $dep = 0;
         $str = 0;
@@ -359,18 +386,18 @@ if ($type == "mentalHealth") {
             $sle += $entry['sleep'];
             $wat += $entry['water'];
             $count++;
-            if ($count == 365) {
+            if ($count == $num) {
                 break;
             }
         }
         
-        $anx = round($anx / 365, 1);
-        $dep = round($dep / 365, 1);
-        $str = round($str / 365, 1);
-        $hea = round($hea / 365, 1);
-        $pro = round($pro / 365, 1);
-        $sle = round($sle / 365, 1);
-        $wat = round($wat / 365, 1);
+        $anx = round($anx / $num, 1);
+        $dep = round($dep / $num, 1);
+        $str = round($str / $num, 1);
+        $hea = round($hea / $num, 1);
+        $pro = round($pro / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
         
         
         echo '<p style="text-align:left;">';
@@ -385,25 +412,25 @@ if ($type == "mentalHealth") {
         checkQuantity($wat,"Water Consumption");
         echo '<br><b>Good Habits: </b></p>';
         echo '<ul style="text-align:left;">';
-        countTimes("Ate a Meal","productive",365,$entries);
-        countTimes("Showered/Bathed","productive",365,$entries);
-        countTimes("Brushed Teeth","productive",365,$entries);
-        countTimes("Did a Chore","productive",365,$entries);
-        countTimes("Went for a Walk","productive",365,$entries);
-        countTimes("Did Some Excercise","productive",365,$entries);
-        countTimes("Talked To Friends/Family","productive",365,$entries);
-        countTimes("Made Some Art","productive",365,$entries);
-        countTimes("Went to Therapy","productive",365,$entries);
+        countTimes("Ate a Meal","productive",$num,$entries);
+        countTimes("Showered/Bathed","productive",$num,$entries);
+        countTimes("Brushed Teeth","productive",$num,$entries);
+        countTimes("Did a Chore","productive",$num,$entries);
+        countTimes("Went for a Walk","productive",$num,$entries);
+        countTimes("Did Some Excercise","productive",$num,$entries);
+        countTimes("Talked To Friends/Family","productive",$num,$entries);
+        countTimes("Made Some Art","productive",$num,$entries);
+        countTimes("Went to Therapy","productive",$num,$entries);
         echo '</ul>';
         echo '<p style="text-align:left;"><b>Bad Habits: </b></p>';
         echo '<ul style="text-align:left;">';
-        countTimes("Doomscrolled","destructive",365,$entries);
-        countTimes("Lashed Out at Others","destructive",365,$entries);
-        countTimes("Isolated Myself","destructive",365,$entries);
-        countTimes("Stayed Home from School/Work","destructive",365,$entries);
-        countTimes("Spent Recklessly","destructive",365,$entries);
-        countTimes("Picked at my Body","destructive",365,$entries);
-        countTimes("Hurt Myself","destructive",365,$entries);
+        countTimes("Doomscrolled","destructive",$num,$entries);
+        countTimes("Lashed Out at Others","destructive",$num,$entries);
+        countTimes("Isolated Myself","destructive",$num,$entries);
+        countTimes("Stayed Home from School/Work","destructive",$num,$entries);
+        countTimes("Spent Recklessly","destructive",$num,$entries);
+        countTimes("Picked at my Body","destructive",$num,$entries);
+        countTimes("Hurt Myself","destructive",$num,$entries);
         echo '</ul>';
         echo '</div>';
         
@@ -416,6 +443,7 @@ if ($type == "mentalHealth") {
         echo '<div class="journalEntry">';
         echo '<h1>Last Seven Entries</h1>';
         $count = 1;
+        $num = 7;
         $low = 0;
         $hig = 0;
         $avg = 0;
@@ -430,17 +458,17 @@ if ($type == "mentalHealth") {
             $sle += $entry['sleep'];
             $wat += $entry['water'];
             $count++;
-            if ($count == 7) {
+            if ($count == $num) {
                 break;
             }
         }
         
-        $low = round($low / 7, 1);
-        $hig = round($hig / 7, 1);
-        $avg = round($avg / 7, 1);
-        $phy = round($phy / 7, 1);
-        $sle = round($sle / 7, 1);
-        $wat = round($wat / 7, 1);
+        $low = round($low / $num, 1);
+        $hig = round($hig / $num, 1);
+        $avg = round($avg / $num, 1);
+        $phy = round($phy / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
         
         echo '<p style="text-align:left;">';
         checkBad($low,"Lowest Pain");
@@ -452,35 +480,692 @@ if ($type == "mentalHealth") {
         checkQuantity($phy,"Physical Activity");
         echo '<br><b>Common Pain Descriptors: </b></p>';
         echo '<ul style="text-align:left;">';
-        countDescriptions("Swollen","painDescription",7,$entries);
-        countDescriptions("Throbbing","painDescription",7,$entries);
-        countDescriptions("Aching","painDescription",7,$entries);
-        countDescriptions("Numb","painDescription",7,$entries);
-        countDescriptions("Burning","painDescription",7,$entries);
-        countDescriptions("Cramping","painDescription",7,$entries);
-        countDescriptions("Tight","painDescription",7,$entries);
-        countDescriptions("Tender","painDescription",7,$entries);
-        countDescriptions("Shooting","painDescription",7,$entries);
+        countDescriptions("Swollen","painDescription",$num,$entries);
+        countDescriptions("Throbbing","painDescription",$num,$entries);
+        countDescriptions("Aching","painDescription",$num,$entries);
+        countDescriptions("Numb","painDescription",$num,$entries);
+        countDescriptions("Burning","painDescription",$num,$entries);
+        countDescriptions("Cramping","painDescription",$num,$entries);
+        countDescriptions("Tight","painDescription",$num,$entries);
+        countDescriptions("Tender","painDescription",$num,$entries);
+        countDescriptions("Shooting","painDescription",$num,$entries);
         echo '</ul>';
         echo '<p style="text-align:left;"><b>Other Common Symptoms: </b></p>';
         echo '<ul style="text-align:left;">';
-        countDescriptions("Exhaustion","otherSymptoms",7,$entries);
-        countDescriptions("Nausea","otherSymptoms",7,$entries);
-        countDescriptions("Vomiting","otherSymptoms",7,$entries);
-        countDescriptions("Bad Poops","otherSymptoms",7,$entries);
-        countDescriptions("Sore Throat","otherSymptoms",7,$entries);
-        countDescriptions("Insomnia","otherSymptoms",7,$entries);
-        countDescriptions("Bloating","otherSymptoms",7,$entries);
-        countDescriptions("Fever","otherSymptoms",7,$entries);
-        countDescriptions("Chills","otherSymptoms",7,$entries);
-        countDescriptions("Congestion","otherSymptoms",7,$entries);
-        countDescriptions("Muscle Spasms","otherSymptoms",7,$entries);
-        countDescriptions("Brain Fog","otherSymptoms",7,$entries);
-        countDescriptions("Bad Mood","otherSymptoms",7,$entries);
-        countDescriptions("Vertigo","otherSymptoms",7,$entries);
+        countDescriptions("Exhaustion","otherSymptoms",$num,$entries);
+        countDescriptions("Nausea","otherSymptoms",$num,$entries);
+        countDescriptions("Vomiting","otherSymptoms",$num,$entries);
+        countDescriptions("Bad Poops","otherSymptoms",$num,$entries);
+        countDescriptions("Sore Throat","otherSymptoms",$num,$entries);
+        countDescriptions("Insomnia","otherSymptoms",$num,$entries);
+        countDescriptions("Bloating","otherSymptoms",$num,$entries);
+        countDescriptions("Fever","otherSymptoms",$num,$entries);
+        countDescriptions("Chills","otherSymptoms",$num,$entries);
+        countDescriptions("Congestion","otherSymptoms",$num,$entries);
+        countDescriptions("Muscle Spasms","otherSymptoms",$num,$entries);
+        countDescriptions("Brain Fog","otherSymptoms",$num,$entries);
+        countDescriptions("Bad Mood","otherSymptoms",$num,$entries);
+        countDescriptions("Vertigo","otherSymptoms",$num,$entries);
         echo '</ul>';
         echo '</div>';
     } else {
         echo '<p><i>You need at least 7 days of journal entries to use this feature.</i></p>';
     }
+    
+    //Last 30 Days
+    if (count($entries) > 29) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Thirty Entries</h1>';
+        $count = 1;
+        $num = 30;
+        $low = 0;
+        $hig = 0;
+        $avg = 0;
+        $sle = 0;
+        $wat = 0;
+        $phy = 0;
+        foreach ($entries as $entry) {
+            $low += $entry['lowestPain'];
+            $hig += $entry['highestPain'];
+            $avg += $entry['averagePain'];
+            $phy += $entry['physicalActivity'];
+            $sle += $entry['sleep'];
+            $wat += $entry['water'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $low = round($low / $num, 1);
+        $hig = round($hig / $num, 1);
+        $avg = round($avg / $num, 1);
+        $phy = round($phy / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
+        
+        echo '<p style="text-align:left;">';
+        checkBad($low,"Lowest Pain");
+        checkBad($hig,"Highest Pain");
+        checkBad($avg,"Average Pain");
+        echo '<br>';
+        checkQuantity($sle,"Sleep Amount");
+        checkQuantity($wat,"Water Consumption");
+        checkQuantity($phy,"Physical Activity");
+        echo '<br><b>Common Pain Descriptors: </b></p>';
+        echo '<ul style="text-align:left;">';
+        countDescriptions("Swollen","painDescription",$num,$entries);
+        countDescriptions("Throbbing","painDescription",$num,$entries);
+        countDescriptions("Aching","painDescription",$num,$entries);
+        countDescriptions("Numb","painDescription",$num,$entries);
+        countDescriptions("Burning","painDescription",$num,$entries);
+        countDescriptions("Cramping","painDescription",$num,$entries);
+        countDescriptions("Tight","painDescription",$num,$entries);
+        countDescriptions("Tender","painDescription",$num,$entries);
+        countDescriptions("Shooting","painDescription",$num,$entries);
+        echo '</ul>';
+        echo '<p style="text-align:left;"><b>Other Common Symptoms: </b></p>';
+        echo '<ul style="text-align:left;">';
+        countDescriptions("Exhaustion","otherSymptoms",$num,$entries);
+        countDescriptions("Nausea","otherSymptoms",$num,$entries);
+        countDescriptions("Vomiting","otherSymptoms",$num,$entries);
+        countDescriptions("Bad Poops","otherSymptoms",$num,$entries);
+        countDescriptions("Sore Throat","otherSymptoms",$num,$entries);
+        countDescriptions("Insomnia","otherSymptoms",$num,$entries);
+        countDescriptions("Bloating","otherSymptoms",$num,$entries);
+        countDescriptions("Fever","otherSymptoms",$num,$entries);
+        countDescriptions("Chills","otherSymptoms",$num,$entries);
+        countDescriptions("Congestion","otherSymptoms",$num,$entries);
+        countDescriptions("Muscle Spasms","otherSymptoms",$num,$entries);
+        countDescriptions("Brain Fog","otherSymptoms",$num,$entries);
+        countDescriptions("Bad Mood","otherSymptoms",$num,$entries);
+        countDescriptions("Vertigo","otherSymptoms",$num,$entries);
+        echo '</ul>';
+        echo '</div>';
+        
+    }
+    
+    //Last 90 Days
+    if (count($entries) > 89) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Ninety Entries</h1>';
+        $count = 1;
+        $num = 90;
+        $low = 0;
+        $hig = 0;
+        $avg = 0;
+        $sle = 0;
+        $wat = 0;
+        $phy = 0;
+        foreach ($entries as $entry) {
+            $low += $entry['lowestPain'];
+            $hig += $entry['highestPain'];
+            $avg += $entry['averagePain'];
+            $phy += $entry['physicalActivity'];
+            $sle += $entry['sleep'];
+            $wat += $entry['water'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $low = round($low / $num, 1);
+        $hig = round($hig / $num, 1);
+        $avg = round($avg / $num, 1);
+        $phy = round($phy / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
+        
+        echo '<p style="text-align:left;">';
+        checkBad($low,"Lowest Pain");
+        checkBad($hig,"Highest Pain");
+        checkBad($avg,"Average Pain");
+        echo '<br>';
+        checkQuantity($sle,"Sleep Amount");
+        checkQuantity($wat,"Water Consumption");
+        checkQuantity($phy,"Physical Activity");
+        echo '<br><b>Common Pain Descriptors: </b></p>';
+        echo '<ul style="text-align:left;">';
+        countDescriptions("Swollen","painDescription",$num,$entries);
+        countDescriptions("Throbbing","painDescription",$num,$entries);
+        countDescriptions("Aching","painDescription",$num,$entries);
+        countDescriptions("Numb","painDescription",$num,$entries);
+        countDescriptions("Burning","painDescription",$num,$entries);
+        countDescriptions("Cramping","painDescription",$num,$entries);
+        countDescriptions("Tight","painDescription",$num,$entries);
+        countDescriptions("Tender","painDescription",$num,$entries);
+        countDescriptions("Shooting","painDescription",$num,$entries);
+        echo '</ul>';
+        echo '<p style="text-align:left;"><b>Other Common Symptoms: </b></p>';
+        echo '<ul style="text-align:left;">';
+        countDescriptions("Exhaustion","otherSymptoms",$num,$entries);
+        countDescriptions("Nausea","otherSymptoms",$num,$entries);
+        countDescriptions("Vomiting","otherSymptoms",$num,$entries);
+        countDescriptions("Bad Poops","otherSymptoms",$num,$entries);
+        countDescriptions("Sore Throat","otherSymptoms",$num,$entries);
+        countDescriptions("Insomnia","otherSymptoms",$num,$entries);
+        countDescriptions("Bloating","otherSymptoms",$num,$entries);
+        countDescriptions("Fever","otherSymptoms",$num,$entries);
+        countDescriptions("Chills","otherSymptoms",$num,$entries);
+        countDescriptions("Congestion","otherSymptoms",$num,$entries);
+        countDescriptions("Muscle Spasms","otherSymptoms",$num,$entries);
+        countDescriptions("Brain Fog","otherSymptoms",$num,$entries);
+        countDescriptions("Bad Mood","otherSymptoms",$num,$entries);
+        countDescriptions("Vertigo","otherSymptoms",$num,$entries);
+        echo '</ul>';
+        echo '</div>';
+        
+    }
+    
+    //Last 365 Days
+    if (count($entries) > 364) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Three Hundred Sixty Five Entries</h1>';
+        $count = 1;
+        $num = 365;
+        $low = 0;
+        $hig = 0;
+        $avg = 0;
+        $sle = 0;
+        $wat = 0;
+        $phy = 0;
+        foreach ($entries as $entry) {
+            $low += $entry['lowestPain'];
+            $hig += $entry['highestPain'];
+            $avg += $entry['averagePain'];
+            $phy += $entry['physicalActivity'];
+            $sle += $entry['sleep'];
+            $wat += $entry['water'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $low = round($low / $num, 1);
+        $hig = round($hig / $num, 1);
+        $avg = round($avg / $num, 1);
+        $phy = round($phy / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
+        
+        echo '<p style="text-align:left;">';
+        checkBad($low,"Lowest Pain");
+        checkBad($hig,"Highest Pain");
+        checkBad($avg,"Average Pain");
+        echo '<br>';
+        checkQuantity($sle,"Sleep Amount");
+        checkQuantity($wat,"Water Consumption");
+        checkQuantity($phy,"Physical Activity");
+        echo '<br><b>Common Pain Descriptors: </b></p>';
+        echo '<ul style="text-align:left;">';
+        countDescriptions("Swollen","painDescription",$num,$entries);
+        countDescriptions("Throbbing","painDescription",$num,$entries);
+        countDescriptions("Aching","painDescription",$num,$entries);
+        countDescriptions("Numb","painDescription",$num,$entries);
+        countDescriptions("Burning","painDescription",$num,$entries);
+        countDescriptions("Cramping","painDescription",$num,$entries);
+        countDescriptions("Tight","painDescription",$num,$entries);
+        countDescriptions("Tender","painDescription",$num,$entries);
+        countDescriptions("Shooting","painDescription",$num,$entries);
+        echo '</ul>';
+        echo '<p style="text-align:left;"><b>Other Common Symptoms: </b></p>';
+        echo '<ul style="text-align:left;">';
+        countDescriptions("Exhaustion","otherSymptoms",$num,$entries);
+        countDescriptions("Nausea","otherSymptoms",$num,$entries);
+        countDescriptions("Vomiting","otherSymptoms",$num,$entries);
+        countDescriptions("Bad Poops","otherSymptoms",$num,$entries);
+        countDescriptions("Sore Throat","otherSymptoms",$num,$entries);
+        countDescriptions("Insomnia","otherSymptoms",$num,$entries);
+        countDescriptions("Bloating","otherSymptoms",$num,$entries);
+        countDescriptions("Fever","otherSymptoms",$num,$entries);
+        countDescriptions("Chills","otherSymptoms",$num,$entries);
+        countDescriptions("Congestion","otherSymptoms",$num,$entries);
+        countDescriptions("Muscle Spasms","otherSymptoms",$num,$entries);
+        countDescriptions("Brain Fog","otherSymptoms",$num,$entries);
+        countDescriptions("Bad Mood","otherSymptoms",$num,$entries);
+        countDescriptions("Vertigo","otherSymptoms",$num,$entries);
+        echo '</ul>';
+        echo '</div>';
+        
+    }
+} else if ($type == "productivity") {
+    if (count($entries) > 6) {
+        echo '<p style="margin-bottom:12px;"><i>The more journals completed, the more accurate your data will be.</i></p>';
+    }
+    if (count($entries) > 6) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Seven Entries</h1>';
+        
+        $count = 1;
+        $num = 7;
+        $totaltasks = 0;
+        $doneTasks = 0;
+        $doneHabits = 0;
+        $phy = 0;
+        $men = 0;
+        $pro = 0;
+        $moo = 0;
+        
+        foreach ($entries as $entry) {
+            $phy += $entry['physicalHealth'];
+            $men += $entry['mentalHealth'];
+            $pro += $entry['productivity'];
+            $moo += $entry['mood'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $phy = round($phy / $num, 1);
+        $men = round($men / $num, 1);
+        $pro = round($pro / $num, 1);
+        $moo = round($moo / $num, 1);
+        
+        //Calculate Habit Total
+        $habitCount = $num * 2;
+        if (count($entries) == $num) {
+            $habitCount - 2;
+        }
+        
+        
+        //Count Finished Habits
+        $habitComplete = 0;
+        foreach ($entries as $entry) {
+            if ($entry['habitOneCheck'] == 1) {
+                $habitComplete++;
+            }
+            if ($entry['habitTwoCheck'] == 1) {
+                $habitComplete++;
+            }
+            
+        }
+        
+        //Calculate Tasks
+        $tasks = 0;
+        $taskComplete = 0;
+        foreach ($entries as $entry) {
+            if (date('w', strtotime($entry['date'])) == 6 || date('w', strtotime($entry['date'])) == 7) {
+                $tasks = $tasks + 3;
+                if ($entry['oneCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['twoCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['threeCheck'] == 1) {
+                    $taskComplete++;
+                }
+            } else {
+                $tasks = $tasks + 5;
+                if ($entry['oneCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['twoCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['threeCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['fourCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['fiveCheck'] == 1) {
+                    $taskComplete++;
+                }
+            }
+        }
+        
+        //Display Text
+        echo '<p style="text-align:left;"><b>Habit Score: </b>';
+        countTasks($habitComplete, $habitCount);
+        echo '<br><b>Habit Percentage: </b>';
+        $percent = calculatePercent($habitComplete, $habitCount);
+        echo $percent . '%<br><br>';
+        echo '<b>Task Score: </b>';
+        countTasks($taskComplete, $tasks);
+        echo '<br><b>Task Percentage: </b>';
+        $percent = calculatePercent($taskComplete, $tasks);
+        echo $percent . '%<br><br>';
+        checkGood($phy,"Physical Health");
+        checkGood($men,"Mental Health");
+        echo '<br>';
+        checkGood($pro,"Productivity");
+        checkGood($moo,"Mood");
+        echo '</p>';
+        
+        
+        echo '</div>';
+    
+    } else {
+        echo '<p><i>You need at least 7 days of journal entries to use this feature.</i></p>';
+    }
+    
+    if (count($entries) > 29) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Thirty Entries</h1>';
+        
+        $count = 1;
+        $num = 30;
+        $totaltasks = 0;
+        $doneTasks = 0;
+        $doneHabits = 0;
+        $phy = 0;
+        $men = 0;
+        $pro = 0;
+        $moo = 0;
+        
+        foreach ($entries as $entry) {
+            $phy += $entry['physicalHealth'];
+            $men += $entry['mentalHealth'];
+            $pro += $entry['productivity'];
+            $moo += $entry['mood'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $phy = round($phy / $num, 1);
+        $men = round($men / $num, 1);
+        $pro = round($pro / $num, 1);
+        $moo = round($moo / $num, 1);
+        
+        //Calculate Habit Total
+        $habitCount = $num * 2;
+        if (count($entries) == $num) {
+            $habitCount - 2;
+        }
+        
+        
+        //Count Finished Habits
+        $habitComplete = 0;
+        foreach ($entries as $entry) {
+            if ($entry['habitOneCheck'] == 1) {
+                $habitComplete++;
+            }
+            if ($entry['habitTwoCheck'] == 1) {
+                $habitComplete++;
+            }
+            
+        }
+        
+        //Calculate Tasks
+        $tasks = 0;
+        $taskComplete = 0;
+        foreach ($entries as $entry) {
+            if (date('w', strtotime($entry['date'])) == 6 || date('w', strtotime($entry['date'])) == 7) {
+                $tasks = $tasks + 3;
+                if ($entry['oneCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['twoCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['threeCheck'] == 1) {
+                    $taskComplete++;
+                }
+            } else {
+                $tasks = $tasks + 5;
+                if ($entry['oneCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['twoCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['threeCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['fourCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['fiveCheck'] == 1) {
+                    $taskComplete++;
+                }
+            }
+        }
+        
+        //Display Text
+        echo '<p style="text-align:left;"><b>Habit Score: </b>';
+        countTasks($habitComplete, $habitCount);
+        echo '<br><b>Habit Percentage: </b>';
+        $percent = calculatePercent($habitComplete, $habitCount);
+        echo $percent . '%<br><br>';
+        echo '<b>Task Score: </b>';
+        countTasks($taskComplete, $tasks);
+        echo '<br><b>Task Percentage: </b>';
+        $percent = calculatePercent($taskComplete, $tasks);
+        echo $percent . '%<br><br>';
+        checkGood($phy,"Physical Health");
+        checkGood($men,"Mental Health");
+        echo '<br>';
+        checkGood($pro,"Productivity");
+        checkGood($moo,"Mood");
+        echo '</p>';
+        
+        
+        echo '</div>';
+    
+    }
+    
+    if (count($entries) > 89) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Ninety Entries</h1>';
+        
+        $count = 1;
+        $num = 90;
+        $totaltasks = 0;
+        $doneTasks = 0;
+        $doneHabits = 0;
+        $phy = 0;
+        $men = 0;
+        $pro = 0;
+        $moo = 0;
+        
+        foreach ($entries as $entry) {
+            $phy += $entry['physicalHealth'];
+            $men += $entry['mentalHealth'];
+            $pro += $entry['productivity'];
+            $moo += $entry['mood'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $phy = round($phy / $num, 1);
+        $men = round($men / $num, 1);
+        $pro = round($pro / $num, 1);
+        $moo = round($moo / $num, 1);
+        
+        //Calculate Habit Total
+        $habitCount = $num * 2;
+        if (count($entries) == $num) {
+            $habitCount - 2;
+        }
+        
+        
+        //Count Finished Habits
+        $habitComplete = 0;
+        foreach ($entries as $entry) {
+            if ($entry['habitOneCheck'] == 1) {
+                $habitComplete++;
+            }
+            if ($entry['habitTwoCheck'] == 1) {
+                $habitComplete++;
+            }
+            
+        }
+        
+        //Calculate Tasks
+        $tasks = 0;
+        $taskComplete = 0;
+        foreach ($entries as $entry) {
+            if (date('w', strtotime($entry['date'])) == 6 || date('w', strtotime($entry['date'])) == 7) {
+                $tasks = $tasks + 3;
+                if ($entry['oneCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['twoCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['threeCheck'] == 1) {
+                    $taskComplete++;
+                }
+            } else {
+                $tasks = $tasks + 5;
+                if ($entry['oneCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['twoCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['threeCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['fourCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['fiveCheck'] == 1) {
+                    $taskComplete++;
+                }
+            }
+        }
+        
+        //Display Text
+        echo '<p style="text-align:left;"><b>Habit Score: </b>';
+        countTasks($habitComplete, $habitCount);
+        echo '<br><b>Habit Percentage: </b>';
+        $percent = calculatePercent($habitComplete, $habitCount);
+        echo $percent . '%<br><br>';
+        echo '<b>Task Score: </b>';
+        countTasks($taskComplete, $tasks);
+        echo '<br><b>Task Percentage: </b>';
+        $percent = calculatePercent($taskComplete, $tasks);
+        echo $percent . '%<br><br>';
+        checkGood($phy,"Physical Health");
+        checkGood($men,"Mental Health");
+        echo '<br>';
+        checkGood($pro,"Productivity");
+        checkGood($moo,"Mood");
+        echo '</p>';
+        
+        
+        echo '</div>';
+    
+    }
+    
+    if (count($entries) > 364) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Three Hundred Sixty Five Entries</h1>';
+        
+        $count = 1;
+        $num = 365;
+        $totaltasks = 0;
+        $doneTasks = 0;
+        $doneHabits = 0;
+        $phy = 0;
+        $men = 0;
+        $pro = 0;
+        $moo = 0;
+        
+        foreach ($entries as $entry) {
+            $phy += $entry['physicalHealth'];
+            $men += $entry['mentalHealth'];
+            $pro += $entry['productivity'];
+            $moo += $entry['mood'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $phy = round($phy / $num, 1);
+        $men = round($men / $num, 1);
+        $pro = round($pro / $num, 1);
+        $moo = round($moo / $num, 1);
+        
+        //Calculate Habit Total
+        $habitCount = $num * 2;
+        if (count($entries) == $num) {
+            $habitCount - 2;
+        }
+        
+        
+        //Count Finished Habits
+        $habitComplete = 0;
+        foreach ($entries as $entry) {
+            if ($entry['habitOneCheck'] == 1) {
+                $habitComplete++;
+            }
+            if ($entry['habitTwoCheck'] == 1) {
+                $habitComplete++;
+            }
+            
+        }
+        
+        //Calculate Tasks
+        $tasks = 0;
+        $taskComplete = 0;
+        foreach ($entries as $entry) {
+            if (date('w', strtotime($entry['date'])) == 6 || date('w', strtotime($entry['date'])) == 7) {
+                $tasks = $tasks + 3;
+                if ($entry['oneCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['twoCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['threeCheck'] == 1) {
+                    $taskComplete++;
+                }
+            } else {
+                $tasks = $tasks + 5;
+                if ($entry['oneCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['twoCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['threeCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['fourCheck'] == 1) {
+                    $taskComplete++;
+                }
+                if ($entry['fiveCheck'] == 1) {
+                    $taskComplete++;
+                }
+            }
+        }
+        
+        //Display Text
+        echo '<p style="text-align:left;"><b>Habit Score: </b>';
+        countTasks($habitComplete, $habitCount);
+        echo '<br><b>Habit Percentage: </b>';
+        $percent = calculatePercent($habitComplete, $habitCount);
+        echo $percent . '%<br><br>';
+        echo '<b>Task Score: </b>';
+        countTasks($taskComplete, $tasks);
+        echo '<br><b>Task Percentage: </b>';
+        $percent = calculatePercent($taskComplete, $tasks);
+        echo $percent . '%<br><br>';
+        checkGood($phy,"Physical Health");
+        checkGood($men,"Mental Health");
+        echo '<br>';
+        checkGood($pro,"Productivity");
+        checkGood($moo,"Mood");
+        echo '</p>';
+        
+        
+        echo '</div>';
+    
+    }
 }
+
+
+
+
+

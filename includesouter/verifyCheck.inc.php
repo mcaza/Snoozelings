@@ -45,6 +45,6 @@ function logCheck($pdo) {
 
 logCheck($pdo);
 
-verifyEmail($pdo);
+//verifyEmail($pdo);
     
 }

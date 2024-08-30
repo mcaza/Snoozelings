@@ -201,7 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $query = 'UPDATE productivityEntries SET notes = :notes WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $newest['id']);
-        $stmt->bindParam(":notes", $_POST['notes']);
+        $stmt->bindParam(":notes", htmlspecialchars($_POST['notes']));
         $stmt->execute();
     }
     

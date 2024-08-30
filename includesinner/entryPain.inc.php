@@ -28,8 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $activity = $_POST['activity'];
     $weather = $_POST['weather'];
     $air = $_POST['air'];
-    $remedy = $_POST['remedy'];
-    $notes = $_POST['notes'];
+    $remedy = htmlspecialchars($_POST['remedy']);
+    $notes = htmlspecialchars($_POST['notes']);
     
     //Custom Variable Checks
     if ($low > 10 || $low < 1) {
@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $symptoms = substr($symptoms, 0, -2);
     
     if($_POST['meds']) {
-        $meds = $_POST['meds'];
+        $meds = htmlspecialchars($_POST['meds']);
     } else {
         $meds = "Took all my meds";
     }

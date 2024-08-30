@@ -956,6 +956,16 @@ a.selected {
     
 }
 
+.infoBox {
+    width: 30%;
+    margin-left:5%;
+}
+
+.infoLarge {
+    width: 60%;
+    margin-left:5%;
+}
+
 /* Front Page Styles */
 .indexBox {
     border: 2px dashed #827188;
@@ -1681,7 +1691,10 @@ select {
         row-gap: 1.5rem;
         align-items: center;
     }
-
+    
+    .journalInfo {
+        flex-wrap: wrap;
+    }
     
     .social-container {
         margin: auto;
@@ -1905,4 +1918,14 @@ select {
     .dropdown-content {
         display: none !important;
     }
+    
+    .infoBox {
+    width: 90%;
+    margin-left:3%;
+}
+    
+    .infoLarge {
+    width: 90%;
+    margin-left:3%;
+}
 }

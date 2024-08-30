@@ -31,7 +31,7 @@ if ($userId == 1) {
         $count++;
     }
     
-    $query = 'SELECT * FROM users WHERE newsletter = 0';
+    $query = 'SELECT * FROM users WHERE newsletter = 0 And emailVerified = 1';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $emails = $stmt->fetch(PDO::FETCH_ASSOC);

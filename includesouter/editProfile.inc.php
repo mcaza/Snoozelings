@@ -48,7 +48,15 @@ echo '<a href="profile?id=' . $userId . '"><<</a>';
 echo '</div>';
 
 //Post Button (Right)
-echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newsletter\'">Newsletter</button></div>';
+echo '<div class="buttonBar">';
+echo '<button  class="fancyButton" onClick="window.location.href=\'newsletter\'">Newsletter</button>';
+
+
+//Verify Email Button
+if ($result['emailVerified'] == 0) {
+    echo '<button  class="fancyButton" onClick="window.location.href=\'verify\'" style="margin-left:15px;">Verify Email</button>';
+}
+echo '</div>';
 echo '</div>';
 
 //Error

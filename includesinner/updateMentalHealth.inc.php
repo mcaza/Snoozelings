@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST["triggers"]) {
-        $triggers = $_POST["triggers"];
+        $triggers = htmlspecialchars($_POST["triggers"]);
         $query = "UPDATE mentalHealthEntries SET triggers = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST["notes"]) {
-        $notes = $_POST["notes"];
+        $notes = htmlspecialchars($_POST["notes"]);
         $query = "UPDATE mentalHealthEntries SET notes = :pain WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -194,7 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     if($_POST['meds']) {
-        $meds = $_POST['meds'];
+        $meds = htmlspecialchars($_POST['meds']);
         $query = "UPDATE mentalHealthEntries SET missedMeds = :meds WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);

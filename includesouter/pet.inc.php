@@ -178,6 +178,8 @@ $specialArray = explode(" ", $result["specials"]);
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Bug Wings</li>';
         } else if ($special == "EarTip") {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Ear Tip</li>';
+        } else if ($special == "TinyTooth") {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Tiny Tooth</li>';
         } else {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $special . '</li>';
         }

@@ -81,9 +81,26 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
         echo "</div>";
+        $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluff'];
+        foreach ($mothArray as $moth) {
+            if (strpos($pet["specials"], $moth) !== false) {
+                $mothtype = $moth;
+                break;
+            }
+        }
+        if ($moth) {
+            echo "<div class='${class}'>";
+        echo "<img src='Layers/Other/MothFluff/Behind/" . $moth . ".png' id = 'BackFluffOne'>";
+        echo "</div>";
+        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/Faces/" . $mood . "/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
         echo "</div>";
+        if (strpos($pet["specials"],"TinyTooth")) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Faces/" . $mood . "/TinyTooth.png' id = 'Toothone'>";
+            echo "</div>";
+        }
         echo "<div class='${class}'>";
         echo "<img src='Layers/Faces/" . $mood . "/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
         echo "</div>";
@@ -277,6 +294,12 @@ function displayPet($pet, $class) {
         } }
             echo "</div>";
             
+        }
+    
+    if ($moth) {
+            echo "<div class='${class}'>";
+        echo "<img src='Layers/Other/MothFluff/" . $moth . ".png' id = 'FrontFluffOne'>";
+        echo "</div>";
         }
 
         echo "<div class='${class}'>";

@@ -118,10 +118,8 @@ $dyefix = array_unique($dyelist);
          var text2 = ".png";
          var item = "<?php echo $name['name']; ?>";
          if (inputText == "White" || inputText == "") {
-             console.log('test1');
             var final = text1 + item + text2;
          } else {
-             console.log('test2');
             var final = text1 + item + inputText + text2;
 
          }
@@ -129,8 +127,28 @@ $dyefix = array_unique($dyelist);
 
              document.getElementById('itemicon').src = final;
      }
+     
 
     
+    </script>
+    <script>
+    
+     document.getElementById('wish').onchange = (event) => {
+         var inputText = event.target.value;
+         if (inputText == "item") {
+             document.getElementById("item").style.display = "flex";
+             document.getElementById("colorPet").style.display = "none";
+             document.getElementById("marking").style.display = "none";
+         } else if (inputText == "color") {
+             document.getElementById("item").style.display = "none";
+             document.getElementById("colorPet").style.display = "flex";
+             document.getElementById("marking").style.display = "none";
+         } else if (inputText == "marking") {
+             document.getElementById("item").style.display = "none";
+             document.getElementById("colorPet").style.display = "none";
+             document.getElementById("marking").style.display = "flex";
+         }
+     }
     </script>
 
 </body>

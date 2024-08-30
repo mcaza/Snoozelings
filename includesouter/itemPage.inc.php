@@ -153,6 +153,98 @@ if ($results) {
         }
         
         
+    } 
+    
+    if ($item['name'] === "WishToken") {
+        echo '<hr>';
+        echo '<label for="wish"  class="form"><b>Choose A Wish:</b></label><br>';
+        echo '<select  class="input" name="wish" id="wish"><br>';
+        echo '<option value="" disabled="disabled"  selected="selected"></option>';
+        echo '<option value="item">Free Item</option>';
+        echo '<option value="color">Change Color</option>';
+        echo '<option value="marking">Add Marking</option>';
+        echo '</select><br>';
+        
+        //Add an Item Form
+        $query = "SELECT * FROM itemList ORDER BY name";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo '<div style="display:none;justify-content:center;flex-direction:column;" id="item">';
+        echo '<hr>';
+        echo '<h1>Free Item</h1>';
+        echo '<form method="post" action="includes/wishItem.inc.php">';
+        echo '<select  class="input" name="itemid" id="itemid" required><br>';
+        echo '<option value="" disabled="disabled"  selected="selected"></option>';
+        foreach ($items as $item) {
+            echo '<option value="' . $item['id'] . '">' . $item['display'] . '</option>';
+        }
+        echo '</select>';
+        echo '<div><button class="fancyButton">Wish For Item</button></div>';
+        echo '</form>';
+        echo '</div>';
+        
+        //Change Color Form
+        $query = 'SELECT * FROM colors ORDER BY name';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $colors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo '<div style="display:none;justify-content:center;flex-direction:column;" id="colorPet">';
+        echo '<hr>';
+        echo '<h1>Change Color</h1>';
+        echo '<form method="post" action="includes/changeColor.inc.php">';
+        echo '<label for="snoozelingid"  class="form">Choose A Pet:</label><br>';
+        echo '<select  class="input" name="snoozelingid" id="snoozelingid" required><br>';
+        echo '<option value="" disabled="disabled"  selected="selected"></option>';
+        foreach ($snoozelings as $pet) {
+            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+        }
+        echo '</select><br>';
+        echo '<label for="pet"  class="form">Choose A Color:</label><br>';
+        echo '<select  class="input" name="colorid" id="colorid" required><br>';
+        echo '<option value="" disabled="disabled"  selected="selected"></option>';
+        foreach ($colors as $color) {
+            echo '<option value="' . $color['name'] . '">' . $color['display'] . '</option>';
+        }
+        echo '</select><br>';
+        echo '<label for="pet"  class="form">Choose A Body Part:</label><br>';
+        echo '<select  class="input" name="bodypart" id="bodypart" required><br>';
+        echo '<option value="" disabled="disabled"  selected="selected"></option>';
+        echo '<option value="Main">Main Color</option>';
+        echo '<option value="Skin">Skin Color</option>';
+        echo '<option value="Eye">Eye Color</option>';
+        echo '<option value="Hair">Hair Color</option>';
+        echo '<option value="Tail">Tail Color</option>';
+        echo '</select><br>';
+        echo '<div><button class="fancyButton">Wish For Color</button></div>';
+        echo '</form>';
+        echo '</div>';
+        
+        //Add Marking Form
+        echo '<div style="display:none;justify-content:center;flex-direction:column;" id="marking">';
+        echo '<hr>';
+        echo '<h1>Add Marking</h1>';
+        echo '<form method="post" action="includes/addMarking.inc.php">';
+        echo '<label for="pet"  class="form">Choose A Pet:</label><br>';
+        echo '<select  class="input" name="m" id="snoozelingid" required><br>';
+        echo '<option value="" disabled="disabled"  selected="selected"></option>';
+        foreach ($snoozelings as $pet) {
+            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+        }
+        echo '</select><br>';
+        echo '<label for="marking"  class="form">Choose A Marking:</label><br>';
+        echo '<select  class="input" name="marking" id="marking" required><br>';
+        echo '<option value="" disabled="disabled"  selected="selected"></option>';
+        echo '<option value="Belly">Belly</option>';
+        echo '<option value="Boots">Boots</option>';
+        echo '<option value="Cupid">Cupid</option>';
+        echo '<option value="EarTip">Ear Tip</option>';
+        echo '<option value="Spots">Spots</option>';
+        echo '<option value="Sublimation">Sublimation</option>';
+        echo '</select><br>';
+        echo '<div><button class="fancyButton">Wish For Marking</button></div>';
+        echo '</form>';
+        echo '</div>';
     }
 
 
@@ -160,7 +252,7 @@ if ($results) {
         echo '<form method="post" action="includes/wearClothes.inc.php">';
         echo '<input type="hidden" name="item" value="' . $id . '">';
         echo '<input type="hidden" name="item" value="' . $id . '">';
-        echo '<label for="area"  class="form">Choose A Pet:</label><br>';
+        echo '<label for="pet"  class="form">Choose A Pet:</label><br>';
         echo '<select  class="input" name="pet" id="pet"><br>';
         foreach ($snoozelings as $pet) {
             echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';

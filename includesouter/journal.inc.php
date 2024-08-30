@@ -87,6 +87,7 @@ if (!$journalCheck) {
     echo '<select class="input"  name="type">';
     echo '<option value="mentalHealth">Mental Health</option>';
     echo '<option value="pain">Chronic Pain</option>';
+    echo '<option value="productivity">Productivity</option>';
     echo '</select><br>';
     echo '<button  class="fancyButton">Create Journal</button>';
     echo '</form>';

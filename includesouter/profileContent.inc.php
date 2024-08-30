@@ -32,9 +32,33 @@ if ($id == $userId) {
     //User Navigation
             echo '<div id="onlyOne" class="leftRightButtons">';
             if ($id > 1) {
-                echo '<a id="leftArrow" href="profile?id=' . ($id - 1) . '"><<</a>';
+                $num = $id;
+                do {
+                    $num = $num - 1;
+                    $query = "SELECT * FROM users WHERE id = :id;";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->execute();
+                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($downtest) {
+                        break;
+                    }
+                } while ($num) ;
+                echo '<a id="leftArrow" href="profile?id=' . $num . '"><<</a>';
             }
-    echo '<a href="profile?id=' . ($id + 1) . '">>></a>';
+    $num = $id;
+                do {
+                    $num = $num + 1;
+                    $query = "SELECT * FROM users WHERE id = :id;";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->execute();
+                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($downtest) {
+                        break;
+                    }
+                } while ($num) ;
+    echo '<a href="profile?id=' . $num . '">>></a>';
     echo '</div>';
     echo '<div class="button-bar">
                 <button class="fancyButton" onClick="window.location.href=\'/updateaccount\'">Update Account</button>
@@ -48,8 +72,34 @@ if ($id == $userId) {
 } else {
     //User Navigation
     echo '<div class="leftRightButtons">';
-    echo '<a href="profile?id=' . ($id - 1) . '"><<</a>';
-    echo '<a href="profile?id=' . ($id + 1) . '">>></a>';
+    if ($id > 1) {
+                $num = $id;
+                do {
+                    $num = $num - 1;
+                    $query = "SELECT * FROM users WHERE id = :id;";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->execute();
+                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($downtest) {
+                        break;
+                    }
+                } while ($num) ;
+                echo '<a id="leftArrow" href="profile?id=' . $num . '"><<</a>';
+            }
+    $num = $id;
+                do {
+                    $num = $num + 1;
+                    $query = "SELECT * FROM users WHERE id = :id;";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":id", $id);
+                    $stmt->execute();
+                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($downtest) {
+                        break;
+                    }
+                } while ($num) ;
+    echo '<a href="profile?id=' . $num . '">>></a>';
     echo '</div>';
     //Right Side Buttons
     echo '<div class="button-bar">';

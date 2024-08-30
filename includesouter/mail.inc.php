@@ -43,6 +43,7 @@ if ($letter['anon'] == 1) {
     $stmt->execute();
     $penpal = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<p style="font-size: 2rem;"><i>Sent By Anonymous ' . $penpal['sign'] . '</i></p>';
+    
 } else {
     echo '<p style="font-size: 2rem;"><i>Sent By <a href="profile?id=' . $letter['sender'] . '">' . htmlspecialchars($sender['username']) . '</a></i></p>';
 }
@@ -66,16 +67,19 @@ if ($num < 2 || $num > 3 && $num < 10) {
 } else {
     echo '<p style="margin-top: 2rem; width: 70%; margin-right: auto; margin-left: auto;">' . nl2br(htmlspecialchars($letter['message'])) . '</p>';
 }
+
 echo '</div>';
 
 //Reply Box with Button
 if ($num < 3 || $num > 9) {
     echo '<hr>';
+    if ($letter['anon'] == 1) {
+    echo '<p><b><a href="penpalrequest?id=' . $penpal['request'] . '">Original Penpal Request</a></b></p>';
+}
     echo '<form method="POST" action="includes/sendReply.inc.php">';
     echo '<label style="margin-top: 1rem;" for="reply" class="form">Send Reply</label><br>';
     echo '<textarea name="reply" cols="72" class="input" style="height: 20rem;" id="bio"></textarea><br>';
-    echo '<input type="hidden" name="to" value="' . $letter['sender'] . '">';
-    echo '<input type="hidden" name="title" value="' . $letter['title'] . '">';  
+    echo '<input type="hidden" name="mail" value="' . $letter['id'] . '">'; 
     if ($letter['anon'] == 1) {
         echo '<input type="hidden" name="penpal" value="' . $letter['penpalid'] . '">';
     }

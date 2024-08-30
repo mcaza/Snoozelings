@@ -39,6 +39,7 @@
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $usercount = $stmt->fetch(PDO::FETCH_ASSOC);
+
     //Grab All Info
     $one = "1";
     $zero = "0";
@@ -60,7 +61,7 @@
     foreach ($users as $user) {
         //Assign Affirmations & Reset lastLog & DailyItem & Reset Requests
         $randomNum = rand(1, $affirmlength);
-        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0 WHERE id = :id";
+        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0, penpalRequests = 0 WHERE id = :id AND lastLog = 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":affirmation", $affirmresults[$randomNum]["affirmation"]);
         $stmt->bindParam(":id", $user["id"]);
@@ -137,6 +138,9 @@
     $query = "UPDATE mentalHealthEntries SET closed = 1";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
+    $query = "UPDATE productivityEntries SET closed = 1";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
     echo "Journal Entries Closed! \n";
 
     //Reset Daily Post
@@ -170,6 +174,28 @@ foreach ($requests as $request) {
 }
 
 echo $requestcount . ' Trades Cancelled. \n';
+
+//Expire Old Penpals
+$query = 'SELECT * FROM penpalRequests WHERE expired = 0';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$now = new DateTime('now', new DateTimezone('UTC'));
+$result = $now->format('Y-m-d H:i:s');
+
+$requestcount = 0;
+foreach ($requests as $request) {
+    if ($result > $request['datetime']) {
+        $query = 'UPDATE penpalRequests SET expired = 1 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $request['id']);
+        $stmt->execute();
+        $requestcount++;
+    }
+}
+
+echo $requestcount . ' Penpal Requests Cancelled. \n';
 
     
     echo "Rollover Finished!";

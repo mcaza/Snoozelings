@@ -19,6 +19,17 @@ if ($request['user_id'] == $userId) {
 }
 echo '</div>';
 
+//Get all Penpal Infos
+$query = "SELECT * FROM penpals WHERE request = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $id);
+$stmt->execute();
+$list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$array = [];
+
+foreach ($list as $item) {
+    array_push($array,$item['user2']);
+}
 //Title
 echo '<h1>Penpal Request Number ' . $request['id'] . '</h1>';
 
@@ -26,6 +37,12 @@ echo '<h1>Penpal Request Number ' . $request['id'] . '</h1>';
 if ($request['user'] == $userId) {
     echo '<p style="width:70%;margin-right:auto;margin-left:auto;">' . nl2br(htmlspecialchars($request['post'])) . '</p>';
     echo '<p style="text-align:center;margin-top:15px;"><b>You cannot reply to your own penpal request</b></p>';
+    echo "<form method='POST' action='includes/closePenpal.inc.php'>";
+    echo '<input type="hidden" id="request" name="request" value="' . $_GET['id'] . '">';
+    echo '<button  class="fancyButton">Close Request</button>';
+    echo '</form>';
+} else if (in_array($userId,$array)) {
+    echo '<p style="width:70%;margin-right:auto;margin-left:auto;">' . nl2br(htmlspecialchars($request['post'])) . '</p>';
 } else if ($request['expired'] == 1) {
     echo '<p><b>This inquiry has expired.</b></p>';
 } else {

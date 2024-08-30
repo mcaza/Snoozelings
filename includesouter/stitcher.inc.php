@@ -113,7 +113,7 @@ if ($page === "questions") {
                 echo '</div>';
         }
         echo '</div>';
-        echo '<label style="margin-top: 3rem;" for="design" class="form">Which Fabric Would You Like to Use?</label><br>';
+        echo '<label style="margin-top: 3rem;" for="design" class="form">Which Design Would You Like to Use?</label><br>';
         echo '<select class="input"  name="design">';
         foreach ($results as $result) {
             echo '<option value="' . $result['id'] . '">' . $result['display'] . '</option>';

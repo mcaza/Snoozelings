@@ -42,7 +42,27 @@ if ($result["tempCode"] === $code) {
     $stmt->bindParam(":emptyString", $emptyString);
     $stmt->execute();
     
-    header("Location: ../index.php");
+    //Add Puffball Hoodie
+    $item = 224;
+    $query = 'SELECT * FROM itemList WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $item);
+    $stmt->execute();
+    $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":list", $item);
+    $stmt->bindParam(":user", $userId);
+    $stmt->bindParam(":name", $iteminfo['name']);
+    $stmt->bindParam(":display", $iteminfo['display']);
+    $stmt->bindParam(":description", $iteminfo['description']);
+    $stmt->bindParam(":type", $iteminfo['type']);
+    $stmt->bindParam(":rarity", $iteminfo['rarity']);
+    $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
+    $stmt->execute();
+    
+    header("Location: ../verify");
 } else {
     $_SESSION["reply"] = "The code you entered is incorrect.";
     header("Location: ../verify.php");

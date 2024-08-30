@@ -486,15 +486,15 @@ echo '</div>';
         echo '<p><i>Bad to Excellent</i></p>';
         
         //Check for Habits
-        $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER BY id DESC LIMIT 7'; 
+        $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER BY date DESC LIMIT 7'; 
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
         $habits = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($habits as $habit) {
             if ($habit['habitOne']) {
-                $habitOne = $habit['habitOne'];
-                $habitTwo = $habit['habitTwo'];
+                $habitOne = htmlspecialchars($habit['habitOne']);
+                $habitTwo = htmlspecialchars($habit['habitTwo']);
                 break;
             }
         }
@@ -521,28 +521,28 @@ echo '</div>';
         //Task One
         echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" for="tomorrowTaskOne" ><b>Most Important Task:</b></label><br>';
         echo '<p><i>If this was the only thing you did tomorrow, you\'d be satisfied</i></p>';
-        echo '<input class="input" type="text" name="tomorrowTaskOne" placeholder="' . $latestEntry[0]['taskOne'] . '"><br>';
+        echo '<input class="input" type="text" name="tomorrowTaskOne" placeholder="' . htmlspecialchars($latestEntry[0]['taskOne']) . '"><br>';
         
         //Task Two & Three
         echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Secondary Tasks:</b></label><br>';
         echo '<p><i>Completion of these tasks will make the day even better</i></p>';
-        echo '<input class="input" type="text" name="tomorrowTaskTwo" placeholder="' . $latestEntry[0]['taskTwo'] . '"><br>';
-        echo '<input class="input" type="text" name="tomorrowTaskThree" placeholder="' . $latestEntry[0]['taskThree'] . '"><br>';
+        echo '<input class="input" type="text" name="tomorrowTaskTwo" placeholder="' . htmlspecialchars($latestEntry[0]['taskTwo']) . '"><br>';
+        echo '<input class="input" type="text" name="tomorrowTaskThree" placeholder="' . htmlspecialchars($latestEntry[0]['taskThree']) . '"><br>';
         
         if (date('w', strtotime($date)) != 5 && date('w', strtotime($date)) != 6) {
             //Task Four & Five
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Less Important Tasks:</b></label><br>';
             echo '<p><i>To be completed only after completing the tasks above</i></p>';
-            echo '<input class="input" type="text" name="tomorrowTaskFour" placeholder="' . $latestEntry[0]['taskFour'] . '"><br>';
-            echo '<input class="input" type="text" name="tomorrowTaskFive" placeholder="' . $latestEntry[0]['taskFive'] . '"><br>';
+            echo '<input class="input" type="text" name="tomorrowTaskFour" placeholder="' . htmlspecialchars($latestEntry[0]['taskFour']) . '"><br>';
+            echo '<input class="input" type="text" name="tomorrowTaskFive" placeholder="' . htmlspecialchars($latestEntry[0]['taskFive']) . '"><br>';
         }
         
         echo '<hr>';
         if (date('w', strtotime($date)) == 7) {
             echo '<h3>Next Week</h3><br>';
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Next Week\'s Habits:</b></label><br>';
-            echo '<input class="input" type="text" name="newHabitOne" placeholder="' . $latestEntry[0]['habitOne'] . '"><br>';
-            echo '<input class="input" type="text" name="neaHabitTwo" placeholder="' . $latestEntry[0]['habitTwo'] . '"><br>';
+            echo '<input class="input" type="text" name="newHabitOne" placeholder="' . htmlspecialchars($latestEntry[0]['habitOne']) . '"><br>';
+            echo '<input class="input" type="text" name="neaHabitTwo" placeholder="' . htmlspecialchars($latestEntry[0]['habitTwo']) . '"><br>';
             
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Weekly Wins:</b></label><br>';
             echo '<p><i>Reflect on the past week. What wins are you proud of?</i></p>';
