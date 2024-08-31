@@ -77,6 +77,24 @@ function alphaEmail(object $pdo, string $email) {
     }
 }
 
-function createUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter, string $randomString) {
-    setUser($pdo, $username, $pwd, $email, $birthdate, $pronouns, $newsletter, $randomString);
+function earlyAccessCode(object $pdo, string $email) {
+    if (checkCode($pdo, $email)) {
+        return false;
+    } else {
+        return true;
+    }
+    
+}
+
+function earlyAccessCodeCheck(object $pdo, string $email) {
+    if (checkCodeUsed($pdo, $email) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+    
+}
+
+function createUser(object $pdo, string $username, string $pwd, string $email, $birthdate, string $pronouns, int $newsletter, string $randomString, $code) {
+    setUser($pdo, $username, $pwd, $email, $birthdate, $pronouns, $newsletter, $randomString, $code);
 }

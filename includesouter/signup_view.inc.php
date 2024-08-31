@@ -9,7 +9,7 @@ function checkSignupErrors() {
         echo "<br>";
         
         foreach ($errors as $error) {
-            echo '<p class="form-error">' . $error . '</p>';
+            echo '<p class="form-error" style="color:#850000">' . $error . '</p><br>';
         }
         
         unset($_SESSION['errors_signup']);
@@ -20,27 +20,33 @@ function checkSignupErrors() {
 }
 
 function signupInputs() {
+    echo "<label for='code'  class='form'>Early Access Code:</label><br>";
+    if (isset($_SESSION["signupData"]["code"]) && !isset($_SESSION["errors_signup"]["code_not_found"]) && !isset($_SESSION["errors_signup"]["code_used"])) {
+            echo '<input class="input" type="text" name="code" placeholder="From Your Email" value="' . $_SESSION["signupData"]["code"] . '" required><br>';
+        } else {
+            echo '<input class="input" type="text" name="code" placeholder="From Your Email" required><br>';
+        }
     echo "<label for='username'  class='form'>Username:</label><br>";
         if (isset($_SESSION["signupData"]["username"]) && !isset($_SESSION["errors_signup"]["username_taken"])) {
-            echo '<input class="input" type="text" name="username" placeholder="Username" value="' . $_SESSION["signupData"]["username"] . '"><br>';
+            echo '<input class="input" type="text" name="username" placeholder="Username" value="' . $_SESSION["signupData"]["username"] . '" required><br>';
         } else {
-            echo '<input class="input" type="text" name="username" placeholder="Username"><br>';
+            echo '<input class="input" type="text" name="username" placeholder="Username" required><br>';
         }
     echo "<label for='pwd'  class='form'>Password:</label><br>";
-    echo '<input class="input" type="password" name="pwd" placeholder="Password"><br>';
+    echo '<input class="input" type="password" name="pwd" placeholder="Password" required><br>';
     echo "<label for='pwd2'  class='form'>Confirm Password:</label><br>";
-    echo '<input class="input" type="password" name="pwd2" placeholder="Password"><br>';
+    echo '<input class="input" type="password" name="pwd2" placeholder="Password" required><br>';
     echo "<label for='email'  class='form'>Email:</label><br>";
     if (isset($_SESSION["signupData"]["email"]) && !isset($_SESSION["errors_signup"]["email_registered"]) && !isset($_SESSION["errors_signup"]["invalid_email"])) {
-            echo '<input  class="input"type="text" name="email" placeholder="Email" value="' . $_SESSION["signupData"]["email"] . '"><br>';
+            echo '<input  class="input"type="text" name="email" placeholder="Email" value="' . $_SESSION["signupData"]["email"] . '" required><br>';
         } else {
-            echo '<input  class="input"type="text" name="email" placeholder="Email"><br>';
+            echo '<input  class="input"type="text" name="email" placeholder="Email" required><br>';
         }
     echo "<label for='birthday'  class='form'>Date of Birth:</label><br>";
     if (isset($_SESSION["signupData"]["birthday"])) {
-        echo '<input  class="input"type="date" id="birthday" name="birthday" value="' . $_SESSION["signupData"]["birthday"] . '"><br>';
+        echo '<input  class="input"type="date" id="birthday" name="birthday" value="' . $_SESSION["signupData"]["birthday"] . '" required><br>';
     } else {
-        echo '<input  class="input"type="date" id="birthday" name="birthday"><br>';
+        echo '<input  class="input"type="date" id="birthday" name="birthday" required><br>';
     }
     echo '<label for="pronouns"  class="form">Your Pronouns:</label><br>';
     echo '<select  class="input" name="pronouns"><br>';

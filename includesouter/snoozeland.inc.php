@@ -30,7 +30,7 @@ echo '<div class="shopRows">';
 echo '<a href="requests" class="shopBox">';
 echo '<div>';
 echo '<img src="resources/squareAdoptionHouse.png" class="shopImg" style="width: 90%;">';
-echo '<h4>Request Board</h4>';
+echo '<h4>Request Boards</h4>';
 echo '</div>';
 echo '</a>';
 

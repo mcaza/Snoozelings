@@ -25,6 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":premium", $premium);
     $stmt->execute();
     
+        //Update Tutorial
+    $query = 'UPDATE users SET tutorial = 4 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    
     header("Location: ../journal.php");
 } else {
 header("Location: ../journal.php");

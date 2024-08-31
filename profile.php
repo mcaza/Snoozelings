@@ -103,17 +103,20 @@ if (!$result) {
     <script>
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const id = urlParams.get('id');
+        const id = urlParams.get('id');;
+        if (id > 1) {
+            const beforeKey = document.getElementById('left').value;
+        }
         
-        const before = id - 1;
-        const after = parseInt(id) + 1;
+        const after = document.getElementById('right').value;
 
         document.onkeydown = arrowChecker;
 
 function arrowChecker(e) {  
     e = e || window.event;
     if (e.keyCode == '37') { //left
-        document.location.href = "profile?id=" + before;
+        const beforeKey = document.getElementById('left').value;
+        document.location.href = "profile?id=" + beforeKey;
     }
     else if (e.keyCode == '39') { //right
         document.location.href = "profile?id=" + after;

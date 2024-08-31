@@ -1,5 +1,12 @@
 <?php
 $id = $_GET['id'];
+$userId = $_SESSION['user_id'];
+
+$query = "SELECT * FROM users WHERE id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Navigation
 echo '<div id="onlyOne" class="leftRightButtons">';
@@ -30,9 +37,14 @@ $query = "SELECT owner_id FROM snoozelings WHERE id = :id;";
 if ($_SESSION["user_id"] == $result["owner_id"]) { 
     echo '<div class="button-bar">
                 <button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Edit Pet</button>
-                <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Change Job</button>
-                <button class="fancyButton" onClick="window.location.href=\'../includes/bondSoul.inc.php?id=' . $id . '\'">Bond Souls</button>
-            </div>';
+                <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Change Job</button>';
+    echo  '<button class="fancyButton" onClick="window.location.href=\'../includes/bondSoul.inc.php?id=' . $id . '\'">Bond Souls</button>';
+    if ($user['bonded'] != $id) {
+        
+    }
+                
+               
+    echo '</div>';
 } elseif ($result['owner_id'] === "0") {
      echo '<div class="button-bar"><p style="font-size: 2rem;" >Up for Adoption</p></div>';
 } else {

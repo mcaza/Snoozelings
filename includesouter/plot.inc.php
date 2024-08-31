@@ -74,7 +74,11 @@ if ($int === 0) {
     echo '<label for="farmer"  class="form pushDown">Choose A Farmer:</label><br>';
     echo '<select  class="input" name="farmer"><br>';
     foreach ($results as $pet) {
-    echo '<option value="' . $pet['id'] . '">' . $pet['name'] . '</option>';
+        if ($pet['job']== "Farmer") {
+                echo '<option value="' . $pet['id'] . '">*' . htmlspecialchars($pet['name']) . '*</option>';
+            } else {
+                echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+            }
     }
     echo '</select></br>';
     

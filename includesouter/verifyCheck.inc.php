@@ -13,7 +13,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 //Check for Logged in 
 if (isset($_SESSION["user_id"])) {
     if ($result['emailVerified'] == 0) {
-            header("Location:../verify.php");
+            header("Location:../verify");
         die();
         }
 

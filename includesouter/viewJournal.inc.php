@@ -148,6 +148,10 @@ if ($days === "facts") {
                 array_push($taskArrayFive,false);
             }
         } 
+        
+        if (count($journals) < 2) {
+            echo '<p><i>Productivity Journals cannot be viewed until you have 2 entries.</i></p>';
+        }
     }
     
     foreach ($journals as $box) {

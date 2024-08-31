@@ -77,8 +77,9 @@ require_once '../includes/adminCheck.inc.php';
                    foreach ($emails as $email) {
                        echo $email['email'] . '<br>';
                    } 
-            
-    
+            echo "<form method='POST' action='includes/emailsAdded.inc.php'>";  
+            echo '<button style="margin-bottom: .7rem;margin-top:20px;" class="fancyButton">Clear Emails</button>';
+            echo '</form>';
     ?>
 
         </div></div>

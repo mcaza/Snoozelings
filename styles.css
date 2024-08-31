@@ -1524,6 +1524,10 @@ a.recipe:hover {
     justify-content: space-evenly;
 }
 
+.displaycontainerright {
+        width: 400px;
+    }
+
 /* Form Styles */ 
 .form {
     display: inline-block;
@@ -1928,4 +1932,8 @@ select {
     width: 90%;
     margin-left:3%;
 }
+    
+    .displaycontainerright {
+        width: auto;
+    }
 }

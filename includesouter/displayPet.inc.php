@@ -84,11 +84,12 @@ function displayPet($pet, $class) {
         $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluff'];
         foreach ($mothArray as $moth) {
             if (strpos($pet["specials"], $moth) !== false) {
+                echo 'test';
                 $mothtype = $moth;
                 break;
             }
         }
-        if ($moth) {
+        if ($mothtype) {
             echo "<div class='${class}'>";
         echo "<img src='Layers/Other/MothFluff/Behind/" . $moth . ".png' id = 'BackFluffOne'>";
         echo "</div>";
@@ -296,7 +297,7 @@ function displayPet($pet, $class) {
             
         }
     
-    if ($moth) {
+    if ($mothtype) {
             echo "<div class='${class}'>";
         echo "<img src='Layers/Other/MothFluff/" . $moth . ".png' id = 'FrontFluffOne'>";
         echo "</div>";

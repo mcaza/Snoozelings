@@ -112,6 +112,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $weeklyLesson = htmlspecialchars($_POST['weeklyLesson']);
     }
     
+    //Get Journal Id
+    $query = 'SELECT id FROM productivityEntries WHERE user_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $prevCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($prevCheck != false) {
     //Custom Variable Checks
     if ($productivity > 10 || $productivity < 1 || is_numeric($productivity) != true) {
         header("Location: ../index");
@@ -131,6 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($mental > 10 || $mental < 1 || is_numeric($mental) != true) {
         header("Location: ../index");
         die();
+    }
     }
     
     //Submit Journal

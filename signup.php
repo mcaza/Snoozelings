@@ -60,19 +60,22 @@ require_once '../includes/loginRedirect.inc.php';
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
             <div style="margin-bottom: 2rem;"><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
-            <h3 style="margin-bottom:1.5rem">Alpha Testers Only</h3>
-
-            <form action="includes/signup.inc.php" method="post">
-                <?php 
-            signupInputs();
-        ?>
-                <button  class="fancyButton regButton">Register</button>
-            </form>
-            
+            <h3 style="margin-bottom:1.5rem">Early Access is Open</h3>
             <?php
             checkSignupErrors();
             
             ?>
+            <?php 
+            
+            
+            echo '<form action="includes/signup.inc.php" method="post">';
+            signupInputs();
+        
+                echo '<button  class="fancyButton regButton">Register</button>';
+            echo '</form>'; 
+            ?>
+            
+            
             
             
         </div>

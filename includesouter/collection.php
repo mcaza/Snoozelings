@@ -32,41 +32,27 @@ echo '<div id="onlyOne" class="leftRightButtons">';
 if ($id == 10) {
     echo '<a id="leftArrow" href="collection?id=2"><<</a>';
 } else if ($id > 1) {
-    $num = $id;
-                do {
-                    $num = $num - 1;
-                    $query = "SELECT * FROM users WHERE id = :id;";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->execute();
-                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($downtest) {
-                        break;
-                    }
-                } while ($num) ;
-                echo '<a id="leftArrow" href="collection?id=' . $num . '"><<</a>';
+    $query = 'SELECT * FROM users WHERE id < :id ORDER BY id DESC LIMIT 1';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":id", $id);
+                $stmt->execute();
+                $down = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo '<input type="hidden" name="left" value="' . $down['id'] . '" id="left">';
+                echo '<a id="leftArrow" href="collection?id=' . $down['id'] . '"><<</a>';
 }
 if ($id == 2) {
     echo '<a href="collection?id=10">>></a>';
 } else {
-    $num = $id;
-                do {
-                    $num = $num + 1;
-                    $query = "SELECT * FROM users WHERE id = :id;";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->execute();
-                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($downtest) {
-                        break;
-                    }
-                } while ($num) ;
-    echo '<a href="collection?id=' . $num . '">>></a>';
-}
-            
+$query = 'SELECT * FROM users WHERE id > :id ORDER BY id ASC LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $up = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo '<input type="hidden" name="right" value="' . $up['id'] . '" id="right">';
+    echo '<a href="collection?id=' . $up['id'] . '">>></a>';      
     
     echo '</div>';
-
+}
 if ($userId === $id) {
     echo "<h3>Your Collection</h3>";
 } else {

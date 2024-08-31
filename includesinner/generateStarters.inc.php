@@ -17,7 +17,13 @@ for ($i = 0; $i < 6; $i++) {
     randomCommon($pdo, $results, $userId, $count);
 }
 
-header("Location: ../welcome.php");
+//Update Tutorial
+    $query = 'UPDATE users SET tutorial = 2 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+
+header("Location: ../welcome");
 
 //Function to Randomize info
 

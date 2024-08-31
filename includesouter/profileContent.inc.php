@@ -32,33 +32,21 @@ if ($id == $userId) {
     //User Navigation
             echo '<div id="onlyOne" class="leftRightButtons">';
             if ($id > 1) {
-                $num = $id;
-                do {
-                    $num = $num - 1;
-                    $query = "SELECT * FROM users WHERE id = :id;";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->execute();
-                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($downtest) {
-                        break;
-                    }
-                } while ($num) ;
-                echo '<a id="leftArrow" href="profile?id=' . $num . '"><<</a>';
+                $query = 'SELECT * FROM users WHERE id < :id ORDER BY id DESC LIMIT 1';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":id", $id);
+                $stmt->execute();
+                $down = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo '<input type="hidden" name="left" value="' . $down['id'] . '" id="left">';
+                echo '<a id="leftArrow" href="profile?id=' . $down['id'] . '"><<</a>';
             }
-    $num = $id;
-                do {
-                    $num = $num + 1;
-                    $query = "SELECT * FROM users WHERE id = :id;";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->execute();
-                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($downtest) {
-                        break;
-                    }
-                } while ($num) ;
-    echo '<a href="profile?id=' . $num . '">>></a>';
+        $query = 'SELECT * FROM users WHERE id > :id ORDER BY id ASC LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $up = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo '<input type="hidden" name="right" value="' . $up['id'] . '" id="right">';
+    echo '<a href="profile?id=' . $up['id'] . '">>></a>';
     echo '</div>';
     echo '<div class="button-bar">
                 <button class="fancyButton" onClick="window.location.href=\'/updateaccount\'">Update Account</button>
@@ -71,35 +59,23 @@ if ($id == $userId) {
     
 } else {
     //User Navigation
-    echo '<div class="leftRightButtons">';
-    if ($id > 1) {
-                $num = $id;
-                do {
-                    $num = $num - 1;
-                    $query = "SELECT * FROM users WHERE id = :id;";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->execute();
-                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($downtest) {
-                        break;
-                    }
-                } while ($num) ;
-                echo '<a id="leftArrow" href="profile?id=' . $num . '"><<</a>';
+    echo '<div id="onlyOne" class="leftRightButtons">';
+            if ($id > 1) {
+                $query = 'SELECT * FROM users WHERE id < :id ORDER BY id DESC LIMIT 1';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":id", $id);
+                $stmt->execute();
+                $down = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo '<input type="hidden" name="left" value="' . $down['id'] . '" id="left">';
+                echo '<a id="leftArrow" href="profile?id=' . $down['id'] . '"><<</a>';
             }
-    $num = $id;
-                do {
-                    $num = $num + 1;
-                    $query = "SELECT * FROM users WHERE id = :id;";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->execute();
-                    $downtest = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($downtest) {
-                        break;
-                    }
-                } while ($num) ;
-    echo '<a href="profile?id=' . $num . '">>></a>';
+        $query = 'SELECT * FROM users WHERE id > :id ORDER BY id ASC LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $up = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo '<input type="hidden" name="right" value="' . $up['id'] . '" id="right">';
+    echo '<a href="profile?id=' . $up['id'] . '">>></a>';
     echo '</div>';
     //Right Side Buttons
     echo '<div class="button-bar">';
@@ -205,13 +181,13 @@ if ($id == $userId) {
     echo '<p class="snoozelinginfo"><strong>Farm Name: </strong>' . $result['farmName'];
     } else {
         if ($id === "4") {
-              echo '<p class="snoozelinginfo" style="overflow-y: auto;"><strong>Job: </strong>Seed Shopkeeper</p>';
+              echo '<p class="snoozelinginfo" style="overflow-y: auto;"><strong>Job: </strong>Seed Sower</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Trail Mix</p>';
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Responsible & Hard Working</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Crossbreeding Plants</p>';
               echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Sprout holds the Snooze Land record for most plants harvested in a single lifetime.</p>';
         } elseif ($id === "3") {
-            echo '<p class="snoozelinginfo"><strong>Job: </strong>Code Redemption Employee</p>';
+            echo '<p class="snoozelinginfo"><strong>Job: </strong>Polymath</p>';
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Playful & Worry Free</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>Spreading Joy</p>';
               echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Similar to the snowshoe hare, Cozy\'s fur changes depending on the season. ' . $tempnoun . 'gender fluidity is heavily influenced by these physical changes.</p>';
@@ -224,14 +200,14 @@ if ($id == $userId) {
               echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Miss Lulu and Minky are often seen together. They\'re platonic soulmates.</p>';
         } elseif ($id === "6") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Runs Sewing Shop</p>';
-              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Honeycomb</p>';
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Cotton Candy</p>';
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Artistic & Quick-witted</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Creating Snoozelings</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To find that pin he dropped almost three years ago.</p>';
               echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> When Minky isn\'t working, he spends time stitching teddy bears for the adoption house.</p>';
         } elseif ($id === "7") {
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Dog Treats</p>';
-            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Determined & 	Pro-active</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Playful & Friendly</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Swimming Long Distances</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To find joy in simple things.</p>';
               echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Simon is not a hoarder. He is a collector. But when his many piles begin to overflow, he\'s always happy to share his knick knacks with the community.</p>';
@@ -252,7 +228,7 @@ if ($id == $userId) {
     }
     echo '</div>';
     echo '</div>';
-echo '<div class="displaycontainerright" style="width:400px;">';
+echo '<div class="displaycontainerright" >';
 if ($id === "4") {
     echo '<img src="resources/seedNPC.png" style="height: 40rem;">';
 } elseif ($id === "3") {

@@ -63,9 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         //Clean String
         $clean = trim($specials);
         
-        echo $clean;
-        die();
-        
         //Update Specials
         $query = "UPDATE snoozelings SET specials = :design WHERE id = :id";
         $stmt = $pdo->prepare($query);

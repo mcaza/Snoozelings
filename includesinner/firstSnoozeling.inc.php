@@ -110,17 +110,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Welcome Mail Message
     $message = "Welcome newest Snooze Village citizen!!
     
-    Read through this letter for important Snooze Village information.
+    Read through this letter for important Snoozelings information.
     
     <b style='font-size: 2rem;'>Mail System</b>
     
     Here in Snooze Village, we don't want to overwhelm our postman. We also feel that it's important to not be checking our inboxes all the time. Because of these two reasons, the postman only delivers your mail twice a day at 6 AM EST and 7PM EST.
     
-    Please keep this in mind when sending messages to your friends. They aren't ignoring you. Postman Penn is just making sure to take plenty of breaks on his route.
+    Please keep this in mind when sending messages to your friends. They aren't ignoring you. The postman is just takes plenty of breaks on his route.
     
     <b style='font-size: 2rem;'>Health Journaling</b>
     
-    When filling out your journal, we ask that you do not include any identifying information. Even though no one will be reading your journal but you, we believe it is best that we do not have access to this information.
+    When filling out your journal, we ask that you do not include any identifying information. Even though no one will be reading your journal but you, we do believe it is safest to not store identifying information on our servers.
     
     <strong>Things You Can Include:</strong>
     Symptoms, Times, Dates, Body Locations, How Your Appointments Went, New Treatments Attempted, Generic Medication Names (Heart Medication, Antidepressents, Cortisone Shots), Medication Doses (Anxiety Med 1 - 30mg), Physio Exercises
@@ -151,7 +151,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":datetime", $date);
     $stmt->execute();
     
-    $_SESSION['bonded'] = htmlspecialchars($name);
+    //Add Wish Token if Alpha Tester
+    $query = 'SELECT alphaTester FROM users WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $tokenCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($tokenCheck['alphaTester'] == 1) {
+        $token = 225;
+        $query = 'SELECT * FROM itemList WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $token);
+        $stmt->execute();
+        $item = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+            $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":list", $token);
+        $stmt->bindParam(":user", $userId);
+        $stmt->bindParam(":name", $item['name']);
+        $stmt->bindParam(":display", $item['display']);
+        $stmt->bindParam(":description", $item['description']);
+        $stmt->bindParam(":type", $item['type']);
+        $stmt->bindParam(":rarity", $item['rarity']);
+        $stmt->bindParam(":canDonate", $zero);
+        $stmt->execute();
+    }
+    
+    //Update Tutorial to 3
+    $query = 'UPDATE users SET tutorial = 3 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
     
     header("Location: ../pet?id=" . $result["id"]);
     

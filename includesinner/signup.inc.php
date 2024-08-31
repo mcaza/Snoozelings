@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = strtolower($_POST["email"]);
     $birthday = $_POST["birthday"];
     $pronouns = $_POST["pronouns"];
+    $code = $_POST["code"];
     
         $newsletter = 0;
     
@@ -47,8 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if(passwordLength($pwd)) {
             $errors["short_password"] = "Your password must be at least 8 characters in length.";
         }
-        if (alphaEmail($pdo, $email)) {
-            $errors["alpha_email"] = "That email is not registered for alpha testing.";
+        if (earlyAccessCode($pdo, $code)) {
+            $errors["code_not_found"] = "You have entered an incorrect early access code.";
+        }
+        if (earlyAccessCodeCheck($pdo, $code)) {
+            $errors["code_used"] = "Your code has already been used on another account.";
         }
         if (!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them" || $pronouns === "She/Him")) {
             $errors["pronouns"] = "Please do not enter custom pronouns.";
@@ -62,7 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $signupData = [
                 "username" => $username,
                 "email" => $email,
-                "birthday" => $birthday
+                "birthday" => $birthday,
+                "code" => $code
             ];
             $_SESSION['signupData'] = $signupData;
             
@@ -79,12 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
           
-        createUser($pdo, $username, $pwd, $email, $birthday, $pronouns, $newsletter, $randomString);
+        createUser($pdo, $username, $pwd, $email, $birthday, $pronouns, $newsletter, $randomString, $code);
         
         $address = $email;
 
         $title ="Snoozelings Email Confirmation";
-        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $username . ',<br><br>We are excited to welcome you into the world of Snoozelings!!! <br><br>You\'ll get to play in just a few more seconds, but first, we need you to confirm your email using the link below. If the link doesn\t work, you can also copy & paste the code manually.<br><br><a href="https://snoozelings.com/verify?code=' . $randomString . '">Click Here to Verify Email</a></p><h1>' . $randomString . '</h1><p>If you did not personally attempt to log in to your account just now, please reset your password immediately.<br><br>See you soon,<br><i>Snoozelings</i></p>';
+        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $username . ',<br><br>We are excited to welcome you into the world of Snoozelings!!! <br><br>You\'ll get to play in just a few more seconds, but first, we need you to confirm your email using the link below. If the link doesn\t work, you can also copy & paste the code manually.<br><br><a href="https://snoozelings.com/verify?code=' . $randomString . '">Click Here to Verify Email</a></p><h1>' . $randomString . '</h1><p>See you soon,<br><i>Snoozelings</i></p>';
 
         // Always set content-type when sending HTML email
         $headers = "MIME-Version: 1.0" . "\r\n";

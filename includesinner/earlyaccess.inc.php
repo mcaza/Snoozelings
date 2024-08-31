@@ -57,12 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Send Email
     $address = $email;
-    $title ="Snoozelings Early Access Conformation";
-    if ($id) {
-        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $email . ',<br><br>Thank you so much for preregistering for the Snoozelings Early Access!!! <br><br>We are sending you this email as confirmation of your chosen ID and alpha code. We will also resend you your early access code 1 week before early access opens.<br><br><b>Account ID:</b> ' . $id . '<br><br><b>Alpha Code: </b>' . $randomString . '<br><br>See you this Spring,<br><i>Snoozelings</i></p>';
-    } else {
-        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $email . ',<br><br>Thank you so much for preregistering for the Snoozelings Early Access!!! <br><br>We are sending you this email as confirmation of your alpha code. We will also resend you your early access code 1 week before early access opens. That email will also include your randomly assigned ID.<br><br><b>Alpha Code: </b>' . $randomString . '<br><br>See you this Spring,<br><i>Snoozelings</i></p>';
-    }
+    $title ="Snoozelings Early Access Confirmation";
+        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $email . ',<br><br>Thank you so much for preregistering for the Snoozelings Early Access!!! <br><br>We are sending you this email as confirmation of your chosen ID and alpha code. We are excited to see you on Sept 1st at 3PM.<br><br><b>Account ID:</b> ' . $id . '<br><br><b>Alpha Code: </b>' . $randomString . '<br><br>See you soon,<br><i>Snoozelings</i></p>';
+    
 
         // Always set content-type when sending HTML email
         $headers = "MIME-Version: 1.0" . "\r\n";
