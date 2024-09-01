@@ -26,8 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $health = $_POST["health"];
     $sleep = $_POST["sleep"];
     $water = $_POST["water"];
-    $triggers = htmlspecialchars($_POST['triggers']);
-    $notes = htmlspecialchars($_POST['notes']);
+    $triggers = $_POST['triggers'];
+    $notes = $_POST['notes'];
     
     //Custom Variable Checks
     if ($anxiety > 10 || $anxiety < 1) {
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bad = substr($bad, 0, -2);
     
     if($_POST['meds']) {
-        $meds = htmlspecialchars($_POST['meds']);
+        $meds = $_POST['meds'];
     } else {
         $meds = "Took all my meds";
     }

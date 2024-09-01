@@ -52,6 +52,15 @@ if ($tutorial < 4) {
             echo '<div class="notificationbox"><a href="secretemailpage" class="notif" style="color:red;">' . $count . '. Add Emails</a></div>';
             $count++;
         }
+        
+        $query = 'SELECT * FROM dailyRecords ORDER BY id DESC LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $records = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($records['backup'] == 0) {
+            echo '<div class="notificationbox"><p>' . $count . '. Daily Data Backup</p></div>';
+            $count++;
+        }
     }
 
    
@@ -219,6 +228,10 @@ if ($tutorial < 4) {
     if ($modmail) {
         echo '<div class="notificationbox"><a href="moderatormail" class="notif">' . $count . '. Moderator Mail</a></div>';
         $count++;
+    }
+    
+    if ($count == 1) {
+        echo '<div class="notificationbox"><p>Nothing!!!</p></div>';
     }
 }
 

@@ -12,20 +12,22 @@ if (isset($_SESSION['user_id'])) {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $tutorial = $result['tutorial'];
+        
+        
     
        if ($tutorial < 3) {
             $page = "welcome";
            
        } else if ($tutorial == 3 ) {
-           if ($id == "tutorial") {
-               
-           } else {
-               $page = "journal?id=tutorial";
-           }
+           $page = "journal";
            
        }
-
-    header("location: " . $page);
+        
+        if ($page) {
+            
+            header("location: " . $page);
+        }
+    
 
     }
 

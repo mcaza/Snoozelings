@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Update Tomorrow's Tasks
     if ($_POST['tomorrowTaskOne']) {
-        $pro = htmlspecialchars($_POST["tomorrowTaskOne"]);
+        $pro = $_POST["tomorrowTaskOne"];
         $query = "UPDATE productivityEntries SET taskOne = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST['tomorrowTaskTwo']) {
-        $pro = htmlspecialchars($_POST["tomorrowTaskTwo"]);
+        $pro = $_POST["tomorrowTaskTwo"];
         $query = "UPDATE productivityEntries SET taskTwo = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST['tomorrowTaskThree']) {
-        $pro = htmlspecialchars($_POST["tomorrowTaskThree"]);
+        $pro = $_POST["tomorrowTaskThree"];
         $query = "UPDATE productivityEntries SET taskThree = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST['tomorrowTaskFour']) {
-        $pro = htmlspecialchars($_POST["tomorrowTaskFour"]);
+        $pro = $_POST["tomorrowTaskFour"];
         $query = "UPDATE productivityEntries SET taskFour = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST['tomorrowTaskFive']) {
-        $pro = htmlspecialchars($_POST["tomorrowTaskFive"]);
+        $pro = $_POST["tomorrowTaskFive"];
         $query = "UPDATE productivityEntries SET taskFive = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Update Weekly Journal
     if ($_POST['newHabitOne']) {
-        $pro = htmlspecialchars($_POST["newHabitOne"]);
+        $pro = $_POST["newHabitOne"];
         $query = "UPDATE productivityEntries SET habitOne = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST['neaHabitTwo']) {
-        $pro = htmlspecialchars($_POST["neaHabitTwo"]);
+        $pro = $_POST["newHabitTwo"];
         $query = "UPDATE productivityEntries SET habitTwo = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -170,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST['weeklyWins']) {
-        $pro = htmlspecialchars($_POST["weeklyWins"]);
+        $pro = $_POST["weeklyWins"];
         $query = "UPDATE productivityEntries SET weeklyWin = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -178,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST['weeklyLoses']) {
-        $pro = htmlspecialchars($_POST["weeklyLoses"]);
+        $pro = $_POST["weeklyLoses"];
         $query = "UPDATE productivityEntries SET weeklyLoss = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     if ($_POST['weeklyLesson']) {
-        $pro = htmlspecialchars($_POST["weeklyLesson"]);
+        $pro = $_POST["weeklyLesson"];
         $query = "UPDATE productivityEntries SET learned = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);

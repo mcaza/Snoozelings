@@ -5,8 +5,18 @@ require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
+$userId = $_SESSION['user_id'];
+$query = 'SELECT bonded FROM users WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
+$query = 'SELECT name FROM snoozelings WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $result['bonded']);
+$stmt->execute();
+$petname = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -16,7 +26,7 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fanny Pack</title>
+    <title><?php echo $petname['name'] ?>'s BackPack</title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>

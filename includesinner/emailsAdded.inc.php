@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     
     //Update Emails
-    $query = "UPDATE users SET newsletter = 1 WHERE newsletter = 0";
+    $query = "UPDATE users SET newsletter = 1 WHERE newsletter = 0 AND emailVerified = 1";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     

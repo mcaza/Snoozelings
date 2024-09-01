@@ -60,12 +60,12 @@ echo '<div style="text-align:left;">';
 
 //Basic Information
 if ($username) {
-    echo '<p><b>Username: </b><a href="profile?id=' . $results[0]['submitter'] . '" target="_blank">' . $username['username'] . ' #' . $results[0]['submitter'] . '</a></p>';
+    echo '<p><b>Username: </b><a href="profile?id=' . htmlspecialchars($results[0]['submitter']) . '" target="_blank">' . htmlspecialchars($username['username']) . ' #' . htmlspecialchars($results[0]['submitter']) . '</a></p>';
 } else {
     echo '<p><b>Username: </b> No Username Attached</p>';
 }
 if ($results[0]['email']) {
-    echo '<p><b>Email: </b>' . $results[0]['email'] . '</p>';
+    echo '<p><b>Email: </b>' . htmlspecialchars($results[0]['email']) . '</p>';
 }
 
 //Additional Information (Post, User, Pet, Transfer, Purchase)
@@ -79,7 +79,7 @@ if ($results[0]['userid']) {
     $stmt->bindParam(":id", $results[0]['userid']);
     $stmt->execute();
     $reported = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo '<p><b>User Reported: </b><a href="profile?id=' . $results[0]['userid'] . '" target="_blank">' . $reported['username'] . ' #' . $results[0]['userid'] . '</a></p>';
+    echo '<p><b>User Reported: </b><a href="profile?id=' . htmlspecialchars($results[0]['userid']) . '" target="_blank">' . htmlspecialchars($reported['username']) . ' #' . $results[0]['userid'] . '</a></p>';
 }
 if ($results[0]['petid']) {
     $query = 'SELECT name FROM snoozelings WHERE id = :id';
@@ -87,7 +87,7 @@ if ($results[0]['petid']) {
     $stmt->bindParam(":id", $results[0]['petid']);
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo '<p><b>Pet Reported: </b><a href="profile?id=' . $results[0]['petid'] . '" target="_blank">' . $pet['name'] . ' #' . $results[0]['petid'] . '</a></p>';
+    echo '<p><b>Pet Reported: </b><a href="profile?id=' . htmlspecialchars($results[0]['petid']) . '" target="_blank">' . htmlspecialchars($pet['name']) . ' #' . $results[0]['petid'] . '</a></p>';
 }
 if ($results[0]['transferid']) {
     echo '<p><b>Transfer To: </b>' . $results[0]['transferid'] . '</p>';
@@ -125,7 +125,7 @@ if ($position == "admin" || $position == "moderator") {
 //Original Submission
 echo '<h1 style="text-align: center;">Ticket Replies</h1>';
 echo '<table style="width: 90%; border-radius: 0;">';
-echo '<tr><th>Original Submission - Submitted by <a href="profile?id=' . $results[0]['submitter'] . '" target="_blank" style="color: white">' . $username['username'] . ' #' . $results[0]['submitter'] . '</a></th></tr>';
+echo '<tr><th>Original Submission - Submitted by <a href="profile?id=' . htmlspecialchars($results[0]['submitter']) . '" target="_blank" style="color: white">' . htmlspecialchars($username['username']) . ' #' . htmlspecialchars($results[0]['submitter']) . '</a></th></tr>';
 echo '<tr><td>' . nl2br(htmlspecialchars($results[0]['information'])) . '</td></tr>';
 echo '<tr><td style="text-align: right">' . $results[0]['datetime'] . '</td></tr>';
 echo '</table><br>';
@@ -142,7 +142,7 @@ if (count($results) > 1) {
 
                 //Reply if Submitter is Posting
                 if ($results[0]['submitter'] == $result['replyid']) {
-                   echo '<tr><th>Reply - Submitted by <a href="profile?id=' . $results[0]['submitter'] . '" target="_blank" style="color: white">' . $username['username'] . ' #' . $results[0]['submitter'] . '</a></th></tr>'; 
+                   echo '<tr><th>Reply - Submitted by <a href="profile?id=' . htmlspecialchars($results[0]['submitter']) . '" target="_blank" style="color: white">' . htmlspecialchars($username['username']) . ' #' . $results[0]['submitter'] . '</a></th></tr>'; 
                 } else {
                     //Reply if Staff Member is Viewing
                     if ($position == "admin" || $position == "moderator") {

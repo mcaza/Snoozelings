@@ -95,21 +95,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }  
     }
     
-    $taskOne = htmlspecialchars($_POST['tomorrowTaskOne']);
-    $taskTwo = htmlspecialchars($_POST['tomorrowTaskTwo']);
-    $taskThree = htmlspecialchars($_POST['tomorrowTaskThree']);
+    $taskOne = $_POST['tomorrowTaskOne'];
+    $taskTwo = $_POST['tomorrowTaskTwo'];
+    $taskThree = $_POST['tomorrowTaskThree'];
     
     if (date('w', strtotime($date)) != 5 && date('w', strtotime($date)) != 6) {
-        $taskFour = htmlspecialchars($_POST['tomorrowTaskFour']);
-        $taskFive = htmlspecialchars($_POST['tomorrowTaskFive']);
+        $taskFour = $_POST['tomorrowTaskFour'];
+        $taskFive = $_POST['tomorrowTaskFive'];
     }
     
     if (date('w', strtotime($date)) == 7 ) {
-        $habitOne = htmlspecialchars($_POST['newHabitOne']);
-        $habitTwo = htmlspecialchars($_POST['neaHabitTwo']);
-        $weeklyWins = htmlspecialchars($_POST['weeklyWins']);
-        $weeklyLosses = htmlspecialchars($_POST['weeklyLoses']);
-        $weeklyLesson = htmlspecialchars($_POST['weeklyLesson']);
+        $habitOne = $_POST['newHabitOne'];
+        $habitTwo = $_POST['neaHabitTwo'];
+        $weeklyWins = $_POST['weeklyWins'];
+        $weeklyLosses = $_POST['weeklyLoses'];
+        $weeklyLesson = $_POST['weeklyLesson'];
     }
     
     //Get Journal Id
@@ -210,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $query = 'UPDATE productivityEntries SET notes = :notes WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $newest['id']);
-        $stmt->bindParam(":notes", htmlspecialchars($_POST['notes']));
+        $stmt->bindParam(":notes", $_POST['notes']);
         $stmt->execute();
     }
     

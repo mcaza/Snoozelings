@@ -89,7 +89,7 @@ foreach ($results as $result) {
 }
 
 echo '</div>';
-if ($result['setting']) {
+if ($setting) {
     echo '<p><i>Your penpal setting is currently set to ' . $setting . '. This can be adjusted in <a href="editprofile">Profile Settings</a>.</i></p>';
 } else {
     echo '<p><i>Your penpal setting is currently set to Easy only. This can be adjusted in Profile Settings.</i></p>';

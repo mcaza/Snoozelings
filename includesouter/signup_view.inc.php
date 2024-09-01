@@ -20,8 +20,11 @@ function checkSignupErrors() {
 }
 
 function signupInputs() {
+    $EACode = $_GET['code'];
     echo "<label for='code'  class='form'>Early Access Code:</label><br>";
-    if (isset($_SESSION["signupData"]["code"]) && !isset($_SESSION["errors_signup"]["code_not_found"]) && !isset($_SESSION["errors_signup"]["code_used"])) {
+    if ($EACode) {
+        echo '<input class="input" type="text" name="code" placeholder="From Your Email" value="' . $EACode . '" required><br>';
+    } else if (isset($_SESSION["signupData"]["code"]) && !isset($_SESSION["errors_signup"]["code_not_found"]) && !isset($_SESSION["errors_signup"]["code_used"])) {
             echo '<input class="input" type="text" name="code" placeholder="From Your Email" value="' . $_SESSION["signupData"]["code"] . '" required><br>';
         } else {
             echo '<input class="input" type="text" name="code" placeholder="From Your Email" required><br>';

@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
             //Redirect
-            $_SESSION['reply'] = "Code successfully redeemed. Your item has been added to your fanny pack.";
+            $_SESSION['reply'] = "Code successfully redeemed. Your item has been added to your backpack.";
             header("Location: ../coderedemption");
 
         } else {

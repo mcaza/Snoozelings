@@ -67,7 +67,7 @@ if ($request['user_id'] == $userId) {
 } else if ($request['fulfilled'] == 1) {
     echo '<h1>This request has already been fulfilled</h1>';
 } else if ($check && $plaincheck) {
-    echo '<form method="post" action="includes/fulfillrequest.inc.php" onsubmit="return confirm(\'This action will remove 1 ' . strtolower($request['displayname']) . ' from your fanny pack\');">';
+    echo '<form method="post" action="includes/fulfillrequest.inc.php" onsubmit="return confirm(\'This action will remove 1 ' . strtolower($request['displayname']) . ' from your backpack\');">';
     echo '<input type="hidden" id="request" name="request" value="' . $_GET['id'] . '">';
     echo '<button  class="fancyButton">Fulfill Request</button>';
     echo '</form>';

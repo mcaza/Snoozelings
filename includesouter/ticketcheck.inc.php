@@ -18,14 +18,14 @@ $stmt->execute();
 $statustwo = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-if ($statustwo['status'] == 1) {
+if ($statustwo['staff'] == 1) {
     if ($status == "admin" || $userId == $statustwo['submitter']) {
         
     } else {
         header("Location: ../login");
         die();
     }
-} else if ($status['staff'] == "admin" || $status['status'] == "mod" || $userId == $statustwo['submitter']) {
+} else if ($status['staff'] == "admin" || $status['staff'] == "mod" || $userId == $statustwo['submitter']) {
     
 } else {
     header("Location: ../login");

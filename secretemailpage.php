@@ -70,7 +70,7 @@ require_once '../includes/adminCheck.inc.php';
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
             <?php 
-            $query = 'SELECT email FROM users WHERE newsletter = 0';
+            $query = 'SELECT email FROM users WHERE emailVerified = 1 AND newsletter = 0';
             $stmt = $pdo->prepare($query);
             $stmt->execute();
             $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);

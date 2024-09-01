@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     $user = $_POST['userid'];
     $ticket = $_POST['ticket'];
-    $reply = htmlspecialchars($_POST['information1']);
+    $reply = $_POST['information1'];
     
     //Check if Usernames Match
     if ($userId == $user) {
@@ -44,12 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $now = date_create('now')->format('Y-m-d H:i:s');
     
     //Submit Ticket
-    $query = "INSERT INTO modtickets (ticketid, information, datetime, replyid) VALUES (:ticketid, :information, :datetime, :replyid);";
+    $query = "INSERT INTO modtickets (ticketid, information, datetime, replyid, status) VALUES (:ticketid, :information, :datetime, :replyid, :status);";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":ticketid", $ticket);
     $stmt->bindParam(":information", $reply);
     $stmt->bindParam(":datetime", $now);
     $stmt->bindParam(":replyid", $userId);
+    $stmt->bindParam(":status", $result['statis']);
     $stmt->execute();
     
     //Mark Ticket as Replied

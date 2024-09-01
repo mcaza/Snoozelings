@@ -247,7 +247,7 @@ echo '<label style="font-size: 1.7rem;" for="Penpals">Find Penpal</label><br><br
 echo '<input type="checkbox" id="Snoozeling" name="Snoozeling" value="Snoozeling">';
 echo '<label style="font-size: 1.7rem;" for="Snoozeling">Bonded Snoozeling</label><br><br>';
 echo '<input type="checkbox" id="Pack" name="Pack" value="Pack">';
-echo '<label style="font-size: 1.7rem;" for="Pack">Fanny Pack</label><br><br>';
+echo '<label style="font-size: 1.7rem;" for="Pack">Backpack</label><br><br>';
 
 //Blank Field Warning
 echo '<p><i>Any Blank Fields Will Not Be Changed</i></p>';
