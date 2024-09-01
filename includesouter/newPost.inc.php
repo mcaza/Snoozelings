@@ -5,6 +5,7 @@ $title = $_SESSION['title'];
 $post = $_SESSION['post'];
 unset($_SESSION['title']);
 unset($_SESSION['post']);
+unset($_SESSION['type']);
 
 
  //Back to Pack Arrows
@@ -70,8 +71,13 @@ if (!$result || $userId == 1) {
     
 
     //End Form
-    echo '<button  class="fancyButton" style="width: 8rem;">Post</button>';
+    echo '<input class="fancyButton" type="submit" name="publish" value="Post" style="margin-right:20px;width:80px;">
+    <input class="fancyButton" type="submit" name="save" value="Preview">';
     echo '</form>';
+    
+    if ($post) {
+        echo '<div style="width:70%;margin-left:auto;margin-right:auto;">' . $post . '</div>';
+    }
     
 } else {
     if ( $result['new'] == "1" || $userId == 1) {

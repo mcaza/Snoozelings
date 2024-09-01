@@ -489,9 +489,8 @@ echo '</div>';
         echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Secondary Tasks:</b></label><br>';
         echo '<p><i>Completion of these tasks will make the day even better</i></p>';
         echo '<input class="input" type="text" name="tomorrowTaskTwo" required><br>';
-        echo '<input class="input" type="text" name="tomorrowTaskThree" required><br>';
-        
-        if (date('w', strtotime($date)) != 5 && date('w', strtotime($date)) != 6) {
+        echo '<input class="input" type="text" name="tomorrowTaskThree" required><br>';       
+        if (date('N') != 5 && date('N') != 6) {
             //Task Four & Five
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Less Important Tasks:</b></label><br>';
             echo '<p><i>To be completed only after completing the tasks above</i></p>';
@@ -500,7 +499,7 @@ echo '</div>';
         }
         
         echo '<hr>';
-        if (date('w', strtotime($date)) == 7) {
+        if (date('N') == 7) {
             echo '<h3>Next Week</h3><br>';
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Next Week\'s Habits:</b></label><br>';
             echo '<input class="input" type="text" name="newHabitOne" required><br>';

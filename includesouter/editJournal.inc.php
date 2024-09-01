@@ -469,7 +469,7 @@ echo '</div>';
         echo '<p><i>Bad to Excellent</i></p>';
          
          //Rate Mental Health
-        echo '<label class="form" style="margin-top: 2rem;">Rate Your Physical Health:</label><br>';
+        echo '<label class="form" style="margin-top: 2rem;">Rate Your Mental Health:</label><br>';
         //Buttons
         echo '<div class="radioRow">';
         echo '<div class="radioBox" ><input type="radio" name="mental" value="1"  id="men1"><label for="men1">1</label></div>';
@@ -529,7 +529,7 @@ echo '</div>';
         echo '<input class="input" type="text" name="tomorrowTaskTwo" placeholder="' . htmlspecialchars($latestEntry[0]['taskTwo']) . '"><br>';
         echo '<input class="input" type="text" name="tomorrowTaskThree" placeholder="' . htmlspecialchars($latestEntry[0]['taskThree']) . '"><br>';
         
-        if (date('w', strtotime($date)) != 5 && date('w', strtotime($date)) != 6) {
+        if (date('N') != 5 && date('N') != 6) {
             //Task Four & Five
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Less Important Tasks:</b></label><br>';
             echo '<p><i>To be completed only after completing the tasks above</i></p>';
@@ -538,7 +538,7 @@ echo '</div>';
         }
         
         echo '<hr>';
-        if (date('w', strtotime($date)) == 7) {
+        if (date('N') == 7) {
             echo '<h3>Next Week</h3><br>';
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Next Week\'s Habits:</b></label><br>';
             echo '<input class="input" type="text" name="newHabitOne" placeholder="' . htmlspecialchars($latestEntry[0]['habitOne']) . '"><br>';

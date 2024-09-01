@@ -19,32 +19,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
     
-    //Get Date
-    $now = new DateTime("now", new DateTimezone('UTC'));
-    $formatted = $now->format('Y-m-d H:i:s');
+    if (isset($_POST['publish'])) {
+        //Get Date
+        $now = new DateTime("now", new DateTimezone('UTC'));
+        $formatted = $now->format('Y-m-d H:i:s');
+
+        //Post Bulletin
+        $query = 'INSERT INTO posts (user_id, category, datetime, likes, title, text, new) VALUES (:id, :category, :date, :likes, :title, :text, :new)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":date", $formatted);
+        $stmt->bindParam(":category", $type);
+        $stmt->bindParam(":likes", $likes);
+        $stmt->bindParam(":title", $title);
+        $stmt->bindParam(":text", $post);
+        $stmt->bindParam(":new", $new);
+        $stmt->execute();
+
+        //Get Bulletin ID
+        $query = 'SELECT id FROM posts WHERE user_id = :id ORDER BY id DESC LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $id = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        //Reroute
+        header("Location: ../post?id=" . $id['id']);
+    }
+    elseif (isset($_POST['save'])) {
+        $_SESSION['post'] = $post;
+        $_SESSION['title'] = $title;
+        $_SESSION['type'] = $type;
+        
+        //Reroute
+        header("Location: ../newPost");
+    }
     
-    //Post Bulletin
-    $query = 'INSERT INTO posts (user_id, category, datetime, likes, title, text, new) VALUES (:id, :category, :date, :likes, :title, :text, :new)';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->bindParam(":date", $formatted);
-    $stmt->bindParam(":category", $type);
-    $stmt->bindParam(":likes", $likes);
-    $stmt->bindParam(":title", $title);
-    $stmt->bindParam(":text", $post);
-    $stmt->bindParam(":new", $new);
-    $stmt->execute();
     
-    //Get Bulletin ID
-    $query = 'SELECT id FROM posts WHERE user_id = :id ORDER BY id DESC LIMIT 1';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $id = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    //Reroute
-    header("Location: ../post?id=" . $id['id']);
     
 } else {
-    header("Location: ../boards.php");
+    header("Location: ../index");
 }
