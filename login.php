@@ -61,7 +61,7 @@ require_once '../includes/loginRedirect.inc.php';
         <!-- All Main Content -->
         <div class="main-container"><div class="bottomPush">
             <div style="margin-bottom:2rem;"><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
-            <h3 style="margin-bottom:1.5rem">Alpha Testing Login</h3>
+            <h3 style="margin-bottom:1.5rem">🎉 Welcome Early Access Players 🎉</h3>
             <form action="includes/login.inc.php" method="post">
                 <label class='form' for="usernamelogin">Username:</label><br>
                 <input class="input" type="text" name="usernamelogin" placeholder="Username"><br>

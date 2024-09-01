@@ -1,6 +1,21 @@
 <?php 
 
+
+
     if (isset($_SESSION["user_id"])) {
+        $userId = $_SESSION['user_id'];
+        $query = "SELECT bonded FROM users WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $id = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $query = "SELECT name FROM snoozelings WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id['bonded']);
+        $stmt->execute();
+        $name = $stmt->fetch(PDO::FETCH_ASSOC);
+        
         echo '<div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s Abode</a></button>
             <div class="dropdown-content">
@@ -8,7 +23,7 @@
                 <a href="/crafting">Crafting Table</a>
                 <a href="dyes">Dye Station</a>
                 <a href="farm">Farm Plots</a>
-                <a href="pack">Fanny Pack</a>
+                <a href="pack">' . $name['name'] . '\'s Pack</a>
             </div>
         </div>
         <div class="dropdown">
@@ -41,21 +56,21 @@
                 <a href="critterweb">Critter Web</a>
             </div>
         </div>
-        <div>
-            <a href="/includes/logout.inc.php" class="menu">Log Out</a>
+        <div class="dropdown">
+        <button class="menu dropdown dropbtn" id="drop"><a href="/includes/logout.inc.php">Log Out</a></button>
         </div>';
     } else {
         echo '<div>
-            <a href="/signup" class="menu">Sign Up</a>
+        <button class="menu dropdown dropbtn" id="drop"><a href="signup">Sign Up</a></button>
         </div>
         <div>
-            <a href="/login" class="menu">Log In</a>
+        <button class="menu dropdown dropbtn" id="drop"><a href="login">Log In</a></button>
         </div>
         <div>
-            <a href="/helpme" class="menu">Help Me</a>
+        <button class="menu dropdown dropbtn" id="drop"><a href="helpme">Help Me</a></button>
         </div>
         <div>
-            <a href="/premiumshop" class="menu">Code Shop</a>
+        <button class="menu dropdown dropbtn" id="drop"><a href="premiumshop">Code Shop</a></button>
         </div>';
     }
 

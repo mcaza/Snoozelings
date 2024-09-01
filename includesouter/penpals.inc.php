@@ -34,7 +34,13 @@ $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
-$setting = $user['penpal'];
+
+if ($user['penpal']) {
+    $setting = $user['penpal'];
+} else {
+    $setting = "Easy";
+}
+
 
 //Get all Open Notes
 if ($setting == "Moderate") {
@@ -75,9 +81,8 @@ foreach ($results as $result) {
             echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:#FFFF8F;border-radius:8px;width:80px;padding:3px;height:20px;"><b>Moderate</b></p>';
         } else if ($result['setting'] == "Stressful") {
             echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:Salmon;border-radius:8px;width:70px;padding:3px;height:20px;"><b>Stressful</b></p>';
-        }  else if ($result['setting'] == "Moderate") {
-        }
-        echo '<p style="padding-left:10px;padding-right:10px;text-overflow: hidden;">' . nl2br(htmlspecialchars($result['post'])) . '</p>';
+        }  
+        echo '<p style="padding-left:10px;padding-right:10px;text-overflow: hidden;margin-top:-10px;">' . nl2br(htmlspecialchars($result['post'])) . '</p>';
         echo '<p style="margin-bottom:20px;">~ Anonymous</p>';
         echo '</a>';
     }

@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     Here in Snooze Village, we don't want to overwhelm our postman. We also feel that it's important to not be checking our inboxes all the time. Because of these two reasons, the postman only delivers your mail twice a day at 6 AM EST and 7PM EST.
     
-    Please keep this in mind when sending messages to your friends. They aren't ignoring you. The postman is just takes plenty of breaks on his route.
+    Please keep this in mind when sending messages to your friends. They aren't ignoring you. The postman just takes plenty of breaks on his route.
     
     <b style='font-size: 2rem;'>Health Journaling</b>
     

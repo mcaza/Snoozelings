@@ -439,7 +439,7 @@ echo '</div>';
         echo '<p><i>Bad to Excellent</i></p>';
          
          //Rate Mental Health
-        echo '<label class="form" style="margin-top: 2rem;">Rate Your Physical Health:</label><br>';
+        echo '<label class="form" style="margin-top: 2rem;">Rate Your Mental Health:</label><br>';
         //Buttons
         echo '<div class="radioRow">';
         echo '<div class="radioBox" ><input type="radio" name="mental" value="1" required id="men1"><label for="men1">1</label></div>';

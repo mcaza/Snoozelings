@@ -36,45 +36,46 @@ echo '</select><br><button class="fancyButton">Update</button></form>';
 //Grab all Journal Entries For User of that Type Limit $days
 if ($journal['type'] === 'pain') {
     if ($days === "7") {
-        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id ORDER BY date DESC LIMIT 7';
+        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id ORDER BY id DESC LIMIT 7';
     } elseif ($days === "14") {
-        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 14';
+        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 14';
     } elseif ($days === "21") {
-        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 21';
+        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 21';
     } elseif ($days === "facts") {
-        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id  ORDER BY date DESC';
+        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id  ORDER BY id DESC';
     } else {
-        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 3';
+        $query = 'SELECT * FROM chronicPainEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 3';
     }
 } elseif ($journal['type'] === 'mentalHealth') {
     if ($days === "7") {
-        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 7';
+        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 7';
     } elseif ($days === "14") {
-        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 14';
+        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 14';
     } elseif ($days === "21") {
-        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 21';
+        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 21';
     } elseif ($days === "facts") {
-        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY date DESC';
+        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY id DESC';
     } else {
-        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 3';
+        $query = 'SELECT * FROM mentalHealthEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 3';
     }
 } else if ($journal['type'] === "productivity") {
     if ($days === "7") {
-        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 7';
+        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 7';
     } elseif ($days === "14") {
-        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 14';
+        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 14';
     } elseif ($days === "21") {
-        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 21';
+        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 21';
     } elseif ($days === "facts") {
-        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY date DESC';
+        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY id DESC';
     } else {
-        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY date DESC LIMIT 4';
+        $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 4';
     }
 }
 $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $journal['id']);
     $stmt->execute();
     $journals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 if ($journal['type'] === "productivity") {
     $journals = array_reverse($journals);
 }
@@ -237,12 +238,15 @@ if ($days === "facts") {
                     echo '<p>❌ ' . htmlspecialchars($habitTwoArray[$count]) . '</p>';
                 }
             }
-            echo '<hr>';
-            echo '<h4 style="">Health Stats</h4>';
-            echo '<p><strong>Physical Health: </strong>' . $box['physicalHealth'] . '</p>';
-            echo '<p><strong>Mental Health: </strong>' . $box['mentalHealth'] . '</p>';
-            echo '<p><strong>Productivity: </strong>' . $box['productivity'] . '</p>';
-            echo '<p><strong>Mood: </strong>' . $box['mood'] . '</p>';
+            if ($box['physicalHealth']) {
+                echo '<hr>';
+                echo '<h4 style="">Health Stats</h4>';
+                echo '<p><strong>Physical Health: </strong>' . $box['physicalHealth'] . '</p>';
+                echo '<p><strong>Mental Health: </strong>' . $box['mentalHealth'] . '</p>';
+                echo '<p><strong>Productivity: </strong>' . $box['productivity'] . '</p>';
+                echo '<p><strong>Mood: </strong>' . $box['mood'] . '</p>';
+                
+            }
             echo '</div>';
             echo '<div class="infoLarge">';
             echo '<h4 style="">Daily Tasks</h4>';

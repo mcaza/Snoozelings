@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $userId = $_SESSION['user_id'];
     $difficulty = $_POST["difficulty"];
-    $post = htmlspecialchars($_POST["post"]);
+    $post = $_POST["post"];
     
     //Check Difficulty
     if ($difficulty == "Easy" || $difficulty == "Moderate" || $difficulty == "Stressful") {

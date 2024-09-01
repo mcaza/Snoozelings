@@ -85,7 +85,7 @@ if (isset($reply)) {
 }
 
 //Title
-echo '<h3>' . $bondedname['name'] . '\'s Fanny Pack</h3>';
+echo '<h3>' . $bondedname['name'] . '\'s Backpack</h3>';
 
 //Display Coin Count Top Right
 echo '<div>';

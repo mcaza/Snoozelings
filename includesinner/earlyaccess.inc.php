@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Send Email
     $address = $email;
     $title ="Snoozelings Early Access Confirmation";
-        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $email . ',<br><br>Thank you so much for preregistering for the Snoozelings Early Access!!! <br><br>We are sending you this email as confirmation of your chosen ID and alpha code. We are excited to see you on Sept 1st at 3PM.<br><br><b>Account ID:</b> ' . $id . '<br><br><b>Alpha Code: </b>' . $randomString . '<br><br>See you soon,<br><i>Snoozelings</i></p>';
+        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $email . ',<br><br>Thank you so much for preregistering for the Snoozelings Early Access!!! <br><br>We are sending you this email as confirmation of your chosen ID and alpha code. We are excited to see you on Sept 1st at 3PM.<br><br>In the meantime, you can join our discord server if you\'d like: <a href="https://discord.gg/kgbj5zZm">Discord Link</a><br><br><b>Account ID:</b> ' . $id . '<br><br><b>Alpha Code: </b>' . $randomString . '<br><br>See you soon,<br><i>Snoozelings</i></p>';
     
 
         // Always set content-type when sending HTML email

@@ -36,6 +36,7 @@ echo '<h1>Penpal Request Number ' . $request['id'] . '</h1>';
 //Display Post
 if ($request['user'] == $userId) {
     echo '<p style="width:70%;margin-right:auto;margin-left:auto;">' . nl2br(htmlspecialchars($request['post'])) . '</p>';
+    echo '<hr>';
     echo '<p style="text-align:center;margin-top:15px;"><b>You cannot reply to your own penpal request</b></p>';
     echo "<form method='POST' action='includes/closePenpal.inc.php'>";
     echo '<input type="hidden" id="request" name="request" value="' . $_GET['id'] . '">';
@@ -48,6 +49,7 @@ if ($request['user'] == $userId) {
 } else {
     echo '<p style="width:70%;margin-right:auto;margin-left:auto;">' . nl2br(htmlspecialchars($request['post'])) . '</p>';
     echo '<p style="text-align:center;margin-top:15px;">~ Anonymous</p>';
+    echo '<hr>';
     echo "<form method='POST' action='includes/replyPenpal.inc.php'>";
     echo '<hr>';
     echo '<label style="margin-top: 2rem;" for="post" class="form"><b>Send a Reply:</b></label><br>';
