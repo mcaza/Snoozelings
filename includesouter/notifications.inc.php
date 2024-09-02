@@ -43,23 +43,25 @@ if ($tutorial < 4) {
             $count++;
         }
 
-        $query = 'SELECT * FROM users WHERE newsletter = 0 And emailVerified = 1';
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
-        $emails = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($emails) {
-            echo '<div class="notificationbox"><a href="secretemailpage" class="notif" style="color:red;">' . $count . '. Add Emails</a></div>';
-            $count++;
-        }
+        
         
         $query = 'SELECT * FROM dailyRecords ORDER BY id DESC LIMIT 1';
         $stmt = $pdo->prepare($query);
         $stmt->execute();
         $records = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($records['backup'] == 0) {
-            echo '<div class="notificationbox"><p>' . $count . '. Daily Data Backup</p></div>';
+            echo '<div class="notificationbox"><p style="color:red;margin-bottom:0">' . $count . '. Daily Data Backup</p></div>';
             $count++;
+            
+            $query = 'SELECT * FROM users WHERE newsletter = 0 And emailVerified = 1';
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            $emails = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($emails) {
+                echo '<div class="notificationbox"><a href="secretemailpage" class="notif" style="color:red;">' . $count . '. Add Emails</a></div>';
+                $count++;
+            }
         }
     }
 

@@ -6,7 +6,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Grab Form Variables
     $reply = $_POST["post"];
-    $id = htmlspecialchars($_POST["request"]);
+    $id = $_POST["request"];
     $userId = $_SESSION['user_id'];
     $emoticons = [':‑)',':)',':-]',':]',':}',':^)','=]', '=)', ':‑D',':D','=D','=3','c:','C:',':O',':‑O',':‑o',':o',':-0',':0','=O','=o','=0',':-3',':3','=3','>:3',':‑P',':P',':‑p','>:P','>:‑)','}:)','>:)','>:3','\o/','*\0/*','._.','O_O','o_o','O-O','o‑o','O_o','o_O','\( ͡° ͜ʖ ͡°\)','\(◕‿◕✿\)','ʕ •ᴥ•ʔ','<(｀^´)>','^_^','(°o°)','=^_^=','>^_^<','^_^','\(^o^)/','＼(^o^)／'];
     $count = count($emoticons) - 1;

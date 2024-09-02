@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $threeCheck = 0;
     }
-    if (date('w', strtotime($date)) == 6 || date('w', strtotime($date)) == 7) {
+    if (date('N') == 6 || date('N') == 7) {
         
     } else {
         if ($_POST['fourCheck']) {
@@ -99,12 +99,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $taskTwo = $_POST['tomorrowTaskTwo'];
     $taskThree = $_POST['tomorrowTaskThree'];
     
-    if (date('w', strtotime($date)) != 5 && date('w', strtotime($date)) != 6) {
+    if ($_POST['tomorrowTaskFour']) {
         $taskFour = $_POST['tomorrowTaskFour'];
         $taskFive = $_POST['tomorrowTaskFive'];
     }
     
-    if (date('w', strtotime($date)) == 7 ) {
+    if ($_POST['newHabitOne']) {
         $habitOne = $_POST['newHabitOne'];
         $habitTwo = $_POST['neaHabitTwo'];
         $weeklyWins = $_POST['weeklyWins'];
@@ -143,11 +143,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Submit Journal
-    if (date('w', strtotime($date)) == 7) {
+    if (date('N') == 7) {
         $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, taskFour, taskFive,oneCheck,twoCheck,threeCheck,weeklyWin,weeklyLoss,learned,closed) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :taskFour, :taskFive, :oneCheck, :twoCheck, :threeCheck, :weeklyWin, :weeklyLoss, :learned)';
-    } else if (date('w', strtotime($date)) == 5) {
+    } else if (date('N') == 5) {
         $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, oneCheck,twoCheck,threeCheck,fourCheck,fiveCheck) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :oneCheck, :twoCheck, :threeCheck, :fourCheck, :fiveCheck)';
-    } else if (date('w', strtotime($date)) == 6 ) {
+    } else if (date('N') == 6 ) {
         $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, oneCheck,twoCheck,threeCheck) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :oneCheck, :twoCheck, :threeCheck)';
     } else {
 
@@ -167,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":oneCheck", $oneCheck);
     $stmt->bindParam(":twoCheck", $twoCheck);
     $stmt->bindParam(":threeCheck", $threeCheck);
-    if (date('w', strtotime($date)) == 7) {
+    if (date('N') == 7) {
         $stmt->bindParam(":habitOne", $habitOne);
         $stmt->bindParam(":habitTwo", $habitTwo);
         $stmt->bindParam(":weeklyWin", $weeklyWins);
@@ -175,10 +175,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":learned", $taskFour);
         $stmt->bindParam(":taskFour", $taskFour);
         $stmt->bindParam(":taskFive", $taskFive);
-    } else if (date('w', strtotime($date)) == 5) {
+    } else if (date('N') == 5) {
         $stmt->bindParam(":fourCheck", $fourCheck);
         $stmt->bindParam(":fiveCheck", $fiveCheck);
-    } else if (date('w', strtotime($date)) == 6 ) {
+    } else if (date('N') == 6 ) {
         
     } else {
         $stmt->bindParam(":taskFour", $taskFour);

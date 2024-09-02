@@ -491,13 +491,32 @@ echo '</div>';
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
         $habits = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($habits as $habit) {
-            if ($habit['habitOne']) {
-                $habitOne = htmlspecialchars($habit['habitOne']);
-                $habitTwo = htmlspecialchars($habit['habitTwo']);
-                break;
+            
+        //Fix to Seven
+        if (date('N') == 7) {
+            $check = 1;
+                foreach ($habits as $habit) {
+                    if ($check == 1) {
+                        $check++;
+                    } else {
+                        if ($habit['habitOne']) {
+                            $habitOne = htmlspecialchars($habit['habitOne']);
+                            $habitTwo = htmlspecialchars($habit['habitTwo']);
+                            break;
+                        }
+                    }
+                
+            }
+        } else {
+                foreach ($habits as $habit) {
+                if ($habit['habitOne']) {
+                    $habitOne = htmlspecialchars($habit['habitOne']);
+                    $habitTwo = htmlspecialchars($habit['habitTwo']);
+                    break;
+                }
             }
         }
+        
         if ($habitOne) {
             echo '<h1>Check All Completed Habits</h1>';
             if ($latestEntry[0]['habitOneCheck'] == 1) {
@@ -542,19 +561,19 @@ echo '</div>';
             echo '<h3>Next Week</h3><br>';
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Next Week\'s Habits:</b></label><br>';
             echo '<input class="input" type="text" name="newHabitOne" placeholder="' . htmlspecialchars($latestEntry[0]['habitOne']) . '"><br>';
-            echo '<input class="input" type="text" name="neaHabitTwo" placeholder="' . htmlspecialchars($latestEntry[0]['habitTwo']) . '"><br>';
+            echo '<input class="input" type="text" name="newHabitTwo" placeholder="' . htmlspecialchars($latestEntry[0]['habitTwo']) . '"><br>';
             
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Weekly Wins:</b></label><br>';
             echo '<p><i>Reflect on the past week. What wins are you proud of?</i></p>';
-            echo '<input class="input" type="text" name="weeklyWins" ><br>';
+            echo '<input class="input" type="text" name="weeklyWins" placeholder="' . htmlspecialchars($latestEntry[0]['weeklyWin']) . '"><br>';
             
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Weekly Losses:</b></label><br>';
             echo '<p><i>Reflect on the past week. What tasks fell through your planning?</i></p>';
-            echo '<input class="input" type="text" name="weeklyLoses" ><br>';
+            echo '<input class="input" type="text" name="weeklyLoses" placeholder="' . htmlspecialchars($latestEntry[0]['weeklyLoss']) . '"><br>';
             
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Weekly Lesson:</b></label><br>';
             echo '<p><i>Reflect on the past week. What lessons did you learn this week?</i></p>';
-            echo '<input class="input" type="text" name="weeklyLesson" ><br>';
+            echo '<input class="input" type="text" name="weeklyLesson" placeholder="' . htmlspecialchars($latestEntry[0]['learned']) . '"><br>';
         }
     echo '<button  class="fancyButton">Submit</button>';
      echo "</form>";

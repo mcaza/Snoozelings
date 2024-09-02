@@ -29,7 +29,7 @@ $stmt->execute();
 $bondedname = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Fetch All Items
-$query = "SELECT * FROM items WHERE user_id = :id";
+$query = "SELECT * FROM items WHERE user_id = :id AND test = 0";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();

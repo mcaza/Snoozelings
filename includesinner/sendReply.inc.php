@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get TO + Title
     $sending = $mail['sender'];
     $title = "Re: " . $mail['title'];
-    $message = htmlspecialchars($_POST['reply']);
+    $message = $_POST['reply'];
     $zero = 0;
     $one = 1;
     

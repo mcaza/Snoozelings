@@ -10,12 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pet = $_POST['pet'];
 
     //Get Item Name
-    $query = 'SELECT name FROM items WHERE id = :id';
+    $query = 'SELECT * FROM items WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $design);
     $stmt->execute();
     $designid = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     
     //Get Pet Name
     $query = 'SELECT * FROM snoozelings WHERE id = :id';
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $specials = $petname['specials'];
         
         //Add to String
-        $wings = str_replace("Design", "", $name);
+        $wings = str_replace("Design", "", $designid['name']);
         $string = " " . $wings;
         $specials .= $string;
         

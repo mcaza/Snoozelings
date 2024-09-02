@@ -77,12 +77,12 @@ foreach ($results as $result) {
         echo '<a href="penpalrequest?id=' . $result['id'] . '" class="paper bar" style="overflow:auto;">';
         if ($setting == "Easy") {
             echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:DarkSeaGreen;border-radius:8px;width:40px;padding:3px;height:20px;"><b>Easy</b></p>';
-        } else if ($result['setting'] == "Moderate") {
+        } else if ($setting == "Moderate") {
             echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:#FFFF8F;border-radius:8px;width:80px;padding:3px;height:20px;"><b>Moderate</b></p>';
-        } else if ($result['setting'] == "Stressful") {
+        } else if ($setting == "Stressful") {
             echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:Salmon;border-radius:8px;width:70px;padding:3px;height:20px;"><b>Stressful</b></p>';
         }  
-        echo '<p style="padding-left:10px;padding-right:10px;text-overflow: hidden;margin-top:-10px;">' . nl2br(htmlspecialchars($result['post'])) . '</p>';
+        echo '<p style="padding-left:10px;padding-right:10px;text-overflow: hidden;margin-top:-5px;">' . nl2br(htmlspecialchars($result['post'])) . '</p>';
         echo '<p style="margin-bottom:20px;">~ Anonymous</p>';
         echo '</a>';
     }

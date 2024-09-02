@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":num", $pro);
         $stmt->execute();
     }
-    if ($_POST['neaHabitTwo']) {
+    if ($_POST['newHabitTwo']) {
         $pro = $_POST["newHabitTwo"];
         $query = "UPDATE productivityEntries SET habitTwo = :num WHERE id = :id";
         $stmt = $pdo->prepare($query);

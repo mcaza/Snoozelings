@@ -126,7 +126,7 @@ if ($position == "admin" || $position == "moderator") {
 echo '<h1 style="text-align: center;">Ticket Replies</h1>';
 echo '<table style="width: 90%; border-radius: 0;">';
 echo '<tr><th>Original Submission - Submitted by <a href="profile?id=' . htmlspecialchars($results[0]['submitter']) . '" target="_blank" style="color: white">' . htmlspecialchars($username['username']) . ' #' . htmlspecialchars($results[0]['submitter']) . '</a></th></tr>';
-echo '<tr><td>' . nl2br(htmlspecialchars($results[0]['information'])) . '</td></tr>';
+echo '<tr><td>' . nl2br(htmlspecialchars($results[0]['information'], ENT_QUOTES)) . '</td></tr>';
 echo '<tr><td style="text-align: right">' . $results[0]['datetime'] . '</td></tr>';
 echo '</table><br>';
 
@@ -157,9 +157,13 @@ if (count($results) > 1) {
                         echo '<tr><th>Staff Reply - Submitted by Staff Member</th></tr>'; 
                     } 
                 }
-
+                if ($result['replyid'] == 1) {
+                    echo '<tr><td>' . nl2br($result['information']) . '</td></tr>';
+                } else {
+                    echo '<tr><td>' . nl2br(htmlspecialchars($result['information'], ENT_QUOTES)) . '</td></tr>';
+                }
                 //Post Information
-                echo '<tr><td>' . nl2br(htmlspecialchars($result['information'])) . '</td></tr>';
+                
                 echo '<tr><td style="text-align: right">' . $result['datetime'] . '</td></tr>';
                 echo '</table><br>';
             }

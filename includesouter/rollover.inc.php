@@ -186,7 +186,7 @@ $result = $now->format('Y-m-d H:i:s');
 
 $requestcount = 0;
 foreach ($requests as $request) {
-    if ($result > $request['datetime']) {
+    if ($result > $request['expire']) {
         $query = 'UPDATE penpalRequests SET expired = 1 WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $request['id']);

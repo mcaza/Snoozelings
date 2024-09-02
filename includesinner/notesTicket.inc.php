@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_SESSION['user_id'];
     $user = $_POST['userid'];
     $ticket = $_POST['ticket'];
-    $reply = htmlspecialchars($_POST['information1']);
+    $reply = $_POST['information1'];
     
     //Check if Usernames Match
     if ($userId == $user) {
