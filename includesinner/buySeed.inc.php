@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Check Coins
     if ($coins < $price) {
         //If Under Price, Return to Seed Shop With Error
-        $_SESSION['reply'] = "You do not have enough gold coins.";
+        $_SESSION['reply'] = "You do not have enough snooze coins.";
         header("Location: ../seedshop");
     } else {
         //Remove 2 Coins

@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $coincount = $stmt->fetch(PDO::FETCH_ASSOC);
     $coins = intval($coincount['coinCount']);
     if ($coins < 1) {
-        $_SESSION['reply'] = 'You do not have enough coins to do this.';
+        $_SESSION['reply'] = 'You do not have enough snooze coins to do this.';
         header("Location: ../raffle");
         die();
     }

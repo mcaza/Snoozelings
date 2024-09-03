@@ -288,6 +288,7 @@ if ($days === "facts") {
                 }
             }
             
+            
             echo '</div>';
             if ($box['weeklyWin']) {
                 echo '</div>';
@@ -297,7 +298,7 @@ if ($days === "facts") {
                 echo '<p><strong>Weekly Win: </strong>' . htmlspecialchars($box['weeklyWin']) . '</p>';
                 echo '<p><strong>Weekly Loss: </strong>' . htmlspecialchars($box['weeklyLoss']) . '</p>';
                 echo '<p><strong>Learned Lesson: </strong>' . htmlspecialchars($box['learned']) . '</p>';
-                echo '<p><strong>Notes: </strong>' . htmlspecialchars($box['notes']) . '</p>';
+                
                 echo '</div>';
             }
             
@@ -305,6 +306,18 @@ if ($days === "facts") {
         }
         
         echo '</div>';
+            if ($box['notes']) {
+                if ($box['weeklyWin']) {
+                    
+                } else {
+                    echo '<hr>';
+                }
+                
+                echo '<div class="infoLarge" style="margin-left:auto;margin-right:auto;width:80%">';
+                echo '<p><strong>Notes: </strong>' . htmlspecialchars($box['notes']) . '</p>';
+                echo '</div>';
+            }
+            
         echo '</div>';
     }
     }

@@ -1,6 +1,7 @@
 <?php
 
 $userId = $_SESSION['user_id'];
+date_default_timezone_set('America/New_York');
 
 //Get Journal Type
 //Check for Journals

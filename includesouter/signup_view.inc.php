@@ -47,9 +47,9 @@ function signupInputs() {
         }
     echo "<label for='birthday'  class='form'>Date of Birth:</label><br>";
     if (isset($_SESSION["signupData"]["birthday"])) {
-        echo '<input  class="input"type="date" id="birthday" name="birthday" value="' . $_SESSION["signupData"]["birthday"] . '" required><br>';
+        echo '<input  class="input"type="date" id="birthday" name="birthday" value="' . $_SESSION["signupData"]["birthday"] . '" max="9999-12-31" required><br>';
     } else {
-        echo '<input  class="input"type="date" id="birthday" name="birthday" required><br>';
+        echo '<input  class="input"type="date" id="birthday" name="birthday" max="9999-12-31" required><br>';
     }
     echo '<label for="pronouns"  class="form">Your Pronouns:</label><br>';
     echo '<select  class="input" name="pronouns"><br>';

@@ -78,7 +78,7 @@ echo '<div class="journalDisplay">';
 if (!$journalCheck) {
     //Journal Creation Title & Information
     echo '<h4  style="margin-top: 2rem;">Creating Your First Journal</h4>';
-    echo '<p style="margin-top: 2rem;">One of the best things you can do for your health is keep a journal. This gives doctors a better understanding of your condition. This makes appointments much less stressful. <br><br>Here in Snooze Village, we want you to take care of yourself. Therefore, everytime you fill out your journal you\'ll recieve 5 gold coins and help contribute to our daily records.</p>';
+    echo '<p style="margin-top: 2rem;">One of the best things you can do for your health is keep a journal. This gives doctors a better understanding of your condition. This makes appointments much less stressful. <br><br>Here in Snooze Village, we want you to take care of yourself. Therefore, everytime you fill out your journal you\'ll recieve 5 snooze coins and help contribute to our daily records.</p>';
     echo '<p style="margin-top: 2rem; width: 90%;margin-right: auto;margin-left: auto;margin-bottom: 1rem;"><i>"It\'s easy. And I\'ll be here to help you every step of the way. Let\'s start by choosing a journal type. Then click Create Journal."</i></p>';
     
     //Form to Create Journal

@@ -30,9 +30,9 @@ echo '</div>';
 //Display Coin Count Top Right
 echo '<div style="text-align: right">';
 if ($player['coinCount'] === "1") {
-    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Gold Coin</p>';
+    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Snooze Coin</p>';
 } else {
-    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Gold Coins</p>';
+    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Snooze Coins</p>';
 }
 echo '</div>';
 echo '</div>';
@@ -70,9 +70,9 @@ foreach ($pets as $pet) {
         $name = $stmt->fetch(PDO::FETCH_ASSOC);
         echo '<div class="adoptPet">';
         displayPet($petinfo, "art");
-        echo '<p style="font-size:1.6rem;"><b>' . $pet['name'] . ' - ' . $pet['cost'] . ' Gold Coins' . $bed . '</b></p>';
+        echo '<p style="font-size:1.6rem;"><b>' . $pet['name'] . ' - ' . $pet['cost'] . ' Snooze Coins' . $bed . '</b></p>';
         echo '<p style="font-size: 1.6rem;">Donated By ' . $name['username'] . '</p>';
-        echo '<form method="POST" action="includes/adoptSnoozeling.inc.php" onsubmit=\'return confirm("Are you sure that you want to adopt this pet for ' . $pet['cost'] . ' coins?");\'>';
+        echo '<form method="POST" action="includes/adoptSnoozeling.inc.php" onsubmit=\'return confirm("Are you sure that you want to adopt this pet for ' . $pet['cost'] . ' snooze coins?");\'>';
         echo '<input type="hidden" name="pet" value="' . $pet['id'] . '">';
         echo '<button  class="fancyButton">Adopt Pet</button>';
         echo '</form>';

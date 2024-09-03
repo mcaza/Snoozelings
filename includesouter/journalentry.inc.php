@@ -1,6 +1,7 @@
 <?php
 
 $userId = $_SESSION['user_id'];
+date_default_timezone_set('America/New_York');
 
 
 //Get Journal Type
@@ -499,7 +500,7 @@ echo '</div>';
         }
         
         echo '<hr>';
-        if (date('N') == 7) {
+        if (date('N') == 1) {
             echo '<h3>Next Week</h3><br>';
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Next Week\'s Habits:</b></label><br>';
             echo '<input class="input" type="text" name="newHabitOne" required><br>';

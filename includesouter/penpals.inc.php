@@ -75,11 +75,11 @@ echo '<div style="background-image:url(resources/corkboard.avif);padding:20px;bo
 foreach ($results as $result) {
     if ($result['user'] != $userId) {
         echo '<a href="penpalrequest?id=' . $result['id'] . '" class="paper bar" style="overflow:auto;">';
-        if ($setting == "Easy") {
+        if ($result['setting'] == "Easy") {
             echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:DarkSeaGreen;border-radius:8px;width:40px;padding:3px;height:20px;"><b>Easy</b></p>';
-        } else if ($setting == "Moderate") {
+        } else if ($result['setting'] == "Moderate") {
             echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:#FFFF8F;border-radius:8px;width:80px;padding:3px;height:20px;"><b>Moderate</b></p>';
-        } else if ($setting == "Stressful") {
+        } else if ($result['setting'] == "Stressful") {
             echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:Salmon;border-radius:8px;width:70px;padding:3px;height:20px;"><b>Stressful</b></p>';
         }  
         echo '<p style="padding-left:10px;padding-right:10px;text-overflow: hidden;margin-top:-5px;">' . nl2br(htmlspecialchars($result['post'])) . '</p>';

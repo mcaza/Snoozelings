@@ -1,8 +1,10 @@
 <?php
 
+    require_once 'dbh-inc.php';
+
 //Get all Journals
 $input = "productivity";
-$query = 'SELECT id FROM journals WHERE type = :input';
+$query = 'SELECT * FROM journals WHERE type = :input';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":input", $input);
     $stmt->execute();
@@ -17,7 +19,7 @@ foreach ($results as $result) {
             $zero = 0;
             $now = new DateTime("now", new DateTimezone('UTC'));
             $date = $now->format('Y-m-d H:i:s');
-            $message = 'Hey there ' . $user['username'] . ', 
+            $message = 'Hey there, 
             
             You are receiving this message because you have the Productivity journal type.
             

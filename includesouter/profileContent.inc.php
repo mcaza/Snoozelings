@@ -95,7 +95,12 @@ if ($id == $userId) {
     echo "<h3>" . htmlspecialchars($result["username"]) . "'s Profile</h3>";
     }
     //Insert Status Here
-    echo "<p>" . $result["status"] . "</p>";
+    if ($result['status']) {
+        echo "<p>" . $result["status"] . "</p>";
+    } else {
+        echo "<p><br></p>";
+    }
+    
     
     echo '<div class="profilebox bar" style="overflow-y: auto;">';
 

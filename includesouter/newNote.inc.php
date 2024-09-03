@@ -42,7 +42,7 @@ if (intval($result['penpalRequests']) > 0) {
     echo '</select><br><br>';
     
     //Post
-    echo '<label style="margin-top: 2rem;" for="post" class="form"><b>Send a Reply:</b></label><br>';
+    echo '<label style="margin-top: 2rem;" for="post" class="form"><b>Type Your Note:</b></label><br>';
     echo '<textarea name="post" cols="72" class="input" style="height: 20rem;" required></textarea><br>';
     
     //End Select & Form

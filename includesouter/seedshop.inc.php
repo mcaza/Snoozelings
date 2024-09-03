@@ -86,7 +86,7 @@ foreach ($seeds as $seed) {
     echo '<img style="margin-top:.3rem;height:100px;" src="items/' . $seed['name'] . '.png" title="' . $seed['description'] . '">';
     echo '<p><strong>' . $seed['plantName'] . ' Seed</strong></p>';
     echo '<p>' . $seed['price'] . ' Snooze Coins</p>';
-    echo "<form method='POST' action='includes/buySeed.inc.php' onsubmit=\"return confirm('This will cost " . $seed['price'] . " coins.');\">";   
+    echo "<form method='POST' action='includes/buySeed.inc.php' onsubmit=\"return confirm('This will cost " . $seed['price'] . " snooze coins.');\">";   
     echo '<input type="hidden" name="seed" value="' . $seed['item_id'] . '">';
     echo '<input type="hidden" name="price" value="' . $seed['price'] . '">';
     echo '<button style="margin-bottom: .7rem; width: 50%;" class="fancyButton">Buy</button>';

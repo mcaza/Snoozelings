@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $coins = $stmt->fetch(PDO::FETCH_ASSOC);
     if (intval($coins['coinCount']) < intval($pet['cost'])) {
-        $_SESSION['reply'] = 'You do not have enough coins to adopt that snoozeling';
+        $_SESSION['reply'] = 'You do not have enough snooze coins to adopt that snoozeling';
         header("Location: ../adoption");
         die();        
     }

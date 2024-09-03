@@ -51,7 +51,6 @@ if ($request['user'] == $userId) {
     echo '<p style="text-align:center;margin-top:15px;">~ Anonymous</p>';
     echo '<hr>';
     echo "<form method='POST' action='includes/replyPenpal.inc.php'>";
-    echo '<hr>';
     echo '<label style="margin-top: 2rem;" for="post" class="form"><b>Send a Reply:</b></label><br>';
     echo '<textarea name="post" cols="72" class="input" style="height: 20rem;" required></textarea><br>';
     echo '<input type="hidden" id="request" name="request" value="' . $_GET['id'] . '">';

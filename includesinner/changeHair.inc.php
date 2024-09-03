@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $count = intval($coins['coinCount']);
     
     if ($count < 5) {
-        $_SESSION['reply'] = "You do not have enough gold coins.";
+        $_SESSION['reply'] = "You do not have enough snooze coins.";
          header("Location: ../trendytails");
     } else {
     //Remove 5 coins

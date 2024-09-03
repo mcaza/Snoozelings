@@ -67,7 +67,7 @@ if ($items || $coins > 0) {
     if ($coins === 1) {
         echo '<p>' . $name . ' brought you 1 coin.</p>';
     } elseif ($coins > 1) {
-        echo '<p>' . $name . ' brought you ' . $coins . ' coins.</p>';
+        echo '<p>' . $name . ' brought you ' . $coins . ' snooze coins.</p>';
     }
     if ($items) {
         if ($coins > 1) {
