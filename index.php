@@ -4,7 +4,11 @@ require_once '../includes/dbh-inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
-
+if ($_SESSION['user_id']) {
+    $title = "Bulletin Board";
+} else {
+    $title = "Snoozelings Virtual Pet Game";
+}
 
 
 ?>
@@ -15,7 +19,7 @@ require_once '../includes/verifySinglePet.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snoozelings</title>
+    <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>

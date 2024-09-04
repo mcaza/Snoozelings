@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Roll Amount Based on Watering
     $num = intval($farm['water']);
-    if ($num === 0) {
+    if ($num == 0) {
         $amount = 1;
     } else {
         $chance = $farm['water'] * 5;

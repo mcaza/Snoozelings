@@ -21,6 +21,14 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $bonded = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Get Backpack Name
+
+if ($bonded['backpackName']) {
+    $backpackName = $bonded['backpackName'];
+} else {
+    $backpackName = "Backpack";
+}
+
 //Get Bonded Name
 $query = 'SELECT * FROM snoozelings WHERE id = :id';
 $stmt = $pdo->prepare($query);
@@ -85,7 +93,7 @@ if (isset($reply)) {
 }
 
 //Title
-echo '<h3>' . $bondedname['name'] . '\'s Backpack</h3>';
+echo '<h3>' . $bondedname['name'] . '\'s ' . $backpackName . '</h3>';
 
 //Display Coin Count Top Right
 echo '<div>';

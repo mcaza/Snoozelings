@@ -38,9 +38,9 @@ if ($_SESSION["user_id"] == $result["owner_id"]) {
     echo '<div class="button-bar">
                 <button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Edit Pet</button>
                 <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Change Job</button>';
-    echo  '<button class="fancyButton" onClick="window.location.href=\'../includes/bondSoul.inc.php?id=' . $id . '\'">Bond Souls</button>';
+    
     if ($user['bonded'] != $id) {
-        
+        echo  '<button class="fancyButton" onClick="window.location.href=\'../includes/bondSoul.inc.php?id=' . $id . '\'">Bond Souls</button>';
     }
                 
                
@@ -80,10 +80,24 @@ if (!($pet['gotchaDate'] === null)) {
     $joinDay = intval($joinDay);
 }
 
+//Secret Explore Time
+$now = new DateTime("now", new DateTimezone('UTC'));
+$result = $now->format('Y-m-d H:i:s');
+
+//Get Minutes Remaining
+$to_time = strtotime($pet['cooldownTime']);
+$from_time = strtotime($result);
+$diff = round(abs($to_time - $from_time) / 60,0);
+//Date Stuff
+$now = new DateTime("now", new DateTimezone('UTC'));
+$future_date = new DateTime($pet['cooldownTime']);
+$interval = $future_date->diff($now);
+
 //Row One
 echo '<div class="profilerow">';
 echo '<div class="profilecontainerleft">';
 
+//echo "<h3 title='" . $interval->format("%h Hours, %i Minutes") . "'>" . htmlspecialchars($pet["name"]) . "</h3>";
 echo "<h3>" . htmlspecialchars($pet["name"]) . "</h3>";
 echo "<p>" . $pet['title'] . '</p>';
 

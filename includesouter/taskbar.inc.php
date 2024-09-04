@@ -4,7 +4,7 @@
 
     if (isset($_SESSION["user_id"])) {
         $userId = $_SESSION['user_id'];
-        $query = "SELECT bonded FROM users WHERE id = :id";
+        $query = "SELECT * FROM users WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
@@ -16,8 +16,14 @@
         $stmt->execute();
         $name = $stmt->fetch(PDO::FETCH_ASSOC);
         
+        if ($id['homeName']) {
+            $home = $id['homeName'];
+        } else {
+            $home = "Abode";
+        }
+        
         echo '<div class="dropdown">
-            <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s Abode</a></button>
+            <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s ' . $home . '</a></button>
             <div class="dropdown-content">
                 <a href="/collection?id=' . $_SESSION['user_id'] . '">Snoozeling Nests</a>
                 <a href="/crafting">Crafting Table</a>

@@ -26,7 +26,7 @@ if ($reply) {
 }
 
 //Title
-echo '<h3 id="requestitle">Find Penpals</h3><br>';
+echo '<h3 id="requestitle">📮 Find New Penpals 📮</h3><br>';
 
 //Get User Difficulty
 $query = "SELECT * FROM users WHERE id = :id";
@@ -69,7 +69,81 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 //Corkboard Div
-echo '<div style="background-image:url(resources/corkboard.avif);padding:20px;border-radius:10px;border: solid 8px #1C161D;display:flex;flex-wrap:wrap;">';
+$month = ltrim(date('m'), "0");
+
+if ($month == 9) { 
+    echo '<div style="background-image:url(resources/September.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+    } else if ($month == 10) {
+    echo '<div style="background-image:url(resources/October.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+} else if ($month == 11) {
+    echo '<div style="background-image:url(resources/November.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+} else if ($month == 12) {
+    echo '<div style="background-image:url(resources/December.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+} else if ($month == 5) {
+    echo '<div style="background-image:url(resources/May.jpg);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+} else if ($month == 6) {
+    echo '<div style="background-image:url(resources/June.jpg);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+} else if ($month == 8) {
+    echo '<div style="background-image:url(resources/August.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:800px;">';
+} else if ($month == 2) {
+    echo '<div style="background-image:url(resources/February.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+} else if ($month == 1) {
+    echo '<div style="background-image:url(resources/January.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+} else if ($month == 4) {
+    echo '<div style="background-image:url(resources/April.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:700px;">';
+} else if ($month == 7) {
+    echo '<div style="background-image:url(resources/July.png);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+} else if ($month == 3) {
+    echo '<div style="background-image:url(resources/March.jpg);padding:20px;border-radius:10px;border: #2e1a12 solid 12px;
+  -webkit-border-image: url(@image) 200 stretch;
+  -moz-border-image: url(@image) 200 stretch;
+  border-image: url(@image) 200 stretch;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);display:flex;flex-wrap:wrap;min-height:250px;background-size:1000px;">';
+}
 
 //Display Penpal Requests
 foreach ($results as $result) {

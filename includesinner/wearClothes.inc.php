@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         
         
-    }else {
+    } else {
         $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -67,16 +67,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $display = $result['display'];
     }
     
+    
     //Make sure item is in user inventory
     if (!$results) {
         $_SESSION['reply'] = "You do not own any of this item.";
         header("Location: ../pack");
+        die();
     }
     
     //Make sure item is clothing type
     if (!($type === 'clothesTop' || $type === "clothesBottom" || $type === 'clothesHoodie' || $type === 'clothesBoth')) {
         $_SESSION['reply'] = "This is not a clothing item and cannot be worn.";
         header("Location: ../pack");
+        die();
     }
       
     //Fetch Current Pet Clothes of that Type. 

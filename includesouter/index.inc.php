@@ -119,8 +119,8 @@ echo '</div>';
     unset($_SESSION['reply']);
         echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;"><p>' . $reply . '</p></div>';
     }
-    echo '<img src="resources/wipwhitebg.png" style="width:90%;">';
-    echo '<h3 style="font-size:4rem;border-bottom: 2px dashed #827188;padding-bottom:1.5rem;margin-top:1.5rem;">Coming Soon to All Browsers</h3>';
+    echo '<img src="resources/wip.png" style="width:90%;">';
+    echo '<h3 style="font-size:4rem;border-bottom: 2px dashed #827188;padding-bottom:1.5rem;margin-top:1.5rem;">🎉 Welcome Early Access Players 🎉</h3>';
     
     //Collect Snoozelings
     echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Collect and Create Snoozelings</h3>';
@@ -134,30 +134,33 @@ echo '</div>';
     echo '<div style="width: 30%;"><img src="resources/promo1.png" class="adimage"><p><b>Meringue</b></p></div>';
     echo '<div style="width: 30%;"><img src="resources/promo3.png" class="adimage"><p><b>Crescendo</b></p></div>';
     echo '</div>';
-    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">The above Snoozelings were all created during alpha testing<p>';
+    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">The above Snoozelings were all created during Alpha Test Number One</p>';
     
     //Self Care Section
     echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Practice Self Care</h3>';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
-    echo '<div style="width:40%;"><img src="resources/promo7.png"  class="adimage" style="border-radius: 15px;"><p><b>Daily Affirmations</b></p></div>';
-    echo '<div style="width: 40%;"><img src="resources/promo8.png" class="adimage"><p><b>Keep a Health Journal</b></p></div>';
+    echo '<div style="width:40%;"><img src="resources/promo7.png"  class="adimage" style="border-radius: 15px;border:1px solid #dddddd;"><p><b>Daily Affirmations</b></p></div>';
+    echo '<div style="width: 40%;"><img src="resources/promo8.png" class="adimage" style="border-radius: 15px;border:1px solid #dddddd;"><p><b>Keep a Health Journal</b></p></div>';
     echo '</div>';
-    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">Plus Water Reminders, Sleep Tracking, and Journal .pdf Exporting for Appointments<p>';
+    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">Take care of yourself to earn coin to buy cute clothes and hair styles for your Snoozeling.</p>';
     
     //Cozy Gaming
-    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Cozy Pet Simming</h3>';
+    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Farming with a Purpose</h3>';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
-    echo '<div style="width:80%;"><img src="resources/promo14.png"  class="adimage" style="border-radius: 15px;"><p><b>Farming with a Purpose</b></p></div>';
+    echo '<div style="width:80%;"><img src="resources/promo14.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
     echo '</div>';
-    echo '<p style="padding-bottom:2rem;">Plants can be Used to Craft Dyes & Fabric<p>';
+    echo '<p style="padding-bottom:2rem;border-bottom: 2px dashed #827188;padding-bottom:2rem;">Plants can be Used to Craft Dyes & Fabric</p>';
+    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Craft a Large Variety of Items</h3>';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
-    echo '<div style="width:80%;"><img src="resources/promo11.png"  class="adimage" style="border-radius: 15px;"><p><b>Pet Crafting Bench</b></p></div>';
+    echo '<div style="width:80%;"><img src="resources/promo11.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
     echo '</div>';
-    echo '<p style="padding-bottom:2rem;">Create New Clothes, Fabrics, and Tails for Your Snoozelings<p>';
+    echo '<p style="padding-bottom:2rem;border-bottom: 2px dashed #827188;padding-bottom:2rem;">Create New Clothes, Fabrics, Items, and Designs for Your Snoozelings</p>';
+    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Large Dye System</h3>';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
-    echo '<div style="width:80%;"><img src="resources/promo13.png"  class="adimage" style="border-radius: 15px;"><p><b>User Contributed Daily Raffle</b></p></div>';
+    echo '<div style="width:80%;"><img src="resources/dyes1.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;margin-bottom:12px;"></div>';
+    echo '<div style="width:80%;"><img src="resources/Dyes2.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
     echo '</div>';
-    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">Earn Kindness Coins for Donating and Win Something Cool<p>';
+    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">Dye your Clothes with Over Twenty-Six Custom Colors</p>';
     
     //Alpha Reviews
     echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Alpha Player Reviews</h3>';

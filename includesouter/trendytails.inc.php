@@ -85,8 +85,8 @@ echo '</select><br>';
 //List All Hairstyles
 echo '<label for="hair" class="form">Hairstyle:</label><br>';
 echo '<select class="input"  name="hair" id="hairChoice">';
-echo '<option value="Floof">No Hair</option>';
 echo '<option value="Forelock">Forelock</option>';
+echo '<option value="Floof">Floof</option>';
 echo '<option value="Mane">Mane</option>';
 echo '<option value="Mohawk">Mohawk</option>';
 echo '<option value="Wave">Wave</option>';
@@ -117,10 +117,10 @@ echo '</select><br>';
 //List All Hairstyles
 echo '<label for="tails" class="form">Tailstyle:</label><br>';
 echo '<select class="input"  name="tails" id="TailChoice">';
+echo '<option value="Pom">Pom</option>';
 echo '<option value="Dragon">Dragon</option>';
 echo '<option value="Long">Long</option>';
 echo '<option value="Nub">Nub</option>';
-echo '<option value="Pom">Pom</option>';
 echo '</select><br>';
 
 //Button

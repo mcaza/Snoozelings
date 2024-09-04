@@ -14,6 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bonded = $_POST["bonded"];
     $userId = $_SESSION['user_id'];
     $farmName = $_POST['farm'];
+    $houseName = $_POST['house'];
+    $backpackName = $_POST['backpack'];
     $mailbox = $_POST['mailbox'];
     $penpal = $_POST['penpal'];
     $shortcutArray = "";
@@ -116,6 +118,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
         }
     }
+    
+    //Home Name
+    if ($houseName) {
+        $query = 'SELECT * FROM homeNames';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $farms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $check = 0;
+        foreach ($farms as $farm) {
+            if ($houseName === $farm['name']) {
+                $check = 1;
+            }
+        }
+        if ($check === 0) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
+    
+    //Backpack Name
+    if ($backpackName) {
+        $query = 'SELECT * FROM backpackNames';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $farms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $check = 0;
+        foreach ($farms as $farm) {
+            if ($backpackName === $farm['name']) {
+                $check = 1;
+            }
+        }
+        if ($check === 0) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
     //Mailbox Color
     if ($mailbox) {
         if (!($mailbox === 'blue' || $mailbox === 'cyan' || $mailbox === 'orange' || $mailbox === 'purple' || $mailbox === 'red')) {
@@ -209,6 +247,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $query = "UPDATE users SET farmName = :farmName WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":farmName", $farmName);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
+    //Update House Name
+    if ($houseName) {
+        $query = "UPDATE users SET homeName = :homeName WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":homeName", $houseName);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
+    //Update Backpack Name
+    if ($backpackName) {
+        $query = "UPDATE users SET backpackName = :backpackName WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":backpackName", $backpackName);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
     }

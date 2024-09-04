@@ -251,7 +251,6 @@ if ($results) {
     if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
         echo '<form method="post" action="includes/wearClothes.inc.php">';
         echo '<input type="hidden" name="item" value="' . $id . '">';
-        echo '<input type="hidden" name="item" value="' . $id . '">';
         echo '<label for="pet"  class="form">Choose A Pet:</label><br>';
         echo '<select  class="input" name="pet" id="pet"><br>';
         foreach ($snoozelings as $pet) {

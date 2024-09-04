@@ -38,6 +38,18 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $farmNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Get House Names
+$query = "SELECT * FROM homeNames ORDER BY name";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$houseNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//Get Backpack Names
+$query = "SELECT * FROM backpackNames ORDER BY name";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$backpackNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 //Top Bar. Back Error Left. Request Button Right
 echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
@@ -148,6 +160,24 @@ echo '<label for="farm" class="form">Change Farm Name:</label><br>';
 echo '<select class="input" name="farm">';
 echo '<option value=""></option>';
 foreach ($farmNames as $name) {
+    echo "<option value='" . $name['name'] . "'>" . $name['name'] . "</option>";
+}
+echo '</select><br>';
+
+//House Name
+echo '<label for="house" class="form">Change House Name:</label><br>';
+echo '<select class="input" name="house">';
+echo '<option value=""></option>';
+foreach ($houseNames as $name) {
+    echo "<option value='" . $name['name'] . "'>" . $name['name'] . "</option>";
+}
+echo '</select><br>';
+
+//Backpack Name
+echo '<label for="backpack" class="form">Change Backpack Name:</label><br>';
+echo '<select class="input" name="backpack">';
+echo '<option value=""></option>';
+foreach ($backpackNames as $name) {
     echo "<option value='" . $name['name'] . "'>" . $name['name'] . "</option>";
 }
 echo '</select><br>';

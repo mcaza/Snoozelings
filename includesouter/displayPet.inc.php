@@ -247,7 +247,42 @@ function displayPet($pet, $class) {
             echo "<img src='Layers/Tail/" . $pet["tailType"] . "/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
             echo "</div>";
         
-        }else {
+        } else if ($pet['tailType'] == "Lizard") {
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+            $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings")) {
+                echo "<div class='${class}'>";
+             echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                echo "</div>";
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    echo "<div class='${class}'>";
+                 echo "<img src='Layers/ClothesBottom/" . $clothing . ".png'>";  
+                    echo "</div>";
+                } 
+            }
+            if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            }
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Tail/Lizard/Spikes/" . $pet["tailColor"] . ".png' id = 'Tailone'>";
+            echo "</div>";
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Tail/Lizard/" . $pet["mainColor"] . ".png' id = 'TailTopone'>";
+            echo "</div>";
+        } else {
         if (strlen($pet['clothesBottom']) > 1) {
             $clothesBottom = explode(' ', $pet['clothesBottom']);
             foreach ($clothesBottom as $clothing) {

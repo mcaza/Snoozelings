@@ -497,14 +497,12 @@ echo '</div>';
         if (date('N') == 7) {
             $check = 1;
                 foreach ($habits as $habit) {
-                    if ($check == 1) {
-                        $check++;
-                    } else {
+
                         if ($habit['habitOne']) {
                             $habitOne = htmlspecialchars($habit['habitOne']);
                             $habitTwo = htmlspecialchars($habit['habitTwo']);
                             break;
-                        }
+                        
                     }
                 
             }

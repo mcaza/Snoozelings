@@ -238,7 +238,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Set Session for Coins
-    $_SESSION['finish'] = 1;
+    if ($_POST['newHabitOne']) {
+            $_SESSION['finish'] = 3;
+
+    } else {
+            $_SESSION['finish'] = 1;
+
+    }
     
     header("Location: ../journal");
     
