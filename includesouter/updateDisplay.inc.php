@@ -325,13 +325,17 @@ if ($closed === "selected") {
     echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any users can use this pet as inspiration.</p></div>';
 }
 
+echo '<hr>';
 echo '<label for="bio"  class="form">Pet Bio:</label><br>';
 echo '<textarea id="bio" name="bio" rows="12" cols="70" name="bio">' . htmlspecialchars($result['bio']) . '</textarea>';
-echo '<p>Bios Cannot be Longer than 500 Characters</p>';
+echo '<p><i>Bios Cannot be Longer than 500 Characters</i></p>';
+echo '<hr>';
+
+//Blank Field Warning
+echo '<p><i>Any Blank Fields Will Not Be Changed</i></p>';
 
 //Submit Button
 echo '<div>';
-
 echo '<button  class="fancyButton">Update Pet</button>';
 echo '</div>';
 echo '</form>';

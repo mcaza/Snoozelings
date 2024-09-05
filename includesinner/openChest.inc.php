@@ -105,9 +105,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Redirect
     if ($coins == 1) {
-        $word = " Coin, 1 ";
+        $word = " Snooze Coin, 1 ";
     } else {
-        $word = " Coins, 1 ";
+        $word = " Snooze Coins, 1 ";
     }
     $_SESSION['reply'] = "You open the chest and find: " . $coins . $word . $prizes[0] . ', 1 ' . $prizes[1];
     header("Location: ../pack");

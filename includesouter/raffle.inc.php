@@ -75,7 +75,7 @@ foreach ($results as $result) {
 }
 echo '</div>';
 if ($count === 0 || !in_array($userId, $explode)) {
-     echo "<form method='POST' action='includes/enterRaffle.inc.php' onsubmit=\"return confirm('Buying a ticket will cost you 1 gold coin.');\">";
+     echo "<form method='POST' action='includes/enterRaffle.inc.php' onsubmit=\"return confirm('Buying a ticket will cost you 1 snooze coin.');\">";
     echo '<button  class="fancyButton">Buy Ticket</button>';
     echo '</form>';
    

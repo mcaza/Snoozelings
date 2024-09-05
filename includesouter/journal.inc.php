@@ -121,11 +121,11 @@ if (!$journalCheck) {
 } elseif ($latestEntry['closed'] == "0") {
     //Check if Any Messages (Earn Coins OR Journal Edit)
     if ($finish == 1) {
-        echo '<div class="returnBar" style="margin-top: 1rem;"><p>You earned 5 coins.</p></div>';
+        echo '<div class="returnBar" style="margin-top: 1rem;"><p>You earned 5 snooze coins.</p></div>';
     } elseif ($finish == 2) {
         echo '<div class="returnBar" style="margin-top: 1rem;"><p>Your journal has been edited.</p></div>';
     } else if ($finish == 3) {
-        echo '<div class="returnBar" style="margin-top: 1rem;"><p>You earned 5 coins.<br><br>You have also set new habits. Be sure to edit your journal when you complete them today.</p></div>';
+        echo '<div class="returnBar" style="margin-top: 1rem;"><p>You earned 5 snooze coins.<br><br>You have also set new habits. Be sure to edit your journal when you complete them today.</p></div>';
     }
     
     //Journal Completed for Today

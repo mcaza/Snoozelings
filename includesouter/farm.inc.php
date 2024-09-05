@@ -16,7 +16,7 @@ unset($_SESSION['reply']);
 
 
 //Get Farmname
-$query = "SELECT farmName FROM users WHERE id = :id;";
+$query = "SELECT * FROM users WHERE id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
@@ -36,6 +36,12 @@ $query = "SELECT lastWater FROM users WHERE id = :id";
     $stmt->execute();
     $water = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Get Pet Name
+$query = "SELECT * FROM snoozelings WHERE id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $farmName['bonded']);
+    $stmt->execute();
+    $petName = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 //Date Stuff
@@ -70,7 +76,14 @@ if ($reply) {
 if ($result > $water['lastWater']) {
         echo '<div class="returnBar" style="margin-bottom: 2rem;">';
     echo '<h4 style=" margin-top: 0;">Time to Hydrate</h4>';
-    echo '<p>' . $petName . ' would like you to drink some water while they water the plants.</p>';
+    if ($petName['pronouns'] == "She/Her") {
+        echo '<p>' . $petName['name'] . ' would like you to drink some water while she water the plants.</p>';
+    } else if ($petname['pronouns'] == "He/Him") {
+        echo '<p>' . $petName['name'] . ' would like you to drink some water while he water the plants.</p>';
+    } else {
+        echo '<p>' . $petName['name'] . ' would like you to drink some water while they water the plants.</p>';
+    }
+    
     echo '<button class="fancyButton" onClick="window.location.href=\'includes/waterPlants.inc.php\'">Click Here After You Drink</button>';
     echo '</div>';
 }

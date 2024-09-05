@@ -2,8 +2,8 @@
 require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
 require_once '../includes/logincheck.inc.php';
-require_once '../includes/adminCheck.inc.php';
-
+require_once '../includes/verifyCheck.inc.php'; 
+require_once '../includes/verifySinglePet.inc.php'; 
 
 
 
@@ -16,7 +16,7 @@ require_once '../includes/adminCheck.inc.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Sleepy Head Beds</title>
     <link rel="stylesheet" href="styles.css">
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
@@ -71,29 +71,7 @@ require_once '../includes/adminCheck.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div  class="bottomPush">
-            <?php
-    
-    $query = 'SELECT * FROM itemList';
-                    $stmt = $pdo->prepare($query);
-                    $stmt->execute();
-                    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    
-                    echo '<div style="display:flex;flex-wrap:wrap;">';
-                    foreach ($items as $item) {
-                        echo '<div>';
-                        echo '<img src="items/' . $item['name'] . '.png" title="' . $item['id'] . '">';
-                        echo '<p><b>' . $item['display'] . '</b></p>';
-                        echo '</div>';
-                    }
-                    echo '</div>';
-            echo '<form action="/includes/giveItem.inc.php" method="post">';
-            echo '<label for="userid">User Id:</label>';
-            echo '<input type="number" id="userid" name="userid"><br>';
-            echo '<label for="itemid">Item Id:</label>';
-            echo '<input type="number" id="itemid" name="itemid"><br>';
-            echo '<button class="fancyButton">Give Item</button>';
-            echo '</form>';
-            ?>
+            <?php require_once '../includes/bedShop.inc.php' ?>
         </div></div>
     </div>
     <!--End of All Main Content-->

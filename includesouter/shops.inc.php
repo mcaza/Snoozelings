@@ -26,13 +26,6 @@ echo '<h4>Kindness Boutique</h4>';
 echo '</div>';
 echo '</a>';
 
-echo '<a href="stitcher" class="shopBox">';
-echo '<div >';
-echo '<img src="resources/sewingNPC.png" class="shopImg" style="width: 100%";">';
-echo '<h4>Snoozeling Stitcher</h4>';
-echo '</div>';
-echo '</a>';
-
 echo '<a href="trendytails" class="shopBox">';
 echo '<div >';
 echo '<img src="resources/trendyNPCMenu.png" class="shopImg" style="width: 100%";">';
@@ -40,10 +33,26 @@ echo '<h4>Trendy Tails</h4>';
 echo '</div>';
 echo '</a>';
 
+
+
 echo '<a href="adoption" class="shopBox">';
 echo '<div >';
 echo '<img src="resources/adoptshopNPC.png" class="shopImg" style="width: 100%";">';
 echo '<h4>Adoption House</h4>';
+echo '</div>';
+echo '</a>';
+
+echo '<a href="bedShop" class="shopBox">';
+echo '<div >';
+echo '<img src="resources/bedNPC.png" class="shopImg" style="width: 100%";">';
+echo '<h4>Sleepy Head Beds</h4>';
+echo '</div>';
+echo '</a>';
+
+echo '<a href="stitcher" class="shopBox">';
+echo '<div >';
+echo '<img src="resources/sewingNPC.png" class="shopImg" style="width: 100%";">';
+echo '<h4>Snoozeling Stitcher</h4>';
 echo '</div>';
 echo '</a>';
 
@@ -68,5 +77,7 @@ if ($today >= $spring && $today < $summer) {
 echo '<h4>Code Redemption</h4>';
 echo '</div>';
 echo '</a>';
+
+
     
 echo '</div>';
