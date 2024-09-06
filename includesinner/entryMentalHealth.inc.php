@@ -15,8 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $closed = 0;
     
         //Get Date
-    $now = new DateTime('now');
-    $formatted = $now->format('Y-m-d');
+    $query = 'SELECT * FROM times';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $times = $stmt->fetch(PDO::FETCH_ASSOC);
+    $future_date2 = new DateTime($times['mailone']);
+    $formatted = $future_date2->format('Y-m-d');
+    
     
     //Grab Form Variables
     $anxiety = $_POST["anxiety"];

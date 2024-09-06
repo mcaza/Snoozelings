@@ -13,6 +13,16 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 $type = $result['type'];
 
+//Get Date
+$query = 'SELECT * FROM times';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$times = $stmt->fetch(PDO::FETCH_ASSOC);
+$future_date2 = new DateTime($times['mailone']);
+$formatted = $future_date2->format('Y-m-d');
+
+$dateNum = date('N',strtotime($formatted));
+
 //Check For Open Entries
     if ($type === "mentalHealth") {
         $query = 'SELECT * FROM mentalHealthEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
@@ -491,7 +501,7 @@ echo '</div>';
         echo '<p><i>Completion of these tasks will make the day even better</i></p>';
         echo '<input class="input" type="text" name="tomorrowTaskTwo" required><br>';
         echo '<input class="input" type="text" name="tomorrowTaskThree" required><br>';       
-        if (date('N') != 5 && date('N') != 6) {
+        if ($dateNum != 5 && $dateNum != 6) {
             //Task Four & Five
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Less Important Tasks:</b></label><br>';
             echo '<p><i>To be completed only after completing the tasks above</i></p>';
@@ -500,7 +510,7 @@ echo '</div>';
         }
         
         echo '<hr>';
-        if (date('N') == 1) {
+        if ($dateNum == 1) {
             echo '<h3>Next Week</h3><br>';
             echo '<label class="form" style="margin-top: 2rem;margin-bottom:0;" ><b>Next Week\'s Habits:</b></label><br>';
             echo '<input class="input" type="text" name="newHabitOne" required><br>';

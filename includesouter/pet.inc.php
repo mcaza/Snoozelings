@@ -343,10 +343,10 @@ echo '</div>';
 echo '<hr>';
 
 //Bottom Space
-echo '<div id="bottomSpace">';
+/* echo '<div id="bottomSpace">';
 echo '<p><b>Boop Count:</b> 0</p>';
 echo '<button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Boop ' . $pet['name'] . '\'s Snoot</button>';
-echo '</div>';
+echo '</div>'; */
 
 
 

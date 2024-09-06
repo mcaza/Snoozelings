@@ -117,8 +117,7 @@ if (!leftArrow) {
         <script>
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const id = urlParams.get('id');
-        
+        const id = urlParams.get('id');;
         if (id > 1) {
             const beforeKey = document.getElementById('left').value;
         }
@@ -130,24 +129,11 @@ if (!leftArrow) {
 function arrowChecker(e) {  
     e = e || window.event;
     if (e.keyCode == '37') { //left
-        if (id == 10) {
-            document.location.href = "collection?id=2";
-        } else if (id == 1) {
-            
-        } else {
-            const beforeKey = document.getElementById('left').value;
-            document.location.href = "collection?id=" + beforeKey;
-        }
-        
+        const beforeKey = document.getElementById('left').value;
+        document.location.href = "collection?id=" + beforeKey;
     }
     else if (e.keyCode == '39') { //right
-        if (id == 2) {
-            document.location.href = "collection?id=10";
-        } else {
-            
-            document.location.href = "collection?id=" + after;
-        }
-
+        document.location.href = "collection?id=" + after;
     }
 }</script>
     
