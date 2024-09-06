@@ -45,7 +45,7 @@
             <div class="dropdown-content">
                 <a href="raffle">Daily Raffle</a>
                 <a href="randomitem">Simon\'s Gifts</a>
-                <a href="designer">Snooze Maker</a>
+                <a href="designer">Pet Designer</a>
             </div>
         </div>
         <div class="dropdown">

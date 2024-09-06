@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = "SELECT job, farmEXP FROM snoozelings WHERE id = :farmer";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":farmer", $farmer);
-    $stmt->execute();
+    $stmt->execute(); 
     $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Check if Pet is Crafting
@@ -83,12 +83,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt = $pdo->prepare($query);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stg1 = 60;
+        $stg2 = 120;
+        $stg3 = 180;
         $count = count($results)-1;
         $rand = rand(0,$count);
         $name = $results[$rand]['name'];
-        $temp1 = intval($results[$rand]['stg1']) * $reduce;
-        $temp2 = intval($results[$rand]['stg2']) * $reduce;
-        $temp3 = intval($results[$rand]['stg3']) * $reduce;
+        $temp1 = $stg1 * $reduce;
+        $temp2 = $stg2 * $reduce;
+        $temp3 = $stg3 * $reduce;
         $stg1 = round($temp1, 0);
         $stg2 = round($temp2, 0);
         $stg3 = round($temp3, 0);

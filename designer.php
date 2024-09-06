@@ -228,20 +228,13 @@ require_once '../includes/verifySinglePet.inc.php';
  }
     
     document.getElementById('mothFluff').onchange = (event) => {
-        var mothColor = document.getElementById('mothFluff').value;
-        if (checkBox.checked == true) {
-            document.getElementById('Bootsdesigner').src = "Layers/Markings/Boots/" + mainColor + ".png";
-        } else {
-            document.getElementById('Bootsdesigner').src = "";
-        }
- }
-    
-    document.getElementById('mothFluff').onchange = (event) => {
+        
      var inputText = event.target.value;
         if (inputText == "NoFluff") {
             document.getElementById('TopMothdesigner').src = "";
             document.getElementById('BottomMothdesigner').src = "";
         } else {
+            console.log(inputText);
             document.getElementById('TopMothdesigner').src = "Layers/Other/MothFluff/" + inputText + ".png";
             document.getElementById('BottomMothdesigner').src = "Layers/Other/MothFluff/Behind/" + inputText + ".png";
         }
@@ -297,6 +290,26 @@ require_once '../includes/verifySinglePet.inc.php';
             document.getElementById('Eartipdesigner').src = "Layers/Other/EarTip.png";
         } else {
             document.getElementById('Eartipdesigner').src = "";
+        }
+    }
+        
+        document.getElementById('bugwings').onchange = (event) => {
+        var checkBox = document.getElementById("bugwings");
+        if (checkBox.checked == true) {
+            document.getElementById('Topbugdesigner').src = "Layers/Wings/BugWingTop.png";
+            document.getElementById('Bottombugdesigner').src = "Layers/Wings/BugWingBottom.png";
+        } else {
+            document.getElementById('Topbugdesigner').src = "";
+            document.getElementById('Bottombugdesigner').src = "";
+        }
+    }
+        
+        document.getElementById('tooth').onchange = (event) => {
+        var checkBox = document.getElementById("tooth");
+        if (checkBox.checked == true) {
+            document.getElementById('Tinytoothdesigner').src = "Layers/Faces/Happy/TinyTooth.png";
+        } else {
+            document.getElementById('Tinytoothdesigner').src = "";
         }
     }
  

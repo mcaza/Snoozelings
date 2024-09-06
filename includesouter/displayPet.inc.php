@@ -359,10 +359,12 @@ function displayPet($pet, $class) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";
             echo "</div>";
-            if ($pet["hairType"] === "Knitted") {
+            if ($pet["hairType"] === "Knitted" && strlen($pet['clothesHoodie']) < 1) {
                 echo "<div class='${class}'>";
-                echo '<img src="Layers/Hair/Knitted/"' . $pet['hairColor'] . '.png" id="Hairone">';
+                echo '<img src="Layers/Hair/Knitted/' . $pet['hairColor'] . '.png" id="Hairone">';
                 echo "</div>";
+            } else {
+                
             }
         }
         if (strpos($pet["specials"], "BugWings") !== false) {

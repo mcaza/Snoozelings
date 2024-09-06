@@ -298,11 +298,32 @@ echo '</div>';
 
 //Inspired Snoozelings
 echo '<div class="itemsapplied bar" style="height: 140px; width: 90%; border: 2px dashed #827188; border-radius: 20px;overflow-y: auto;">';
-echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Inspired Snoozelings</h4>';
-echo '<div style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; " >';
+echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Snooze Family</h4>';
+echo '<div style="display: flex; flex-direction: column; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; " >';
+if ($pet['parents']) {
+    $parents = explode(" ", $pet['parents']);
+    echo '<p style="margin-bottom:0"><b>Inspiration:</b></p>';
+    echo '<ul style="margin-top:0;">';
+    foreach($parents as $parent) {
+        $query = 'SELECT * FROM snoozelings WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $parent);
+        $stmt->execute();
+        $listitem = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<li style="font-size:1.6rem;text-align: left;"><a href="pet?id=' . $inspire . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
+    }
+    echo '</ul>';
+}
+if ($pet['parents'] && $pet['inspire']) {
+    echo '<hr style="margin-bottom:8px;margin-top:8px;">';
+     echo '<p style="margin-bottom:0;margin-top:0px;"><b>Inspiring:</b></p>';
+} else if ($pet['inspire']) {
+     echo '<p style="margin-bottom:0"><b>Inspiring:</b></p>';
+}
 if ($pet['inspire']) {
     $inspires = explode(" ", $pet['inspire']);
-    echo '<ul>';
+   
+    echo '<ul style="margin-top:0;">';
     foreach($inspires as $inspire) {
         $query = 'SELECT name, owner_id FROM snoozelings WHERE id = :id';
         $stmt = $pdo->prepare($query);
@@ -323,6 +344,8 @@ echo '<hr>';
 
 //Bottom Space
 echo '<div id="bottomSpace">';
+echo '<p><b>Boop Count:</b> 0</p>';
+echo '<button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Boop ' . $pet['name'] . '\'s Snoot</button>';
 echo '</div>';
 
 

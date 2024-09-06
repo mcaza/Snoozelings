@@ -4,8 +4,8 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST["email"];
-    $username = $_POST["username"];
+    $email = strtolower($_POST["email"]);
+    $username = strtolower($_POST["username"]);
     
     if(!$email || !$username) {
         $_SESSION["reply"] = "You must enter both your email and username to change your password.";
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Grab User Info
-    $query = 'SELECT username, email, id FROM users WHERE email = :email';
+    $query = 'SELECT username, email, id FROM users WHERE LOWER(email) = :email';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":email", $email);
     $stmt->execute();
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Check if Email Matches Username
-    if (!($username === $user['username'])) {
+    if (!($username === strtolower($user['username']))) {
         $_SESSION["reply"] = "That username and email do not match. Please try again.";
         header("Location: ../helpme");
         die();

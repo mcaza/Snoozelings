@@ -21,7 +21,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    $query = "INSERT INTO snoozelings (owner_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials, name, pronouns, birthDate, job, mood, breedStatus, title, bedcolor) VALUES (:owner_id, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials, :name, :pronouns, :birthDate, :job, :mood, :breedStatus, :title, :bed);";
+    //Get Breeding Parents
+    $query = 'SELECT * FROM breedings WHERE blueprint = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $breeding = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $parents = $breeding['one'] . " " . $breeding['two'];
+    
+    $query = "INSERT INTO snoozelings (owner_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials, name, pronouns, birthDate, job, mood, breedStatus, title, bedcolor, parents) VALUES (:owner_id, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials, :name, :pronouns, :birthDate, :job, :mood, :breedStatus, :title, :bed, :parents);";
     $stmt = $pdo->prepare($query);
     
     $stmt->bindParam(":owner_id", $userId);
@@ -41,14 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":breedStatus", $breedStatus);
     $stmt->bindParam(":title", $title);
     $stmt->bindParam(":bed", $bed);
+    $stmt->bindParam(":parents", $parents);
     $stmt->execute(); 
-    
-    //Get Breeding Parents
-    $query = 'SELECT * FROM breedings WHERE blueprint = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    $breeding = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Get New Snooze ID
     $query = 'SELECT * FROM snoozelings ORDER BY id DESC LIMIT 1';

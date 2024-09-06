@@ -27,7 +27,7 @@ if ($reply) {
 }
 
 //Title
-echo '<h3 id="requestitle">Requests Board</h3><br>';
+echo '<h3 id="requestitle">📜 Player Request Board 📜</h3><br>';
 
 //Grab All Requests
 $query = "SELECT * FROM requests WHERE fulfilled = 0 AND expired = 0";

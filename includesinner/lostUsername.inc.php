@@ -4,10 +4,10 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST["email"];
+    $email = strtolower($_POST["email"]);
     
     //Check if Email Exists
-    $query = 'SELECT username, email FROM users WHERE email = :email';
+    $query = 'SELECT username, email FROM users WHERE LOWER(email) = :email';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":email", $email);
     $stmt->execute();

@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 function getUser(object $pdo, string $username) {
-    $query = "SELECT id, username, password, bonded FROM users WHERE username = :username;";
+    $username = strtolower($username);
+    $query = "SELECT id, username, password, bonded FROM users WHERE LOWER(username) = :username;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":username", $username);
     $stmt->execute();

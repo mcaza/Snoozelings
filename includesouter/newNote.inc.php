@@ -34,7 +34,7 @@ if (intval($result['penpalRequests']) > 0) {
     
     //Select Difficulty
     echo '<br><label for="difficulty"  class="form">Select Emotional Difficulty:</label><br>';
-    echo '<select class="input" name="difficulty" id="difficulty" required><br>';
+    echo '<select class="input" name="difficulty" id="difficulty" required>';
     echo '<option value="" disabled="disabled"  selected="selected"></option>';
     echo '<option value="Easy">Easy</option>';
     echo '<option value="Moderate">Moderate</option>';
@@ -63,6 +63,45 @@ foreach ($results as $row) {
 
     
 echo '</table>';
+
+//Penpal Mail Setting
+echo '<form action="includes/penpalSetting.inc.php" method="post">';
+echo '<hr>';
+echo '<label for="penpal" class="form">Penpal Intensity:</label><br>';
+switch ($result['penpal']) {
+    case "Easy":
+        $easy = "selected";
+        break;
+    case "Moderate":
+        $moderate = "selected";
+        break;
+    case "Stressful":
+        $stressful = "selected";
+        break;
+}
+echo '<select class="input" name="penpal" id="penpal">';
+echo '<option value="Easy"' . $easy . '>Easy</option>';
+echo '<option value="Moderate"' . $moderate . '>Moderate</option>';
+echo '<option value="Stressful"' . $stressful . '>Stressful</option>';
+echo '</select>';
+$easy = "";
+$moderate = "";
+$stressful = "";
+
+//Breeding Status Javascript
+if ($result['penpal'] === "Easy") {
+    echo '<div id="penpalInfoDiv"><p id="penpalInfo" style="margin-top: 0" >Penpal requests that are fun, easy going, non triggering, etc.</p></div>';
+} elseif ($result['penpal'] === "Moderate") {
+    echo '<div id="penpalInfoDiv"><p id="penpalInfo" style="margin-top: 0" >Penpal requests may contain pg-13 fandom conent, roleplay requests, harder topics, etc.</p></div>';
+} else if ($result['penpal'] === "Stressful") {
+    echo '<div id="penpalInfoDiv"><p id="penpalInfo" style="margin-top: 0" >Penpal requests may contain triggering topics such as arguments, loss, medical frustrations, etc.</p></div>';
+} else {
+    echo '<div id="penpalInfoDiv"><p id="penpalInfo" style="margin-top: 0" >Penpal requests that are fun, easy going, non triggering, etc.</p></div>';
+}
+//Submit Button
+echo '<button  class="fancyButton">Update Setting</button>';
+echo '</form>';
+echo '<hr>';
 
 
 //List Requests Posted (Closed) (Add in Future)
