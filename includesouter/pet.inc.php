@@ -310,7 +310,7 @@ if ($pet['parents']) {
         $stmt->bindParam(":id", $parent);
         $stmt->execute();
         $listitem = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<li style="font-size:1.6rem;text-align: left;"><a href="pet?id=' . $inspire . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
+        echo '<li style="font-size:1.6rem;text-align: left;"><a href="pet?id=' . $parent . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
     }
     echo '</ul>';
 }
@@ -318,7 +318,7 @@ if ($pet['parents'] && $pet['inspire']) {
     echo '<hr style="margin-bottom:8px;margin-top:8px;">';
      echo '<p style="margin-bottom:0;margin-top:0px;"><b>Inspiring:</b></p>';
 } else if ($pet['inspire']) {
-     echo '<p style="margin-bottom:0"><b>Inspiring:</b></p>';
+     echo '<p style="margin-bottom:0"><b>Inspired Snoozelings:</b></p>';
 }
 if ($pet['inspire']) {
     $inspires = explode(" ", $pet['inspire']);

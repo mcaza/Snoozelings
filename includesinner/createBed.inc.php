@@ -85,17 +85,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Remove Items
     for ($i = 0; $i < $amount; $i++) {
-        $query = "DELETE FROM items WHERE user_id = :id AND list_id = 29";
+        $query = "DELETE FROM items WHERE user_id = :id AND list_id = 29 LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
 
-        $query = "DELETE FROM items WHERE user_id = :id AND list_id = 41";
+        $query = "DELETE FROM items WHERE user_id = :id AND list_id = 41 LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
 
-        $query = "DELETE FROM items WHERE user_id = :id AND list_id = 59";
+        $query = "DELETE FROM items WHERE user_id = :id AND list_id = 59 LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();

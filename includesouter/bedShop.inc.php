@@ -51,9 +51,9 @@ echo '</div>';
 //Display Coin Count Top Right
 echo '<div>';
 if ($player['coinCount'] === "1") {
-    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Snooze Coin</p>';
+    echo '<p><strong>Inventory: </strong>' . $user['coinCount'] . ' Snooze Coin</p>';
 } else {
-    echo '<p><strong>Inventory: </strong>' . $player['coinCount'] . ' Snooze Coins</p>';
+    echo '<p><strong>Inventory: </strong>' . $user['coinCount'] . ' Snooze Coins</p>';
 }
 
 echo '</div>';

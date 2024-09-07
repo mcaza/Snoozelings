@@ -234,7 +234,6 @@ require_once '../includes/verifySinglePet.inc.php';
             document.getElementById('TopMothdesigner').src = "";
             document.getElementById('BottomMothdesigner').src = "";
         } else {
-            console.log(inputText);
             document.getElementById('TopMothdesigner').src = "Layers/Other/MothFluff/" + inputText + ".png";
             document.getElementById('BottomMothdesigner').src = "Layers/Other/MothFluff/Behind/" + inputText + ".png";
         }

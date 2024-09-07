@@ -155,7 +155,7 @@ echo '</div>';
     echo '<div style="width:80%;"><img src="resources/promo11.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
     echo '</div>';
     echo '<p style="padding-bottom:2rem;border-bottom: 2px dashed #827188;padding-bottom:2rem;">Create New Clothes, Fabrics, Items, and Designs for Your Snoozelings</p>';
-    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Large Dye System</h3>';
+    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Clothing Dye System</h3>';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
     echo '<div style="width:80%;"><img src="resources/dyes1.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;margin-bottom:12px;"></div>';
     echo '<div style="width:80%;"><img src="resources/Dyes2.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';

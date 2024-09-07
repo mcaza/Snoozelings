@@ -1,7 +1,5 @@
 <?php
 
-header("Location: ../");
-
 //Get Values
 $id = $_GET['id'];
 $userId = $_SESSION['user_id'];
@@ -20,6 +18,7 @@ if (!$result) {
 
 //Check if user id matches blueprint id
 if (!($userId == $result['owner_id'])) {
+    
     header("Location: ../");
 }
 

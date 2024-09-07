@@ -145,7 +145,7 @@ foreach ($moths as $moth) {
         }
     } 
 }
-if ($check = 0) {
+if ($check == 0) {
     echo "<div class='artlarge'>";
         echo "<img src='' id = 'BottomMothdesigner'>";
         echo "</div>";
@@ -175,6 +175,46 @@ if ($pet) {
     echo "<img src='Layers/Faces/Happy/Lines/Amethyst.png' id = 'Facedesigner'>";
 }
 echo "</div>";
+
+if ($pet) {
+    if ($pet['tailType'] == "Lizard") {
+        echo "<div class='artlarge'>";
+        echo "<img src='Layers/Tail/Lizard/Spikes/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
+        echo "</div>";
+        echo "<div class='artlarge'>";
+        echo "<img src='Layers/Tail/Lizard/" . $pet['mainColor'] . ".png' id = 'TailTopdesigner'>";
+        echo "</div>";
+    } else if ($pet['tailType'] == "Dragon") {
+        echo "<div class='artlarge'>";
+        echo "<img src='Layers/Tail/Dragon/End/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
+        echo "</div>";
+        echo "<div class='artlarge'>";
+        echo "<img src='Layers/Tail/Dragon/" . $pet['mainColor'] . ".png' id = 'TailTopdesigner'>";
+        echo "</div>";
+    } else if ($pet['tailType'] == "Mermaid") {
+        echo "<div class='artlarge'>";
+        echo "<img src='Layers/Tail/Mermaid/" . $pet['mainColor'] . ".png' id = 'Taildesigner'>";
+        echo "</div>";
+        echo "<div class='artlarge'>";
+        echo "<img src='' id = 'TailTopdesigner'>";
+        echo "</div>";
+    } else {
+        echo "<div class='artlarge'>";
+        echo "<img src='Layers/Tail/" . $pet['tailType'] . "/" . $pet['mainColor'] . ".png' id = 'Taildesigner'>";
+        echo "</div>";
+        echo "<div class='artlarge'>";
+        echo "<img src='' id = 'TailTopdesigner'>";
+        echo "</div>";
+    }
+} else {
+    echo "<div class='artlarge'>";
+    echo "<img src='Layers/Tail/Dragon/End/Amethyst.png' id = 'Taildesigner'>";
+    echo "</div>";
+    echo "<div class='artlarge'>";
+    echo "<img src='Layers/Tail/Dragon/Amethyst.png' id = 'TailTopdesigner'>";
+    echo "</div>";
+}
+
 
 if ($pet['hairType'] == "Knitted") {
     echo "<div class='artlarge'>";
@@ -247,51 +287,14 @@ foreach ($moths as $moth) {
         }
     } 
 }
-if ($check = 0) {
+if ($check == 0) {
     echo "<div class='artlarge'>";
-        echo "<img src='' id = 'BottomMothdesigner'>";
+        echo "<img src='' id = 'TopMothdesigner'>";
         echo "</div>";
 }
 
 
-if ($pet) {
-    if ($pet['tailType'] == "Lizard") {
-        echo "<div class='artlarge'>";
-        echo "<img src='Layers/Tail/Lizard/Spikes/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
-        echo "</div>";
-        echo "<div class='artlarge'>";
-        echo "<img src='Layers/Tail/Lizard/" . $pet['mainColor'] . ".png' id = 'TailTopdesigner'>";
-        echo "</div>";
-    } else if ($pet['tailType'] == "Dragon") {
-        echo "<div class='artlarge'>";
-        echo "<img src='Layers/Tail/Dragon/End/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
-        echo "</div>";
-        echo "<div class='artlarge'>";
-        echo "<img src='Layers/Tail/Dragon/" . $pet['mainColor'] . ".png' id = 'TailTopdesigner'>";
-        echo "</div>";
-    } else if ($pet['tailType'] == "Mermaid") {
-        echo "<div class='artlarge'>";
-        echo "<img src='Layers/Tail/Mermaid/" . $pet['mainColor'] . ".png' id = 'Taildesigner'>";
-        echo "</div>";
-        echo "<div class='artlarge'>";
-        echo "<img src='' id = 'TailTopdesigner'>";
-        echo "</div>";
-    } else {
-        echo "<div class='artlarge'>";
-        echo "<img src='Layers/Tail/" . $pet['tailType'] . "/" . $pet['mainColor'] . ".png' id = 'Taildesigner'>";
-        echo "</div>";
-        echo "<div class='artlarge'>";
-        echo "<img src='' id = 'TailTopdesigner'>";
-        echo "</div>";
-    }
-} else {
-    echo "<div class='artlarge'>";
-    echo "<img src='Layers/Tail/Dragon/End/Amethyst.png' id = 'Taildesigner'>";
-    echo "</div>";
-    echo "<div class='artlarge'>";
-    echo "<img src='Layers/Tail/Dragon/Amethyst.png' id = 'TailTopdesigner'>";
-    echo "</div>";
-}
+
 
 echo "<div class='artlarge'>";
 if ($pet) {
