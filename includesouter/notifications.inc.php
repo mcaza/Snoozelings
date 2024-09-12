@@ -62,6 +62,13 @@ if ($tutorial < 4) {
                 echo '<div class="notificationbox"><a href="secretemailpage" class="notif" style="color:red;">' . $count . '. Add Emails</a></div>';
                 $count++;
             }
+            
+            $now = new DateTime("now", new DateTimezone('UTC'));
+            $result = $now->format('Y-m-d');
+            if ($now->format('Y-m-d') == '2025-01-01') {
+                echo '<div class="notificationbox"><a href="secretemailpage" class="notif" style="color:red;">' . $count . '. Update all 2024 to 2025</a></div>';
+                $count++;
+            }
         }
     }
 

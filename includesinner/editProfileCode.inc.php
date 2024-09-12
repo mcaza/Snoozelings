@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $status = $_POST["status"];
     $friends = $_POST["friends"];
     $messages = $_POST["messages"];
+    $gifts = $_POST["birthdayGifts"];
     $bonded = $_POST["bonded"];
     $userId = $_SESSION['user_id'];
     $farmName = $_POST['farm'];
@@ -18,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $backpackName = $_POST['backpack'];
     $mailbox = $_POST['mailbox'];
     $shortcutArray = "";
+    $bio = $_POST['bio'];
     
      //Update Shortcuts
     $shortCount = 0;
@@ -78,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Variable Checks
     //Pronouns
     if ($pronouns) {
-        if(!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them" || $pronouns === "She/Him")) {
+        if(!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them" || $pronouns === "She/Him" || $pronouns === "See Bio")) {
             header("Location: ../editprofile?id=" . $userId);
             die();
         }
@@ -176,7 +178,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     
-    
+    //Alow Messages
+    if ($gifts) {
+        if (!($gifts === "0" || $gifts === "1")) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        }
+    }
     
     //Bonded Update
     if ($bonded) {
@@ -200,12 +208,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Update Pronouns, Friend Requests, and Message Requests
-    $query = "UPDATE users SET pronouns = :pronouns, blockRequests = :friends, blockMessages = :messages WHERE id = :id";
+    $query = "UPDATE users SET pronouns = :pronouns, blockRequests = :friends, blockMessages = :messages, birthdayOptOut = :gifts WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":pronouns", $pronouns);
     $stmt->bindParam(":messages", $messages);
     $stmt->bindParam(":friends", $friends);
+    $stmt->bindParam(":gifts", $gifts);
     $stmt->execute();
     
     //Update Mailbox Color
@@ -251,6 +260,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":backpackName", $backpackName);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
+    }
+    
+    //Update Bio
+    if ($bio) {
+        if (strlen($bio) > 500) {
+            $_SESSION['reply'] = "The bio entered is longer than 500 characters.";
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        } else {
+            $query = 'UPDATE users SET bio = :bio WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $userId);
+            $stmt->bindParam(":bio", $bio);
+            $stmt->execute();
+        }
     }
     
     header("Location: ../profile?id=" . $userId);

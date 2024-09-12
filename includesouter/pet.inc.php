@@ -117,7 +117,7 @@ if ($pet['job'] === 'jack') {
 }
 echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $job;
 echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>' . $pet['breedStatus'];
-echo '<p class="snoozelinginfo"><strong>Bio:</strong><br>' . nl2br(htmlspecialchars($pet['bio'])) . '</p>';
+
 echo '</div>';
 echo '</div>';
 
@@ -139,6 +139,8 @@ echo '<hr>';
 //Pet Row Two
 
 echo '<div class="secondrow">';
+
+
 
 //Plushie Build
 echo '<div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px;overflow-y: auto; height: 305px;">';
@@ -214,11 +216,65 @@ $specialArray = explode(" ", $result["specials"]);
 echo  '</ul>';
 echo '</div>';
 
+//Bio Box
+echo '<div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px;overflow-y: auto; height: 305px;scroll;overflow-x: hidden;">';
+echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188; height: " >&nbsp;&nbsp;&nbsp;Bio</h4>';
+    echo '<p class="snoozelinginfo">' . nl2br(htmlspecialchars($pet['bio'])) . '</p>';
+
+echo '</div>';
+echo '</div>';
+echo '<hr>';
+
+echo '<div class="secondrow">';
+
+//Inspired Snoozelings
+echo '<div class="profilerowtwo">';
+echo '<div class="itemsapplied bar" style="height: 140px; width: 100%; border: 2px dashed #827188; border-radius: 20px;overflow-y: auto;">';
+echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Snooze Family</h4>';
+echo '<div style="display: flex; flex-direction: column; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; " >';
+if ($pet['parents']) {
+    $parents = explode(" ", $pet['parents']);
+    echo '<p style="margin-bottom:0"><b>Inspiration:</b></p>';
+    echo '<ul style="margin-top:0;">';
+    foreach($parents as $parent) {
+        $query = 'SELECT * FROM snoozelings WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $parent);
+        $stmt->execute();
+        $listitem = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<li style="font-size:1.6rem;text-align: left;"><a href="pet?id=' . $parent . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
+    }
+    echo '</ul>';
+}
+if ($pet['parents'] && $pet['inspire']) {
+    echo '<hr style="margin-bottom:8px;margin-top:8px;">';
+     echo '<p style="margin-bottom:0;margin-top:0px;"><b>Inspiring:</b></p>';
+} else if ($pet['inspire']) {
+     echo '<p style="margin-bottom:0"><b>Inspired Snoozelings:</b></p>';
+}
+if ($pet['inspire']) {
+    $inspires = explode(" ", $pet['inspire']);
+   
+    echo '<ul style="margin-top:0;">';
+    foreach($inspires as $inspire) {
+        $query = 'SELECT name, owner_id FROM snoozelings WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $inspire);
+        $stmt->execute();
+        $listitem = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<li style="font-size:1.6rem;text-align: left"><a href="pet?id=' . $inspire . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
+    }
+    echo '</ul>';
+}
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
 //Small Right Boxes
 echo '<div class="profilerowtwo">';
 
 //Clothes Box
-echo '<div class="itemsapplied box" style="height: 140px; width: 90%; border: 2px dashed #827188; border-radius: 20px;margin-bottom: 2.1rem; overflow-y: auto;">';
+echo '<div class="itemsapplied box" style="height: 140px; width: 100%; border: 2px dashed #827188; border-radius: 20px;margin-bottom: 2.1rem; overflow-y: auto;">';
 echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Snooze Clothes</h4>';
 $clothes = [];
 $list = "";
@@ -296,57 +352,34 @@ foreach ($clothes as $item) {
 echo '</div>';
 echo '</div>';
 
-//Inspired Snoozelings
-echo '<div class="itemsapplied bar" style="height: 140px; width: 90%; border: 2px dashed #827188; border-radius: 20px;overflow-y: auto;">';
-echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Snooze Family</h4>';
-echo '<div style="display: flex; flex-direction: column; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; " >';
-if ($pet['parents']) {
-    $parents = explode(" ", $pet['parents']);
-    echo '<p style="margin-bottom:0"><b>Inspiration:</b></p>';
-    echo '<ul style="margin-top:0;">';
-    foreach($parents as $parent) {
-        $query = 'SELECT * FROM snoozelings WHERE id = :id';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $parent);
-        $stmt->execute();
-        $listitem = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<li style="font-size:1.6rem;text-align: left;"><a href="pet?id=' . $parent . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
-    }
-    echo '</ul>';
-}
-if ($pet['parents'] && $pet['inspire']) {
-    echo '<hr style="margin-bottom:8px;margin-top:8px;">';
-     echo '<p style="margin-bottom:0;margin-top:0px;"><b>Inspiring:</b></p>';
-} else if ($pet['inspire']) {
-     echo '<p style="margin-bottom:0"><b>Inspired Snoozelings:</b></p>';
-}
-if ($pet['inspire']) {
-    $inspires = explode(" ", $pet['inspire']);
-   
-    echo '<ul style="margin-top:0;">';
-    foreach($inspires as $inspire) {
-        $query = 'SELECT name, owner_id FROM snoozelings WHERE id = :id';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $inspire);
-        $stmt->execute();
-        $listitem = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<li style="font-size:1.6rem;text-align: left"><a href="pet?id=' . $inspire . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
-    }
-    echo '</ul>';
-}
+
 echo '</div>';
-echo '</div>';
-echo '</div>';
+
+
 echo '</div>';
 echo '</div>';
 
 echo '<hr>';
 
 //Bottom Space
-/* echo '<div id="bottomSpace">';
-echo '<p><b>Boop Count:</b> 0</p>';
-echo '<button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Boop ' . $pet['name'] . '\'s Snoot</button>';
-echo '</div>'; */
+echo '<div id="bottomSpace">';
+if ($result['boops']) {
+    $boops = explode(" ", $result["boops"]);
+    $buuopsNum = count($boops);
+} else {
+    $boops = [];
+    $buuopsNum = 0;
+}
+echo '<p><b>Boop Count:</b> ' . $buuopsNum . '</p>';
+if (in_array($userId,$boops)) {
+    echo '<p><i>You have already booped this snoozeling\'s snoot</i></p>';
+} else {
+    echo '<form action="includes/boopSnoot.inc.php" method="post">';
+    echo '<input type="hidden" id="id" name="id" value="' . $id . '">';
+    echo '<button  class="fancyButton">Boop ' . $result['name'] . '\'s Snoot</button>';
+    echo '</form>';
+}
+echo '</div>'; 
 
 
 

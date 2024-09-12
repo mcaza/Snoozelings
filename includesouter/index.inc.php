@@ -5,114 +5,193 @@
 if (isset($_SESSION['user_id'])) {
     
     $userId = $_SESSION['user_id'];
-$username = $_SESSION['user_username'];
+    $username = $_SESSION['user_username'];
 
-//Rollover Time Stuff
-$query = 'SELECT * FROM times';
-$stmt = $pdo->prepare($query);
-$stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+    //Rollover Time Stuff
+    $query = 'SELECT * FROM times';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-//Date Stuff
-$now = new DateTime("now", new DateTimezone('UTC'));
-$future_date = new DateTime($result['rotime']);
-$interval = $future_date->diff($now);
+    //Date Stuff
+    $now = new DateTime("now", new DateTimezone('UTC'));
+    $future_date = new DateTime($result['rotime']);
+    $interval = $future_date->diff($now);
 
-//Mail 1 Diff
-$future_date2 = new DateTime($result['mailone']);
-$interval2 = $future_date2->diff($now);
+    //Mail 1 Diff
+    $future_date2 = new DateTime($result['mailone']);
+    $interval2 = $future_date2->diff($now);
 
-//Mail 2 Diff
-$future_date3 = new DateTime($result['mailtwo']);
-$interval3 = $future_date3->diff($now);
+    //Mail 2 Diff
+    $future_date3 = new DateTime($result['mailtwo']);
+    $interval3 = $future_date3->diff($now);
+
+    //Mail 3 Diff
+    $future_date4 = new DateTime($result['mailthree']);
+    $interval4 = $future_date4->diff($now);
+
+    //Grab Newest News Post
+    $cat = "news";
+    $query = 'SELECT * FROM posts WHERE category = :cat ORDER by id DESC LIMIT 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":cat", $cat);
+    $stmt->execute();
+    $news = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    //Grab Newest Submissions Post
+    $cat = "submissions";
+    $query = 'SELECT * FROM posts WHERE category = :cat ORDER by id DESC LIMIT 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":cat", $cat);
+    $stmt->execute();
+    $submissions = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo '<div class="content">';
+
+    //Left Column
+    echo '<div class="leftColumnHome">';
+
+    //Bulletin Board Image
+    echo '<div class="indexBox" id="bulletinBoard">';
+    echo '<img src="resources/bulletinboard.png" class="shopImg" style="height: 150px;width: auto;">';
+    echo '</div>';
+
+    //Rollover Countdown
+    echo '<div class="indexBox">';
+    echo '<h4 style="margin-top: 0;">Rollover</h4>';
+    echo '<p>' . $interval->format("%h hours, %i minutes, %s seconds") . '</p>';
+    echo '</div>';
+
+    //Mail Countdown
+    echo '<div class="indexBox">';
+    echo '<h4 style="margin-top: 0;">Mail Delivery</h4>';
+    if ($now < $future_date2) {
+        echo '<p>' . $interval2->format("%h hours, %i minutes, %s seconds") . '</p>';
+    } elseif ($now < $future_date3) {
+        echo '<p>' . $interval3->format("%h hours, %i minutes, %s seconds") . '</p>';
+    } else {
+        echo '<p>' . $interval4->format("%h hours, %i minutes, %s seconds") . '</p>';
+    }
+
+    echo '</div>';
+
+    //To Do
+    echo '<div class="indexBox">';
+    echo '<h4 style="margin-top: 0;">To Do</h4>';
+    require "../includes/notifications.inc.php"; 
+    echo '</div>';
+
+    //Important Dates
+    $query = 'SELECT * FROM times';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $times = $stmt->fetch(PDO::FETCH_ASSOC);
+    $now = new DateTime($times['mailone']);
+    $result = $now->format('Y-m-d');
+
+    $query = 'SELECT * FROM importantDates';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $dates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $check = 0;
+    foreach ($dates as $date) {
+        if ($date['date'] > $result) {
+            $check = 1;
+        }
+    }
+
+    if ($check == 1) {
+        echo '<div class="indexBox">';
+        echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Important Dates</h4>';
+        foreach ($dates as $date) {
+            if ($date['date'] > $result) {
+                echo '<p><b>' . $date['name'] . '</b></p><p>' . $date['format'] . '</p>';
+            }
+        }
+        echo '</div>';
+    }
+
+    //Todays Birthdays
+    $query = 'SELECT * FROM users WHERE birthdayOptOut = 0';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $dates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $check = 0;
+    foreach ($dates as $date) {
+        $tester = new DateTime($date['birthdate']);
+        if ($tester->format('2024-m-d') == $now->format('Y-m-d')) {
+            $check = 1;
+        }
+    }
+
+    if ($check == 1) {
+        echo '<div class="indexBox">';
+        echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Today\'s Birthdays</h4>';
+        foreach ($dates as $date) {
+            $tester = new DateTime($date['birthdate']);
+            if ($tester->format('2024-m-d') == $now->format('Y-m-d')) {
+                echo '<p><b><a href="profile?id=' . $date['id'] . '">' . $date['username'] . '</a></b></p><p>' . $tester->format('F jS') . '</p>';
+            }
+        }
+        echo '</div>';
+    }
+
+    //Upcoming Birthdays
+    $fiveDays = new DateTime('now');
+    $fiveDays->add(new DateInterval('P5D'));
+
+
+
+    $tester = new DateTime($dates[1]['birthdate']);
+    $tester->format('2024-m-d');
+
+    $check = 0;
+    foreach ($dates as $date) {
+        $tester = new DateTime($date['birthdate']);
+        if ($tester->format('2024-m-d') > $now->format('Y-m-d') && $tester->format('2024-m-d') < $fiveDays->format('Y-m-d')) {
+            $check = 1;
+        }
+    }
+
+    if ($check == 1) {
+        echo '<div class="indexBox">';
+        echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Upcoming Birthdays</h4>';
+             foreach ($dates as $date) {
+                $tester = new DateTime($date['birthdate']);
+                if ($tester->format('2024-m-d') > $now->format('Y-m-d') && $tester->format('2024-m-d') < $fiveDays->format('Y-m-d')) {
+                    echo '<p><b><a href="profile?id=' . $date['id'] . '">' . $date['username'] . '</a></b></p><p>' . $tester->format('F jS') . '</p>';
+                }
+            }
+
+        echo '</div>';
+    }
     
-//Mail 3 Diff
-$future_date4 = new DateTime($result['mailthree']);
-$interval4 = $future_date4->diff($now);
+    echo '</div>';
 
-//Grab Newest News Post
-$cat = "news";
-$query = 'SELECT * FROM posts WHERE category = :cat ORDER by id DESC LIMIT 1';
-$stmt = $pdo->prepare($query);
-$stmt->bindParam(":cat", $cat);
-$stmt->execute();
-$news = $stmt->fetch(PDO::FETCH_ASSOC);
+    //Right Column
+    echo '<div class="rightColumnHome">';
 
-//Grab Newest Submissions Post
-$cat = "submissions";
-$query = 'SELECT * FROM posts WHERE category = :cat ORDER by id DESC LIMIT 1';
-$stmt = $pdo->prepare($query);
-$stmt->bindParam(":cat", $cat);
-$stmt->execute();
-$submissions = $stmt->fetch(PDO::FETCH_ASSOC);
+    //Recent News
+    echo '<div class="indexBox">';
+    echo '<h3 style="margin-top: 0;border-bottom:2px dashed #827188; padding-bottom: 1rem;margin-bottom: 1rem;">Recent News</h3>';
+    echo '<h4 style="margin-top: 0;">' . $news['title'] . '</h4>';
+    echo '<div style="height: 250px; overflow: hidden;">' . nl2br($news['text']) . '</div>';
+    echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $news['id'] . '">Read More >></a></div>';
+    echo '</div>';
 
-echo '<div class="content">';
+    //Recent Submissions
+    echo '<div class="indexBox">';
+    echo '<h3 style="margin-top: 0;border-bottom:2px dashed #827188; padding-bottom: 1rem;margin-bottom: 1rem;">Kindness Coins</h3>';
+    echo '<h4 style="margin-top: 0;">' . $submissions['title'] . '</h4>';
+    echo '<div style="height: 250px; overflow: hidden;">' . nl2br($submissions['text']) . '</div>';
+    echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $submissions['id'] . '">Read More >></a></div>';
+    echo '</div>';
 
-//Left Column
-echo '<div class="leftColumnHome">';
+    echo '</div>';
+    echo '</div>';
 
-//Bulletin Board Image
-echo '<div class="indexBox" id="bulletinBoard">';
-echo '<img src="resources/bulletinboard.png" class="shopImg" style="height: 150px;width: auto;">';
-echo '</div>';
-
-//Rollover Countdown
-echo '<div class="indexBox">';
-echo '<h4 style="margin-top: 0;">Rollover</h4>';
-echo '<p>' . $interval->format("%h hours, %i minutes, %s seconds") . '</p>';
-echo '</div>';
-
-//Mail Countdown
-echo '<div class="indexBox">';
-echo '<h4 style="margin-top: 0;">Mail Delivery</h4>';
-if ($now < $future_date2) {
-    echo '<p>' . $interval2->format("%h hours, %i minutes, %s seconds") . '</p>';
-} elseif ($now < $future_date3) {
-    echo '<p>' . $interval3->format("%h hours, %i minutes, %s seconds") . '</p>';
-} else {
-    echo '<p>' . $interval4->format("%h hours, %i minutes, %s seconds") . '</p>';
-}
-
-echo '</div>';
-
-//To Do
-echo '<div class="indexBox">';
-echo '<h4 style="margin-top: 0;">To Do</h4>';
-require "../includes/notifications.inc.php"; 
-echo '</div>';
-
-//Important Dates
-echo '<div class="indexBox">';
-echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Important Dates</h4>';
-echo '<p>Coming Soon</p>';
-/* echo '<p><b>December 18th</b><br>News Update</p><br>';
-echo '<p><b>December 20th</b><br>Alpha Test Last Day</p><br>'; */
-echo '</div>';
-
-echo '</div>';
-
-//Right Column
-echo '<div class="rightColumnHome">';
-
-//Recent News
-echo '<div class="indexBox">';
-echo '<h3 style="margin-top: 0;border-bottom:2px dashed #827188; padding-bottom: 1rem;margin-bottom: 1rem;">Recent News</h3>';
-echo '<h4 style="margin-top: 0;">' . $news['title'] . '</h4>';
-echo '<div style="height: 250px; overflow: hidden;">' . nl2br($news['text']) . '</div>';
-echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $news['id'] . '">Read More >></a></div>';
-echo '</div>';
-
-//Recent Submissions
-echo '<div class="indexBox">';
-echo '<h3 style="margin-top: 0;border-bottom:2px dashed #827188; padding-bottom: 1rem;margin-bottom: 1rem;">Kindness Coins</h3>';
-echo '<h4 style="margin-top: 0;">' . $submissions['title'] . '</h4>';
-echo '<div style="height: 250px; overflow: hidden;">' . nl2br($submissions['text']) . '</div>';
-echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $submissions['id'] . '">Read More >></a></div>';
-echo '</div>';
-
-echo '</div>';
-echo '</div>';
-    
 } else {
     if (isset($_SESSION['reply'])) {
     $reply = $_SESSION['reply'];
@@ -213,6 +292,7 @@ echo '</div>';
 </div>
 <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]=\'EMAIL\';ftypes[0]=\'email\';fnames[1]=\'FNAME\';ftypes[1]=\'text\';fnames[2]=\'LNAME\';ftypes[2]=\'text\';fnames[3]=\'ADDRESS\';ftypes[3]=\'address\';fnames[4]=\'PHONE\';ftypes[4]=\'phone\';fnames[5]=\'BIRTHDAY\';ftypes[5]=\'birthday\';}(jQuery));var $mcj = jQuery.noConflict(true);</script></div>
 ';
+    echo '<div id="MobileNewsletter"><h3><a href="https://mailchi.mp/45ecadfead88/snoozelings-newsletter">Click Here</a></h3></div>';
     echo '</div>';
 }
 

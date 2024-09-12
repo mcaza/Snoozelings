@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $type = $result['type'];
     
     //Fetch Items
-    if ($color == "White") {
+    if ($color == "Basic") {
         $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Remove Item from Inventory
-    if ($color && $color != "White") {
+    if ($color && $color != "Basic") {
         $query = 'DELETE FROM items WHERE list_id = :id AND user_id = :user AND dye = :color LIMIT 1'; 
     } else {
         $query = 'DELETE FROM items WHERE list_id = :id AND user_id = :user AND dye IS NULL LIMIT 1'; 
@@ -142,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->bindParam(":user", $userId);
-    if ($color && $color != "White") {
+    if ($color && $color != "Basic") {
         $stmt->bindParam(":color", $color);
     }
     $stmt->execute(); 

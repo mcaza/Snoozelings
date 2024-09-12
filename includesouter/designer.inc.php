@@ -200,7 +200,7 @@ if ($pet) {
         echo "</div>";
     } else {
         echo "<div class='artlarge'>";
-        echo "<img src='Layers/Tail/" . $pet['tailType'] . "/" . $pet['mainColor'] . ".png' id = 'Taildesigner'>";
+        echo "<img src='Layers/Tail/" . $pet['tailType'] . "/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
         echo "</div>";
         echo "<div class='artlarge'>";
         echo "<img src='' id = 'TailTopdesigner'>";
@@ -338,13 +338,14 @@ foreach ($colors as $color) {
         echo '<option value="' . $color['name'] . '">' . $color['display'] . '</option>';
     }
 }
+
 foreach ($fabrics as $fabric) {
-    if ($pet['noseColor'] == $color['name']) {
+    if ($pet['noseColor'] == $fabric['name']) {
         echo '<option value="' . $fabric['name'] . '" selected>' . $fabric['display'] . '</option>';
     } else {
         echo '<option value="' . $fabric['name'] . '">' . $fabric['display'] . '</option>';
     }
-}
+} 
 echo '</select><br>';
 
 echo '<label for="eyeColor" class="form">Eye Color:</label><br>';
@@ -387,7 +388,7 @@ echo '</select><br>';
 echo '<label for="mothFluff" class="form">Moth Fluff:</label><br>';
 echo '<select id="mothFluff"  class="input">';
 $moths = ['NoFluff','MothFluff','MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBrown','MothFluffBlack', 'MothFluffPink', 'MothFluffSilver','MothFluffGold', 'MothFluffPastelPink', 'MothFluffPastelBlue', 'MothFluffPastelPurple', 'MothFluffPastelBrown', 'MothFluffGooseberry', 'MothFluffBlueberry', 'MothFluffTeal', 'MothFluffRainbowLove', 'MothFluffFemaleLove', 'MothFluffMaleLove', 'MothFluffDoubleLove', 'MothFluffAnyLove', 'MothFluffAceLove', 'MothFluffAroLove', 'MothFluffNewSelf', 'MothFluffUniqueSelf', 'MothFluffFluidSelf'];
-$mothDisplay = ['No Fluff','White','Red','Orange','Yellow','Green','Blue','Purple','Brown','Black', 'Pink', 'Silver','Gold', 'Pastel Pink', 'Pastel Blue', 'Pastel Purple', 'Pastel Brown', 'Gooseberry', 'Blueberry', 'Teal', 'Rainbow Love', 'Female Love', 'Male Love', 'Double Love', 'Any Love', 'Ace Love', 'Aro Love', 'New Self', 'Unique Self', 'Fluid Self'];
+$mothDisplay = ['No Fluff','Basic','Red','Orange','Yellow','Green','Blue','Purple','Brown','Black', 'Pink', 'Silver','Gold', 'Pastel Pink', 'Pastel Blue', 'Pastel Purple', 'Pastel Brown', 'Gooseberry', 'Blueberry', 'Teal', 'Rainbow Love', 'Female Love', 'Male Love', 'Double Love', 'Any Love', 'Ace Love', 'Aro Love', 'New Self', 'Unique Self', 'Fluid Self'];
     $round = 0;
 foreach ($moths as $moth) {
     if (strpos($pet["specials"], $moth) !== false) {

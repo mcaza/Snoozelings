@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Submit Journal
     if (date('N') == 7) {
-        $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, taskFour, taskFive,oneCheck,twoCheck,threeCheck,weeklyWin,weeklyLoss,learned,closed) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :taskFour, :taskFive, :oneCheck, :twoCheck, :threeCheck, :weeklyWin, :weeklyLoss, :learned)';
+        $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, taskFour, taskFive,oneCheck,twoCheck,threeCheck,weeklyWin,weeklyLoss,learned,habitOne,habitTwo) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :taskFour, :taskFive, :oneCheck, :twoCheck, :threeCheck, :weeklyWin, :weeklyLoss, :learned, :habitOne, :habitTwo)';
     } else if (date('N') == 5) {
         $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, oneCheck,twoCheck,threeCheck,fourCheck,fiveCheck) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :oneCheck, :twoCheck, :threeCheck, :fourCheck, :fiveCheck)';
     } else if (date('N') == 6 ) {

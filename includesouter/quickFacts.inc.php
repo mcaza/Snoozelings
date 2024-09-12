@@ -213,7 +213,7 @@ if ($type == "mentalHealth") {
         countTimes("Spent Recklessly","destructive",$num,$entries);
         countTimes("Picked at my Body","destructive",$num,$entries);
         countTimes("Hurt Myself","destructive",$num,$entries);
-        echo '/<ul>';
+        echo '<ul>';
         echo '</div>';
         
     } else {

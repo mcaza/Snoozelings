@@ -184,6 +184,8 @@ if ($id == $userId) {
     
     echo '</ul>';
     echo '<p class="snoozelinginfo"><strong>Farm Name: </strong>' . $result['farmName'];
+
+    
     } else {
         if ($id === "4") {
               echo '<p class="snoozelinginfo" style="overflow-y: auto;"><strong>Job: </strong>Seed Sower</p>';
@@ -279,16 +281,10 @@ if ($id === "4") {
     
     //Left Side Achievements + Right Side Friends
     echo '  <div class="secondrow">
-               <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;">
-<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Achievements</h4>
+               <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;overflow:scroll;overflow-x: hidden;" >
+<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Bio</h4>
                                    <div  >';
-    if ($result['trophies']) {
-            $trophies = explode(" ", $result['trophies']);
-            array_shift($trophies);
-            foreach ($trophies as $trophy) {
-            echo '<img style="height: 60px;" src="trophies/' . $trophy . '.png" title="' . $trophy . '">';
-        }
-    }
+   echo '<p class="snoozelinginfo">' . nl2br(htmlspecialchars($result['bio'])) . '</p>';
 
 
              echo   '</div>';
@@ -339,13 +335,83 @@ if ($id === "4") {
     }
 
 
+    
+
+    //Birthday Gifts
+    $fiveDays = new DateTime('now');
+    $fiveDays->add(new DateInterval('P5D'));
+
+    //Important Dates
+    $query = 'SELECT * FROM times';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $times = $stmt->fetch(PDO::FETCH_ASSOC);
+    $now = new DateTime($times['mailone']);
+    $tester = new DateTime($result['birthdate']);
+
     //Bottom Section
     echo '<hr>';
     
-    if ($id < 3 || $id > 9) {
-        echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';
-    } else {
+    if ($id > 3 && $id < 9) {
         echo '<div id="bottomSpace"></div>';
+    } else if ($userId == $id) {
+        echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';
+    } else if ($tester->format('2024-m-d') == $now->format('Y-m-d')) {
+        echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';
+    } else if ($result['birthdayOptOut'] == 1 && $tester->format('2024-m-d') > $now->format('Y-m-d') && $tester->format('2024-m-d') < $fiveDays->format('Y-m-d')) {
+        echo '<div><h3><a href="collection?id=' . $id . '">Go To Collection >></a><hr></div>';
+            echo '<p><b>This user has opted out of receiving birthday gifts</b></p>';
+    } else if ($tester->format('2024-m-d') > $now->format('Y-m-d') && $tester->format('2024-m-d') < $fiveDays->format('Y-m-d')) {
+            $query = 'SELECT * FROM birthdayGifts WHERE gifter = :gifter AND giftee = :giftee';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":gifter", $userId);
+        $stmt->bindParam(":giftee", $id);
+        $stmt->execute();
+        $giftCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($giftCheck) {
+            echo '<div><h3><a href="collection?id=' . $id . '">Go To Collection >></a><hr></div>';
+            echo '<p><b>You have already given a birthday gift to this user</b></p>';
+        } else {
+            echo '<div><h3><a href="collection?id=' . $id . '">Go To Collection >></a><hr></div>';
+            echo '<div style="border: 2px dashed #827188;border-radius: 10px;width:80%;margin-left:auto;margin-right:auto;margin-bottom:25px;"><h1>Give a Birthday Gift</h1>';
+            echo '<form method="POST" id="comment" name="comment" action="includes/birthdayGift.inc.php">';
+            echo '<input type="hidden" id="postId" name="postId" value="' . $id . '" />';
+            $query = 'SELECT * FROM items WHERE user_id = :id ORDER BY id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $userId);
+            $stmt->execute();
+            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo '<label style="margin-top: 2rem;" for="gift" class="form" required>Choose a Gift:</label><br>';
+            echo '<select class="input"  name="gift">';
+            echo '<option value=""></option>';
+            foreach ($items as $item) {
+                $query = 'SELECT * FROM itemList WHERE name = :name';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":name", $item['name']);
+                $stmt->execute();
+                $canDye = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($canDye['canDye'] == 1) {
+                    if ($item['dye']) {
+                        $query = 'SELECT * FROM dyes WHERE name = :name';
+                        $stmt = $pdo->prepare($query);
+                        $stmt->bindParam(":name", $item['dye']);
+                        $stmt->execute();
+                        $color = $stmt->fetch(PDO::FETCH_ASSOC);
+                        echo '<option value="' . $item['id'] . '">' . $item['display'] . ' [' . $color['display'] . ']</option>';
+                    } else {
+                        echo '<option value="' . $item['id'] . '">' . $item['display'] . ' [Basic]</option>';
+                    }
+                } else {
+                    echo '<option value="' . $item['id'] . '">' . $item['display'] . '</option>';
+                }
+            }
+            echo '</select><br>';
+            echo "<button class='fancyButton' style='margin-bottom:20px;'>Send Gift</button><br>";
+            echo '</form></div>';
+        }
+        
+    } else {
+        echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';
     }
     
 

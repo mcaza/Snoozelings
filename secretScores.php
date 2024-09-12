@@ -132,6 +132,25 @@ require_once '../includes/adminCheck.inc.php';
                         echo '<li><a href="/profile?id='  . $user['id'] . '">' . $buy['username'] . '</a> - <i>' . $buy['itemsBought'] . ' Purchases</i></li>';
                     }
                     echo '</ol>';
+                    
+                    $query = 'SELECT * FROM dailyRecords';
+                    $stmt = $pdo->prepare($query);
+                    $stmt->execute();
+                    $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    $journals = 0;
+                    $crops = 0;
+                    $crafted = 0;
+                    $kindness = 0;
+                    $requests = 0;
+                    foreach ($records as $record) {
+                        $journals = $journals + $record['journalEntries'];
+                        $crops = $crops + $record['cropsHarvested'];
+                        $crafted = $crafted + $record['itemsCrafted'];
+                        $kindness = $kindness + $record['kindnessCoins'];
+                        $requests = $requests + $record['requestsFilled'];
+                    }
+                    echo '<p><b>Journals: </b>' . $journals . '<br><b>Crops: </b>' . $crops . '<br><b>Crafts:</b> ' . $crafted . '<br><b>Kindness:</b> ' . $kindness . '<br><b>Requests: </b>' . $requests . '</p>';
             ?>
         </div></div>
     </div>

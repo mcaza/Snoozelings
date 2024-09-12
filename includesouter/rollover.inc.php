@@ -75,7 +75,7 @@
     foreach ($users as $user) {
         $firstDate = $now->format('m-d');
         $secondDate = substr($user['birthdate'], 5);
-        if ($firstDate === $secondDate) {
+        if ($firstDate == $secondDate) {
             //Add Item
             $list = 222;
             $one = 1;
@@ -104,7 +104,22 @@
             $zero = 0;
             $now = new DateTime("now", new DateTimezone('UTC'));
             $date = $now->format('Y-m-d H:i:s');
-            $message = 'Hey there ' . $user['username'] . ', 
+            if ($user['birthdayOptOut'] == 0) {
+                $message = 'Hey there ' . $user['username'] . ', 
+            
+            Here at Snoozelings, we know birthdays can sometimes be not so great. Sometimes friends and families fall through. Sometimes we just don\'t have anyone to spend the day with. Sometimes people just forget.
+            
+            That\'s why we want to send you a little gift on us. A birthday exclusive fabric for a snoozeling of your choice. Because we care.
+            
+            You may also find some birthday gifts from other users appearing in your mailbox in the next 5-10 minutes.
+            
+            Please remember: You are loved, You are valued, You are worthy, You are enough.
+            
+            Happy birthday from all of us at Snoozelings <3
+            
+            ~Slothie';
+            } else {
+                $message = 'Hey there ' . $user['username'] . ', 
             
             Here at Snoozelings, we know birthdays can sometimes be not so great. Sometimes friends and families fall through. Sometimes we just don\'t have anyone to spend the day with. Sometimes people just forget.
             
@@ -115,6 +130,7 @@
             Happy birthday from all of us at Snoozelings <3
             
             ~Slothie';
+            }
             $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime)';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":sender", $sender);

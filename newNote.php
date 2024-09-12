@@ -97,7 +97,7 @@ require_once '../includes/verifySinglePet.inc.php';
          if (inputText == "Easy") {
              document.getElementById('penpalInfo').innerHTML = "Penpal requests that are fun, easy going, non triggering, etc.";
          } else if (inputText == "Moderate") {
-            document.getElementById('penpalInfo').innerHTML = "Penpal requests may contain pg-13 fandom conent, roleplay requests, harder topics, etc.";
+            document.getElementById('penpalInfo').innerHTML = "Penpal requests may contain pg-13 fandom content, roleplay requests, harder topics, etc.";
         } else {
             document.getElementById('penpalInfo').innerHTML = "Penpal requests may contain triggering topics such as arguments, loss, medical frustrations, etc.";
 

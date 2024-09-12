@@ -5,6 +5,11 @@ $userId = $_SESSION['user_id'];
 $error = $_SESSION['error'];
 unset($_SESSION['error']);
 
+if ($_SESSION['reply']) {
+    $reply = $_SESSION['reply'];
+    unset($_SESSION['reply']);
+}
+
 //Grab Pet Info from Database
 $query = "SELECT * FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);
@@ -78,6 +83,11 @@ if ($error) {
     echo '</div><br>';
 }
 
+//Session Reply Area
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 1rem;"><p>' . $reply . '</p></div>';
+}
+
 //Title
 echo '<h3 style="margin-bottom: .5rem;">Update Your Profile</h3>';
 echo '<form action="includes/editProfileCode.inc.php" method="post">';
@@ -107,6 +117,9 @@ switch ($result['pronouns']) {
     case "She/Him":
         $sheHim = "selected";
         break;
+    case "See Bio":
+        $seebio = "selected";
+        break;
 }
 //Form "Pronouns"
 echo '<label for="pronouns"  class="form">Your Pronouns:</label><br>';
@@ -118,6 +131,7 @@ echo '<option value="They/Them"' . $theyThem . '>They/Them</option>';
 echo '<option value="She/Them"' . $sheThem . '>She/Them</option>';
 echo '<option value="He/Them"' . $heThem . '>He/Them</option>';
 echo '<option value="She/Him"' . $sheHim . '>She/Him</option>';
+echo '<option value="See Bio"' . $seebio . '>See Bio</option>';
 echo '</select><br>';
 
 //Breeding Status Check
@@ -229,6 +243,22 @@ echo '</select><br>';
 $yes = "";
 $no = "";
 
+//Allow Birthday Gifts
+echo '<label for="birthdayGifts" class="form">Allow Birthday Gifts:</label><br>';
+switch ($result['birthdayOptOut']) {
+    case "1":
+        $no = "selected";
+        break;
+    case "0":
+        $yes = "selected";
+        break;
+}
+echo '<select class="input" name="birthdayGifts">';
+echo '<option value="0"' . $yes . '>Yes</option>';
+echo '<option value="1"' . $no . '>No</option>';
+echo '</select><br>';
+$yes = "";
+$no = "";
 
 
 //Bonded Snoozeling
@@ -261,7 +291,11 @@ echo '<label style="font-size: 1.7rem;" for="Snoozeling">Bonded Snoozeling</labe
 echo '<input type="checkbox" id="Pack" name="Pack" value="Pack">';
 echo '<label style="font-size: 1.7rem;" for="Pack">Backpack</label><br><br>';
 
-
+echo '<hr>';
+echo '<label for="bio"  class="form">User Bio:</label><br>';
+echo '<textarea id="bio" name="bio" rows="12" cols="70" name="bio">' . htmlspecialchars($result['bio']) . '</textarea>';
+echo '<p><i>Bios Cannot be Longer than 500 Characters</i></p>';
+echo '<hr>';
 
 //Blank Field Warning
 echo '<p><i>Any Blank Fields Will Not Be Changed</i></p>';

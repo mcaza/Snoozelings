@@ -210,6 +210,12 @@ $userId = $_SESSION['user_id'];
             $stmt->execute();
             $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
             
+            if ($item['name'] == "Bandana") {
+                $newName = 'Bandana [' . $color . ']';
+            } else {
+                $newName = $item['name'];
+            }
+            
             if ($newname) {
                 $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate, dye) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate, :dye);";
             } else {
@@ -218,7 +224,7 @@ $userId = $_SESSION['user_id'];
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":list", $item);
             $stmt->bindParam(":user", $userId);
-            $stmt->bindParam(":name", $iteminfo['name']);
+            $stmt->bindParam(":name", $newName);
             $stmt->bindParam(":display", $iteminfo['display']);
             $stmt->bindParam(":description", $iteminfo['description']);
             $stmt->bindParam(":type", $iteminfo['type']);
@@ -239,7 +245,7 @@ $userId = $_SESSION['user_id'];
     //Variable Checks
     //Pronouns
     if ($pronouns) {
-        if(!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them" || $pronouns === "She/Him")) {
+        if(!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them" || $pronouns === "She/Him" || $pronouns === "See Bio")) {
             header("Location: ../editprofile?id=" . $userId);
             die();
         } else {

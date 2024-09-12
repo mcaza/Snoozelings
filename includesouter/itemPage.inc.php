@@ -33,7 +33,7 @@ if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
             if ($dye['dye']) {
                 array_push($dyelist, $dye['dye']);
             } else {
-                array_push($dyelist, "White");
+                array_push($dyelist, "Basic");
             }
         }
     }
@@ -41,19 +41,25 @@ if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
     $dyefix = array_unique($dyelist);
     
     
-    //Move White to Front
-    $notwhite = [];
-    if(in_array("White", $dyefix)) {
+    //Move Basic to Front
+    $notWhite = [];
+    if(in_array("Basic", $dyefix)) {
         foreach ($dyefix as $fix) {
-            if ($fix == "White") {
+            if ($fix == "Basic") {
                 
             } else {
                 array_push($notwhite, $fix);
             }
-            $white = ["White"];
-            $dyefix = array_merge($white, $notwhite);
+            $white = ["Basic"];
+            if ($notwhite) {
+                $dyefix = array_merge($white, $notwhite);
+            } else {
+                $dyefix = ['Basic'];
+            }
         }
     }
+    
+    
     
     $dyedisplays = [];
     foreach ($dyefix as $word) {
@@ -99,7 +105,7 @@ echo '</div>';
 echo '<div class="itemPageRow">';
 echo '<div class="itemPage">';
 if ($dyefix || $item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
-    if ($dyefix[0] == "White") {
+    if ($dyefix[0] == "Basic") {
         echo '<img id="itemicon" src="items/' . $item['name'] . '.png" style="width: 150px;">';
         echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
     } else {

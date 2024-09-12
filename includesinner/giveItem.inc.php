@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
          
-    $test = 1;
+    $test = 0;
     $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate, test) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate, :test);";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":list", $item);

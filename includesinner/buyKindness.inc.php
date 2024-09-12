@@ -59,6 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $item = $stmt->fetch(PDO::FETCH_ASSOC);
         
+        if ($item['name'] == "Bandana") {
+            $newName = 'Bandana [' . $color . ']';
+        } else {
+            $newName = $item['name'];
+        }
+        
         //Add Item to Inventory
         if ($color) {
             $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate, dye) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate, :dye);";
@@ -68,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":list", $id);
         $stmt->bindParam(":user", $userId);
-        $stmt->bindParam(":name", $item['name']);
+        $stmt->bindParam(":name", $newName);
         $stmt->bindParam(":display", $item['display']);
         $stmt->bindParam(":description", $item['description']);
         $stmt->bindParam(":type", $item['type']);

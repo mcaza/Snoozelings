@@ -92,7 +92,7 @@ $stressful = "";
 if ($result['penpal'] === "Easy") {
     echo '<div id="penpalInfoDiv"><p id="penpalInfo" style="margin-top: 0" >Penpal requests that are fun, easy going, non triggering, etc.</p></div>';
 } elseif ($result['penpal'] === "Moderate") {
-    echo '<div id="penpalInfoDiv"><p id="penpalInfo" style="margin-top: 0" >Penpal requests may contain pg-13 fandom conent, roleplay requests, harder topics, etc.</p></div>';
+    echo '<div id="penpalInfoDiv"><p id="penpalInfo" style="margin-top: 0" >Penpal requests may contain pg-13 fandom content, roleplay requests, harder topics, etc.</p></div>';
 } else if ($result['penpal'] === "Stressful") {
     echo '<div id="penpalInfoDiv"><p id="penpalInfo" style="margin-top: 0" >Penpal requests may contain triggering topics such as arguments, loss, medical frustrations, etc.</p></div>';
 } else {

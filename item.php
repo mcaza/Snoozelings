@@ -13,6 +13,7 @@ $id = $_GET['id'];
     $stmt->bindParam(":id", $id);
     $stmt->execute();
     $name = $stmt->fetch(PDO::FETCH_ASSOC);
+    $itemName = $name['display'];
 
 //Get Dyes
 $dyelist = [];
@@ -116,8 +117,8 @@ $dyefix = array_unique($dyelist);
          var inputText = event.target.value;
          var text1 = "items/";
          var text2 = ".png";
-         var item = "<?php echo $name['name']; ?>";
-         if (inputText == "White" || inputText == "") {
+         var item = "<?php echo $itemName; ?>";
+         if (inputText == "Basic" || inputText == "") {
             var final = text1 + item + text2;
          } else {
             var final = text1 + item + inputText + text2;

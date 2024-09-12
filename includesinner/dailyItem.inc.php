@@ -28,12 +28,12 @@ $randomNum = rand(0, $count - 1);
     
 //Select Color if Bandana
 if ($items[$randomNum]['name'] == "Bandana") {
-    $colors = ['White', 'Yellow', 'Orange', 'Red', 'Green', 'Purple', 'Blue', 'Brown', 'Black', 'Pink', 'PastelBrown', 'PastelPink', 'PastelBlue', 'PastelPurple', 'Gooseberry', 'Blueberry', 'Teal'];
+    $colors = ['Basic', 'Yellow', 'Orange', 'Red', 'Green', 'Purple', 'Blue', 'Brown', 'Black', 'Pink', 'PastelBrown', 'PastelPink', 'PastelBlue', 'PastelPurple', 'Gooseberry', 'Blueberry', 'Teal'];
     $colcount = count($colors);
     $colnum = rand(0, $colcount - 1);
     $color = $colors[$colnum];
     $itemshort = "Bandana";
-    if ($color == "White") {
+    if ($color == "Basic") {
         $itemname = "Bandana";
         $itemdisplay = "Bandana";
         $dye = "";

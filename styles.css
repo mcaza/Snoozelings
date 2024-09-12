@@ -976,6 +976,10 @@ a.selected {
     padding: .8rem;
 }
 
+#MobileNewsletter {
+        display: none;
+    }
+
 .leftColumnHome {
     width: 30%;
     display: flex;
@@ -1699,6 +1703,16 @@ select {
         align-items: center;
     }
     
+    #mc_embed_shell {
+        display:none;
+    }
+    
+    #MobileNewsletter {
+        display: block;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    
     .journalInfo {
         flex-wrap: wrap;
     }
@@ -1938,5 +1952,9 @@ select {
     
     .displaycontainerright {
         width: auto;
+    }
+    
+    .itemPageRow {
+        width: 80%;
     }
 }

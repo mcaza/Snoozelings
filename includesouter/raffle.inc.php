@@ -161,7 +161,7 @@ echo '<h3>Donate an Item</h3>';
 echo '<p><i>Raffle items are randomly drawn from the donation pool everyday.</i></p>';
 echo '<p><i>You will recieve 1 Kindness Coin if your item is used.</i></p>';
 
-$query = 'SELECT * FROM items WHERE user_id = :id AND canDonate = 1 GROUP BY list_id, id';
+$query = 'SELECT * FROM items WHERE user_id = :id AND canDonate = 1 AND dye IS NULL GROUP BY list_id, id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
