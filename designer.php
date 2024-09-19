@@ -292,6 +292,15 @@ require_once '../includes/verifySinglePet.inc.php';
         }
     }
         
+        document.getElementById('skeleton').onchange = (event) => {
+        var checkBox = document.getElementById("skeleton");
+        if (checkBox.checked == true) {
+            document.getElementById('Skeletondesigner').src = "Layers/Skeleton.png";
+        } else {
+            document.getElementById('Skeletondesigner').src = "";
+        }
+    }
+        
         document.getElementById('bugwings').onchange = (event) => {
         var checkBox = document.getElementById("bugwings");
         if (checkBox.checked == true) {

@@ -11,6 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST["color"]) {
         $color = $_POST["color"];
     }
+    
+
      
     //Fetch Type of Clothes Item
     $query = 'SELECT * FROM itemList WHERE id = :id';
@@ -22,7 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Fetch Items
     if ($color == "Basic") {
-        $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user';
+        
+        $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user AND dye IS NULL';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":user", $userId);

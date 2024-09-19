@@ -45,7 +45,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     $exp = $snooze['farmEXP'] + .5;
+    
+    //Get First Seed ID
+    $query = "SELECT id FROM items WHERE name = :name && user_id = :id ORDER BY id LIMIT 1";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $seed);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $seedId = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if(!$seedId) {
+        $_SESSION["reply"] = "You do not own any of that seed.";
+        header("Location: ../farm");
+        die();
+    }
+    
 
+        if (!$plot || !$seed) {
+            $message = "Planting Error: Check Logs for More Info";
+            error_log($message, 1, "megan.caza@gmail.com");
+            echo 'There has been an error with planting your crop. An email with complete details has been sent to lead developer Slothie.';
+            die();
+        }
+    
+    
 
     
     //Get Time Reducer
@@ -63,19 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $reduce = .50;
     }
     
-    //Get First Seed ID
-    $query = "SELECT id FROM items WHERE name = :name && user_id = :id ORDER BY id LIMIT 1";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $seed);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $seedId = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if(!$seedId) {
-        $_SESSION["reply"] = "You do not own any of that seed.";
-        header("Location: ../farm");
-        die();
-    }
 
     //Get Seed Info
     if ($seed == "MysterySeed") {
@@ -116,6 +127,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     
+    //Error Email
+    if (!$plantName) {
+        $message = "Plant name crash = Plot: " . $plot . ", Seed: " . $seed . ", User: " . $userId . ", Farmer: " . $farmer;
+            error_log($message, 1, "megan.caza@gmail.com");
+            echo 'There has been an error with planting your crop. An email with complete details has been sent to lead developer Slothie.';
+            die();
+    }
+    
+    
 //Calculate Times
     //Update Snoozeling to working and add cooldown
     $now = new DateTime("now", new DateTimezone('UTC'));
@@ -128,6 +148,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $time3 = (clone $now)->add(new DateInterval("PT{$stg3}M")); 
     $format3 = $time3->format('Y-m-d H:i:s');
+    
+    //Record to Database to Track for Error
+    if ($seed == "MysterySeed") {
+        $mystery = 1;
+    } else {
+        $mystery = 0;
+    }
+    
+    $query = "INSERT INTO plantingLogs SET name = :name, stg1 = :stg1, stg2 = :stg2, stg3 = :stg3, amount = :amount, plantName = :plantName, mystery = :mystery, user_id = :user, plot = :plot, seed = :seed, farmer = :farmer";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $name);
+    $stmt->bindParam(":stg1", $format1);
+    $stmt->bindParam(":stg2", $format2);
+    $stmt->bindParam(":stg3", $format3);
+    $stmt->bindParam(":amount", $amount);
+    $stmt->bindParam(":plantName", $plantName);
+    $stmt->bindParam(":mystery", $mystery);
+    $stmt->bindParam(":user", $userId);
+    $stmt->bindParam(":plot", $plot);
+    $stmt->bindParam(":seed", $seed);
+    $stmt->bindParam(":farmer", $farmer);
+    $stmt->execute();
 
 //Update Seed into Farm
     if ($seed == "MysterySeed") {

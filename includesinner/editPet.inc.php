@@ -202,7 +202,7 @@ $userId = $_SESSION['user_id'];
                         $colordisplay = $x;
                     }
                 }
-            
+
             //Return Item
             $query = 'SELECT * FROM itemList WHERE id = :id';
             $stmt = $pdo->prepare($query);
@@ -210,10 +210,10 @@ $userId = $_SESSION['user_id'];
             $stmt->execute();
             $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            if ($item['name'] == "Bandana") {
+            if ($iteminfo['name'] == "Bandana") {
                 $newName = 'Bandana [' . $color . ']';
             } else {
-                $newName = $item['name'];
+                $newName = $iteminfo['name'];
             }
             
             if ($newname) {

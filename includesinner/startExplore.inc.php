@@ -23,6 +23,8 @@ $area = $_POST["area"];
     $itemsWon = [];
     $coinsWon = 0;
     
+    //If Holiday Month, add Holiday Items to Rare Arrays
+    
     //Get Pet Name
     $query = "SELECT name, owner_id, job, cooldownTime FROM snoozelings WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -249,7 +251,7 @@ function pickItem($rarity, $area) {
             $coinsWon += 2;
         } elseif ($rarity < 111) {
             $coinsWon++;
-        } elseif ($rarity < 250) {
+        } elseif ($rarity < 260) {
             $count = count($farmCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $farmCommon[$randomNum];
@@ -284,7 +286,7 @@ function pickItem($rarity, $area) {
             $coinsWon += 2;
         } elseif ($rarity < 111) {
             $coinsWon++;
-        } elseif ($rarity < 250) {
+        } elseif ($rarity < 260) {
             $count = count($woodsCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $woodsCommon[$randomNum];
@@ -319,7 +321,7 @@ function pickItem($rarity, $area) {
             $coinsWon += 2;
         } elseif ($rarity < 111) {
             $coinsWon++;
-        } elseif ($rarity < 250) {
+        } elseif ($rarity < 260) {
             $count = count($oceanCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $oceanCommon[$randomNum];

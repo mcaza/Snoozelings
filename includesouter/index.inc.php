@@ -113,7 +113,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     //Todays Birthdays
-    $query = 'SELECT * FROM users WHERE birthdayOptOut = 0';
+    $query = 'SELECT * FROM users WHERE birthdayOptOut = 0 ORDER BY MONTH(birthdate), DAY(birthdate)';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $dates = $stmt->fetchAll(PDO::FETCH_ASSOC);

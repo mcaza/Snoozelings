@@ -15,7 +15,7 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $journal = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($journal) {
-    $journalCheck = count($journal);
+    $journalCheck = $journal['entries'];
 }
 
 
@@ -42,26 +42,20 @@ $formatted = $future_date2->format('Y-m-d');
 $now = date("M jS, Y", strtotime($formatted));
 
 //Check For Open Entries
-if ($journalCheck) {
+if ($journal) {
     if ($journal['type'] === "mentalHealth") {
         $query = 'SELECT * FROM mentalHealthEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute();
-        $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
     } else if ($journal['type'] === "pain") {
         $query = 'SELECT * FROM chronicPainEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute();
-        $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
     } else if ($journal['type'] == "productivity") {
         $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute();
-        $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else if ($journal['type'] == "generic") {
+        $query = 'SELECT * FROM genericEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
     }
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 //Title
@@ -79,7 +73,7 @@ echo '<div class="journalDisplay">';
 //If No journal, Create Journal
 //Else If Check for Entry Today. If no entry, Create Entry
 //Else If, Show Today's Entry
-if (!$journalCheck) {
+if (!$journal) {
     //Journal Creation Title & Information
     echo '<h4  style="margin-top: 2rem;">Creating Your First Journal</h4>';
     echo '<p style="margin-top: 2rem;">One of the best things you can do for your health is keep a journal. This gives doctors a better understanding of your condition. This makes appointments much less stressful. <br><br>Here in Snooze Village, we want you to take care of yourself. Therefore, everytime you fill out your journal you\'ll recieve 5 snooze coins and help contribute to our daily records.</p>';
@@ -92,9 +86,12 @@ if (!$journalCheck) {
     echo '<option value="mentalHealth">Mental Health</option>';
     echo '<option value="pain">Chronic Pain</option>';
     echo '<option value="productivity">Productivity</option>';
+    echo '<option value="generic">Generic</option>';
     echo '</select><br>';
     echo '<button  class="fancyButton">Create Journal</button>';
     echo '</form>';
+    
+    echo '<br><p><a href="https://snoozelings.fandom.com/wiki/Journal_Types">More Journal Information</a></p>';
     
 } elseif (!$latestEntry || $latestEntry['closed'] == 1) {
     //Journal Display if there's no active entry

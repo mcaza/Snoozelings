@@ -30,6 +30,8 @@ $dateNum = date('N',strtotime($formatted));
         $query = 'SELECT * FROM chronicPainEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';  
     } else if ($type === "productivity") {
         $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';  
+    } else if ($type == "generic") {
+        $query = 'SELECT * FROM genericEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';  
     }
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
@@ -530,8 +532,203 @@ echo '</div>';
         }
     echo '<button  class="fancyButton">Submit</button>';
      echo "</form>";
- } 
+ } else if ($type == "generic") {
+    echo "<form method='POST' action='includes/entryGeneric.inc.php' onsubmit=\"return confirm('Please confirm there is no identifying information');\">";    
+        echo '<h1>Ratings</h1>';
+        echo '<p><i>Bad Health to Excellent Health</i></p>';
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Physical Health:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="physical" value="1" id="phy1" required><label for="phy1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="2" id="phy2"><label for="phy2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="3" id="phy3"><label for="phy3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="4" id="phy4"><label for="phy4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="5" id="phy5"><label for="phy5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="6" id="phy6"><label for="phy6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="7" id="phy7"><label for="phy7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="8" id="phy8"><label for="phy8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="9" id="phy9"><label for="phy9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="physical" value="10" id="phy10"><label for="phy10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Was my body exhausted, in pain, sick, etc?</i></p>';
+        
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Mental Health:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="mental" value="1" id="men1" required><label for="men1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="2" id="men2"><label for="men2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="3" id="men3"><label for="men3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="4" id="men4"><label for="men4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="5" id="men5"><label for="men5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="6" id="men6"><label for="men6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="7" id="men7"><label for="men7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="8" id="men8"><label for="men8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="9" id="men9"><label for="men9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="mental" value="10" id="men10"><label for="men10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Did my mind struggle to focus on normal tasks?</i></p>';
+        
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Emotional Health:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="emotional" value="1" id="emo1" required><label for="emo1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="2" id="emo2"><label for="emo2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="3" id="emo3"><label for="emo3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="4" id="emo4"><label for="emo4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="5" id="emo5"><label for="emo5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="6" id="emo6"><label for="emo6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="7" id="emo7"><label for="emo7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="8" id="emo8"><label for="emo8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="9" id="emo9"><label for="emo9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="emotional" value="10" id="emo10"><label for="emo">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Did I have a hard time staying emotionally regulated?</i></p>';
+        
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Spiritual Health:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="spiritual" value="1" id="spi1" required><label for="spi1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="2" id="spi2"><label for="spi2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="3" id="spi3"><label for="spi3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="4" id="spi4"><label for="spi4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="5" id="spi5"><label for="spi5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="6" id="spi6"><label for="spi6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="7" id="spi7"><label for="spi7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="8" id="spi8"><label for="spi8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="9" id="spi9"><label for="spi9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="spiritual" value="10" id="spi10"><label for="spi10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Did I follow my own personal believes / moral system?</i></p>';
+        
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Social Health:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="social" value="1" id="soc1" required><label for="soc1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="2" id="soc2"><label for="soc2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="3" id="soc3"><label for="soc3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="4" id="soc4"><label for="soc4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="5" id="soc5"><label for="soc5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="6" id="soc6"><label for="soc6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="7" id="soc7"><label for="soc7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="8" id="soc8"><label for="soc8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="9" id="soc9"><label for="soc9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="social" value="10" id="soc10"><label for="soc10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Did I struggle to socialize with friends/family?</i></p>';
+        
+        echo '<hr><h1>More Ratings</h1>';
+        
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Food Wellness:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="food" value="1" id="foo1" required><label for="foo1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="2" id="foo2"><label for="foo2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="3" id="foo3"><label for="foo3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="4" id="foo4"><label for="foo4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="5" id="foo5"><label for="foo5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="6" id="foo6"><label for="foo6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="7" id="foo7"><label for="foo7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="8" id="foo8"><label for="foo8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="9" id="foo9"><label for="foo9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="food" value="10" id="foo10"><label for="foo10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Did I eat healthy foods to fuel my body today?</i></p>';
+        
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Exercise:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="exercise" value="1" id="exe1" required><label for="exe1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="2" id="exe2"><label for="exe2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="3" id="exe3"><label for="exe3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="4" id="exe4"><label for="exe4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="5" id="exe5"><label for="exe5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="6" id="exe6"><label for="exe6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="7" id="exe7"><label for="exe7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="8" id="exe8"><label for="exe8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="9" id="exe9"><label for="exe9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="exercise" value="10" id="exe10"><label for="exe10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Did I manage to move around stretch my mucsles?</i></p>';
+        
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Sleep:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="sleep" value="1" required id="sle1"><label for="sle1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="2" id="sle2"><label for="sle2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="3" id="sle3"><label for="sle3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="4" id="sle4"><label for="sle4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="5" id="sle5"><label for="sle5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="6" id="sle6"><label for="sle6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="7" id="sle7"><label for="sle7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="8" id="sle8"><label for="sle8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="9" id="sle9"><label for="sle9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="sleep" value="10" id="sle10"><label for="sle10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Did I get a good amount of sleep?</i></p>';
+        
+        //Rate Anxiety
+        echo '<label class="form" style="margin-top: 1rem;">Rate Your Water Intake:</label><br>';
+        //Buttons
+        echo '<div class="radioRow">';
+        echo '<div class="radioBox" ><input type="radio" name="water" value="1" required id="wat1"><label for="wat1">1</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="2" id="wat2"><label for="wat2">2</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="3" id="wat3"><label for="wat3">3</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="4" id="wat4"><label for="wat4">4</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="5" id="wat5"><label for="wat5">5</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="6" id="wat6"><label for="wat6">6</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="7" id="wat7"><label for="wat7">7</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="8" id="wat8"><label for="wat8">8</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="9" id="wat9"><label for="wat9">9</label></div>';
+        echo '<div class="radioBox"><input type="radio" name="water" value="10" id="wat10"><label for="wat10">10</label></div>';
+        echo '</div>';
+        echo '<p><i>Did I drink enough water?</i></p>';
+        
+        echo '<hr><h1>Questions</h1>';
+        
+        echo '<label class="form" style="margin-top: 2rem;" for="pain">Any Pain:</label><br>';
+        echo '<input class="input" type="text" name="pain"><br>';
+        
+        echo '<label class="form" style="margin-top: 2rem;" for="illness">Any Illness:</label><br>';
+        echo '<input class="input" type="text" name="illness"><br>';
+        
+        echo '<label class="form" style="margin-top: 2rem;" for="notes">Any Other Notes:</label><br>';
+        echo '<input class="input" type="text" name="notes"><br>';
+        
+        echo '<hr><h1>Reflection</h1>';
+        
+        echo '<label class="form" style="margin-top: 2rem;" for="goodThing">Name One Good Thing from Today:</label><br>';
+        echo '<input class="input" type="text" name="goodThing" required><br>';
+        
+        echo '<label class="form" style="margin-top: 2rem;" for="badThing">Name One Bad Thing from Today:</label><br>';
+        echo '<input class="input" type="text" name="badThing" required><br>';
+        
+        echo '<button  class="fancyButton">Submit</button>';
+        echo '</form>';
+    }
+
 } else {
     header("Location: ../journal.php");
     die();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

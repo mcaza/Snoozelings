@@ -114,6 +114,14 @@ if (strpos($pet["specials"], "Belly") !== false) {
 echo "</div>";
 
 echo "<div class='artlarge'>";
+if (strpos($pet["specials"], "Skeleton") !== false) {
+    echo "<img src='Layers/Skeleton.png' id = 'Skeletondesigner'>";
+} else {
+    echo "<img src='' id = 'Skeletondesigner'>";
+}
+echo "</div>";
+
+echo "<div class='artlarge'>";
 if ($pet) {
     echo "<img src='Layers/MainLines/" . $pet['mainColor'] . ".png' id = 'Mainlinesdesigner'>";
 } else {
@@ -514,6 +522,20 @@ if (strpos($pet["specials"], "TinyTooth") !== false) {
     echo '<input type="checkbox" id="tooth"><label class="designerCheck" for="tooth">Tiny Tooth</label><br>';
 }
 echo '</div>';
+
+echo '</div>';
+echo '<div>';
+echo '<label style="margin-bottom: 1rem;" class="form">Other Designs:</label><br>';
+
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "Skeleton") !== false) {
+    echo '<input type="checkbox" id="skeleton" checked><label class="designerCheck" for="skeleton">Skeleton</label><br>';
+} else {
+    echo '<input type="checkbox" id="skeleton"><label class="designerCheck" for="skeleton">Skeleton</label><br>';
+}
+
+echo '</div>';
+
 
 echo '</div>';
 

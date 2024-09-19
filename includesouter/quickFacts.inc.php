@@ -20,6 +20,8 @@ if ($type == "mentalHealth") {
     $query = 'SELECT * FROM chronicPainEntries WHERE user_id = :id ORDER by id DESC';
 } else if ($type == "productivity") {
     $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER by id DESC';
+} else if ($type == "generic") {
+    $query = 'SELECT * FROM genericEntries WHERE user_id = :id ORDER by id DESC';
 }
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
@@ -770,17 +772,20 @@ if ($type == "mentalHealth") {
             $habitCount - 2;
         }
         
-        
         //Count Finished Habits
         $habitComplete = 0;
+        $counter = 0;
         foreach ($entries as $entry) {
+            if ($counter == 7) {
+                break;
+            }
             if ($entry['habitOneCheck'] == 1) {
                 $habitComplete++;
             }
             if ($entry['habitTwoCheck'] == 1) {
                 $habitComplete++;
             }
-            
+            $counter++;
         }
         
         //Calculate Tasks
@@ -1163,6 +1168,238 @@ if ($type == "mentalHealth") {
         echo '</div>';
     
     }
+} else if ($type == "generic") {
+    //Last 7 Days
+    if (count($entries) > 6) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Seven Entries</h1>';
+        $count = 1;
+        $num = 7;
+        $phy = 0;
+        $men = 0;
+        $emo = 0;
+        $spi = 0;
+        $soc = 0;
+        $eat = 0;
+        $exe = 0;
+        $sle = 0;
+        $wat = 0;
+        foreach ($entries as $entry) {
+            $phy += $entry['physicalHealth'];
+            $men += $entry['mentalHealth'];
+            $emo += $entry['emotionalHealth'];
+            $spi += $entry['spiritualHealth'];
+            $soc += $entry['socialHealth'];
+            $eat += $entry['eating'];
+            $exe += $entry['excercise'];
+            $sle += $entry['sleeping'];
+            $wat += $entry['water'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $phy = round($phy / $num, 1);
+        $men = round($men / $num, 1);
+        $emo = round($emo / $num, 1);
+        $spi = round($spi / $num, 1);
+        $soc = round($soc / $num, 1);
+        $eat = round($eat / $num, 1);
+        $exe = round($exe / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
+        
+        echo '<p style="text-align:left;">';
+        checkBad($phy,"Physical Health");
+        checkBad($men, "Mental Health");
+        checkBad($emo,"Emotional Health");
+        checkBad($spi,"Spiritual Health");
+        checkBad($soc,"Social Health");
+        echo '<br>';
+        checkQuantity($eat,"Food Wellness");
+        checkQuantity($exe,"Exercise Amount");
+        checkQuantity($sle,"Sleep Amount");
+        checkQuantity($wat,"Water Consumption");
+
+        echo '</div>';
+    } else {
+        echo '<p><i>You need at least 7 days of journal entries to use this feature.</i></p>';
+    }
+    
+    //Last 30 Days
+    if (count($entries) > 29) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Seven Entries</h1>';
+        $count = 1;
+        $num = 30;
+        $phy = 0;
+        $men = 0;
+        $emo = 0;
+        $spi = 0;
+        $soc = 0;
+        $eat = 0;
+        $exe = 0;
+        $sle = 0;
+        $wat = 0;
+        foreach ($entries as $entry) {
+            $phy += $entry['physicalHealth'];
+            $men += $entry['mentalHealth'];
+            $emo += $entry['emotionalHealth'];
+            $spi += $entry['spiritualHealth'];
+            $soc += $entry['socialHealth'];
+            $eat += $entry['eating'];
+            $exe += $entry['excercise'];
+            $sle += $entry['sleeping'];
+            $wat += $entry['water'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $phy = round($phy / $num, 1);
+        $men = round($men / $num, 1);
+        $emo = round($emo / $num, 1);
+        $spi = round($spi / $num, 1);
+        $soc = round($soc / $num, 1);
+        $eat = round($eat / $num, 1);
+        $exe = round($exe / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
+        
+        echo '<p style="text-align:left;">';
+        checkBad($phy,"Physical Health");
+        checkBad($men, "Mental Health");
+        checkBad($emo,"Emotional Health");
+        checkBad($spi,"Spiritual Health");
+        checkBad($soc,"Social Health");
+        echo '<br>';
+        checkQuantity($eat,"Food Wellness");
+        checkQuantity($exe,"Exercise Amount");
+        checkQuantity($sle,"Sleep Amount");
+        checkQuantity($wat,"Water Consumption");
+
+        echo '</div>';
+    }
+    
+    //Last 90 Days
+    if (count($entries) > 89) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Seven Entries</h1>';
+        $count = 1;
+        $num = 90;
+        $phy = 0;
+        $men = 0;
+        $emo = 0;
+        $spi = 0;
+        $soc = 0;
+        $eat = 0;
+        $exe = 0;
+        $sle = 0;
+        $wat = 0;
+        foreach ($entries as $entry) {
+            $phy += $entry['physicalHealth'];
+            $men += $entry['mentalHealth'];
+            $emo += $entry['emotionalHealth'];
+            $spi += $entry['spiritualHealth'];
+            $soc += $entry['socialHealth'];
+            $eat += $entry['eating'];
+            $exe += $entry['excercise'];
+            $sle += $entry['sleeping'];
+            $wat += $entry['water'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $phy = round($phy / $num, 1);
+        $men = round($men / $num, 1);
+        $emo = round($emo / $num, 1);
+        $spi = round($spi / $num, 1);
+        $soc = round($soc / $num, 1);
+        $eat = round($eat / $num, 1);
+        $exe = round($exe / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
+        
+        echo '<p style="text-align:left;">';
+        checkBad($phy,"Physical Health");
+        checkBad($men, "Mental Health");
+        checkBad($emo,"Emotional Health");
+        checkBad($spi,"Spiritual Health");
+        checkBad($soc,"Social Health");
+        echo '<br>';
+        checkQuantity($eat,"Food Wellness");
+        checkQuantity($exe,"Exercise Amount");
+        checkQuantity($sle,"Sleep Amount");
+        checkQuantity($wat,"Water Consumption");
+
+        echo '</div>';
+    }
+    
+    //Last 365 Days
+    if (count($entries) > 364) {
+        echo '<div class="journalEntry">';
+        echo '<h1>Last Seven Entries</h1>';
+        $count = 1;
+        $num = 365;
+        $phy = 0;
+        $men = 0;
+        $emo = 0;
+        $spi = 0;
+        $soc = 0;
+        $eat = 0;
+        $exe = 0;
+        $sle = 0;
+        $wat = 0;
+        foreach ($entries as $entry) {
+            $phy += $entry['physicalHealth'];
+            $men += $entry['mentalHealth'];
+            $emo += $entry['emotionalHealth'];
+            $spi += $entry['spiritualHealth'];
+            $soc += $entry['socialHealth'];
+            $eat += $entry['eating'];
+            $exe += $entry['excercise'];
+            $sle += $entry['sleeping'];
+            $wat += $entry['water'];
+            $count++;
+            if ($count == $num) {
+                break;
+            }
+        }
+        
+        $phy = round($phy / $num, 1);
+        $men = round($men / $num, 1);
+        $emo = round($emo / $num, 1);
+        $spi = round($spi / $num, 1);
+        $soc = round($soc / $num, 1);
+        $eat = round($eat / $num, 1);
+        $exe = round($exe / $num, 1);
+        $sle = round($sle / $num, 1);
+        $wat = round($wat / $num, 1);
+        
+        echo '<p style="text-align:left;">';
+        checkBad($phy,"Physical Health");
+        checkBad($men, "Mental Health");
+        checkBad($emo,"Emotional Health");
+        checkBad($spi,"Spiritual Health");
+        checkBad($soc,"Social Health");
+        echo '<br>';
+        checkQuantity($eat,"Food Wellness");
+        checkQuantity($exe,"Exercise Amount");
+        checkQuantity($sle,"Sleep Amount");
+        checkQuantity($wat,"Water Consumption");
+
+        echo '</div>';
+    }
+    
+    
+    
+    
+    
+    
 }
 
 

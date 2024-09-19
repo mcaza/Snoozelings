@@ -85,8 +85,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     
+    //Log to Find harvestLogs
+    $query = "INSERT INTO harvestLogs SET user_id = :user, plot = :plot, farmer = :farmer, itemInfoId = :cropId, itemInfoName = :cropName, stg1 = :stg1, stg2 = :stg2, stg3 = :stg3, amount = :amount, water = :water, mystery = :mystery";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user", $userId);
+    $stmt->bindParam(":plot", $plot);
+    $stmt->bindParam(":farmer", $farmer);
+    $stmt->bindParam(":cropId", $itemInfo['id']);
+    $stmt->bindParam(":cropName", $itemInfo['name']);
+    $stmt->bindParam(":stg1", $farm['stg1']);
+    $stmt->bindParam(":stg2", $farm['stg2']);
+    $stmt->bindParam(":stg3", $farm['stg3']);
+    $stmt->bindParam(":amount", $farm['amount']);
+    $stmt->bindParam(":water", $farm['water']);
+    $stmt->bindParam(":mystery", $farm['mystery']);
+    $stmt->execute();
     
-    //Add Item to Inventory
+    
+    
+    if ($itemInfo['id']) {
+        //Add Item to Inventory
     for ($i = 0; $i < $amount; $i++) {
         $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
         $stmt = $pdo->prepare($query);
@@ -100,6 +118,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":canDonate", $itemInfo['canDonate']);
     $stmt->execute();
     }
+    } else {
+        $message = "Harvesting Error: Check Logs for More Info";
+        error_log($message, 1, "megan.caza@gmail.com");
+        echo 'There has been an error with harvesting your crop. An email with complete details has been sent to lead developer Slothie.';
+        die();
+    }
+    
     
     //Update +1 to User Records
     $query = 'UPDATE users SET cropsHarvested = cropsHarvested + 1 WHERE id = :id';

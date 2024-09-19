@@ -41,10 +41,13 @@ if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
     $dyefix = array_unique($dyelist);
     
     
+    
     //Move Basic to Front
-    $notWhite = [];
+    $notwhite = [];
     if(in_array("Basic", $dyefix)) {
+        
         foreach ($dyefix as $fix) {
+            
             if ($fix == "Basic") {
                 
             } else {
@@ -58,6 +61,7 @@ if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
             }
         }
     }
+
     
     
     
@@ -78,6 +82,7 @@ if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
     }
         
 }
+
 
 
 

@@ -70,7 +70,19 @@ if ($journal['type'] === 'pain') {
     } else {
         $query = 'SELECT * FROM productivityEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 4';
     }
-}
+} elseif ($journal['type'] === 'generic') {
+    if ($days === "7") {
+        $query = 'SELECT * FROM genericEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 7';
+    } elseif ($days === "14") {
+        $query = 'SELECT * FROM genericEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 14';
+    } elseif ($days === "21") {
+        $query = 'SELECT * FROM genericEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 21';
+    } elseif ($days === "facts") {
+        $query = 'SELECT * FROM genericEntries WHERE journal_id = :id  ORDER BY id DESC';
+    } else {
+        $query = 'SELECT * FROM genericEntries WHERE journal_id = :id  ORDER BY id DESC LIMIT 3';
+    }
+} 
 $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $journal['id']);
     $stmt->execute();
@@ -192,6 +204,42 @@ if ($days === "facts") {
             echo '<p><strong>Treatments Attempted:<br></strong>' . htmlspecialchars($box['remedies']) . '</p>';
             echo '<p><strong>Notes:<br></strong>' . htmlspecialchars($box['otherNotes']) . '</p>';
             echo '</div>';
+        } else if ($journal['type'] == "generic") {
+            echo '<div class="infoBox">';
+            echo '<h4 style="">Health Info</h4>';
+            echo '<p><strong>Physical Health: </strong>' . $box['physicalHealth'] . '</p>';
+            echo '<p><strong>Mental Health: </strong>' . $box['mentalHealth'] . '</p>';
+            echo '<p><strong>Emotional Health: </strong>' . $box['emotionalHealth'] . '</p>';
+            echo '<p><strong>Spiritual Health: </strong>' . $box['spiritualHealth'] . '</p>';
+            echo '<p><strong>Social Health: </strong>' . $box['socialHealth'] . '</p>';
+            echo '<p style="margin-bottom: .5rem;"><strong>Pain Location:<br></strong></p>';
+            echo '<p style="margin-top: 0;">' . $box['painLocation'] . '</p>';
+            echo '</div>';
+            echo '<div class="infoBox">';
+            echo '<h4 style="">Daily Life</h4>';
+            echo '<p><strong>Eating Wellness: </strong>' . $box['eating'] . '</p>';
+            echo '<p><strong>Exercise Amount: </strong>' . $box['excercise'] . '</p>';
+            echo '<p><strong>Sleep Quality: </strong>' . $box['sleeping'] . '</p>';
+            echo '<p><strong>Water Amount: </strong>' . $box['water'] . '</p>';
+            echo '</div>';
+            echo '<div class="infoBox">';
+            echo '<h4 style="">Other</h4>';
+            if ($box['pain']) {
+                echo '<p><strong>Pain: </strong>' . htmlspecialchars($box['pain']) . '</p>';
+            } 
+            if ($box['illness']) {
+                echo '<p><strong>Illness: </strong>' . htmlspecialchars($box['illness']) . '</p>';
+            } 
+            echo '<p><strong>Good Thing: </strong>' . htmlspecialchars($box['goodThing']) . '</p>';
+            echo '<p><strong>Bad Thing: </strong>' . htmlspecialchars($box['badThing']) . '</p>';
+            echo '</div>';
+            echo '</div>';
+            if ($box['notes']) {
+                echo '<hr>';
+                echo '<div class="infoLarge" style="margin-left:auto;margin-right:auto;width:80%">';
+                echo '<p><strong>Notes: </strong>' . htmlspecialchars($box['notes']) . '</p>';
+                echo '</div>';
+            }
         } else if ($journal['type'] === "mentalHealth") {
             echo '<div class="infoBox">';
             echo '<h4 >Health Info</h4>';
@@ -306,7 +354,7 @@ if ($days === "facts") {
         }
         
         echo '</div>';
-            if ($box['notes']) {
+            if ($journal['type'] == "productivity" && $box['notes']) {
                 if ($box['weeklyWin']) {
                     
                 } else {
