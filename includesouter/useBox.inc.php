@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($check) {
         //If Below, Add New Farm Plot
-        if ($count < 10) {
+        if ($count < 9) {
             //Delete Item
             $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 114 LIMIT 1';
             $stmt = $pdo->prepare($query);

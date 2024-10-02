@@ -120,15 +120,90 @@ if ($exp < 50 || $pet['job'] === "jack") {
     $level = 6;
 }
 
+//Get Holiday Recipes if Any
+$now = new DateTime('now', new DateTimezone('UTC'));
+$month = $now->format('m');
+
+
+
 //Show Recipes
-$query = 'SELECT * FROM recipes WHERE type = :type AND level <= :level ORDER BY level, id';
+$query = 'SELECT * FROM recipes WHERE type = :type AND level <= :level AND month = :month ORDER BY level, id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":level", $level);
+$stmt->bindParam(":type", $type);
+$stmt->bindParam(":month", $month);
+$stmt->execute();
+$holidayRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo '<div class="recipebuttons" style="margin-top:2rem;">';
+if ($holidayRecipes) {
+    foreach ($holidayRecipes as $recipe) {
+    //Get Items & Numbers
+    $items = explode(" ", $recipe['items']);
+    $numbers = explode(" ", $recipe['numbers']);
+    
+    //Box Img & Title
+    if (!($result['recipe_id'])) {
+        //Check Items
+        $yes = 1;
+        foreach ($items as $item) {
+            $query = 'SELECT id FROM items WHERE name = :name AND user_id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":name", $item);
+            $stmt->bindParam(":id", $userId);
+            $stmt->execute();
+            $inv = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $key = array_search($item, $items);
+            $count = count($inv);
+            if ($count >= intval($numbers[$key])) {
+                
+            } else {
+                $yes = 0;
+            }
+        }
+        if ($yes == 1) {
+            echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe have">';
+        } else {
+            echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe">';
+        }
+        
+    } else {
+        echo '<div class="recipe">';
+    }
+        echo '<div class="recipeimg">';
+        echo '<img src="items/' . $recipe['name'] . '.png" style="height:100px">';
+        echo '</div>';
+        echo '<div class="recipetext">';
+        echo '<p style="font-size:1.9rem;margin-bottom:.5rem;"><b>' . $recipe['display'] . '</b></p>';
+    
+        //Display Items Needed
+       foreach ($items as $item) {
+            $query = 'SELECT * FROM itemList WHERE name = :name';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":name", $item);
+            $stmt->execute();
+            $itemname = $stmt->fetch(PDO::FETCH_ASSOC);
+            $key = array_search($item, $items);
+            echo '<p style="margin-top:0;margin-bottom:.4rem;" title="' . $itemname['tooltip'] . '">' . $numbers[$key] . ' x ' . $itemname['display'] . '</p>';
+        }
+        echo '</div>';
+    if (!($result['recipe_id'])) {   
+        echo '</a>';
+    } else {
+        echo '</div>';
+    }
+}
+} 
+
+//Show Recipes
+$query = 'SELECT * FROM recipes WHERE type = :type AND level <= :level AND month = 0 ORDER BY level, id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":level", $level);
 $stmt->bindParam(":type", $type);
 $stmt->execute();
 $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-echo '<div class="recipebuttons" style="margin-top:2rem;">';
+
 foreach ($recipes as $recipe) {
     //Get Items & Numbers
     $items = explode(" ", $recipe['items']);

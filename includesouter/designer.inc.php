@@ -106,6 +106,14 @@ if ($pet) {
 echo "</div>";
 
 echo "<div class='artlarge'>";
+if (strpos($pet["specials"], "Skeleton") !== false) {
+    echo "<img src='Layers/Skeleton.png' id = 'Skeletondesigner'>";
+} else {
+    echo "<img src='' id = 'Skeletondesigner'>";
+}
+echo "</div>";
+
+echo "<div class='artlarge'>";
 if (strpos($pet["specials"], "Belly") !== false) {
     echo "<img src='Layers/Markings/Belly/" . $pet["mainColor"] . ".png' id = 'Bellydesigner'>";
 } else {
@@ -113,13 +121,7 @@ if (strpos($pet["specials"], "Belly") !== false) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
-if (strpos($pet["specials"], "Skeleton") !== false) {
-    echo "<img src='Layers/Skeleton.png' id = 'Skeletondesigner'>";
-} else {
-    echo "<img src='' id = 'Skeletondesigner'>";
-}
-echo "</div>";
+
 
 echo "<div class='artlarge'>";
 if ($pet) {
@@ -130,7 +132,7 @@ if ($pet) {
 echo "</div>";
 
 
-$moths = ['NoFluff','MothFluff','MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBrown','MothFluffBlack', 'MothFluffPink', 'MothFluffSilver','MothFluffGold', 'MothFluffPastelPink', 'MothFluffPastelBlue', 'MothFluffPastelPurple', 'MothFluffPastelBrown', 'MothFluffGooseberry', 'MothFluffBlueberry', 'MothFluffTeal', 'MothFluffRainbowLove', 'MothFluffFemaleLove', 'MothFluffMaleLove', 'MothFluffDoubleLove', 'MothFluffAnyLove', 'MothFluffAceLove', 'MothFluffAroLove', 'MothFluffNewSelf', 'MothFluffUniqueSelf', 'MothFluffFluidSelf'];
+$moths = ['NoFluff','MothFluff','MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBrown','MothFluffBlack', 'MothFluffPink', 'MothFluffSilver','MothFluffGold', 'MothFluffPastelPink', 'MothFluffPastelBlue', 'MothFluffPastelPurple', 'MothFluffPastelBrown', 'MothFluffGooseberry', 'MothFluffBlueberry', 'MothFluffTeal', 'MothFluffRainbowLove', 'MothFluffFemaleLove', 'MothFluffMaleLove', 'MothFluffDoubleLove', 'MothFluffAnyLove', 'MothFluffAceLove', 'MothFluffAroLove', 'MothFluffNewSelf', 'MothFluffUniqueSelf', 'MothFluffFluidSelf', 'MothFluffSpooky'];
 $check = 0;
 foreach ($moths as $moth) {
     if (strpos($pet["specials"], $moth) !== false) {
@@ -272,7 +274,7 @@ if ($pet['hairType'] != "Knitted") {
     echo "</div>";
 }
 
-$moths = ['NoFluff','MothFluff','MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBrown','MothFluffBlack', 'MothFluffPink', 'MothFluffSilver','MothFluffGold', 'MothFluffPastelPink', 'MothFluffPastelBlue', 'MothFluffPastelPurple', 'MothFluffPastelBrown', 'MothFluffGooseberry', 'MothFluffBlueberry', 'MothFluffTeal', 'MothFluffRainbowLove', 'MothFluffFemaleLove', 'MothFluffMaleLove', 'MothFluffDoubleLove', 'MothFluffAnyLove', 'MothFluffAceLove', 'MothFluffAroLove', 'MothFluffNewSelf', 'MothFluffUniqueSelf', 'MothFluffFluidSelf'];
+$moths = ['NoFluff','MothFluff','MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBrown','MothFluffBlack', 'MothFluffPink', 'MothFluffSilver','MothFluffGold', 'MothFluffPastelPink', 'MothFluffPastelBlue', 'MothFluffPastelPurple', 'MothFluffPastelBrown', 'MothFluffGooseberry', 'MothFluffBlueberry', 'MothFluffTeal', 'MothFluffRainbowLove', 'MothFluffFemaleLove', 'MothFluffMaleLove', 'MothFluffDoubleLove', 'MothFluffAnyLove', 'MothFluffAceLove', 'MothFluffAroLove', 'MothFluffNewSelf', 'MothFluffUniqueSelf', 'MothFluffFluidSelf', 'MothFluffSpooky'];
 $check = 0;
 foreach ($moths as $moth) {
     if (strpos($pet["specials"], $moth) !== false) {
@@ -395,8 +397,8 @@ foreach ($hairs as $hair) {
 echo '</select><br>';
 echo '<label for="mothFluff" class="form">Moth Fluff:</label><br>';
 echo '<select id="mothFluff"  class="input">';
-$moths = ['NoFluff','MothFluff','MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBrown','MothFluffBlack', 'MothFluffPink', 'MothFluffSilver','MothFluffGold', 'MothFluffPastelPink', 'MothFluffPastelBlue', 'MothFluffPastelPurple', 'MothFluffPastelBrown', 'MothFluffGooseberry', 'MothFluffBlueberry', 'MothFluffTeal', 'MothFluffRainbowLove', 'MothFluffFemaleLove', 'MothFluffMaleLove', 'MothFluffDoubleLove', 'MothFluffAnyLove', 'MothFluffAceLove', 'MothFluffAroLove', 'MothFluffNewSelf', 'MothFluffUniqueSelf', 'MothFluffFluidSelf'];
-$mothDisplay = ['No Fluff','Basic','Red','Orange','Yellow','Green','Blue','Purple','Brown','Black', 'Pink', 'Silver','Gold', 'Pastel Pink', 'Pastel Blue', 'Pastel Purple', 'Pastel Brown', 'Gooseberry', 'Blueberry', 'Teal', 'Rainbow Love', 'Female Love', 'Male Love', 'Double Love', 'Any Love', 'Ace Love', 'Aro Love', 'New Self', 'Unique Self', 'Fluid Self'];
+$moths = ['NoFluff','MothFluff','MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBrown','MothFluffBlack', 'MothFluffPink', 'MothFluffSilver','MothFluffGold', 'MothFluffPastelPink', 'MothFluffPastelBlue', 'MothFluffPastelPurple', 'MothFluffPastelBrown', 'MothFluffGooseberry', 'MothFluffBlueberry', 'MothFluffTeal', 'MothFluffRainbowLove', 'MothFluffFemaleLove', 'MothFluffMaleLove', 'MothFluffDoubleLove', 'MothFluffAnyLove', 'MothFluffAceLove', 'MothFluffAroLove', 'MothFluffNewSelf', 'MothFluffUniqueSelf', 'MothFluffFluidSelf', 'MothFluffSpooky'];
+$mothDisplay = ['No Fluff','Basic','Red','Orange','Yellow','Green','Blue','Purple','Brown','Black', 'Pink', 'Silver','Gold', 'Pastel Pink', 'Pastel Blue', 'Pastel Purple', 'Pastel Brown', 'Gooseberry', 'Blueberry', 'Teal', 'Rainbow Love', 'Female Love', 'Male Love', 'Double Love', 'Any Love', 'Ace Love', 'Aro Love', 'New Self', 'Unique Self', 'Fluid Self', 'Spooky'];
     $round = 0;
 foreach ($moths as $moth) {
     if (strpos($pet["specials"], $moth) !== false) {
@@ -524,6 +526,7 @@ if (strpos($pet["specials"], "TinyTooth") !== false) {
 echo '</div>';
 
 echo '</div>';
+
 echo '<div>';
 echo '<label style="margin-bottom: 1rem;" class="form">Other Designs:</label><br>';
 
@@ -538,6 +541,7 @@ echo '</div>';
 
 
 echo '</div>';
+
 
 echo '</div>';
 

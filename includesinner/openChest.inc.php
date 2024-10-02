@@ -79,6 +79,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     
+    //Add Coins
+    $query = "UPDATE users SET coinCount = coinCount + :coins WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":coins", $coins);
+    $stmt->execute();
+    
     //Insert Items Into Player's Table
     $prizes = [];
     foreach ($itemsWon as $item) {

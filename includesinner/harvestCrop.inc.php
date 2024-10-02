@@ -71,20 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $itemInfo = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    //Roll Amount Based on Watering
-    $num = intval($farm['water']);
-    if ($num == 0) {
-        $amount = 1;
-    } else {
-        $chance = $farm['water'] * 5;
-        $randomNum = rand(1, 100);
-        if ($randomNum <= $chance) {
-            $amount = 2;
-        } else {
-            $amount = 1;
-        }
-    }
-    
     //Log to Find harvestLogs
     $query = "INSERT INTO harvestLogs SET user_id = :user, plot = :plot, farmer = :farmer, itemInfoId = :cropId, itemInfoName = :cropName, stg1 = :stg1, stg2 = :stg2, stg3 = :stg3, amount = :amount, water = :water, mystery = :mystery";
     $stmt = $pdo->prepare($query);
@@ -100,6 +86,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":water", $farm['water']);
     $stmt->bindParam(":mystery", $farm['mystery']);
     $stmt->execute();
+
+    
+    //Roll Amount Based on Watering
+    $num = intval($farm['water']);
+    if ($num == 0) {
+        $amount = 1;
+    } else {
+        $chance = $farm['water'] * 5;
+        $randomNum = rand(1, 100);
+        if ($randomNum <= $chance) {
+            $amount = 2;
+        } else {
+            $amount = 1;
+        }
+    }
+    
+    
+    
     
     
     
@@ -119,9 +123,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     }
     } else {
-        $message = "Harvesting Error: Check Logs for More Info";
-        error_log($message, 1, "megan.caza@gmail.com");
-        echo 'There has been an error with harvesting your crop. An email with complete details has been sent to lead developer Slothie.';
+         $_SESSION['reply'] = "There was a small glitch in the snoozeling internet, but we promise your plant was harvested.";
+        header("Location: ../farm");
         die();
     }
     

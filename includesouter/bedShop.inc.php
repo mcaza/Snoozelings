@@ -88,7 +88,7 @@ if ($total < 9) {
     $stmt->execute();
     $seagull = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    echo '<p><i>"Brings me the following items and I\'ll craft you a new pet bed."</i></p>';
+    echo '<p><i>"Bring me the following items and I\'ll craft you a new pet bed."</i></p>';
     echo '<hr>';
     
     if (count($tiny) >= $amount) {

@@ -9,7 +9,7 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-displayStarter($result, "artlarge");
+displayPet($result, "artlarge");
 echo '<p><i>"I think I\'m ready to come home now."</i></p>';
 echo '<form  method="post" action="includes/addSnoozeling.inc.php">';
     echo '<label style="margin-top:2rem" class="form" for="name" required>Name Your Snoozeling:</label><br>';
@@ -28,7 +28,7 @@ echo '<form  method="post" action="includes/addSnoozeling.inc.php">';
     echo "</form>";
 
 
-function displayStarter($pet, $class) {    
+/* function displayStarter($pet, $class) {    
     
     echo '<div class="art-container">';
     if (strpos($pet["specials"], "Wings") !== false) {
@@ -99,4 +99,4 @@ function displayStarter($pet, $class) {
         
         echo "</div>";
                         
-}
+} */

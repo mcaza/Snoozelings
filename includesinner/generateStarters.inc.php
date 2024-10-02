@@ -12,6 +12,18 @@ $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $count = count($results) - 1;
 
+//Check for Blueprints already
+$query = 'SELECT * FROM blueprints WHERE owner_id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$check = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($check) {
+    header("Location: ../welcome");
+    die();
+}
+
 //Do Functions 6 Times
 for ($i = 0; $i < 6; $i++) {
     randomCommon($pdo, $results, $userId, $count);
@@ -24,6 +36,7 @@ for ($i = 0; $i < 6; $i++) {
     $stmt->execute();
 
 header("Location: ../welcome");
+die();
 
 //Function to Randomize info
 

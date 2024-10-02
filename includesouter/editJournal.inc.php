@@ -25,7 +25,12 @@ $type = $result ['type'];
     $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
-        $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($type === "productivity") {
+    $latestEntry = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $latestEntry = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+        
 //Back to Pack Arrows
  echo '<div class="leftRightButtons">';
 echo '<a href="journal"><<</a>';

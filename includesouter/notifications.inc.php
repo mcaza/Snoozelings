@@ -98,6 +98,8 @@ if ($tutorial < 4) {
         $query = 'SELECT * FROM mentalHealthEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
     } else if ($journal['type'] === "productivity") {
         $query = 'SELECT * FROM productivityEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
+    } else if ($journal['type'] === "generic") {
+        $query = 'SELECT * FROM genericEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
     }
     
     $stmt = $pdo->prepare($query);

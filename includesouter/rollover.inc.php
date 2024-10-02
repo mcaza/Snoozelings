@@ -157,6 +157,9 @@
     $query = "UPDATE productivityEntries SET closed = 1";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
+    $query = "UPDATE genericEntries SET closed = 1";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
     echo "Journal Entries Closed! \n";
 
     //Reset Daily Post

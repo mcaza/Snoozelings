@@ -73,16 +73,17 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/Ear/" . $pet["noseColor"] . ".png' id = 'Earone'>";
         echo "</div>";
-        if (strpos($pet["specials"], "Belly") !== false) {
-            echo "<div class='${class}'>";
-            echo "<img src='Layers/Markings/Belly/" . $pet["mainColor"] . ".png' id = 'Bellyone'>";
-            echo "</div>";
-        }
         if (strpos($pet["specials"], "Skeleton") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Skeleton.png' id = 'Skeleton1'>";
             echo "</div>";
         }
+        if (strpos($pet["specials"], "Belly") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Belly/" . $pet["mainColor"] . ".png' id = 'Bellyone'>";
+            echo "</div>";
+        }
+        
         
         echo "<div class='${class}'>";
         echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";

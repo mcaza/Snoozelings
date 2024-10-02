@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
     $userId = $_SESSION['user_id'];
     $adopt = $_POST['pet'];
-    $maxpets = 6;
+    $maxpets = 9;
     
     //Get Adoption Info
     $query = 'SELECT * FROM adopts WHERE id = :id';
@@ -91,11 +91,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Set owner_id of pet to new owner & Gotcha Date
     $todaysDate = date("Y-m-d");
-    $query = 'UPDATE snoozelings SET owner_id = :id, gotchaDate = :date WHERE id = :pet';
+    $title = "Recently Adopted";
+    $query = 'UPDATE snoozelings SET owner_id = :id, gotchaDate = :date, title = :title WHERE id = :pet';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":pet", $pet['pet_id']);
     $stmt->bindParam(":date", $todaysDate);
+    $stmt->bindParam(":title", $title);
     $stmt->execute();
     
     

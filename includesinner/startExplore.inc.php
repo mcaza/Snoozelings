@@ -7,6 +7,8 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //Grab Form Variables
 $petId = $_POST["explorer"];
+
+    
 if ($petId) {
 $area = $_POST["area"];
     $userId = $_SESSION['user_id'];
@@ -24,6 +26,13 @@ $area = $_POST["area"];
     $coinsWon = 0;
     
     //If Holiday Month, add Holiday Items to Rare Arrays
+    $now = new DateTime('now', new DateTimezone('UTC'));
+    $firstDate = $now->format('m');
+    if ($firstDate == 10) {
+        array_push($farmRare,'236','237','238','239');
+        array_push($woodsRare,'236','237','238','239');
+        array_push($oceanRare,'236','237','238','239');
+    }
     
     //Get Pet Name
     $query = "SELECT name, owner_id, job, cooldownTime FROM snoozelings WHERE id = :id";
