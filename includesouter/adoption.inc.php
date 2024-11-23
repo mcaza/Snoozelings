@@ -44,9 +44,19 @@ if ($reply) {
 
 //Title & Photo
 echo '<div><img style="width: 35%;" src="resources/adoptshopNPC.png"></div>';
-if ($pets) {
+
+//Text
+$check = 0;
+foreach ($pets as $pet) {
+    if ($pet['available'] == 1) {
+        $check = 1;
+    }
+}
+if ($pets && $check == 0) {
     echo '<p><i>"Thank you for considering adoption. Here are the snoozelings looking for homes."</i></p>';
     echo '<hr>';
+} else if ($pets) {
+    echo '<p><i>"Check back soon. New snoozelings will be posted after their spa day is finished."</i></p>';
 } else {
     echo '<p><i>"There are currently no snoozelings looking for homes. Check back soon."</i></p>';
 }

@@ -87,7 +87,7 @@ function countTimes($word,$cat,$amount,$entries) {
         }
     }
     if ($times > 0) {
-        echo '<li>' . $word . ' ' . $times . '/7 Days</li>';
+        echo '<li>' . $word . ' ' . $times . '/' . $amount . ' Days</li>';
     } 
 }
 

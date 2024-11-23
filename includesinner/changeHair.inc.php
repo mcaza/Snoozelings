@@ -34,12 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $coins = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = intval($coins['coinCount']);
     
-    if ($count < 5) {
+    if ($count < 10) {
         $_SESSION['reply'] = "You do not have enough snooze coins.";
          header("Location: ../trendytails");
     } else {
-    //Remove 5 coins
-    $query = 'UPDATE users SET coinCount = coinCount - 5 WHERE id = :id';
+    //Remove 10 coins
+    $query = 'UPDATE users SET coinCount = coinCount - 10 WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();

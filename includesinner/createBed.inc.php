@@ -22,22 +22,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $total = $user['petBeds'] + count($beds);
     
-    //Calculate Bed Cost
-    if ($total == 2) {
-        $amount = 5;
-    } else if ($total == 3) {
-        $amount = 10;
-    } else if ($total == 4) {
-        $amount = 25;
-    } else if ($total == 5) {
-        $amount = 50;
-    } else if ($total == 6) {
-        $amount = 75;
-    } else if ($total == 7) {
-        $amount = 100;
-    } else if ($total == 8) {
-        $amount = 150;
-    } 
+//Calculate Bed Cost
+if ($total == 2) {
+    $amount = 5;
+} else if ($total == 3) {
+    $amount = 10;
+} else if ($total == 4) {
+    $amount = 20;
+} else if ($total == 5) {
+    $amount = 30;
+} else if ($total == 6) {
+    $amount = 40;
+} else if ($total == 7) {
+    $amount = 50;
+} else if ($total == 8) {
+    $amount = 75;
+} 
+
+//Coin Cost
+if ($total == 2) {
+    $coinAmount = 50;
+} else if ($total == 3) {
+    $coinAmount = 100;
+} else if ($total == 4) {
+    $coinAmount = 200;
+} else if ($total == 5) {
+    $coinAmount = 400;
+} else if ($total == 6) {
+    $coinAmount = 800;
+} else if ($total == 7) {
+    $coinAmount = 1600;
+} else if ($total == 8) {
+    $coinAmount = 3200;
+} 
     
     //Check Feathers & Coins
     $query = "SELECT * FROM items WHERE user_id = :id AND list_id = 29";
@@ -58,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $seagull = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    if (count($tiny) < $amount || count($colorful) < $amount || count($seagull) < $amount || $user['coinCount'] < $amount || $total > 8) {
+    if (count($tiny) < $amount || count($colorful) < $amount || count($seagull) < $amount || $user['coinCount'] < $coinAmount || $total > 8) {
         header("Location: ../index");
         die();
     }

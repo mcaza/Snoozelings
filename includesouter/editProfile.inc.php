@@ -66,7 +66,10 @@ echo '</div>';
 
 //Post Button (Right)
 echo '<div class="buttonBar">';
-echo '<button  class="fancyButton" onClick="window.location.href=\'newsletter\'">Newsletter</button>';
+echo '<button  class="fancyButton" onClick="window.location.href=\'reorder\'">Reorder</button>';
+
+//Post Button (Right)
+echo '<button  class="fancyButton" onClick="window.location.href=\'newsletter\'" style="margin-left:15px">Newsletter</button>';
 
 
 //Verify Email Button

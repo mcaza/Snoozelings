@@ -88,7 +88,7 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
         echo "</div>";
-        $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluff'];
+        $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluff'];
         foreach ($mothArray as $moth) {
             if (strpos($pet["specials"], $moth) !== false) {
                 $mothtype = $moth;
@@ -100,23 +100,27 @@ function displayPet($pet, $class) {
         echo "<img src='Layers/Other/MothFluff/Behind/" . $moth . ".png' id = 'BackFluffOne'>";
         echo "</div>";
         }
-        echo "<div class='${class}'>";
-        echo "<img src='Layers/Faces/" . $mood . "/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
-        echo "</div>";
-        if (strpos($pet["specials"],"TinyTooth")) {
+        
+        if($mood != "Cheeky") {
             echo "<div class='${class}'>";
-            echo "<img src='Layers/Faces/" . $mood . "/TinyTooth.png' id = 'Toothone'>";
+            echo "<img src='Layers/Faces/" . $mood . "/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
             echo "</div>";
+            if (strpos($pet["specials"],"TinyTooth")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Faces/" . $mood . "/TinyTooth.png' id = 'Toothone'>";
+                echo "</div>";
+            }
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Faces/" . $mood . "/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
+            echo "</div>";
+
+            if ($pet['mood'] === 'Overwhelmed') {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/tear.png' id = 'Tearone'>";
+                echo "</div>";
+            }
         }
-        echo "<div class='${class}'>";
-        echo "<img src='Layers/Faces/" . $mood . "/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
-        echo "</div>";
-    
-    if ($pet['mood'] === 'Overwhelmed') {
-        echo "<div class='${class}'>";
-        echo "<img src='Layers/tear.png' id = 'Tearone'>";
-        echo "</div>";
-    }
+        
         
         
         
@@ -392,6 +396,31 @@ function displayPet($pet, $class) {
             
         }
     
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+    if ($mood == "Cheeky" && str_contains($clothing, "Bandana")) {
+        echo "<div class='${class}'>";
+                echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
+                echo "</div>";
+    } }
+    
+    if($mood == "Cheeky") {
+        echo "<div class='${class}'>";
+            echo "<img src='Layers/Faces/" . $mood . "/Tongue/" . $pet["noseColor"] . ".png' id = 'Tongueone'>";
+            echo "</div>";    
+        if (strpos($pet["specials"],"TinyTooth")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Faces/" . $mood . "/TinyTooth.png' id = 'Toothone'>";
+                echo "</div>";
+            }
+        
+        echo "<div class='${class}'>";
+            echo "<img src='Layers/Faces/" . $mood . "/Lines/" . $pet["mainColor"] . ".png' id = 'Faceone'>";
+            echo "</div>";
+            
+            
+        } 
+    
     if ($mothtype) {
             echo "<div class='${class}'>";
         echo "<img src='Layers/Other/MothFluff/" . $moth . ".png' id = 'FrontFluffOne'>";
@@ -405,7 +434,9 @@ function displayPet($pet, $class) {
     if (strlen($pet['clothesTop']) > 1) {
     $clothesTop = explode(' ', $pet['clothesTop']);
         foreach ($clothesTop as $clothing) {
-            if ($clothing != "SpikedBracelet") {
+            if ($clothing == "SpikedBracelet" || ($mood == "Cheeky" && str_contains($clothing, "Bandana"))) {
+                
+            } else {
                 echo "<div class='${class}'>";
                 echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
                 echo "</div>";
@@ -421,6 +452,13 @@ function displayPet($pet, $class) {
          echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
         } } }
+    
+    if (strpos($pet["specials"], "BugWings") !== false) {
+        
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Wings/BugWingTop.png' id = 'TopWingone'>";
+            echo "</div>";
+        }
         if (strpos($pet["specials"], "FeatheredWings") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingone'>";
@@ -443,13 +481,9 @@ function displayPet($pet, $class) {
             }
             
         } }
+
         
-        if (strpos($pet["specials"], "BugWings") !== false) {
         
-            echo "<div class='${class}'>";
-            echo "<img src='Layers/Wings/BugWingTop.png' id = 'TopWingone'>";
-            echo "</div>";
-        }
         if ($pet['clothesHoodie']) {
             $clothesHoodies = explode(' ', $pet['clothesHoodie']);
         foreach ($clothesHoodies as $clothing) {

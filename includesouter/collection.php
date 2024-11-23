@@ -15,12 +15,28 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-//Query All Pets
-$query = "SELECT * FROM snoozelings WHERE owner_id = :id";
-$stmt = $pdo->prepare($query);
-$stmt->bindParam(":id", $id);
-$stmt->execute();
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if(!$result['petOrder']) {
+    //Query All Pets
+    $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $petList = explode(" ", $result['petOrder']);
+    $results = [];
+    foreach ($petList as $pet) {
+        $query = "SELECT * FROM snoozelings WHERE owner_id = :id AND id = :petId";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":petId", $pet);
+        $stmt->execute();
+        $petInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+        array_push($results,$petInfo);
+    }
+}
+
+
 
 $extraBeds = intval($result['petBeds']) - intval(count($results));
 $beds = ['BlueFree','BrownFree','GreenFree','PinkFree','RedFree'];

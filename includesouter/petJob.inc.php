@@ -87,6 +87,9 @@ $percent = ceil($pet['farmEXP'] / 10);
 if ($percent > 5) {
     $input = $percent . '%';
 }
+if ($percent > 100) {
+    $percent = 100;
+}
 echo '<input type="radio" id="Farmer" value="Farmer" name="job" required ' . $farmer . '><label for="Farmer" class="jobtitle">' . $farmname . '</label><br>';
 echo '<p>Higher Level Makes Crops Grow Faster</p>';
 //Calculate Values for Each Job. Display Radio Button then Job

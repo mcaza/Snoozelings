@@ -22,6 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $future_date2 = new DateTime($times['mailone']);
     $formatted = $future_date2->format('Y-m-d');
     
+    //Attempted fix
+    date_default_timezone_set('America/Los_Angeles');
+    
     //Grab Form Variables
     if ($_POST['productivity']) {
         $productivity = $_POST['productivity'];
@@ -146,6 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     }
     
+    
     //Submit Journal
     if (date('N') == 7) {
         $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, taskFour, taskFive,oneCheck,twoCheck,threeCheck,weeklyWin,weeklyLoss,learned,habitOne,habitTwo) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :taskFour, :taskFive, :oneCheck, :twoCheck, :threeCheck, :weeklyWin, :weeklyLoss, :learned, :habitOne, :habitTwo)';
@@ -154,7 +158,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else if (date('N') == 6 ) {
         $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, oneCheck,twoCheck,threeCheck) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :oneCheck, :twoCheck, :threeCheck)';
     } else {
-
         $query = 'INSERT INTO productivityEntries (user_id, journal_id, date, productivity, mood, physicalHealth, mentalHealth, taskOne, taskTwo, taskThree, taskFour, taskFive, oneCheck,twoCheck,threeCheck,fourCheck,fiveCheck) VALUES (:user_id, :journal_id, :date, :productivity, :mood, :physicalHealth, :mentalHealth, :taskOne, :taskTwo, :taskThree, :taskFour, :taskFive, :oneCheck, :twoCheck, :threeCheck, :fourCheck, :fiveCheck)';
     }
     $stmt = $pdo->prepare($query);

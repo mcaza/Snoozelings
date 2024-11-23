@@ -52,7 +52,7 @@ echo "<div class='artlarge'>";
 if ($pet) {
     echo "<img src='Layers/Primary/" . $pet['mainColor'] . ".png' id = 'Primarydesigner'>";
 } else {
-    echo "<img src='Layers/Primary/Amethyst.png' id = 'Primarydesigner'>";
+    echo "<img src='Layers/Primary/Alexandrite.png' id = 'Primarydesigner'>";
 }
 echo "</div>";
 
@@ -101,7 +101,7 @@ echo "<div class='artlarge'>";
 if ($pet) {
     echo "<img src='Layers/Ear/" . $pet['noseColor'] . ".png' id = 'Eardesigner'>";
 } else {
-    echo "<img src='Layers/Ear/Amethyst.png' id = 'Eardesigner'>";
+    echo "<img src='Layers/Ear/Alexandrite.png' id = 'Eardesigner'>";
 }
 echo "</div>";
 
@@ -127,7 +127,7 @@ echo "<div class='artlarge'>";
 if ($pet) {
     echo "<img src='Layers/MainLines/" . $pet['mainColor'] . ".png' id = 'Mainlinesdesigner'>";
 } else {
-    echo "<img src='Layers/MainLines/Amethyst.png' id = 'Mainlinesdesigner'>";
+    echo "<img src='Layers/MainLines/Alexandrite.png' id = 'Mainlinesdesigner'>";
 }
 echo "</div>";
 
@@ -174,7 +174,7 @@ echo "<div class='artlarge'>";
 if ($pet) {
     echo "<img src='Layers/Faces/Happy/Eyes/" . $pet['eyeColor'] . ".png' id = 'Eyesdesigner'>";
 } else {
-    echo "<img src='Layers/Faces/Happy/Eyes/Amethyst.png' id = 'Eyesdesigner'>";
+    echo "<img src='Layers/Faces/Happy/Eyes/Alexandrite.png' id = 'Eyesdesigner'>";
 }
 echo "</div>";
 
@@ -182,7 +182,7 @@ echo "<div class='artlarge'>";
 if ($pet) {
     echo "<img src='Layers/Faces/Happy/Lines/" . $pet['mainColor'] . ".png' id = 'Facedesigner'>";
 } else {
-    echo "<img src='Layers/Faces/Happy/Lines/Amethyst.png' id = 'Facedesigner'>";
+    echo "<img src='Layers/Faces/Happy/Lines/Alexandrite.png' id = 'Facedesigner'>";
 }
 echo "</div>";
 
@@ -218,10 +218,10 @@ if ($pet) {
     }
 } else {
     echo "<div class='artlarge'>";
-    echo "<img src='Layers/Tail/Dragon/End/Amethyst.png' id = 'Taildesigner'>";
+    echo "<img src='Layers/Tail/Dragon/End/Alexandrite.png' id = 'Taildesigner'>";
     echo "</div>";
     echo "<div class='artlarge'>";
-    echo "<img src='Layers/Tail/Dragon/Amethyst.png' id = 'TailTopdesigner'>";
+    echo "<img src='Layers/Tail/Dragon/Alexandrite.png' id = 'TailTopdesigner'>";
     echo "</div>";
 }
 
@@ -252,7 +252,7 @@ if ($pet) {
         echo "<img src='Layers/Hair/" . $pet['hairType'] . "/" . $pet['hairColor'] . ".png' id = 'Hairdesigner'>";
     }
 } else {
-    echo "<img src='Layers/Hair/Floof/Amethyst.png' id = 'Hairdesigner'>";
+    echo "<img src='Layers/Hair/Floof/Alexandrite.png' id = 'Hairdesigner'>";
 }
 echo "</div>";
 
@@ -310,7 +310,7 @@ echo "<div class='artlarge'>";
 if ($pet) {
     echo "<img src='Layers/Noses/" . $pet['noseColor'] . ".png' id = 'Nosedesigner'>";
 } else {
-    echo "<img src='Layers/Noses/Amethyst.png' id = 'Nosedesigner'>";
+    echo "<img src='Layers/Noses/Alexandrite.png' id = 'Nosedesigner'>";
 }
 echo "</div>";
 

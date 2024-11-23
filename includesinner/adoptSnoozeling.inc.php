@@ -5,9 +5,16 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     //Get Values
-    $userId = $_SESSION['user_id'];
+    if ($_SESSION['user_id']) {
+        $userId = $_SESSION['user_id'];
+    } else {
+        header("Location: ../login");
+        die();
+    }
     $adopt = $_POST['pet'];
-    $maxpets = 9;
+    $maxpets = 7;
+    
+    
     
     //Get Adoption Info
     $query = 'SELECT * FROM adopts WHERE id = :id';
@@ -15,6 +22,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $adopt);
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Check if Owner ID is 0
+    $query = 'SELECT * FROM snoozelings WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $pet['pet_id']);
+    $stmt->execute();
+    $ownerCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    
+    if ($ownerCheck['owner_id'] == 0) {
+        
+    } else {
+        //Reply & Reroute
+        $_SESSION['reply'] = "This snoozeling has already been adopted. Please report this bug to Moderator Mail";
+        header("Location: ../adoption");
+        die();
+    }
     
     //Check Coins
     $query = 'SELECT coinCount, petBeds FROM users WHERE id = :id';
@@ -103,9 +127,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Remove Adopt
-    $query = "DELETE FROM adopts WHERE id = :id";
+    $query = "DELETE FROM adopts WHERE pet_id = :id";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $adopt);
+    $stmt->bindParam(":id", $pet['pet_id']);
     $stmt->execute();
     
     //Reroute to pet page

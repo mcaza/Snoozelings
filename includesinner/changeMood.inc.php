@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $mood = $_POST['mood'];
     
     //Check for Fake Moods 
-    if(!($mood === "Happy" || $mood === "Sleepy" || $mood === "Overwhelmed" || $mood === "Anxious")) {
+    if(!($mood === "Happy" || $mood === "Sleepy" || $mood === "Overwhelmed" || $mood === "Anxious" || $mood === "Cheeky")) {
         header("Location: ../index");
         die();
     }

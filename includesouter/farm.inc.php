@@ -8,11 +8,13 @@ $item =  $_SESSION['item'];
 $amount = $_SESSION['amount'];
 $name = $_SESSION['name'];
 $reply = $_SESSION['reply'];
+$seedCheck = $_SESSION['seed'];
 
 unset($_SESSION['item']);
 unset($_SESSION['amount']);
 unset($_SESSION['name']);
 unset($_SESSION['reply']);
+unset($_SESSION['seed']);
 
 
 //Get Farmname
@@ -58,11 +60,15 @@ echo '<h3 style="margin-bottom: 2rem;">' . $farmName['farmName'] . '</h3>';
 if ($item) {
         echo '<div class="returnBar" style="margin-bottom: 2rem;">';
         if ($amount === 1 ) {
-            echo '<p>' . $name . ' harvested ' . $item . '.</p>';
+            echo '<p>' . $name . ' harvested ' . $item . '</p>';
         } elseif ($amount === 2 && ($name === "Cocoa Beans" || $name === "Black Beans")) {
          echo '<p>' . $name . ' harvested 2 ' . $item . '.</p>';
     } else {
-            echo '<p>' . $name . ' harvested 2 ' . $item . 's.</p>';
+            echo '<p>' . $name . ' harvested 2 ' . $item . 's</p>';
+        }
+    
+        if ($seedCheck == 1) {
+            echo '<p>You have also found a single ' . $item . ' Seed</p>';
         }
         echo '</div>';
     }
@@ -77,9 +83,9 @@ if ($result > $water['lastWater']) {
         echo '<div class="returnBar" style="margin-bottom: 2rem;">';
     echo '<h4 style=" margin-top: 0;">Time to Hydrate</h4>';
     if ($petName['pronouns'] == "She/Her") {
-        echo '<p>' . $petName['name'] . ' would like you to drink some water while she water the plants.</p>';
-    } else if ($petname['pronouns'] == "He/Him") {
-        echo '<p>' . $petName['name'] . ' would like you to drink some water while he water the plants.</p>';
+        echo '<p>' . $petName['name'] . ' would like you to drink some water while she waters the plants.</p>';
+    } else if ($petName['pronouns'] == "He/Him") {
+        echo '<p>' . $petName['name'] . ' would like you to drink some water while he waters the plants.</p>';
     } else {
         echo '<p>' . $petName['name'] . ' would like you to drink some water while they water the plants.</p>';
     }

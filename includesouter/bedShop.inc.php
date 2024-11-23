@@ -28,15 +28,32 @@ if ($total == 2) {
 } else if ($total == 3) {
     $amount = 10;
 } else if ($total == 4) {
-    $amount = 25;
+    $amount = 20;
 } else if ($total == 5) {
-    $amount = 50;
+    $amount = 30;
 } else if ($total == 6) {
-    $amount = 75;
+    $amount = 40;
 } else if ($total == 7) {
-    $amount = 100;
+    $amount = 50;
 } else if ($total == 8) {
-    $amount = 150;
+    $amount = 75;
+} 
+
+//Coin Cost
+if ($total == 2) {
+    $coinAmount = 50;
+} else if ($total == 3) {
+    $coinAmount = 100;
+} else if ($total == 4) {
+    $coinAmount = 200;
+} else if ($total == 5) {
+    $coinAmount = 400;
+} else if ($total == 6) {
+    $coinAmount = 800;
+} else if ($total == 7) {
+    $coinAmount = 1600;
+} else if ($total == 8) {
+    $coinAmount = 3200;
 } 
 
 //Future Updates -> 150, 250, 400, 600, 800, 1000
@@ -109,15 +126,15 @@ if ($total < 9) {
         echo '<p>❌ ' . count($seagull) . '/' . $amount . ' Seagull Feathers';
     }
     
-    if ($user['coinCount'] >= $amount) {
-        echo '<p>✔️ ' . $amount . '/' . $amount . ' Snooze Coins';
+    if ($user['coinCount'] >= $coinAmount) {
+        echo '<p>✔️ ' . $coinAmount . '/' . $coinAmount . ' Snooze Coins';
     } else {
-        echo '<p>❌ ' . $user['coinCount'] . '/' . $amount . ' Snooze Coins';
+        echo '<p>❌ ' . $user['coinCount'] . '/' . $coinAmount . ' Snooze Coins';
     }
     
-    if (count($tiny) >= $amount && count($colorful) >= $amount && count($seagull) >= $amount && $user['coinCount'] >= $amount) {
+    if (count($tiny) >= $amount && count($colorful) >= $amount && count($seagull) >= $amount && $user['coinCount'] >= $coinAmount) {
         $triple = $amount * 3;
-        echo "<form method='POST' action='includes/createBed.inc.php' onsubmit=\"return confirm('Are you sure you want to trade him " . $triple . " feathers and " .  $amount . " snooze coins?');\">";   
+        echo "<form method='POST' action='includes/createBed.inc.php' onsubmit=\"return confirm('Are you sure you want to trade him " . $triple . " feathers and " .  $coinAmount . " snooze coins?');\">";   
         echo '<button style="margin-bottom: .7rem;" class="fancyButton">Create Pet Bed</button>';
         echo '<form>';
     }

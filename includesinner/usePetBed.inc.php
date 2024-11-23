@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($check) {
         //If Below, Add New Farm Plot
-        if (intval($result['petBeds']) < 7) {
+        if (intval($result['petBeds']) < 8) {
             //Delete Item
             $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 155 LIMIT 1';
             $stmt = $pdo->prepare($query);

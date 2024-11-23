@@ -101,35 +101,35 @@ require_once '../includes/adminCheck.inc.php';
                     echo '<h1 style="text-align:left">Crops Harvested</h1>';
                     echo '<ol style="text-align:left;font-size:15px;">';
                     foreach ($crops as $crop) {
-                        echo '<li><a href="/profile?id='  . $user['id'] . '">' . $crop['username'] . '</a> - <i>' . $crop['cropsHarvested'] . ' Harvests</i></li>';
+                        echo '<li><a href="/profile?id='  . $crop['id'] . '">' . $crop['username'] . '</a> - <i>' . $crop['cropsHarvested'] . ' Harvests</i></li>';
                     }
                     echo '</ol>';
                     
                     echo '<h1 style="text-align:left">Crafts Crafted</h1>';
                     echo '<ol style="text-align:left;font-size:15px;">';
                     foreach ($crafts as $craft) {
-                        echo '<li><a href="/profile?id='  . $user['id'] . '">' . $craft['username'] . '</a> - <i>' . $craft['itemsCrafted'] . ' Crafts</i></li>';
+                        echo '<li><a href="/profile?id='  . $craft['id'] . '">' . $craft['username'] . '</a> - <i>' . $craft['itemsCrafted'] . ' Crafts</i></li>';
                     }
                     echo '</ol>';
                     
                     echo '<h1 style="text-align:left">Explores Taken</h1>';
                     echo '<ol style="text-align:left;font-size:15px;">';
                     foreach ($explores as $explore) {
-                        echo '<li><a href="/profile?id='  . $user['id'] . '">' . $explore['username'] . '</a> - <i>' . $explore['explores'] . ' Explores</i></li>';
+                        echo '<li><a href="/profile?id='  . $explore['id'] . '">' . $explore['username'] . '</a> - <i>' . $explore['explores'] . ' Explores</i></li>';
                     }
                     echo '</ol>';
                     
                     echo '<h1 style="text-align:left">Requests Filled</h1>';
                     echo '<ol style="text-align:left;font-size:15px;">';
                     foreach ($requests as $request) {
-                        echo '<li><a href="/profile?id='  . $user['id'] . '">' . $request['username'] . '</a> - <i>' . $request['requestsFilled'] . ' Requests</i></li>';
+                        echo '<li><a href="/profile?id='  . $request['id'] . '">' . $request['username'] . '</a> - <i>' . $request['requestsFilled'] . ' Requests</i></li>';
                     }
                     echo '</ol>';
                     
                     echo '<h1 style="text-align:left">Purchases Bought</h1>';
                     echo '<ol style="text-align:left;font-size:15px;">';
                     foreach ($buys as $buy) {
-                        echo '<li><a href="/profile?id='  . $user['id'] . '">' . $buy['username'] . '</a> - <i>' . $buy['itemsBought'] . ' Purchases</i></li>';
+                        echo '<li><a href="/profile?id='  . $buy['id'] . '">' . $buy['username'] . '</a> - <i>' . $buy['itemsBought'] . ' Purchases</i></li>';
                     }
                     echo '</ol>';
                     

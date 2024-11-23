@@ -106,12 +106,17 @@ if (!$dyebatch) {
 echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:15px;padding-bottom: 25px;margin: auto;margin-bottom:20px;">';
 echo '<h1>Available Dyes</h1>';
 echo '<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-evenly;">';
+
+$colorsShown = [];
 foreach ($dyes as $dye) {
-    echo '<div>';
-    $name = str_replace(" Dye", "", $dye['display']);
-    echo '<img src="items/' . $dye['name'] . '.png" style="width:100px;" id="' . $dye['name'] . '">';
-    echo '<p><b>' . $name . '</b></p>';
-    echo '</div>';
+    if (!in_array($dye['name'], $colorsShown)) {
+        echo '<div>';
+        $name = str_replace(" Dye", "", $dye['display']);
+        echo '<img src="items/' . $dye['name'] . '.png" style="width:100px;" id="' . $dye['name'] . '">';
+        echo '<p><b>' . $name . '</b></p>';
+        echo '</div>';
+        array_push($colorsShown,$dye['name']);
+    }
 }
 echo '</div>';
 
@@ -122,8 +127,12 @@ if (!$dyebatch) {
     //Dye Selection
     echo '<select name="color" id="color">';
     echo '<option value="" default selected>Select an Option</option>';
+    $colorsListed = [];
     foreach ($dyes as $dye) {
-        echo '<option value="' . $dye['name'] . '">' . $dye['display'] . '</option>';
+        if (!in_array($dye['name'], $colorsListed)) {
+            echo '<option value="' . $dye['name'] . '">' . $dye['display'] . '</option>';
+            array_push($colorsListed,$dye['name']);
+        }
     }
     echo '</select>';
 }

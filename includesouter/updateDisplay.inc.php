@@ -99,13 +99,13 @@ echo '<option value=""></option>';
 foreach ($titles as $title) {
     echo '<option value="' . $title['title'] . '">' . $title['title'] . '</option>';
 }
-if ($result['farmEXP']  > 1000) {
-    echo '<option value="Crop Whisper">Crop Whisperer</option>';
+if ($result['farmEXP']  > 999.5) {
+    echo '<option value="Crop Whisperer">Crop Whisperer</option>';
 }
-if ($result['explorerEXP '] > 1000) {
+if ($result['explorerEXP '] > 999.5) {
     echo '<option value="Grand Adventurer">Grand Adventurer</option>';
 }
-if ($result['farmEXP '] > 1000) {
+if ($result['farmEXP '] > 999.5) {
     echo '<option value="Hooked on Crafts">Hooked on Crafts</option>';
 }
 echo "</select><br>";

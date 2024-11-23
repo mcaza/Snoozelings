@@ -68,10 +68,10 @@ echo "</div>";
 echo '<div class="trendytails">';
 echo '<div class="trendybox">';
  echo '<h4 style="margin-top: .5rem;">New Hairstyle</h4>';
-echo '<p>5 Coins</p>';
+echo '<p>10 Coins</p>';
 
 //Form. Warning it costs 5 coins
-echo "<form method='POST' action='includes/changeHair.inc.php' onsubmit=\"return confirm('This will cost 5 coins. If your previous hair style is rare, you will not be able to change back.');\">";    
+echo "<form method='POST' action='includes/changeHair.inc.php' onsubmit=\"return confirm('Changing your hair type will cost 10 coins. If your previous hair style is rare, you will not be able to change back.');\">";    
 
 
 //List All Pets
@@ -99,10 +99,10 @@ echo '</form>';
 echo '</div>';
 echo '<div class="trendybox">';
 echo '<h4 style="margin-top: .5rem;">New Tailstyle</h4>';
-echo '<p>5 Coins</p>';
+echo '<p>10 Coins</p>';
 
 //Form. Warning it costs 5 coins
-echo "<form method='POST' action='includes/changeTail.inc.php' onsubmit=\"return confirm('This will cost 5 coins. If your previous tail style is rare, you will not be able to change back.');\">";    
+echo "<form method='POST' action='includes/changeTail.inc.php' onsubmit=\"return confirm('Changing your tail type will cost 10 coins. If your previous tail style is rare, you will not be able to change back.');\">";    
 
 
 
@@ -127,4 +127,58 @@ echo '</select><br>';
 echo '<button  class="fancyButton">Change Tail</button>';
 echo '</form>';
 echo '</div>';
+
+//Dye Moth Fluff
+
+//Check for Mothfluff
+$mothCheck = 0;
+$snoozeArray = [];
+foreach ($snoozelings as $snooze) {
+    if (strpos($snooze["specials"], "MothFluff")) {
+        $mothCheck = 1;
+        array_push($snoozeArray,$snooze);
+    }
+}
+if ($mothCheck == 1) {
+    //Select All Dyes
+    $query = 'SELECT * FROM items WHERE user_id = :id AND type = "dye"';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $dyes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo '<div class="trendybox">';
+    echo '<h4 style="margin-top: .5rem;">Dye Moth Fluff</h4>';
+    echo '<p>25 Coins</p>';
+    
+    //Form. Warning it costs 5 coins
+    echo "<form method='POST' action='includes/mothFluff.inc.php' onsubmit=\"return confirm('Dying your moth fluff will cost 25 coins and consume 1 of the selected dye.');\">"; 
+    
+    //Snoozeling Section
+    echo '<label for="snoozeling" class="form">Snoozeling:</label><br>';
+    echo '<select class="input"  name="snoozeling">';
+    foreach ($snoozeArray as $pet) {
+        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+    }
+    echo '</select><br>';
+    
+    //Dye Section
+    echo '<label for="dye" class="form">Dye Color:</label><br>';
+    echo '<select class="input"  name="dye">';
+    $colorsListed = [];
+    foreach ($dyes as $dye) {
+        if (!in_array($dye['name'], $colorsListed)) {
+            echo '<option value="' . $dye['name'] . '">' . $dye['display'] . '</option>';
+            array_push($colorsListed,$dye['name']);
+        }
+    }
+    echo '</select><br>';
+    
+    //Button
+    echo '<button  class="fancyButton">Change Color</button>';
+    echo '</form>';
+    echo '</div>';
+}
+
+
 echo '</div>';

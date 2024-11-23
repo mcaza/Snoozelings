@@ -46,7 +46,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die(); 
     }
     
-    
+    //Check if pet is already donated
+    $query = "SELECT * FROM adopts WHERE pet_id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $one);
+    $stmt->execute();
+    $donatecheck = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($donatecheck) {
+        $_SESSION['reply'] = '<p>This pet has already been donated.</p>';
+        header("Location: ../adoption");
+        die(); 
+    }
     
     //Check if Pet is crafter
     $query = 'SELECT pet_id FROM craftingtables WHERE user_id = :id';
@@ -76,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $coins = 0;
     array_push($colors, $pet['mainColor'], $pet['hairColor'], $pet['tailColor'], $pet['eyeColor'], $pet['noseColor']);
     foreach ($colors as $color) {
-        $query = 'SELECT rarity FROM colors WHERE name = :name';
+        $query = 'SELECT * FROM colors WHERE name = :name';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":name", $color);
         $stmt->execute();

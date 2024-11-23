@@ -17,7 +17,7 @@ $bio = $_POST['bio'];
 $userId = $_SESSION['user_id'];
     
     //Snoozeling Info
-            $query = 'SELECT clothesBottom, clothesTop, clothesHoodie, clothesBoth, owner_id FROM snoozelings WHERE id = :id';
+            $query = 'SELECT * FROM snoozelings WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
@@ -224,7 +224,7 @@ $userId = $_SESSION['user_id'];
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":list", $item);
             $stmt->bindParam(":user", $userId);
-            $stmt->bindParam(":name", $newName);
+            $stmt->bindParam(":name", $iteminfo['name']);
             $stmt->bindParam(":display", $iteminfo['display']);
             $stmt->bindParam(":description", $iteminfo['description']);
             $stmt->bindParam(":type", $iteminfo['type']);
@@ -237,6 +237,8 @@ $userId = $_SESSION['user_id'];
             
             $count++;
         } 
+    
+    
             
 
         
@@ -257,6 +259,7 @@ $userId = $_SESSION['user_id'];
     }
     } 
     //Snoozeling Title
+
     if ($title) {
         $query = 'SELECT * FROM titles';
         $stmt = $pdo->prepare($query);
@@ -268,16 +271,25 @@ $userId = $_SESSION['user_id'];
                 $check = 1;
             }
         }
-        if ($check === 0) {
+        if ($title == "Crop Whisperer" && $snooze['farmEXP'] > 999.5) {
+            $check = 1;
+        }
+        if ($title == "Hooked on Crafts" && $snooze['craftEXP'] > 999.5) {
+            $check = 1;
+        }
+        if ($title == "Grand Adventurer" && $snooze['exploreEXP'] > 999.5) {
+            $check = 1;
+        }
+        if ($check == 0) {
             header("Location: ../editPet?id=" . $id);
             die();
         } else {
-        $query = 'UPDATE snoozelings SET title = :title WHERE id = :id';
+            $query = 'UPDATE snoozelings SET title = :title WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":title", $title);
             $stmt->execute();
-    } 
+        } 
     } 
     //Pet Inspiration
     if ($status) {
@@ -358,6 +370,8 @@ $userId = $_SESSION['user_id'];
     if ($one === $two) {
     $_SESSION['bonded'] = htmlspecialchars($name);
     }
+    
+    
     
 //Redirect to Pet Page
 header("Location: ../pet?id=" . $id);

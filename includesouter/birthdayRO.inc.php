@@ -38,8 +38,8 @@
             $stmt->bindParam(":type", $iteminfo['type']);
             $stmt->bindParam(":rarity", $iteminfo['rarity']);
             $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
-            if ($dye) {
-                $stmt->bindParam(":user", $gift['dye']);
+            if ($gift['dye']) {
+                $stmt->bindParam(":dye", $gift['dye']);
             }
             $stmt->execute();
             

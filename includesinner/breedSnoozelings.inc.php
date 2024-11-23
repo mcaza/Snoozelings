@@ -6,12 +6,20 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Get Values
-    $userId = $_SESSION['user_id'];
+    if ($_SESSION['user_id']) {
+        $userId = $_SESSION['user_id'];
+    } else {
+        header("Location: ../login");
+        die();
+    }
+    
     $first = $_POST['first'];
     $second = $_POST['second'];
     $blueprints = $_POST['blueprints'];
     if ($second === "other") {
         $breedid = $_POST['id'];
+    } else {
+        $breedid = false;
     }
     if ($breedid) {
         if ($breedid === $first) {
@@ -21,8 +29,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     } if ($second === $first) {
         $_SESSION['reply'] = 'You need to use 2 different snoozelings as inspiration.';
-            header("Location: ../stitcher?page=new");
-            die();
+        header("Location: ../stitcher?page=new");
+        die();
+    }
+    
+    //Check if breeding already
+    $query = 'SELECT * FROM blueprints WHERE owner_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $blueprintCheck = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if ($blueprintCheck) {
+        $_SESSION['reply'] = 'You have already have blueprints arriving soon in the mail.';
+        header("Location: ../stitcher?page=new");
+        die();
     }
     
     //Check if person has open slot

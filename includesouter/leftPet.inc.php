@@ -30,6 +30,7 @@ require_once '../includes/displayPet.inc.php';
         echo '<option value="Anxious">Anxious</option>';
         echo '<option value="Overwhelmed">Overwhelmed</option>';
         echo '<option value="Sleepy">Sleepy</option>';
+        echo '<option value="Cheeky">Cheeky</option>';
         //echo '<option value="Naughty">Naughty</option>';
         echo '</select><br>';
         echo '<button class="fancyButton" style="font-size: 2rem; margin-bottom: 1rem;">Change Mood</button>';

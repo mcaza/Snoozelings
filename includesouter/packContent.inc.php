@@ -79,6 +79,7 @@ for ($i=0; $i < $amount; $i++) {
     }
 }
 
+
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $userId . '"><<</a>';

@@ -15,9 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $opencheck = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($opencheck) {
-        
-    } else {
         header("Location: ../");
+        die();
+    } else {
+        
     }
     
     //Double check if they have that item and dye
@@ -32,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
     } else {
         header("Location: ../");
+        die();
     }
     
     $query = 'SELECT * FROM items WHERE name = :id AND user_id = :owner';
@@ -45,6 +47,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
     } else {
         header("Location: ../");
+        die();
+    }
+    
+    //Check if Item Can be Dyed
+    $query = 'SELECT * FROM itemList WHERE name = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $color);
+    $stmt->execute();
+    $canDye = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($canDye) {
+        
+    } else {
+        header("Location: ../");
+        die();
+    }
+    
+    //Check if Dye is White
+    if ($color == "WhiteDye") {
+         if ($canDye['white'] == 1) {
+        
+         } else {
+             $_SESSION["reply"] = "White dye cannot be used with that item.";
+             header("Location: ../");
+             die();
+        }
     }
     
     //Set Dye Batch

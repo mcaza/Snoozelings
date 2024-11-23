@@ -128,6 +128,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
     
+    //Roll for Seed Drop
+    $seedRoll = rand(0,100);
+    if ($seedRoll > 20) {
+        $seed = 1;
+        
+        //Grab Seed Item Information
+        //Grab Item Info
+        $query = "SELECT * FROM itemList WHERE name = :name";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $farm['name']);
+        $stmt->execute();
+        $itemInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        //Add Seed to Inventory
+        $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":list", $itemInfo['id']);
+        $stmt->bindParam(":user", $userId);
+        $stmt->bindParam(":name", $itemInfo['name']);
+        $stmt->bindParam(":display", $itemInfo['display']);
+        $stmt->bindParam(":description", $itemInfo['description']);
+        $stmt->bindParam(":type", $itemInfo['type']);
+        $stmt->bindParam(":rarity", $itemInfo['rarity']);
+        $stmt->bindParam(":canDonate", $itemInfo['canDonate']);
+        $stmt->execute();
+    } else {
+        $seed = 0;
+    }
+    
     
     //Update +1 to User Records
     $query = 'UPDATE users SET cropsHarvested = cropsHarvested + 1 WHERE id = :id';
@@ -151,6 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $_SESSION['amount'] = $amount;
     $_SESSION['item'] = $farm['plantName'];
     $_SESSION['name'] = htmlspecialchars($snooze['name']);
+    $_SESSION['seed'] = $seed;
                    
     //Return
     header("Location: ../farm");

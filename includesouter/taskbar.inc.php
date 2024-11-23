@@ -37,13 +37,13 @@
             <div class="dropdown-content">
                 <a href="explore">Exploring</a>
                 <a href="shops">Snooze Shops</a>
-                <a href="requests">Request Boards</a>
+                <a href="requests">Request Board</a>
             </div>
         </div>
         <div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop"><a href="games">Fun Stuff</a></button>
             <div class="dropdown-content">
-                <a href="raffle">Daily Raffle</a>
+                <a href="raffle">Kindness Raffle</a>
                 <a href="randomitem">Simon\'s Gifts</a>
                 <a href="designer">Pet Designer</a>
             </div>

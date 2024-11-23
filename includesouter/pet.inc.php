@@ -208,6 +208,50 @@ $specialArray = explode(" ", $result["specials"]);
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Ear Tip</li>';
         } else if ($special == "TinyTooth") {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Tiny Tooth</li>';
+        } else if (str_contains($special,"MothFluff")) {
+            //Color Check
+            $query = "SELECT * FROM dyes";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            $colors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $ending = "";
+            $itemName = "";
+            $item = $special;
+            foreach ($colors as $x) {
+                if (str_ends_with($item, $x['name'])) {
+                    $itemName = str_replace($x['name'], "", $item);
+                    $ending = $x['display'];
+                }
+            }
+
+            $othercolors = ['Gold', 'Silver'];
+            foreach ($othercolors as $x) {
+                if (str_ends_with($item, $x)) {
+                    $itemName = str_replace($x, "", $item);
+                    $ending = $x;
+                }
+            }
+
+
+            if ($ending) {
+                //Item Display Name
+                $query = "SELECT * FROM itemList WHERE name = :name;";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":name", $itemName);
+                $stmt->execute();
+                $displayName = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Moth Fluff'. ' [' . $ending . '] ' . '</li>';
+            } else {
+                //Item Display Name
+                $query = "SELECT * FROM itemList WHERE name = :name;";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":name", $item);
+                $stmt->execute();
+                $displayName = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Moth Fluff</li>';
+            } 
         } else {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">' . $special . '</li>';
         }
