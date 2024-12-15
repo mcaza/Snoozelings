@@ -145,6 +145,38 @@ if ($results) {
         echo '</form>';
     }
     
+    if ($item['type'] == "stain") {
+        
+        $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo "<form method='POST' action='includes/useStain.inc.php' onsubmit=\"return confirm('Are you sure you want to apply this stain? This action cannot be reversed.');\">"; 
+        echo '<label style="margin-top: 2rem;" for="pet" class="form">Apply to which Snoozeling?</label><br>';
+        echo '<select class="input"  name="pet">';
+        foreach ($pets as $pet) {
+            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+        }
+        echo '</select><br>';
+        
+        echo '<label style="margin-top: 2rem;" for="part" class="form">Apply to which body part?</label><br>';
+        echo '<select class="input"  name="part">';
+        echo '<option value="mainColor">Main Color</option>';
+        echo '<option value="eyeColor">Eye Color</option>';
+        echo '<option value="hairColor">Hair Color</option>';
+        echo '<option value="tailColor">Tail Color</option>';
+        echo '<option value="skinColor">Skin Color</option>';
+        echo '</select><br>';
+
+        echo '<input type="hidden" name="item" value="' . $item['id'] . '">';
+        
+           
+        echo '<button class="fancyButton">Apply Stain</button>';
+        echo '</form>';
+    }
+    
     if ($item['name'] === "FarmChest" || $item['name'] === "BeachChest" || $item['name'] === "WoodsChest") {
         //Check for Key
         //Check for Key
@@ -256,6 +288,11 @@ if ($results) {
         echo '<div><button class="fancyButton">Wish For Marking</button></div>';
         echo '</form>';
         echo '</div>';
+    } else if ($item['type'] == "cover") {
+        echo '<form method="post" action="includes/useCover.inc.php">';
+        echo '<input type="hidden" name="item" value="' . $id . '">';
+        echo '<button class="fancyButton">Add Bed Cover</button>';
+        echo '</form>';
     }
 
 

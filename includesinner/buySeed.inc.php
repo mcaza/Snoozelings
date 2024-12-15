@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         //If Under Price, Return to Seed Shop With Error
         $_SESSION['reply'] = "You do not have enough snooze coins.";
         header("Location: ../seedshop");
+        die();
     } else {
         //Remove 2 Coins
         $query = 'UPDATE users SET coinCount = coinCount - :price WHERE id = :id';

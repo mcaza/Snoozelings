@@ -5,6 +5,11 @@ $count = 1;
 $now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d');
 
+date_default_timezone_set('America/Los_Angeles');
+$weekday = date('d');
+$month = ltrim(date('m'), "0");
+
+
 $query = 'SELECT * FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
@@ -199,6 +204,24 @@ if ($tutorial < 4) {
     if ($user['dailyPrize'] == "0") {
         echo '<div class="notificationbox"><a href="randomitem" class="notif">' . $count . '. Daily Gift</a></div>';
         $count++;
+    }
+    
+    //Free Item December
+    if ($month == 12) {
+        $gift = 0;
+        if ($weekday < 25 || $weekday == 31) {
+            if ($user['decGift'] < $weekday) {
+                $gift = 1;
+            }
+        } else if ($weekday > 24 && $weekday < 31) {
+            if ($day < 25) {
+                $gift = 1;
+            }
+        }
+        if ($gift == 1) {
+            echo '<div class="notificationbox"><a href="decemberGifts" class="notif">' . $count . '. Cocoa\'s Gift</a></div>';
+            $count++;
+        }
     }
 
     //Finished Craft

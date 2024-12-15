@@ -381,8 +381,8 @@ foreach ($colors as $color) {
 }
 echo '</select><br>';
 
-$hairs = ['Floof', 'Forelock', 'Knitted', 'LizardSpikes', 'Mane', 'Mohawk', 'Wave'];
-$hairDisplay = ['Floof', 'Forelock', 'Knitted', 'Lizard Spikes', 'Mane', 'Mohawk', 'Wave'];
+$hairs = ['Floof', 'Forelock', 'Holiday', 'Knitted', 'LizardSpikes', 'Mane', 'Mohawk', 'Wave'];
+$hairDisplay = ['Floof', 'Forelock', 'Holiday', 'Knitted', 'Lizard Spikes', 'Mane', 'Mohawk', 'Wave'];
 $round = 0;
 echo '<label for="hairType" class="form">Hair Style:</label><br>';
 echo '<select id="hairType"  class="input">';
@@ -423,8 +423,8 @@ foreach ($colors as $color) {
 }
 echo '</select><br>';
 
-$tails = ['Dragon','Knitted','Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
-$tailDisplay = ['Dragon','Knitted','Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
+$tails = ['Dragon','Knitted', 'Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
+$tailDisplay = ['Dragon','Knitted','Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
 $round = 0;
 echo '<label for="tailType" class="form">Tail Style:</label><br>';
 echo '<select id="tailType"  class="input">';

@@ -6,6 +6,8 @@ require_once '../../includes/config_session.inc.php';
 //Get Variables
 $userId = $_SESSION['user_id'];
 $id = $_GET['id'];
+date_default_timezone_set('UTC');
+
 
 //Get Table Info
 $query = 'SELECT * FROM craftingtables WHERE user_id = :id';

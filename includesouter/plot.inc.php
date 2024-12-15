@@ -5,6 +5,8 @@ $farmer = "Farmer";
 $jack = "jack";
 $seed = "seed";
 $plot = $_GET['id'];
+date_default_timezone_set('UTC');
+
 
 //Get All Seeds
 $query = "SELECT * FROM items WHERE user_id = :id AND type = :seed ORDER BY display";

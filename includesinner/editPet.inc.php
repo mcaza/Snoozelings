@@ -16,6 +16,12 @@ $showbed = $_POST['showbed'];
 $bio = $_POST['bio'];
 $userId = $_SESSION['user_id'];
     
+    $query = "SELECT * FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
     //Snoozeling Info
             $query = 'SELECT * FROM snoozelings WHERE id = :id';
             $stmt = $pdo->prepare($query);
@@ -309,10 +315,14 @@ $userId = $_SESSION['user_id'];
     
     //Bed
     if ($bed) {
-        if (!($bed === "BlueFree" || $bed === "BrownFree" || $bed === "GreenFree" || $bed === "PinkFree" || $bed === "RedFree")) {
+        if (!($bed === "BlueFree" || $bed === "BrownFree" || $bed === "GreenFree" || $bed === "PinkFree" || $bed === "RedFree" || $bed === "Holiday" || $bed === "Winter")) {
             header("Location: ../editPet?id=" . $id);
             die();
         } else {
+            if (!str_contains($user['covers'], $bed)) {
+                header("Location: ../index");
+                die();
+            }
             $query = 'UPDATE snoozelings SET bedcolor = :bed WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);
@@ -360,12 +370,7 @@ $userId = $_SESSION['user_id'];
     }
     
     //Check if Bonded and Adjust Session Name
-    $query = "SELECT bonded FROM users WHERE id = :id";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $one = intval($result['bonded']);
+    $one = intval($user['bonded']);
     $two = intval($id);
     if ($one === $two) {
     $_SESSION['bonded'] = htmlspecialchars($name);

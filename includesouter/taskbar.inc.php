@@ -1,5 +1,8 @@
 <?php 
 
+$userId = $_SESSION['user_id'];
+date_default_timezone_set('America/Los_Angeles');
+$month = ltrim(date('m'), "0");
 
 
     if (isset($_SESSION["user_id"])) {
@@ -44,8 +47,14 @@
             <button class="menu dropdown dropbtn" id="drop"><a href="games">Fun Stuff</a></button>
             <div class="dropdown-content">
                 <a href="raffle">Kindness Raffle</a>
-                <a href="randomitem">Simon\'s Gifts</a>
-                <a href="designer">Pet Designer</a>
+                <a href="randomitem">Simon\'s Gifts</a>';
+        
+        //Dec Event
+        if ($month == 12) {
+            echo   '<a href="decemberGifts">Cocoa\'s Gifts</a>';
+        }
+             
+          echo      '<a href="designer">Pet Designer</a>
             </div>
         </div>
         <div class="dropdown">

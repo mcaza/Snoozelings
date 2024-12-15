@@ -15,6 +15,13 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Grab USer Info from Database
+$query = "SELECT * FROM users WHERE id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 //Grab All Titles in Alphebetical Order
 $query = "SELECT * FROM titles ORDER BY title";
 $stmt = $pdo->prepare($query);
@@ -119,6 +126,11 @@ echo '<option value="BlueFree">Blue</option>';
 echo '<option value="GreenFree">Green</option>';
 echo '<option value="PinkFree">Pink</option>';
 echo '<option value="RedFree">Red</option>';
+
+$covers = explode(" ", $user['covers']);
+foreach ($covers as $cover) {
+    echo '<option value="' . $cover . '">' . $cover . '</option>';
+}
 echo '</select><br>';
 
 //Show Bed

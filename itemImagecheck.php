@@ -73,7 +73,7 @@ require_once '../includes/adminCheck.inc.php';
         <div class="main-container"><div  class="bottomPush">
             <?php
     
-    $query = 'SELECT * FROM itemList';
+                    $query = 'SELECT * FROM itemList';
                     $stmt = $pdo->prepare($query);
                     $stmt->execute();
                     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -94,6 +94,38 @@ require_once '../includes/adminCheck.inc.php';
             echo '<button class="fancyButton">Give Item</button>';
             echo '</form>';
             ?>
+            
+            <?php
+            
+            echo '<hr>';
+            
+            $query = 'SELECT * FROM snoozelings';
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $query = 'SELECT * FROM users ORDER BY id';
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            echo '<ul>';
+            foreach ($users as $account) {
+                $count = 0;
+                foreach ($snoozelings as $pet) {
+                    if ($account['id'] == $pet['owner_id']) {
+                        $count++;
+                    }
+                }
+                echo $count;
+                echo $account['petBeds'];
+                echo $account['username'] . '<br>';
+            }
+            
+            echo '</ul>';
+            
+            ?>
+            
         </div></div>
     </div>
     <!--End of All Main Content-->

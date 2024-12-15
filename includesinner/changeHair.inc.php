@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($count < 10) {
         $_SESSION['reply'] = "You do not have enough snooze coins.";
          header("Location: ../trendytails");
+        die();
     } else {
     //Remove 10 coins
     $query = 'UPDATE users SET coinCount = coinCount - 10 WHERE id = :id';

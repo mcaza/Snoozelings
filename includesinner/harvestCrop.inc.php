@@ -6,7 +6,12 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 //Get Variables
-    $userId = $_SESSION['user_id'];
+    if ($_SESSION['user_id']) {
+        $userId = $_SESSION['user_id'];
+    } else {
+        header("Location: ../login");
+        die();
+    }
     $plot = $_POST['plot'];
     $farmer = $_POST['farmer'];
     

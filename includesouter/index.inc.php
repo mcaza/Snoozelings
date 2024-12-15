@@ -6,6 +6,8 @@ if (isset($_SESSION['user_id'])) {
     
     $userId = $_SESSION['user_id'];
     $username = $_SESSION['user_username'];
+    date_default_timezone_set('UTC');
+
 
     //Rollover Time Stuff
     $query = 'SELECT * FROM times';

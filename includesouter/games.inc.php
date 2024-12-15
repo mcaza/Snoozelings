@@ -2,6 +2,8 @@
 
 $userId = $_SESSION['user_id'];
 $name = $_SESSION['petName'];
+$month = ltrim(date('m'), "0");
+
 
 echo '<h3>Snooze Activities</h3>';
 
@@ -23,6 +25,17 @@ echo '</a>';
 
 echo '</div>';
 echo '<div class="shopRows">';
+
+if ($month == 12) {
+    echo '<a href="decemberGifts" class="shopBox">';
+    echo '<div >';
+    echo '<img src="resources/HolidayCocoa.png" class="shopImg"  style="width: 90%;">';
+    echo '<h4>Cocoa\'s Gifts</h4>';
+    echo '</div>';
+    echo '</a>';
+}
+
+
 
 echo '<a href="designer" class="shopBox">';
 echo '<div >';

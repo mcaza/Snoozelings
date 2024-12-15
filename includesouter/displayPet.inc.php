@@ -252,7 +252,7 @@ function displayPet($pet, $class) {
                 echo "</div>";
             }
             
-        } else if ($pet['tailType'] == "Panther") {
+        } else if ($pet['tailType'] == "Panther" || $pet['tailType'] == "Holiday") {
             if (strlen($pet['clothesBottom']) > 1) {
             $clothesBottom = explode(' ', $pet['clothesBottom']);
             foreach ($clothesBottom as $clothing) {
@@ -447,7 +447,7 @@ function displayPet($pet, $class) {
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if (!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns")) {
+            if (!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "StripedHolidaySweater")) {
             echo "<div class='${class}'>";
          echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
@@ -481,6 +481,17 @@ function displayPet($pet, $class) {
             }
             
         } }
+    
+    if (strlen($pet['clothesBoth']) > 1 && strpos($pet["clothesBoth"], "StripedHolidaySweater") !== false) {
+    $clothesTop = explode(' ', $pet['clothesBoth']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "StripedHolidaySweater") {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
+                echo "</div>";
+            }
+            
+        } }
 
         
         
@@ -491,15 +502,28 @@ function displayPet($pet, $class) {
          echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
         } 
-        }
+    }
+    if ($pet['hairType'] == "Holiday") {
+        $hairCheck = 1;
+    }
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if ($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns") {
+            if ($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "TwiggyAntlers" || $clothing === "DeerAntlers") {
             echo "<div class='${class}'>";
-         echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
+            echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
-        } }
+        } else if ($clothing == "StripedHolidaySweater") {
+                echo "<div class='${class}'>";
+            echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
+            echo "</div>";
+                if ($hairCheck == 1) {
+                echo "<div class='${class}'>";
+                echo '<img src="Layers/Hair/Holiday/' . $pet['hairColor'] . '.png" id="Hairone">';
+                echo "</div>";
+                }
+            } 
+        }
     }
 
     if ($class === 'tinyPet') {

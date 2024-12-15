@@ -30,6 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $ownerCheck = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    //Check if User has Blueprints Waiting
+    $query = 'SELECT * FROM blueprints WHERE owner_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $bpCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($bpCheck) {
+        $_SESSION['reply'] = "You are unable to adopt until Minky delivers your finished snoozeling.";
+        header("Location: ../adoption");
+        die();
+    }
     
     if ($ownerCheck['owner_id'] == 0) {
         

@@ -1,5 +1,8 @@
 <?php
 
+date_default_timezone_set('UTC');
+
+
 $userId = $_SESSION['user_id'];
 if ($_SESSION['reply']) {
     $reply = $_SESSION['reply'];

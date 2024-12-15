@@ -131,6 +131,7 @@ echo '<option value="fabric">Fabric</option>';
 echo '<option value="plant">Plant</option>';
 echo '<option value="seed">Seed</option>';
 echo '<option value="special">Special</option>';
+echo '<option value="stain">Stain</option>';
 echo '</select><br>';
 echo '<button class="fancyButton">Filter</button>';
 echo '</form>';
