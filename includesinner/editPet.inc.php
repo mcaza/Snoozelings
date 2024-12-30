@@ -319,10 +319,14 @@ $userId = $_SESSION['user_id'];
             header("Location: ../editPet?id=" . $id);
             die();
         } else {
-            if (!str_contains($user['covers'], $bed)) {
-                header("Location: ../index");
-                die();
+            
+            if ($bed == "Holiday" || $bed == "Winter") {
+                if (!str_contains($user['covers'], $bed)) {
+                    header("Location: ../index");
+                    die();
+                }
             }
+            
             $query = 'UPDATE snoozelings SET bedcolor = :bed WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);

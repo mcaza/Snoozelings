@@ -112,13 +112,13 @@ if ($month == 9) {
 //Display Penpal Requests
 foreach ($results as $result) {
     if ($result['user'] != $userId) {
-        echo '<a href="penpalrequest?id=' . $result['id'] . '" class="paper bar" style="overflow:auto;">';
+        echo '<a href="penpalrequest?id=' . $result['id'] . '" class="paper bar" style="overflow:auto;color: black;">';
         if ($result['setting'] == "Easy") {
-            echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:DarkSeaGreen;border-radius:8px;width:40px;padding:3px;height:20px;"><b>Easy</b></p>';
+            echo '<p class="penpalNote" style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:DarkSeaGreen;border-radius:8px;width:40px;padding:3px;height:20px;"><b>Easy</b></p>';
         } else if ($result['setting'] == "Moderate") {
-            echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:#FFFF8F;border-radius:8px;width:80px;padding:3px;height:20px;"><b>Moderate</b></p>';
+            echo '<p class="penpalNote" style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:#FFFF8F;border-radius:8px;width:80px;padding:3px;height:20px;color:black;"><b>Moderate</b></p>';
         } else if ($result['setting'] == "Stressful") {
-            echo '<p style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:Salmon;border-radius:8px;width:70px;padding:3px;height:20px;"><b>Stressful</b></p>';
+            echo '<p class="penpalNote" style="margin-top:30px;text-align:center;margin-right:10px;margin-left: auto;background-color:Salmon;border-radius:8px;width:70px;padding:3px;height:20px;"><b>Stressful</b></p>';
         }  
         echo '<p style="padding-left:10px;padding-right:10px;text-overflow: hidden;margin-top:-5px;">' . nl2br(htmlspecialchars($result['post'])) . '</p>';
         echo '<p style="margin-bottom:20px;">~ Anonymous</p>';

@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $coins = intval($result['kindnessCount']);
     
     //Check is Kindness Shop Item
-    $query = 'SELECT * FROM kindnessShop WHERE item_id = :id';
+    $query = 'SELECT * FROM kindnessShop WHERE item_id = :id AND daily = 1';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->execute();

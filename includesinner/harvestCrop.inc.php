@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Roll for Seed Drop
     $seedRoll = rand(0,100);
-    if ($seedRoll > 20) {
+    if ($seedRoll < 20) {
         $seed = 1;
         
         //Grab Seed Item Information

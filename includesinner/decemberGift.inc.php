@@ -40,8 +40,11 @@ if ($weekday > 24 && $weekday < 31) {
 //Get Gift info
 $query = "SELECT * FROM decGifts WHERE id = :id";
 $stmt = $pdo->prepare($query);
-if ($weekday < 25 || $weekday == 31) {
+if ($weekday < 25) {
     $stmt->bindParam(":id", $weekday);
+} else if ($weekday == 31) {
+    $day = 26;
+    $stmt->bindParam(":id", $day);
 } else {
     $day = 25;
     $stmt->bindParam(":id", $day);

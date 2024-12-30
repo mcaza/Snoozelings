@@ -24,6 +24,7 @@ if ($userId) {
         echo '<li><a href="explore" ><img src="resources/IconExplore.png"></a></li>';
         echo '<li><a href="crafting" ><img src="resources/IconCrafting.png"></a></li>';
         echo '<li><a href="mailbox" ><img src="resources/IconMailbox.png"></a></li>';
+        echo '<li><a href="includes/darkmode.inc.php" ><img src="resources/darkmode.png"></a></li>';
     } else {
         echo '<li id="homeshortcut"><a href="/" ><img src="resources/IconHome.png"></a></li>';
             
@@ -65,6 +66,7 @@ if ($userId) {
             }
             echo '<li><a href="' . $link . '" ><img src="resources/Icon' . $short . '.png"></a></li>';
         }
+        echo '<li><a href="includes/darkmode.inc.php" ><img src="resources/darkmode.png"></a></li>';
     }
 } else {
      echo '<li id="homeshortcut"><a href="/" ><img src="resources/IconHome.png"></a></li>';

@@ -106,17 +106,17 @@ if ($id == $userId) {
 
     //Staff Icons
     if ($id == 1) {
-        echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/admin.png" style="width:20px;margin-left:10px;" title="Lead Developer"></h4>';
+        echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/admin.png" style="width:20px;margin-left:10px;" title="Lead Developer"></h4>';
     } else if ($result['staff'] == "admin") {
-        echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/developer.png" style="width:20px;margin-left:10px;" title="Administrator"></h4>';
+        echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/developer.png" style="width:20px;margin-left:10px;" title="Administrator"></h4>';
     } else if ($result['staff'] == "artist") {
-        echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/artist.png" style="width:20px;margin-left:10px;" title="Site Artist"></h4>';
+        echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/artist.png" style="width:20px;margin-left:10px;" title="Site Artist"></h4>';
     } else if ($result['staff'] == "moderator") {
-        echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/moderator.png" style="width:20px;margin-left:10px;" title="Moderator"></h4>';
+        echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/moderator.png" style="width:20px;margin-left:10px;" title="Moderator"></h4>';
     } else if ($id > 2 && $id < 10) {
-        echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/NPC.png" style="width:20px;margin-left:10px;" title="NPC Account"></h4>';
+        echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/NPC.png" style="width:20px;margin-left:10px;" title="NPC Account"></h4>';
     } else {
-        echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Profile Info</h4>';
+        echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info</h4>';
     }
     echo '<p class="snoozelinginfo"><strong>Player ID: </strong>' . $result['id'];
 
@@ -281,16 +281,16 @@ if ($id === "4") {
     
     //Left Side Achievements + Right Side Friends
     echo '  <div class="secondrow">
-               <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;overflow:scroll;overflow-x: hidden;" >
-<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Bio</h4>
+               <div class="profilerowtwo" style="overflow:auto;overflow-x: hidden;" >
+<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Bio</h4>
                                    <div  >';
    echo '<p class="snoozelinginfo">' . nl2br(htmlspecialchars($result['bio'])) . '</p>';
 
 
              echo   '</div>';
              echo   '</div>
-                <div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px; height: 200px;">';
-                 echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Friends</h4>';
+                <div class="profilerowtwo" >';
+                 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Friends</h4>';
                 /* echo   '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" ><a href="friends?id=' . $id . '">&nbsp;&nbsp;&nbsp;Friends</a></h4>';
     
                  //Friend Display
@@ -329,7 +329,7 @@ if ($id === "4") {
     echo '<div class="profilenav">';
     echo '<a href="crafting"><img src="resources/desk.png" class="profilenavimage"></a>';
     echo '<a href="farm"><img src="resources/plantbox.png" class="profilenavimage"></a>';
-    echo '<a href="pack"><img src="resources/backpack.jpg" class="profilenavimage"></a>';
+    echo '<a href="pack"><img src="resources/backpack.png" class="profilenavimage"></a>';
     echo '<a href="dyes"><img src="resources/dyePot.png" class="profilenavimage"></a>';
     echo '</div>';
     }

@@ -26,7 +26,7 @@ $rand = rand(0, $count);
 
 //Display Request
 echo '<div class="itemPageRow" style="background-color:' . $notesarray[$rand] . ';margin-bottom:20px;">';
-echo '<div class="itemPage">';
+echo '<div class="itemPage requestText">';
 echo '<h4 id="colortitle" style="margin-top:0;margin-bottom:20px;">Request #' . $id . '</h4>';
 echo '<img id="itemicon" src="items/' . $request['name'] . '.png" style="width: 150px;">';
 echo '<p style="margin-top:12px">1x ' . $request['displayname'] . '</p>';

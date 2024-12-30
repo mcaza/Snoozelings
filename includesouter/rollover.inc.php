@@ -216,7 +216,37 @@ foreach ($requests as $request) {
 
 echo $requestcount . ' Penpal Requests Cancelled. \n';
 
-    
+//Select New Kindness Store Items
+$query = 'UPDATE kindnessShop SET daily = 0';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+
+$kindArray = [7];
+$query = 'SELECT * FROM kindnessShop';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$count = count($items) - 1;
+
+$i = 0;
+while ($i < 7) {
+    $num = rand(0, $count);
+    if (in_array($num,$kindArray)) {
+        
+    } else {
+        array_push($kindArray, $num);
+        $i++;
+    }
+}
+
+foreach ($kindArray as $kind) {
+    $query = 'UPDATE kindnessShop SET daily = 1 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $kind);
+    $stmt->execute();
+}
+
     echo "Rollover Finished!";
 
     $affirmstmt = null;

@@ -103,7 +103,7 @@ echo "<p>" . $pet['title'] . '</p>';
 
 //Pet Info
 echo '<div class="bar profilebox" style="overflow-y: auto;">';
-echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Pet Info</h4>';
+echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Pet Info</h4>';
 echo '<p class="snoozelinginfo"><strong>Pet ID: </strong>' . $pet['id'];
 echo '<p class="snoozelinginfo"><strong>Pronouns: </strong>' . $pet['pronouns'];
 echo '<p class="snoozelinginfo"><strong>Birthday: </strong>' . $monthArray[$monthNum -1] . " " . $dayNum;
@@ -143,8 +143,8 @@ echo '<div class="secondrow">';
 
 
 //Plushie Build
-echo '<div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px;overflow-y: auto; height: 305px;">';
-echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188; height: " >&nbsp;&nbsp;&nbsp;Plushie Build</h4>';
+echo '<div class="petrowtwo bar" >';
+echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Plushie Build</h4>';
 $query = "SELECT * FROM snoozelings WHERE id = :id;";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $id);
@@ -261,8 +261,8 @@ echo  '</ul>';
 echo '</div>';
 
 //Bio Box
-echo '<div class="profilerowtwo" style="border: 2px dashed #827188; border-radius: 20px;overflow-y: auto; height: 305px;scroll;overflow-x: hidden;">';
-echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188; height: " >&nbsp;&nbsp;&nbsp;Bio</h4>';
+echo '<div class="petrowtwo">';
+echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Bio</h4>';
     echo '<p class="snoozelinginfo">' . nl2br(htmlspecialchars($pet['bio'])) . '</p>';
 
 echo '</div>';
@@ -272,9 +272,9 @@ echo '<hr>';
 echo '<div class="secondrow">';
 
 //Inspired Snoozelings
-echo '<div class="profilerowtwo">';
-echo '<div class="itemsapplied bar" style="height: 140px; width: 100%; border: 2px dashed #827188; border-radius: 20px;overflow-y: auto;">';
-echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Snooze Family</h4>';
+echo '<div style="width:40%">';
+echo '<div class="itemsapplied bar petrowthree" >';
+echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Snooze Family</h4>';
 echo '<div style="display: flex; flex-direction: column; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; " >';
 if ($pet['parents']) {
     $parents = explode(" ", $pet['parents']);
@@ -315,11 +315,11 @@ echo '</div>';
 echo '</div>';
 
 //Small Right Boxes
-echo '<div class="profilerowtwo">';
+echo '<div style="width:40%">';
 
 //Clothes Box
-echo '<div class="itemsapplied box" style="height: 140px; width: 100%; border: 2px dashed #827188; border-radius: 20px;margin-bottom: 2.1rem; overflow-y: auto;">';
-echo '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" >&nbsp;&nbsp;&nbsp;Snooze Clothes</h4>';
+echo '<div class="itemsapplied box petrowthree" >';
+echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Snooze Clothes</h4>';
 $clothes = [];
 $list = "";
 if ($pet['clothesBoth']) {

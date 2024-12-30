@@ -15,7 +15,7 @@ require_once '../includes/ticketcheck.inc.php';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Ticket #<?php $ticket = $_GET['ticketid']; echo $ticket ?></title>
-    <link rel="stylesheet" href="styles.css">
+    <?php require_once '../includes/css.inc.php'; ?>
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
 

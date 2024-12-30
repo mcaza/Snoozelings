@@ -177,7 +177,7 @@ if (isset($_SESSION['user_id'])) {
 
     //Recent News
     echo '<div class="indexBox">';
-    echo '<h3 style="margin-top: 0;border-bottom:2px dashed #827188; padding-bottom: 1rem;margin-bottom: 1rem;">Recent News</h3>';
+    echo '<h3>Recent News</h3>';
     echo '<h4 style="margin-top: 0;">' . $news['title'] . '</h4>';
     echo '<div style="height: 250px; overflow: hidden;">' . nl2br($news['text']) . '</div>';
     echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $news['id'] . '">Read More >></a></div>';
@@ -185,7 +185,7 @@ if (isset($_SESSION['user_id'])) {
 
     //Recent Submissions
     echo '<div class="indexBox">';
-    echo '<h3 style="margin-top: 0;border-bottom:2px dashed #827188; padding-bottom: 1rem;margin-bottom: 1rem;">Kindness Coins</h3>';
+    echo '<h3 >Kindness Coins</h3>';
     echo '<h4 style="margin-top: 0;">' . $submissions['title'] . '</h4>';
     echo '<div style="height: 250px; overflow: hidden;">' . nl2br($submissions['text']) . '</div>';
     echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $submissions['id'] . '">Read More >></a></div>';
@@ -206,16 +206,16 @@ if (isset($_SESSION['user_id'])) {
     //Collect Snoozelings
     echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Collect and Create Snoozelings</h3>';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
-    echo '<div style="width: 30%;"><img src="resources/promo2.png" class="adimage"><p><b>Pesto</b></p></div>';
-    echo '<div style="width: 30%;"><img src="resources/promo6.png" class="adimage"><p><b>Dino Nuggets</b></p></div>';
-    echo '<div style="width: 30%;"><img src="resources/promo5.png" class="adimage"><p><b>Bubby</b></p></div>';
+    echo '<div style="width: 33%;"><img src="resources/promo2.png" class="adimage"><p><b>Mayor Cocoa</b></p></div>';
+    echo '<div style="width: 33%;"><img src="resources/promo6.png" class="adimage"><p><b>Princess Mingi</b></p></div>';
+    echo '<div style="width: 33%;"><img src="resources/promo1.png" class="adimage"><p><b>Scrap</b></p></div>';
     echo '</div>';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
-    echo '<div style="width: 30%;"><img src="resources/promo4.png"  class="adimage"><p><b>Pearl</b></p></div>';
-    echo '<div style="width: 30%;"><img src="resources/promo1.png" class="adimage"><p><b>Meringue</b></p></div>';
-    echo '<div style="width: 30%;"><img src="resources/promo3.png" class="adimage"><p><b>Crescendo</b></p></div>';
+    echo '<div style="width: 33%;"><img src="resources/promo3.png"  class="adimage"><p><b>Morticia</b></p></div>';
+    echo '<div style="width: 33%;"><img src="resources/promo4.png" class="adimage"><p><b>Chizori</b></p></div>';
+    echo '<div style="width: 33%;"><img src="resources/promo5.png" class="adimage"><p><b>Tortellini</b></p></div>';
     echo '</div>';
-    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">The above Snoozelings were all created during Alpha Test Number One</p>';
+    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;"><i>The above Snoozelings were all created during Early Access by various users.</i></p>';
     
     //Self Care Section
     echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Practice Self Care</h3>';
@@ -238,8 +238,8 @@ if (isset($_SESSION['user_id'])) {
     echo '<p style="padding-bottom:2rem;border-bottom: 2px dashed #827188;padding-bottom:2rem;">Create New Clothes, Fabrics, Items, and Designs for Your Snoozelings</p>';
     echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Clothing Dye System</h3>';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
-    echo '<div style="width:80%;"><img src="resources/dyes1.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;margin-bottom:12px;"></div>';
-    echo '<div style="width:80%;"><img src="resources/Dyes2.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
+    echo '<div style="width:40%;"><img src="resources/dyes1.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;margin-bottom:12px;"></div>';
+    echo '<div style="width:40%;"><img src="resources/Dyes2.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
     echo '</div>';
     echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">Dye your Clothes with Over Twenty-Six Custom Colors</p>';
     

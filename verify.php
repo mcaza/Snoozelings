@@ -13,7 +13,7 @@ require_once '../includes/viewErrors.inc.php';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Email</title>
-    <link rel="stylesheet" href="styles.css">
+    <?php require_once '../includes/css.inc.php'; ?>
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>
 

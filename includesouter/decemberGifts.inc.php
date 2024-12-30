@@ -60,9 +60,8 @@ if ($month == 12) {
         }
     } else if ($weekday == 31) {
         if ($day < $weekday) {
-            if ($weekday < 25) {
             echo '<p>' . $gift['phrase'] . '</p>';
-            }
+            
             if ($weekday == 1 || $weekday == 21) {
                 $day = ltrim($weekday,"0") . 'st';
             } else if ($weekday == 2 || $weekday == 22) {
@@ -80,9 +79,9 @@ if ($month == 12) {
         
     } else {
         if ($day < 25) {
-            if ($weekday < 25) {
+
             echo '<p>' . $gift['phrase'] . '</p>';
-            }
+
             if ($weekday == 1 || $weekday == 21) {
                 $day = ltrim($weekday,"0") . 'st';
             } else if ($weekday == 2 || $weekday == 22) {

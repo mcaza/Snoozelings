@@ -213,8 +213,8 @@ if ($tutorial < 4) {
             if ($user['decGift'] < $weekday) {
                 $gift = 1;
             }
-        } else if ($weekday > 24 && $weekday < 31) {
-            if ($day < 25) {
+        } else  {
+            if ($user['decGift'] < 25) {
                 $gift = 1;
             }
         }

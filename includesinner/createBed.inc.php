@@ -118,7 +118,7 @@ if ($total == 2) {
         $stmt->execute();
     }
     
-    $newCount = $user['coinCount'] - $amount;
+    $newCount = $user['coinCount'] - $coinAmount;
     $query = 'UPDATE users SET coinCount = :new WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);

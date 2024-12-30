@@ -10,7 +10,7 @@ if ($_SESSION['reply']) {
 }
 
 //Get Items In Money Order By Cost
-$query = "SELECT * FROM kindnessShop ORDER BY price";
+$query = "SELECT * FROM kindnessShop WHERE daily = 1 ORDER BY price";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);

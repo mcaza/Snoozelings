@@ -109,10 +109,10 @@ foreach ($titles as $title) {
 if ($result['farmEXP']  > 999.5) {
     echo '<option value="Crop Whisperer">Crop Whisperer</option>';
 }
-if ($result['explorerEXP '] > 999.5) {
+if ($result['exploreEXP'] > 999.5) {
     echo '<option value="Grand Adventurer">Grand Adventurer</option>';
 }
-if ($result['farmEXP '] > 999.5) {
+if ($result['craftEXP'] > 999.5) {
     echo '<option value="Hooked on Crafts">Hooked on Crafts</option>';
 }
 echo "</select><br>";

@@ -95,15 +95,15 @@ if ($dyebatch) {
     } else {
         echo '<p><i>' . $interval->format("%h Hours, %i Minutes") . ' Remaining</i></p>';
     }
-    
+    echo '<hr>';
 }
 
-echo '<hr>';
+
 if (!$dyebatch) {
     echo '<form method="post" action="includes/applyDye.inc.php">';
 }
 
-echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:15px;padding-bottom: 25px;margin: auto;margin-bottom:20px;">';
+echo '<div class="dyebox">';
 echo '<h1>Available Dyes</h1>';
 echo '<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-evenly;">';
 
@@ -139,7 +139,7 @@ if (!$dyebatch) {
 echo '</div>';
 
 //Dyable Items Section
-echo '<div style="border:#827188 2px dashed;border-radius: 20px;width:80%;padding:15px;padding-bottom: 25px;margin: auto;margin-bottom:20px;">';
+echo '<div class="dyebox">';
 echo '<h1>Available Items</h1>';
 echo '<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-evenly;">';
 
@@ -196,7 +196,7 @@ echo '</div>';
 if ($dyebatch) {
     echo '<br><p><b>You already have an item in the dye pot</b></p>';
 } else {
-    echo "<button class='fancyButton' style='margin-top:20px;width:200px;' >Dye Item</button>";
+    echo "<button class='fancyButton' style='margin-top:20px;width:120px;' >Dye Item</button>";
 }
 
 echo '</div>';

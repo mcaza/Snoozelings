@@ -234,6 +234,9 @@ hr {
 
 .profilerowtwo {
     width: 40%;
+    border: 2px dashed #827188;
+    border-radius: 20px;
+    height: 200px;
 }
 
 .secondrow {
@@ -241,6 +244,32 @@ hr {
     flex-direction: row;
     justify-content:  center;
     column-gap: 4.5rem;
+}
+
+.profileh4 {
+    text-align: left;
+    margin-top: 1rem;
+    padding-bottom: .5rem;
+    font-size: 2.2rem;
+    border-bottom: 2px dashed #827188;
+}
+
+.petrowtwo {
+    border: 2px dashed #827188;
+    border-radius: 20px;
+    overflow-y: auto;
+    height: 305px;
+    width: 40%;
+    border-radius: 20px;
+}
+
+
+.petrowthree {
+    height: 160px;
+    width: 100%;
+    border: 2px dashed #827188;
+    border-radius: 20px;
+    overflow-y: auto;
 }
 
 /* Table Styles */
@@ -699,7 +728,7 @@ margin-top: 15px;
 /* Scroll Bar Styles */
 html::-webkit-scrollbar {
   width: 15px;
-background: red;
+background: #221C35;
 }
 
 html::-webkit-scrollbar-track {
@@ -713,7 +742,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 html::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+  background: #221C35;; 
 }
 
 .profilerowtwo::-webkit-scrollbar {
@@ -731,11 +760,12 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .profilerowtwo::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+  background: #221C35; 
 }
 
 .bar::-webkit-scrollbar {
   width: 8px;
+background: #221C35;
 }
 
 .bar::-webkit-scrollbar-track {
@@ -749,8 +779,9 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .bar::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+  background: #221C35; 
 }
+
 /* Pet.html Styles */
 
 .button-bar {
@@ -1001,6 +1032,13 @@ a.selected {
 
 .adimage:hover {
     width: 100%;
+}
+
+.indexBox h3 {
+    margin-top: 0;
+    border-bottom:2px dashed #827188;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Trendy Tails Styles */
@@ -1448,6 +1486,16 @@ a.recipe:hover {
     width:200px;
     height: auto;
     transform: scaleX(-1);
+}
+
+.dyebox {
+    border:#827188 2px dashed;
+    border-radius: 20px;
+    width:80%;
+    padding:15px;
+    padding-bottom: 25px;
+    margin: auto;
+    margin-bottom:20px;
 }
 
 /* Explore Styles */
