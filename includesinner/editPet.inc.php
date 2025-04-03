@@ -46,7 +46,8 @@ $userId = $_SESSION['user_id'];
     for ($i = 1; $i < $itemcount; $i++) {
         if ($_POST[$i]) {
             $temp = $_POST[$i];
-            $item = (int)filter_var($temp, FILTER_SANITIZE_NUMBER_INT);
+            $temp2 = rtrim($temp, '0123456789');
+            $item = (int)filter_var($temp2, FILTER_SANITIZE_NUMBER_INT);
             $name = str_replace($item,"",$temp);
             array_push($clothesarray, $item);
             array_push($namearray, $name);

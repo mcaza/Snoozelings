@@ -57,10 +57,17 @@ if ($post) {
         echo '<p style="margin-top: 3rem;margin-bottom: 3rem;width: 70%;margin-left: auto;margin-right: auto;line-height: 2rem;">' . nl2br(htmlspecialchars($post['text'])) . '</p>';
     }
     
-    echo '<p><i>' . $post['likes'] . ' Likes, ' . $count . ' Comments</i></p>';
     echo '</div>';
     
+    echo '<hr>';
+    
+     //Date
+    $phpdate = strtotime($post['datetime']);
+    $mysqldate = date('m-d-Y',$phpdate);
+    echo '<p><b>Posted on ' . $mysqldate . '</b></p>';
+    
     echo '<hr style="margin-top: 2rem; margin-bottom: 2rem;">';
+    echo '<p><i>' . $post['likes'] . ' Likes, ' . $count . ' Comments</i></p>';
     
     
     foreach ($comments as $comment) {

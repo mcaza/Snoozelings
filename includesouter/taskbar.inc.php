@@ -46,7 +46,7 @@ $month = ltrim(date('m'), "0");
         <div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop"><a href="games">Fun Stuff</a></button>
             <div class="dropdown-content">
-                <a href="raffle">Kindness Raffle</a>
+                <a href="raffle">Daily Raffle</a>
                 <a href="randomitem">Simon\'s Gifts</a>';
         
         //Dec Event
@@ -54,8 +54,7 @@ $month = ltrim(date('m'), "0");
             echo   '<a href="decemberGifts">Cocoa\'s Gifts</a>';
         }
              
-          echo      '<a href="designer">Pet Designer</a>
-            </div>
+          echo      ' </div>
         </div>
         <div class="dropdown">
             <button class="menu dropdown dropbtn" id="drop"><a href="journal">Self Care</a></button>

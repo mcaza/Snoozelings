@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Check Coins
-    $query = 'SELECT coinCount, petBeds FROM users WHERE id = :id';
+    $query = 'SELECT coinCount, petBeds, petOrder FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
@@ -136,7 +136,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":title", $title);
     $stmt->execute();
     
-    
+    //Add to Custom Order
+    if ($coins['petOrder']) {
+        $newOrder = $coins['petOrder'] . " " . $pet['pet_id'];
+        $query = 'UPDATE users SET petOrder = :petOrder WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":petOrder", $newOrder);
+        $stmt->execute();
+    }
     
     //Remove Adopt
     $query = "DELETE FROM adopts WHERE pet_id = :id";

@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $crafter = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($crafter['pet_id'] === $one) {
+    if ($crafter['pet_id'] == $one) {
         $_SESSION['reply'] = '<p>You can not donate the pet currently assigned to your crafting table.</p>';
         header("Location: ../adoption");
         die(); 
@@ -164,6 +164,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":title", $title);
     $stmt->bindParam(":id", $one);
     $stmt->execute(); 
+    
+    //Reset User Reorder
+    $query = "UPDATE users SET petOrder = NULL WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
     
     $_SESSION['reply'] = '<p>Your pet has been donated and will be available after their spa day.</p>';
         header("Location: ../adoption");

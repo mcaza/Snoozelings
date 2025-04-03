@@ -26,6 +26,13 @@ $stmt->bindParam(":status", $admin);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Get Dark Mode Info
+$query = 'SELECT * FROM users WHERE :id = id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 //Display Admin Escalated Tickets
 echo '<h1>Admin Escalated</h1>';
 echo '<table style="width: 80%">';
@@ -40,13 +47,24 @@ $displayarray = [];
 foreach ($results as $result) {
     if (!in_array($result['ticketid'], $displayarray)) {
         if ($result['waitingreply']) {
-            $backgroundcolor = "#FFCCCB";
-            echo '<tr style="background-color: #FFCCCB;">';
+            if ($user['mode'] == "Dark") {
+                $backgroundcolor = "#3A0002";
+                echo '<tr style="background-color: #3A0002;">';
+            } else {
+                $backgroundcolor = "#FFCCCB";
+                echo '<tr style="background-color: #FFCCCB;">';
+            }
         } else {
-            $backgroundcolor = "#D7EED7";
+            if ($user['mode'] == "Dark") {
+                $backgroundcolor = "#003300";
+                echo '<tr style="background-color: #003300;">';
+            } else {
+                $backgroundcolor = "#D7EED7";
             echo '<tr style="background-color: #D7EED7;">';
+            }
+            
         }
-
+        
         if ($result['notes']) {
             $notes = result['notes'];
         } else {
@@ -77,16 +95,28 @@ echo '<th>Ticket Type</th>';
 echo '<th width="70%">Moderator Notes</th>';
 echo '</tr>';
 
+
 //Display Results
 $displayarray = [];
 foreach ($results as $result) {
     if (!in_array($result['ticketid'], $displayarray)) {
         if ($result['waitingreply']) {
-            $backgroundcolor = "#FFCCCB";
-            echo '<tr style="background-color: #FFCCCB;">';
+            if ($user['mode'] == "Dark") {
+                $backgroundcolor = "#3A0002";
+                echo '<tr style="background-color: #3A0002;">';
+            } else {
+                $backgroundcolor = "#FFCCCB";
+                echo '<tr style="background-color: #FFCCCB;">';
+            }
         } else {
-            $backgroundcolor = "#D7EED7";
+            if ($user['mode'] == "Dark") {
+                $backgroundcolor = "#003300";
+                echo '<tr style="background-color: #003300;">';
+            } else {
+                $backgroundcolor = "#D7EED7";
             echo '<tr style="background-color: #D7EED7;">';
+            }
+            
         }
 
         if ($result['notes']) {

@@ -149,14 +149,24 @@ if ($tickets) {
     foreach ($tickets as $ticket) {
         if (intval($ticket['status']) < 2) {
             $opencount++;
-                if ($ticket['waitingreply'] == 1) {
-                $backgroundcolor = "#D7EED7";
-                echo '<tr style="background-color: #D7EED7;">';
+                if ($result['waitingreply']) {
+            if ($user['mode'] == "Dark") {
+                $backgroundcolor = "#3A0002";
+                echo '<tr style="background-color: #3A0002;">';
             } else {
-                $backgroundcolor = "#FFCCCB";
                 $backgroundcolor = "#FFCCCB";
                 echo '<tr style="background-color: #FFCCCB;">';
             }
+        } else {
+            if ($user['mode'] == "Dark") {
+                $backgroundcolor = "#003300";
+                echo '<tr style="background-color: #003300;">';
+            } else {
+                $backgroundcolor = "#D7EED7";
+            echo '<tr style="background-color: #D7EED7;">';
+            }
+            
+        }
             if ($ticket['waitingreply'] == 1) {
                 $notes = "Waiting on Reply";
             } else {
@@ -184,8 +194,13 @@ if ($tickets) {
     foreach ($tickets as $ticket) {
         if (intval($ticket['status']) == 2) {
             $closedcount++;
+            if ($user['mode'] == "Dark") {
+                $backgroundcolor = "#001D3D";
+                echo '<tr style="background-color: #001D3D;">';
+            } else {
                 $backgroundcolor = "#FFCCCB";
                 echo '<tr style="background-color: #FFCCCB;">';
+            }
             $notes = "Closed Ticket";
             echo "<td style='background-color:" . $backgroundcolor . "' ><a href='ticket?ticketid=" . $ticket['ticketid'] . "' style='display: block; width: 100%; height: 100%;'>" . $ticket['ticketid'] . "</a></td>";
             echo "<td style='background-color:" . $backgroundcolor . "' ><a href='ticket?ticketid=" . $ticket['ticketid'] . "' style='display: block; width: 100%; height: 100%;'>" . $ticket['topic'] . "</a></td>";

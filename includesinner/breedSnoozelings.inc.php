@@ -231,6 +231,10 @@ header("Location: ../index");
 
 
 function breed($pdo, $first, $second, $user, $breeding, $breedid) {
+    $rares = ['BananaPeel','Bee','Chalkboard','Collie','DinoOatmeal','Paint','Raccoon','RedPanda','Retro','Sloth'];
+    $fabrics =['Acorns','CowBlue','CowBrown','CowGrey','CowPink','Forest','GoldHearts','HolidayBlanket','Leaves','Mistletoe','Ocean','PastelBlueDots','PastelBrownDots','PastelPinkDots','PastelPurpleDots','PastelShapes','PinkPetals','PurplePlaid','RetroFloor','SilverHearts','Spooky','Waves','HolidayTreats'];
+    $matches =['FallenLeaves','Waterfall','Latte','Ink','Taffy','Basil','Gold','Holiday','Basil','Leaf','Lagoon','Pastel','Toffee','CottonCandy','Shell','IceCavern','Flower','Pillow','Pigment','Silver','Mandarin','Blueberry','Cornflower'];
+    
     //Get Info from parent One
     $query = 'SELECT * FROM snoozelings WHERE id = :id';
     $stmt = $pdo->prepare($query);
@@ -252,548 +256,382 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
         $stmt->execute();
         $two = $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
     
-    //Calculate Main Color
-    $query = 'SELECT * FROM colors WHERE name = :name';
+    //Grab all Colors
+    $query = 'SELECT * FROM colors';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['mainColor']);
     $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
-    
-    $query = 'SELECT * FROM colors WHERE name = :name';
+    $colorList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      
+    //Add Color Info to Array
+    $color1 = $one['mainColor'];
+    $query = 'SELECT * FROM colors where name = :name';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['mainColor']);
+    $stmt->bindParam(":name", $color1);
     $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    $mainColors = array_merge($mainone, $maintwo);
+    $info1 = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    //Check For Mix Colors
-    if (in_array("Red", $mainColors) && in_array("Yellow", $mainColors)) {
-        array_push($mainColors, "Orange");
-    }
-    if (in_array("Red", $mainColors) && in_array("White", $mainColors)) {
-        array_push($mainColors, "Pink");
-    }
-    if (in_array("Red", $mainColors) && in_array("Blue", $mainColors)) {
-        array_push($mainColors, "Purple");
-    }
-    if (in_array("Blue", $mainColors) && in_array("Yellow", $mainColors)) {
-        array_push($mainColors, "Green");
-    }
-    if (in_array("Green", $mainColors)) {
-        array_push($mainColors, "Yellow");
-        array_push($mainColors, "Blue");
-    }
-    if (in_array("Orange", $mainColors)) {
-        array_push($mainColors, "Yellow");
-        array_push($mainColors, "Red");
-    }
-    if (in_array("Pink", $mainColors)) {
-        array_push($mainColors, "White");
-        array_push($mainColors, "Red");
-    }
-    if (in_array("Purple", $mainColors)) {
-        array_push($mainColors, "Red");
-        array_push($mainColors, "Blue");
-    }
+    $color2 = $two['mainColor'];
+    $query = 'SELECT * FROM colors where name = :name';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $color2);
+    $stmt->execute();
+    $info2 = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    //Remove Duplicates
-    $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
+    $colors = [];
+    $hues = [];
+    $categories = [];
     
-    //Grab Sub Colors
-    $subcolors = [];
-    foreach ($mainColors as $color) {
-        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":colorSearch", $color);
-        $stmt->execute();
-        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($subs as $sub) {
-            if ($sub['rarity'] === "Rare") {
-                
-            } else {
-                array_push($subcolors, $sub['name']);
+    array_push($colors,$info1['color'],$info2['color']);
+    array_push($hues,$info1['hue'],$info2['hue']);
+    array_push($categories,$info1['category'],$info2['category']);
+            
+    $options = [];
+    foreach ($colorList as $color) {
+        foreach ($colors as $col) {
+            if ($color['color'] == $col) {
+                foreach ($hues as $hue) {
+                    if ($color['hue'] == $hue) {
+                        foreach ($categories as $category) {
+                            if ($color['category'] == $category) {
+                                array_push($options,$color['name']);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-    $subcolors = array_unique($subcolors);
-    $subcolors = array_values($subcolors);
-    
-    //Check For Rare Colors
-    $rare = [];
-    if ($cats1['rarity'] === 'Rare') {
-        array_push($rare, $cats1['name']);
-    }
-    if ($cats2['rarity'] === 'Rare') {
-        array_push($rare, $cats2['name']);
-    }
-    if ((in_array("Black", $mainone) && in_array("Eyeburner", $maintwo)) || (in_array("Black", $maintwo) && in_array("Eyeburner", $mainone))) {
-        array_push($rare, "Retro");
-    }
-    if ((in_array("Black", $mainone) && in_array("Red", $maintwo)) || (in_array("White", $mainone) && in_array("Red", $maintwo)) || (in_array("Black", $maintwo) && in_array("Red", $mainone)) || (in_array("White", $maintwo) && in_array("Red", $mainone))) {
-        array_push($rare, "RedPanda");
-    }
-    if ((in_array("Black", $mainone) && in_array("Yellow", $maintwo)) || (in_array("Yellow", $mainone) && in_array("Brown", $maintwo)) || (in_array("Black", $maintwo) && in_array("Yellow", $mainone)) || (in_array("Yellow", $maintwo) && in_array("Brown", $mainone))) {
-        array_push($rare, "Bee");
-    }
-    if ((in_array("Black", $mainone) && in_array("Grey", $maintwo)) || (in_array("Grey", $mainone) && in_array("White", $maintwo)) || (in_array("Black", $maintwo) && in_array("Grey", $mainone)) || (in_array("Grey", $maintwo) && in_array("White", $mainone))) {
-        array_push($rare, "Raccoon");
-    }
-    if ((in_array("Green", $mainone) && in_array("Brown", $maintwo)) || (in_array("Green", $maintwo) && in_array("Brown", $mainone))) {
-        array_push($rare, "Sloth");
-    }
-    if ((in_array("Black", $mainone) && in_array("Blue", $maintwo)) || (in_array("White", $mainone) && in_array("Blue", $maintwo)) || (in_array("Black", $maintwo) && in_array("Blue", $mainone)) || (in_array("White", $maintwo) && in_array("Blue", $mainone))) {
-        array_push($rare, "Collie");
-    }
-    if ($one['mainColor'] === "Oatmeal" || $two['mainColor'] === "Oatmeal") {
-        if (in_array("Red", $mainone) || in_array("Green", $mainone) || in_array("Blue", $mainone) || in_array("Red", $maintwo) || in_array("Green", $maintwo) || in_array("Blue", $maintwo)) {
-            array_push($rare, "DinoOatmeal");
-        }
-    }
-    if ($one['mainColor'] === "Banana" || $two['mainColor'] === "Banana") {
-        if (in_array("Brown", $mainone) || in_array("Brown", $maintwo)) {
-            array_push($rare, "BananaPeel");
-        }
-    }
-    if ((in_array("Eyeburner", $mainone) && in_array("White", $maintwo)) || (in_array("Eyeburner", $maintwo) && in_array("White", $maintwo))) {
-        array_push($rare, "Paint");
-    }
-    if ((in_array("Pastel", $mainone) && in_array("Black", $maintwo)) || (in_array("Pastel", $maintwo) && in_array("Black", $mainone))) {
-        array_push($rare, "Chalkboard");
-    }
-    
-    $rare = array_unique($rare);
-    $rare = array_values($rare);
-    //Calculate if Rare
-    if ($rare) {
-        $num = rand(0, 100);
-        if ($num < 50) {
-            $count = count($rare) -1;
-            $num = rand(0, $count);
-            $mainColor = $rare[$num];
-        } else {
-            $count = count($subcolors) -1;
-            $num = rand(0, $count);
-            $mainColor = $subcolors[$num];
-        }
-    } else {
-        $count = count($subcolors) -1;
-            $num = rand(0, $count);
-            $mainColor = $subcolors[$num];
-    }
+            
+    $oneEach = array_unique($options);
+    $oneEach = array_values($oneEach);
+    $count = count($oneEach) -1;
+    $num = rand(0, $count);
+    $mainColor = $oneEach[$num];
     
     //Eye Color
-    if (in_array($mainColor, $rare)) {
-        $num = rand(0, 100);
-        if ($num < 50) {
-            $eyeColor = $mainColor;
-        } else {
-            //Calculate Eye Color
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['eyeColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
     
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['eyeColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    $mainColors = array_merge($mainone, $maintwo);
-    
-    //Check For Mix Colors
-    if (in_array("Red", $mainColors) && in_array("Yellow", $mainColors)) {
-        array_push($mainColors, "Orange");
-    }
-    if (in_array("Red", $mainColors) && in_array("White", $mainColors)) {
-        array_push($mainColors, "Pink");
-    }
-    if (in_array("Red", $mainColors) && in_array("Blue", $mainColors)) {
-        array_push($mainColors, "Purple");
-    }
-    if (in_array("Blue", $mainColors) && in_array("Yellow", $mainColors)) {
-        array_push($mainColors, "Green");
-    }
-    if (in_array("Green", $mainColors)) {
-        array_push($mainColors, "Yellow");
-        array_push($mainColors, "Blue");
-    }
-    if (in_array("Orange", $mainColors)) {
-        array_push($mainColors, "Yellow");
-        array_push($mainColors, "Red");
-    }
-    if (in_array("Pink", $mainColors)) {
-        array_push($mainColors, "White");
-        array_push($mainColors, "Red");
-    }
-    if (in_array("Purple", $mainColors)) {
-        array_push($mainColors, "Red");
-        array_push($mainColors, "Blue");
-    }
-    
-    //Remove Duplicates
-    $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
-    
-    //Grab Sub Colors
-    $subcolors = [];
-    foreach ($mainColors as $color) {
-        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":colorSearch", $color);
-        $stmt->execute();
-        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($subs as $sub) {
-            if ($sub['rarity'] === "Rare") {
-                
-            } else {
-                array_push($subcolors, $sub['name']);
-            }
+    //Check if rare. Roll to pass down rare.
+    $num = 0;
+    foreach($rares as $rare) {
+        if ($rare == $mainColor) {
+            $num = rand(0,100);
         }
     }
-    $subcolors = array_unique($subcolors);
-    $eyecolors = array_values($subcolors);
-            
-            $count = count($eyecolors)-1;
-            $num = rand(0, $count);
-            $eyeColor = $eyecolors[$num];
-        } 
+    
+    if ($num > 50) {
+        $eyeColor = $mainColor;
     } else {
-        //Calculate Eye Color
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['eyeColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
-    
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['eyeColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    $mainColors = array_merge($mainone, $maintwo);
-    
-    //Check For Mix Colors
-    if (in_array("Red", $mainColors) && in_array("Yellow", $mainColors)) {
-        array_push($mainColors, "Orange");
-    }
-    if (in_array("Red", $mainColors) && in_array("White", $mainColors)) {
-        array_push($mainColors, "Pink");
-    }
-    if (in_array("Red", $mainColors) && in_array("Blue", $mainColors)) {
-        array_push($mainColors, "Purple");
-    }
-    if (in_array("Blue", $mainColors) && in_array("Yellow", $mainColors)) {
-        array_push($mainColors, "Green");
-    }
-    if (in_array("Green", $mainColors)) {
-        array_push($mainColors, "Yellow");
-        array_push($mainColors, "Blue");
-    }
-    if (in_array("Orange", $mainColors)) {
-        array_push($mainColors, "Yellow");
-        array_push($mainColors, "Red");
-    }
-    if (in_array("Pink", $mainColors)) {
-        array_push($mainColors, "White");
-        array_push($mainColors, "Red");
-    }
-    if (in_array("Purple", $mainColors)) {
-        array_push($mainColors, "Red");
-        array_push($mainColors, "Blue");
-    }
-    
-    //Remove Duplicates
-    $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
-    
-    //Grab Sub Colors
-    $subcolors = [];
-    foreach ($mainColors as $color) {
-        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
+        //Add Color Info to Array
+        $color1 = $one['eyeColor'];
+        $query = 'SELECT * FROM colors where name = :name';
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":colorSearch", $color);
+        $stmt->bindParam(":name", $color1);
         $stmt->execute();
-        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($subs as $sub) {
-            if ($sub['rarity'] === "Rare") {
-                
-            } else {
-                array_push($subcolors, $sub['name']);
+        $info1 = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $color2 = $two['eyeColor'];
+        $query = 'SELECT * FROM colors where name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $color2);
+        $stmt->execute();
+        $info2 = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $colors = [];
+        $hues = [];
+        $categories = [];
+
+        array_push($colors,$info1['color'],$info2['color']);
+        array_push($hues,$info1['hue'],$info2['hue']);
+        array_push($categories,$info1['category'],$info2['category']);
+
+        $options = [];
+        foreach ($colorList as $color) {
+            foreach ($colors as $col) {
+                if ($color['color'] == $col) {
+                    foreach ($hues as $hue) {
+                        if ($color['hue'] == $hue) {
+                            foreach ($categories as $category) {
+                                if ($color['category'] == $category) {
+                                    array_push($options,$color['name']);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
+
+        $oneEach = array_unique($options);
+        $oneEach = array_values($oneEach);
+        $raresRemoved = [];
+        foreach ($oneEach as $check) {
+            $z = 0;
+            foreach ($rares as $rare) {
+                if ($check == $rare) {
+                    $z = 1;
+                }
+            }
+            if ($z == 0) {
+                array_push($raresRemoved,$check);
+            }
+        }
+
+        $count = count($raresRemoved) -1;
+        $num = rand(0, $count);
+        $eyeColor = $raresRemoved[$num];
     }
-    $subcolors = array_unique($subcolors);
-    $eyecolors = array_values($subcolors);
-            
-            $count = count($eyecolors)-1;
-            $num = rand(0, $count);
-            $eyeColor = $eyecolors[$num];
-    }
-    
     
     
     //Nose/Ear Color Selection
-    $fabrics = [];
-    $query = 'SELECT * FROM fabrics WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['noseColor']);
-    $stmt->execute();
-    $fabricone = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    $query = 'SELECT * FROM fabrics WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['noseColor']);
-    $stmt->execute();
-    $fabrictwo = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($fabricone) {
-        array_push($fabrics, $one['noseColor']);
-        $catsone = explode(" ", $fabricone['categories']);
-    } else {
-        $query = "SELECT * FROM colors WHERE name = :name";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":name", $one['noseColor']);
-        $stmt->execute();
-        $colorone = $stmt->fetch(PDO::FETCH_ASSOC);
-        $catsone = explode(" ", $colorone['categories']);
+    //Check for Fabrics
+    $count = 0;
+    foreach ($fabrics as $fabric) {
+        if ($fabric == $one['noseColor']) {
+            $noseOne = $matches[$count];
+        } else {
+            $count++;
+        }
     }
     
-    if ($fabrictwo) {
-        array_push($fabrics, $two['noseColor']);
-        $catstwo = explode(" ", $fabrictwo['categories']);
-    } else {
-        $query = "SELECT * FROM colors WHERE name = :name";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":name", $two['noseColor']);
-        $stmt->execute();
-        $colortwo = $stmt->fetch(PDO::FETCH_ASSOC);
-        $catstwo = explode(" ", $colortwo['categories']);
+    $count = 0;
+    foreach ($fabrics as $fabric) {
+        if ($fabric == $two['noseColor']) {
+            $noseTwo = $matches[$count];
+        } else {
+            $count++;
+        }
     }
-    $categories = array_merge($catsone, $catstwo);
     
-    if ($fabrics) {
-        $count = count($fabrics);
-        if ($count > 1) {
-            $num = rand(0,4);
-            if ($num == 0) {
-                $noseColor = $one['noseColor'];
-            } elseif ($num == 1) {
-                $noseColor = $two['noseColor'];
-            } else {
-                $noseColor =  chooseNose($categories, $pdo);
-            }
-        } elseif ($count == 1) {
-            $num = rand(0,4);
-            if ($num == 1) {
-                if ($fabricone) {
-                    $noseColor = $one['noseColor'];
-                } elseif ($fabrictwo) {
-                    $noseColor = $two['noseColor'];
+    if ($noseOne) {
+        $color1 = $noseOne;
+    } else {
+        $color1 = $one['noseColor'];
+    }
+    
+    if ($noseTwo) {
+        $color2 = $noseTwo;
+    } else {
+        $color2 = $two['noseColor'];
+    }
+    
+    //Check if rare. Roll to pass down rare.
+    $num = 0;
+    foreach($rares as $rare) {
+        if ($rare == $mainColor) {
+            $num = rand(0,100);
+        }
+    }
+    
+    if ($num > 50) {
+        $noseColor = $mainColor;
+    } else {
+        //Add Color Info to Array
+        
+        $query = 'SELECT * FROM colors where name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $color1);
+        $stmt->execute();
+        $info1 = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        
+        $query = 'SELECT * FROM colors where name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $color2);
+        $stmt->execute();
+        $info2 = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $colors = [];
+        $hues = [];
+        $categories = [];
+
+        array_push($colors,$info1['color'],$info2['color']);
+        array_push($hues,$info1['hue'],$info2['hue']);
+        array_push($categories,$info1['category'],$info2['category']);
+
+        $options = [];
+        foreach ($colorList as $color) {
+            foreach ($colors as $col) {
+                if ($color['color'] == $col) {
+                    foreach ($hues as $hue) {
+                        if ($color['hue'] == $hue) {
+                            foreach ($categories as $category) {
+                                if ($color['category'] == $category) {
+                                    array_push($options,$color['name']);
+                                }
+                            }
+                        }
+                    }
                 }
-            } else {
-                $noseColor = chooseNose($categories, $pdo);
+            }
+        }
+
+        $oneEach = array_unique($options);
+        $oneEach = array_values($oneEach);
+
+        $raresRemoved = [];
+        foreach ($oneEach as $check) {
+            $z = 0;
+            foreach ($rares as $rare) {
+                if ($check == $rare) {
+                    $z = 1;
+                }
+            }
+            if ($z == 0) {
+                array_push($raresRemoved,$check);
             }
         }
         
-    } else {
-        $noseColor =  chooseNose($categories, $pdo);
+        $count = count($raresRemoved) -1;
+        $num = rand(0, $count);
+        $noseColor = $raresRemoved[$num];
     }
-    
-
     
     //Calculate Hair Color
-        if (in_array($mainColor, $rare)) {
-        $num = rand(0, 100);
-        if ($num < 50) {
-            $hairColor = $mainColor;
-        } else {
-                    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['hairColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
     
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['hairColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    $mainColors = array_merge($mainone, $maintwo);
-        $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
-            
-            //Grab Sub Colors
-    $subcolors = [];
-    foreach ($mainColors as $color) {
-        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":colorSearch", $color);
-        $stmt->execute();
-        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($subs as $sub) {
-            if ($sub['rarity'] === "Rare") {
-                
-            } else {
-                array_push($subcolors, $sub['name']);
-            }
+    //Check if rare. Roll to pass down rare.
+    $num = 0;
+    foreach($rares as $rare) {
+        if ($rare == $mainColor) {
+            $num = rand(0,100);
         }
     }
-    $subcolors = array_unique($subcolors);
-    $haircolors = array_values($subcolors);
-            
-            
-        
-        $count = count($subcolors)-1;
-        $num = rand(0, $count);
-        $hairColor = $haircolors[$num];
-        }
+    
+    if ($num > 50) {
+        $hairColor = $mainColor;
     } else {
-                                $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['hairColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
-    
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['hairColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    $mainColors = array_merge($mainone, $maintwo);
-        $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
-            
-                       //Grab Sub Colors
-    $subcolors = [];
-    foreach ($mainColors as $color) {
-        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
+        //Add Color Info to Array
+        $color1 = $one['hairColor'];
+        $query = 'SELECT * FROM colors where name = :name';
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":colorSearch", $color);
+        $stmt->bindParam(":name", $color1);
         $stmt->execute();
-        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($subs as $sub) {
-            if ($sub['rarity'] === "Rare") {
-                
-            } else {
-                array_push($subcolors, $sub['name']);
+        $info1 = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $color2 = $two['hairColor'];
+        $query = 'SELECT * FROM colors where name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $color2);
+        $stmt->execute();
+        $info2 = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $colors = [];
+        $hues = [];
+        $categories = [];
+
+        array_push($colors,$info1['color'],$info2['color']);
+        array_push($hues,$info1['hue'],$info2['hue']);
+        array_push($categories,$info1['category'],$info2['category']);
+
+        $options = [];
+        foreach ($colorList as $color) {
+            foreach ($colors as $col) {
+                if ($color['color'] == $col) {
+                    foreach ($hues as $hue) {
+                        if ($color['hue'] == $hue) {
+                            foreach ($categories as $category) {
+                                if ($color['category'] == $category) {
+                                    array_push($options,$color['name']);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
-    $subcolors = array_unique($subcolors);
-    $haircolors = array_values($subcolors);
-        
-        $count = count($subcolors)-1;
-        $num = rand(0, $count);
-        $hairColor = $haircolors[$num];
+
+        $oneEach = array_unique($options);
+        $oneEach = array_values($oneEach);
+        $raresRemoved = [];
+        foreach ($oneEach as $check) {
+            $z = 0;
+            foreach ($rares as $rare) {
+                if ($check == $rare) {
+                    $z = 1;
+                }
+            }
+            if ($z == 0) {
+                array_push($raresRemoved,$check);
+            }
         }
-    
+
+        $count = count($raresRemoved) -1;
+        $num = rand(0, $count);
+        $hairColor = $raresRemoved[$num];
+    }
 
     
     //Calculate Tail Color
-    if (in_array($mainColor, $rare)) {
-        $num = rand(0, 100);
-        if ($num < 50) {
-            $tailColor = $mainColor;
-        } else {
-            $num = rand(0, 100);
-            if ($num < 50) {
-                $tailColor = $hairColor;
-            } else {
-                                    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['tailColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
-    
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['tailColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    $mainColors = array_merge($mainone, $maintwo);
-        $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
-                
-                //Grab Sub Colors
-    $subcolors = [];
-    foreach ($mainColors as $color) {
-        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":colorSearch", $color);
-        $stmt->execute();
-        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($subs as $sub) {
-            if ($sub['rarity'] === "Rare") {
-                
-            } else {
-                array_push($subcolors, $sub['name']);
-            }
+    //Check if rare. Roll to pass down rare.
+    $num = 0;
+    foreach($rares as $rare) {
+        if ($rare == $mainColor) {
+            $num = rand(0,100);
         }
     }
-    $subcolors = array_unique($subcolors);
-    $tailcolors = array_values($subcolors);
-        
-        $count = count($subcolors)-1;
-        $num = rand(0, $count);
-        $tailColor = $tailcolors[$num];
-            }
-        }
+    
+    if ($num > 50) {
+        $tailColor = $mainColor;
     } else {
-        $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $one['tailColor']);
-    $stmt->execute();
-    $cats1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $mainone = explode(" ", $cats1['categories']);
-    
-    $query = 'SELECT * FROM colors WHERE name = :name';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":name", $two['tailColor']);
-    $stmt->execute();
-    $cats2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    $maintwo = explode(" ", $cats2['categories']);
-    $mainColors = array_merge($mainone, $maintwo);
-        $mainColors = array_unique($mainColors);
-    $mainColors = array_values($mainColors);
-        
-        //Grab Sub Colors
-    $subcolors = [];
-    foreach ($mainColors as $color) {
-        $query = "SELECT * FROM colors WHERE categories LIKE CONCAT('%', :colorSearch, '%')";
+        //Add Color Info to Array
+        $color1 = $one['tailColor'];
+        $query = 'SELECT * FROM colors where name = :name';
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":colorSearch", $color);
+        $stmt->bindParam(":name", $color1);
         $stmt->execute();
-        $subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($subs as $sub) {
-            if ($sub['rarity'] === "Rare") {
-                
-            } else {
-                array_push($subcolors, $sub['name']);
+        $info1 = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $color2 = $two['tailColor'];
+        $query = 'SELECT * FROM colors where name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $color2);
+        $stmt->execute();
+        $info2 = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $colors = [];
+        $hues = [];
+        $categories = [];
+
+        array_push($colors,$info1['color'],$info2['color']);
+        array_push($hues,$info1['hue'],$info2['hue']);
+        array_push($categories,$info1['category'],$info2['category']);
+
+        $options = [];
+        foreach ($colorList as $color) {
+            foreach ($colors as $col) {
+                if ($color['color'] == $col) {
+                    foreach ($hues as $hue) {
+                        if ($color['hue'] == $hue) {
+                            foreach ($categories as $category) {
+                                if ($color['category'] == $category) {
+                                    array_push($options,$color['name']);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
-    $subcolors = array_unique($subcolors);
-    $tailcolors = array_values($subcolors);
-        
-        $count = count($subcolors)-1;
+
+        $oneEach = array_unique($options);
+        $oneEach = array_values($oneEach);
+        $raresRemoved = [];
+        foreach ($oneEach as $check) {
+            $z = 0;
+            foreach ($rares as $rare) {
+                if ($check == $rare) {
+                    $z = 1;
+                }
+            }
+            if ($z == 0) {
+                array_push($raresRemoved,$check);
+            }
+        }
+
+        $count = count($raresRemoved) -1;
         $num = rand(0, $count);
-        $tailColor = $tailcolors[$num];
+        $tailColor = $raresRemoved[$num];
     }
     
     $hairTypes = [];
@@ -813,18 +651,27 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
     $specialstwo = explode(" ", $two['specials']);
     
     $specials = array_merge($specialsone, $specialstwo);
-    $specials = array_unique($specials);
-    $specials = array_values($specials);
+    $specialsUnique = array_unique($specials);
+    $specialsUnique = array_values($specialsUnique);
     
     $newspec = "";
-    foreach ($specials as $special) {
-        $num = rand(0, 1);
-        if ($num == 0) {
-            $newspec .= $special . " ";
+    foreach ($specialsUnique as $special) {
+        $x = 1;
+        $tmp = array_count_values($specials);
+        $x = $tmp[$special];
+        $num = rand(0, 100);
+        if ($x == 2) {
+            if ($num < 65) {
+                $newspec .= $special . " ";
+            }
+        } else {
+            if ($num < 45) {
+                $newspec .= $special . " ";
+            }
         }
     }
     $newspec = trim($newspec);
-    
+
     
     //Add to Blueprint
     $query = 'INSERT INTO blueprints (owner_id, breeding_id, mainColor, hairColor, tailColor, eyeColor, noseColor, hairType, tailType, specials) VALUES (:owner, :breeding, :mainColor, :hairColor, :tailColor, :eyeColor, :noseColor, :hairType, :tailType, :specials)';

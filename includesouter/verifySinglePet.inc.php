@@ -26,6 +26,7 @@ if (isset($_SESSION['user_id'])) {
         if ($page) {
             
             header("location: " . $page);
+            die();
         }
     
 

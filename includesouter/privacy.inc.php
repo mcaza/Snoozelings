@@ -1,5 +1,9 @@
 <?php
 
+$firstDate = $now->format('m-d');
+
+echo $firstDate;
+
 echo '<h3>PRIVACY POLICY</h3>';
 echo '<p><i>Last Updated November 19, 2023</i></p><br>';
 echo '<div class="privacy" style="width: 90%; margin-left: 2rem; margin-right: auto;text-align: left;">';

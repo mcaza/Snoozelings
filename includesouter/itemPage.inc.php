@@ -363,6 +363,38 @@ if ($results) {
         echo '</form>';
 
     }
+    
+    if ($item['name'] === "Bleach") {
+        $query = 'SELECT * FROM items WHERE user_id = :id AND dye IS NOT NULL';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $query = 'SELECT * FROM dyes';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $dyes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo '<form method="post" action="includes/useBleach.inc.php">';
+        echo '<label for="item"  class="form">Choose An Item:</label><br>';
+        echo '<select  class="input" name="item" id="item"><br>';
+        foreach ($items as $item) {
+            if (!str_contains($item['name'], "Bandana")) {
+                foreach ($dyes as $dye) {
+                    if ($item['dye'] == $dye['name']) {
+                        $dyeName = $dye['display'];
+                        break;
+                    }
+                }
+                echo '<option value="' . $item['id'] . '">' . $item['display'] . ' [' . $dyeName . ']' . '</option>';
+            }
+            
+        }
+        echo '</select>';
+        echo '<div><button class="fancyButton">Wear Item</button></div>';
+        echo '</form>';
+    }
 }
 
 echo '</div>';

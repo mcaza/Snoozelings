@@ -76,7 +76,7 @@ $mail = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
         <!-- All Main Content -->
-        <div class="main-container"><div  class="bottomPush">
+        <div class="main-container"><?php require_once '../includes/news.inc.php'; ?><div  class="bottomPush">
             <?php require_once '../includes/mail.inc.php'; ?>
         </div></div>
     </div>

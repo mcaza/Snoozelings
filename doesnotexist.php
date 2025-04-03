@@ -66,7 +66,7 @@ require_once '../includes/verifySinglePet.inc.php';
 
 
         <!-- All Main Content -->
-        <div class="main-container"><div  class="bottomPush">
+        <div class="main-container"><?php require_once '../includes/news.inc.php'; ?><div  class="bottomPush">
             <img src="resources/lostpageNPC.png" style="width: 45%;">
             <h3>This Page Does Not Exist</h3>
             

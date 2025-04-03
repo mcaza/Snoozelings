@@ -16,12 +16,7 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 $day = $result['decGift'];
 
-//Get Gift Info
-$query = "SELECT * FROM decGifts WHERE id = :id";
-$stmt = $pdo->prepare($query);
-$stmt->bindParam(":id", $weekday);
-$stmt->execute();
-$gift = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
@@ -40,6 +35,12 @@ echo '<h4>Cocoa\'s Holiday Gifts</h4>';
 
 if ($month == 12) {
     if ($weekday < 25) {
+        //Get Gift Info
+        $query = "SELECT * FROM decGifts WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $weekday);
+        $stmt->execute();
+        $gift = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($day < $weekday) {
             if ($weekday < 25) {
             echo '<p>' . $gift['phrase'] . '</p>';
@@ -59,10 +60,17 @@ if ($month == 12) {
             echo '<p><i>Please come back tomorrow.</i></p>';
         }
     } else if ($weekday == 31) {
+        //Get Gift Info
+        $day = 26;
+        $query = "SELECT * FROM decGifts WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $day);
+        $stmt->execute();
+        $gift = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($day < $weekday) {
             echo '<p>' . $gift['phrase'] . '</p>';
             
-            if ($weekday == 1 || $weekday == 21) {
+            if ($weekday == 1 || $weekday == 21 || $weekday == 31) {
                 $day = ltrim($weekday,"0") . 'st';
             } else if ($weekday == 2 || $weekday == 22) {
                 $day = ltrim($weekday,"0") . 'nd';
@@ -79,7 +87,13 @@ if ($month == 12) {
         
     } else {
         if ($day < 25) {
-
+            //Get Gift Info
+            $day = 25;
+            $query = "SELECT * FROM decGifts WHERE id = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $day);
+            $stmt->execute();
+            $gift = $stmt->fetch(PDO::FETCH_ASSOC);
             echo '<p>' . $gift['phrase'] . '</p>';
 
             if ($weekday == 1 || $weekday == 21) {

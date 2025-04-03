@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Check if Item Can be Dyed
     $query = 'SELECT * FROM itemList WHERE name = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $color);
+    $stmt->bindParam(":id", $item);
     $stmt->execute();
     $canDye = $stmt->fetch(PDO::FETCH_ASSOC);
     

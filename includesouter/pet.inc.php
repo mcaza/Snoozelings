@@ -186,13 +186,13 @@ if(!$noseColorResults) {
     $title = "Fabric";
 } else {
     $nose = $noseColorResults["display"];
-    $fabric = $noseColorResults["categories"];
+    $fabric = $noseColorResults["color"] . ' ' . $noseColorResults["category"] . ' ' . $noseColorResults['hue'];
 }
 
-echo '<p class="snoozelinginfo box" id="pbmaincolor" title="' . $mainColorResults["categories"] . '"><strong>Main Color: </strong>' . $mainColorResults["display"] . '</p>
-        <p class="snoozelinginfo" id="pbhaircolor"title="' . $hairColorResults["categories"] . '"><strong>Hair Color: </strong>' . $hairColorResults["display"] . '</p>
-        <p class="snoozelinginfo" id="pbtailcolor"title="' . $tailColorResults["categories"] . '"><strong>Tail Color: </strong>' . $tailColorResults["display"] . '</p>
-        <p class="snoozelinginfo" id="pbeyecolor"title="' . $eyeColorResults["categories"] . '"><strong>Eye Color: </strong>' . $eyeColorResults["display"] . '</p>
+echo '<p class="snoozelinginfo box" id="pbmaincolor" title="' . $mainColorResults["color"] . ' ' . $mainColorResults["category"] . ' ' . $mainColorResults['hue'] . '"><strong>Main Color: </strong>' . $mainColorResults["display"] . '</p>
+        <p class="snoozelinginfo" id="pbhaircolor"title="' . $hairColorResults["color"] . ' ' . $hairColorResults["category"] . ' ' . $hairColorResults['hue'] . '"><strong>Hair Color: </strong>' . $hairColorResults["display"] . '</p>
+        <p class="snoozelinginfo" id="pbtailcolor"title="' . $tailColorResults["color"] . ' ' . $tailColorResults["category"] . ' ' . $tailColorResults['hue'] . '"><strong>Tail Color: </strong>' . $tailColorResults["display"] . '</p>
+        <p class="snoozelinginfo" id="pbeyecolor"title="' . $eyeColorResults["color"] . ' ' . $eyeColorResults["category"] . ' ' . $eyeColorResults['hue'] . '"><strong>Eye Color: </strong>' . $eyeColorResults["display"] . '</p>
         <p class="snoozelinginfo" id="pbnosecolor"title="' . $fabric . '"><strong>Skin Color: </strong>' . $nose . '</p>
         <p class="snoozelinginfo" id="pbhairstyle"><strong>Hair Style: </strong>' . $result["hairType"] . '</p>
         <p class="snoozelinginfo" id="pbtailstyle"><strong>Tail Type: </strong>' . $result["tailType"] . '</p>
@@ -272,7 +272,7 @@ echo '<hr>';
 echo '<div class="secondrow">';
 
 //Inspired Snoozelings
-echo '<div style="width:40%">';
+echo '<div class="petrowholder">';
 echo '<div class="itemsapplied bar petrowthree" >';
 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Snooze Family</h4>';
 echo '<div style="display: flex; flex-direction: column; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; " >';
@@ -315,7 +315,7 @@ echo '</div>';
 echo '</div>';
 
 //Small Right Boxes
-echo '<div style="width:40%">';
+echo '<div class="petrowholder">';
 
 //Clothes Box
 echo '<div class="itemsapplied box petrowthree" >';

@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $table = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!($table['display'] === "")) {
+    if (!($table['display'] == NULL)) {
         $_SESSION['reply'] = "You cannot change pets while crafting.";
         header("Location: ../crafting");
         die();

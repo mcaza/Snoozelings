@@ -58,7 +58,7 @@ require_once '../includes/loginRedirect.inc.php';
 
 
         <!-- All Main Content -->
-        <div class="main-container"><div  class="bottomPush">
+        <div class="main-container"><?php require_once '../includes/news.inc.php'; ?><div  class="bottomPush">
             <div style="margin-bottom: 2rem;"><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
             <h3 style="margin-bottom:1.5rem">Early Access is Open</h3>
             <?php

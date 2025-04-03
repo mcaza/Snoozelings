@@ -50,6 +50,22 @@ $now = new DateTime("now", new DateTimezone('UTC'));
 $future_date = new DateTime($result['finishtime']);
 $interval = $future_date->diff($now);
 
+//Get Level
+$exp = $pet['craftEXP'];
+if ($exp < 50 || $pet['job'] === "jack") {
+    $level = 1;
+} elseif ($exp < 150) {
+    $level = 2;
+} elseif ($exp < 325) {
+    $level = 3;
+} elseif ($exp < 600) {
+    $level = 4;
+} elseif ($exp < 1000) {
+    $level = 5;
+} else {
+    $level = 6;
+}
+
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $userId . '"><<</a>';
@@ -70,7 +86,25 @@ if ($reply) {
 
 //Desk and Snoozeling
 echo '<div class="craftimages">';
-echo '<img src="resources/deskFull.png" id="craftingdesk">';
+echo '<div class="craftingDeskContainer">';
+echo '<img src="resources/table1.png" class="craftingDesk">';
+if ($level > 1) {
+    echo '<img src="resources/table2.png" class="craftingDesk">';
+}
+
+if ($level > 2) {
+    echo '<img src="resources/table3.png" class="craftingDesk">';
+}
+
+if ($level > 3) {
+    echo '<img src="resources/table4.png" class="craftingDesk">';
+}
+
+if ($level > 4) {
+    echo '<img src="resources/table5.png" class="craftingDesk">';
+}
+
+echo '</div>';
 displayPet($pet, "artcrafting");
 echo '</div>';
 echo '<hr>';
@@ -107,21 +141,7 @@ echo '<a href="crafting?type=design" class="craftbutton">Designs</a>';
 echo '<a href="crafting?type=special" class="craftbutton">Special</a>';
 echo '</div>';
 
-//Get Level
-$exp = $pet['craftEXP'];
-if ($exp < 50 || $pet['job'] === "jack") {
-    $level = 1;
-} elseif ($exp < 150) {
-    $level = 2;
-} elseif ($exp < 325) {
-    $level = 3;
-} elseif ($exp < 600) {
-    $level = 4;
-} elseif ($exp < 1000) {
-    $level = 5;
-} else {
-    $level = 6;
-}
+
 
 //Get Holiday Recipes if Any
 $now = new DateTime('now', new DateTimezone('UTC'));

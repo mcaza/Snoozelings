@@ -82,7 +82,7 @@ if ($type === "Submissions") {
         </div>
 
         <!-- All Main Content -->
-        <div class="main-container"><div  class="bottomPush">
+        <div class="main-container"><?php require_once '../includes/news.inc.php'; ?><div  class="bottomPush">
             <?php require_once '../includes/boards.inc.php' ?>
         </div></div>
     </div>

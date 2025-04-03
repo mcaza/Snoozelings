@@ -170,6 +170,13 @@ if (isset($_SESSION['user_id'])) {
         echo '</div>';
     }
     
+    //Resources
+    echo '<div class="indexBox">';
+    echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Game Resources</h4>';
+    echo '<p><a href="gameGuides" class="notif">1. Reference Pages</a></p>';
+    echo '<p><a href="https://discord.gg/sqjMSepvet" class="notif">2. Discord Server</a></p>';
+    echo '</div>';
+    
     echo '</div>';
 
     //Right Column
@@ -204,7 +211,7 @@ if (isset($_SESSION['user_id'])) {
     echo '<h3 style="font-size:4rem;border-bottom: 2px dashed #827188;padding-bottom:1.5rem;margin-top:1.5rem;">🎉 Welcome Early Access Players 🎉</h3>';
     
     //Collect Snoozelings
-    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Collect and Create Snoozelings</h3>';
+    echo '<img src="resources/Banner1.png" style="width:70%">';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
     echo '<div style="width: 33%;"><img src="resources/promo2.png" class="adimage"><p><b>Mayor Cocoa</b></p></div>';
     echo '<div style="width: 33%;"><img src="resources/promo6.png" class="adimage"><p><b>Princess Mingi</b></p></div>';
@@ -218,7 +225,7 @@ if (isset($_SESSION['user_id'])) {
     echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;"><i>The above Snoozelings were all created during Early Access by various users.</i></p>';
     
     //Self Care Section
-    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Practice Self Care</h3>';
+    echo '<img src="resources/Banner2.png" style="width:70%">';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
     echo '<div style="width:40%;"><img src="resources/promo7.png"  class="adimage" style="border-radius: 15px;border:1px solid #dddddd;"><p><b>Daily Affirmations</b></p></div>';
     echo '<div style="width: 40%;"><img src="resources/promo8.png" class="adimage" style="border-radius: 15px;border:1px solid #dddddd;"><p><b>Keep a Health Journal</b></p></div>';
@@ -226,17 +233,17 @@ if (isset($_SESSION['user_id'])) {
     echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">Take care of yourself to earn coin to buy cute clothes and hair styles for your Snoozeling.</p>';
     
     //Cozy Gaming
-    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Farming with a Purpose</h3>';
+    echo '<img src="resources/Banner3.png" style="width:70%">';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
     echo '<div style="width:80%;"><img src="resources/promo14.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
     echo '</div>';
     echo '<p style="padding-bottom:2rem;border-bottom: 2px dashed #827188;padding-bottom:2rem;">Plants can be Used to Craft Dyes & Fabric</p>';
-    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Craft a Large Variety of Items</h3>';
+    echo '<img src="resources/Banner4.png" style="width:70%">';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
     echo '<div style="width:80%;"><img src="resources/promo11.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
     echo '</div>';
     echo '<p style="padding-bottom:2rem;border-bottom: 2px dashed #827188;padding-bottom:2rem;">Create New Clothes, Fabrics, Items, and Designs for Your Snoozelings</p>';
-    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Clothing Dye System</h3>';
+    echo '<img src="resources/Banner5.png" style="width:70%">';
     echo '<div style="display: flex;flex-direction: row; flex-wrap: wrap; justify-content: center;">';
     echo '<div style="width:40%;"><img src="resources/dyes1.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;margin-bottom:12px;"></div>';
     echo '<div style="width:40%;"><img src="resources/Dyes2.png"  class="adimage" style="border-radius: 25px;border:1px solid #dddddd;"></div>';
@@ -244,7 +251,7 @@ if (isset($_SESSION['user_id'])) {
     echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;">Dye your Clothes with Over Twenty-Six Custom Colors</p>';
     
     //Alpha Reviews
-    echo '<h3 style="margin-top: 2rem;margin-bottom:1.5rem;">Alpha Player Reviews</h3>';
+    echo '<img src="resources/Banner6.png" style="width:70%">';
     echo '<p style="width: 80%; margin-right: auto; margin-left: auto;">As someone who quickly falls out of pet Sims every now and again, Snoozelings honestly just has me coming back and back again for more! the self care features are a wonderful touch and the overall aesthetic of the pets themselves brings a lot of comfort and warmth into the site. The community it has is lovely as well and I\'m very excited to see it grow and evolve!</p>';
     echo '<p style="width: 80%; text-align: right; margin-right: 2rem;">~Alpha Tester #33</p>';
     echo '<hr>';
@@ -255,13 +262,15 @@ if (isset($_SESSION['user_id'])) {
     echo '<p style="width: 80%; text-align: right; margin-right: 2rem;">~Alpha Tester #42</p>';
     echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem; margin-bottom: 2rem;"></p>';
     
+    echo '<img src="resources/Banner8.png" style="width:70%">';
     echo '<p style="font-size: 2rem"><b>Early Access Code Sales:</b> <a href="premiumshop">Open</a></p>';
     echo '<p style="font-size: 2rem"><b>Early Access Launch:</b> September 1st, 2024</p>';
     echo '<p style="font-size: 2rem; border-bottom: 2px dashed #827188;padding-bottom:2rem; margin-bottom: 2rem;"><b>Free Launch:</b> Winter 2025</p>';
     
-    echo '<h4 href="https://discord.gg/HDs66g7QeJ">Click to Join Our Discord Server</h4>';
-    echo '<a href="https://discord.gg/HDs66g7QeJ"><img style="width: 10%;"src="https://static-00.iconduck.com/assets.00/discord-icon-2048x2048-nnt62s2u.png"></a>';
-    echo '<h4>Sign Up for Email Updates</h4>';
+    
+    echo '<img src="resources/Banner7.png" style="width:70%"><br>';
+    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;"><a href="https://discord.gg/HDs66g7QeJ"><img style="width: 10%;"src="https://static-00.iconduck.com/assets.00/discord-icon-2048x2048-nnt62s2u.png"></a></p>';
+    echo '<img src="resources/Banner9.png" style="width:70%"><br>';
     echo '<div style="display:flex;">';
     echo '<div id="mc_embed_shell" style="margin-left:auto;margin-right:auto;">
       <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">

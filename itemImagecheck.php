@@ -70,7 +70,67 @@ require_once '../includes/adminCheck.inc.php';
 
 
         <!-- All Main Content -->
-        <div class="main-container"><div  class="bottomPush">
+        <div class="main-container"><?php require_once '../includes/news.inc.php'; ?><div  class="bottomPush">
+            <?php
+            
+            echo '<hr>';
+            
+            //Grab all Colors
+            $query = 'SELECT * FROM colors';
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            $colorList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+           
+            //Add Color Info to Array
+            $color1 = "Marker";
+            $query = 'SELECT * FROM colors where name = :name';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":name", $color1);
+            $stmt->execute();
+            $info1 = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $color2 = "BlueRaspberry";
+            $query = 'SELECT * FROM colors where name = :name';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":name", $color2);
+            $stmt->execute();
+            $info2 = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $colors = [];
+            $hues = [];
+            $categories = [];
+            
+            array_push($colors,$info1['color'],$info2['color']);
+            array_push($hues,$info1['hue'],$info2['hue']);
+            array_push($categories,$info1['category'],$info2['category']);
+            
+            $options = [];
+            foreach ($colorList as $color) {
+                foreach ($colors as $col) {
+                    if ($color['color'] == $col) {
+                        foreach ($hues as $hue) {
+                            if ($color['hue'] == $hue) {
+                                foreach ($categories as $category) {
+                                    if ($color['category'] == $category) {
+                                        array_push($options,$color['name']);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            $oneEach = array_unique($options);
+            
+            echo '<div style="display:flex;flex-wrap:wrap;">';
+            foreach ($oneEach as $option) {
+                echo '<div><img src="Layers/ColorPaws/' . $option . '.png" style="width:200px"><br><p><b>' . $option . '</b></p></div>';
+            }
+            echo '</div>';
+            echo var_dump($options);
+            ?>
+            
             <?php
     
                     $query = 'SELECT * FROM itemList';
@@ -95,36 +155,7 @@ require_once '../includes/adminCheck.inc.php';
             echo '</form>';
             ?>
             
-            <?php
             
-            echo '<hr>';
-            
-            $query = 'SELECT * FROM snoozelings';
-            $stmt = $pdo->prepare($query);
-            $stmt->execute();
-            $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-            $query = 'SELECT * FROM users ORDER BY id';
-            $stmt = $pdo->prepare($query);
-            $stmt->execute();
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-            echo '<ul>';
-            foreach ($users as $account) {
-                $count = 0;
-                foreach ($snoozelings as $pet) {
-                    if ($account['id'] == $pet['owner_id']) {
-                        $count++;
-                    }
-                }
-                echo $count;
-                echo $account['petBeds'];
-                echo $account['username'] . '<br>';
-            }
-            
-            echo '</ul>';
-            
-            ?>
             
         </div></div>
     </div>

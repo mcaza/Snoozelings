@@ -15,6 +15,8 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+singleImage($result);
+
 //Grab USer Info from Database
 $query = "SELECT * FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);
@@ -37,6 +39,8 @@ $dyelist = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="pet?id=' . $id . '"><<</a>';
+echo '<a href="downloadImage?id=' . $id . '" class="fancyButton">Download</a>';
+//echo '<a href="snoozelings/' . $id . '.png" download="snoozelings/' . $id . '.png" class="fancyButton">Download</a>';
 echo '</div>';
 
 if (!function_exists('str_ends_with')) {

@@ -27,7 +27,7 @@ if ($count < 9) {
     $stmt->execute();
     
     //Variables
-    $_SESSION['message'] = "You have successfully installed a new farm plot.";
+    $_SESSION['reply'] = "You have successfully installed a new farm plot.";
 
     //Reroute to Pack
     header("Location: ../pack");

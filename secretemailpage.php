@@ -68,7 +68,7 @@ require_once '../includes/adminCheck.inc.php';
 
 
         <!-- All Main Content -->
-        <div class="main-container"><div  class="bottomPush">
+        <div class="main-container"><?php require_once '../includes/news.inc.php'; ?><div  class="bottomPush">
             <?php 
             $query = 'SELECT email FROM users WHERE emailVerified = 1 AND newsletter = 0';
             $stmt = $pdo->prepare($query);

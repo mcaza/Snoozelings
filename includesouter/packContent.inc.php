@@ -22,11 +22,16 @@ $stmt->execute();
 $bonded = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Get Backpack Name
-
 if ($bonded['backpackName']) {
     $backpackName = $bonded['backpackName'];
 } else {
     $backpackName = "Backpack";
+}
+
+if ($bonded['backpackColor']) {
+    $backpackColor = $bonded['backpackColor'];
+} else {
+    $backpackColor = "Sprout";
 }
 
 //Get Bonded Name
@@ -83,6 +88,7 @@ for ($i=0; $i < $amount; $i++) {
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $userId . '"><<</a>';
+echo '<img src="resources/ShortcutBackpack' . $backpackColor . '.png" style="width:100px;" id="backpackImage">';
 echo '</div>';
 
 
@@ -135,6 +141,8 @@ echo '<option value="stain">Stain</option>';
 echo '</select><br>';
 echo '<button class="fancyButton">Filter</button>';
 echo '</form>';
+echo '</div>';
+
 
 //Display as Categories
 echo "<div id='inventory'>";

@@ -25,7 +25,7 @@ $fabrics = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
-echo '<a href="games"><<</a>';
+echo '<a href="gameGuides"><<</a>';
 echo '</div>';
 
 echo '<h3 style="margin-top: 1rem; margin-bottom: 2rem;">Snoozeling Designer</h3>';

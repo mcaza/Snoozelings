@@ -8,6 +8,12 @@ $query = "SELECT * FROM users WHERE id = :id;";
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($result['backpackColor']) {
+    $backpackColor = $result['backpackColor'];
+} else {
+    $backpackColor = "Sprout";
+}
+
 $birthday = substr($result['birthdate'], 5);
 $join = substr($result['signupDate'], 5);
 $monthNum = $birthday.substr(0, 3);
@@ -322,15 +328,15 @@ if ($id === "4") {
                  }
     echo '</div>'; */
     echo '</div></div> ';
-    
-    //Nav section
+
+//Nav section
     if ($id == $userId) {
     echo '<hr>';
     echo '<div class="profilenav">';
-    echo '<a href="crafting"><img src="resources/desk.png" class="profilenavimage"></a>';
-    echo '<a href="farm"><img src="resources/plantbox.png" class="profilenavimage"></a>';
-    echo '<a href="pack"><img src="resources/backpack.png" class="profilenavimage"></a>';
-    echo '<a href="dyes"><img src="resources/dyePot.png" class="profilenavimage"></a>';
+    echo '<a href="crafting"><img src="resources/shortcutTable.png" class="profilenavimage"></a>';
+    echo '<a href="farm"><img src="resources/shortcutFarm.png" class="profilenavimage"></a>';
+    echo '<a href="pack"><img src="resources/ShortcutBackpack' . $backpackColor . '.png" class="profilenavimage"></a>';
+    echo '<a href="dyes"><img src="resources/shortcutPot.png" class="profilenavimage"></a>';
     echo '</div>';
     }
 

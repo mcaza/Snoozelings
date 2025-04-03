@@ -849,7 +849,7 @@ if ($type == "mentalHealth") {
     }
     
     if (count($entries) > 29) {
-        echo '<div class="journalEntry">';
+        echo '<br><br><div class="journalEntry">';
         echo '<h1>Last Thirty Entries</h1>';
         
         $count = 1;
@@ -956,7 +956,7 @@ if ($type == "mentalHealth") {
     }
     
     if (count($entries) > 89) {
-        echo '<div class="journalEntry">';
+        echo '<br><br><div class="journalEntry">';
         echo '<h1>Last Ninety Entries</h1>';
         
         $count = 1;
@@ -1063,7 +1063,7 @@ if ($type == "mentalHealth") {
     }
     
     if (count($entries) > 364) {
-        echo '<div class="journalEntry">';
+        echo '<br><br><div class="journalEntry">';
         echo '<h1>Last Three Hundred Sixty Five Entries</h1>';
         
         $count = 1;

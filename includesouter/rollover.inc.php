@@ -222,7 +222,7 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 
 $kindArray = [7];
-$query = 'SELECT * FROM kindnessShop';
+$query = 'SELECT * FROM kindnessShop WHERE name != "SewingKit"';
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -230,7 +230,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $count = count($items) - 1;
 
 $i = 0;
-while ($i < 7) {
+while ($i < 8) {
     $num = rand(0, $count);
     if (in_array($num,$kindArray)) {
         
@@ -239,6 +239,8 @@ while ($i < 7) {
         $i++;
     }
 }
+
+
 
 foreach ($kindArray as $kind) {
     $query = 'UPDATE kindnessShop SET daily = 1 WHERE id = :id';

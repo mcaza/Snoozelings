@@ -150,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":one", $one);
     $stmt->execute();
+
     
     //Increase Daily Records +1
     $query = 'UPDATE dailyRecords SET snoozelingsCrafted = snoozelingsCrafted + 1 ORDER BY id DESC LIMIT 1';
@@ -161,6 +162,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
+    
+    //Get Pet Order
+    $query = 'SELECT * FROM users WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Add to Custom Order
+    if ($userInfo['petOrder']) {
+        $newOrder = $userInfo['petOrder'] . " " . $newsnooze['id'];
+        $query = 'UPDATE users SET petOrder = :petOrder WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":petOrder", $newOrder);
+        $stmt->execute();
+    }
     
     //Reroute 
     $_SESSION['reply'] = 'Thanks again! ' . $name . ' is so excited to be home.';

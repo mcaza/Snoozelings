@@ -71,7 +71,7 @@ require_once '../includes/messageCheck.inc.php';
 
 
         <!-- All Main Content -->
-        <div class="main-container"><div  class="bottomPush">
+        <div class="main-container"><?php require_once '../includes/news.inc.php'; ?><div  class="bottomPush">
             <?php require_once '../includes/sendMessage.inc.php'; ?>
         </div></div>
     </div>

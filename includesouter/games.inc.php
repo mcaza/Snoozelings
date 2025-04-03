@@ -34,14 +34,5 @@ if ($month == 12) {
     echo '</div>';
     echo '</a>';
 }
-
-
-
-echo '<a href="designer" class="shopBox">';
-echo '<div >';
-echo '<img src="resources/paintbrush.png" class="shopImg"  style="width: 90%;">';
-echo '<h4>Snoozeling Designer</h4>';
-echo '</div>';
-echo '</a>';
     
 echo '</div>';

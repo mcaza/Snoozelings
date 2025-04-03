@@ -88,7 +88,7 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
         echo "</div>";
-        $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffBlue','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluff'];
+        $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluff'];
         foreach ($mothArray as $moth) {
             if (strpos($pet["specials"], $moth) !== false) {
                 $mothtype = $moth;
@@ -100,12 +100,11 @@ function displayPet($pet, $class) {
         echo "<img src='Layers/Other/MothFluff/Behind/" . $moth . ".png' id = 'BackFluffOne'>";
         echo "</div>";
         }
-        
-        if($mood != "Cheeky") {
+        if($mood != "Cheeky") {            
             echo "<div class='${class}'>";
             echo "<img src='Layers/Faces/" . $mood . "/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
             echo "</div>";
-            if (strpos($pet["specials"],"TinyTooth")) {
+            if (strpos($pet["specials"],"TinyTooth") !== false) {
                 echo "<div class='${class}'>";
                 echo "<img src='Layers/Faces/" . $mood . "/TinyTooth.png' id = 'Toothone'>";
                 echo "</div>";
@@ -408,7 +407,7 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
             echo "<img src='Layers/Faces/" . $mood . "/Tongue/" . $pet["noseColor"] . ".png' id = 'Tongueone'>";
             echo "</div>";    
-        if (strpos($pet["specials"],"TinyTooth")) {
+        if (strpos($pet["specials"],"TinyTooth") !== false) {
                 echo "<div class='${class}'>";
                 echo "<img src='Layers/Faces/" . $mood . "/TinyTooth.png' id = 'Toothone'>";
                 echo "</div>";
@@ -541,5 +540,606 @@ function displayPet($pet, $class) {
     }
 
         echo "</div>";
+                        
+}
+
+function singleImage($pet) {
+        
+    if (!$pet['mood']) {
+        $mood = "Happy";
+    } else {
+        $mood = $pet['mood'];
+    }
+        
+    //Image Start
+    $bg = 'Layers/transparentSquare.png';
+
+    $numberOfImages = 3;
+    $x = 1250;
+    $y = 1250;
+    $background = imagecreatefrompng($bg);
+    
+    imageAlphaBlending($background, true);
+    imageSaveAlpha($background, true);
+    
+    $outputImage = $background;
+    
+    $dest = 'snoozelings/' . $pet['id'] . '.png';
+        
+    if ($pet['mainColor']) {
+    //Bed Code
+        
+    /* if($class === "arttwo" || ($class === "artlarge" && $pet['showbed'] == "1")) {
+        echo "<div class='${class}'>";
+        echo "<img src='Layers/Beds/Back/" . $pet['bedcolor'] . ".png'>";
+        echo "</div>";
+    } */
+    
+    //Wings
+    if (strpos($pet["specials"], "FeatheredWings") !== false) {
+            $url = 'Layers/Wings/Pegasus/Bottom/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        if (strpos($pet["specials"], "BugWings") !== false) {
+            $url = 'Layers/Wings/BugWingBottom.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        
+    //Bottom Wing Accessories or Horns
+    if (strlen($pet['clothesBoth']) > 1) {
+    $clothesBoth = explode(' ', $pet['clothesBoth']);
+        foreach ($clothesBoth as $clothing) {
+            if($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns") {
+                $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } 
+        } 
+    }
+        //Primary Color
+        $url = 'Layers/Primary/' . $pet['mainColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        
+        //Markings
+        if (strpos($pet["specials"], "Cupid") !== false) {
+            $url = 'Layers/Markings/Cupid/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+
+    
+    if (strpos($pet["specials"], "Spots") !== false) {
+            $url = 'Layers/Markings/Spots/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+
+    
+    if (strpos($pet["specials"], "Boots") !== false) {
+            $url = 'Layers/Markings/Boots/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        if (strpos($pet["specials"], "Sublimation") !== false) {
+            $url = 'Layers/Markings/Sublimation/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        if (strpos($pet["specials"], "EarTip") !== false) {
+            $url = 'Layers/Other/EarTip.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+                                                
+
+        if (strpos($pet["specials"], "Skeleton") !== false) {
+            $url = 'Layers/Skeleton.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+
+        if (strpos($pet["specials"], "Belly") !== false) {
+            $url = 'Layers/Markings/Belly/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        
+
+        //Ear Color
+        $url = 'Layers/Ear/' . $pet['noseColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        
+        //Main Lines
+        $url = 'Layers/MainLines/' . $pet['mainColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        
+        //MothFluff
+        $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluff'];
+        foreach ($mothArray as $moth) {
+            if (strpos($pet["specials"], $moth) !== false) {
+                $mothtype = $moth;
+                break;
+            }
+        }
+        if ($mothtype) {  
+            $url = 'Layers/Other/MothFluff/Behind/' . $moth . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        
+        //Not Cheeky Face
+        if($mood !== "Cheeky") {
+            $url = 'Layers/Faces/' . $mood . '/Eyes/' .  $pet['eyeColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            
+            //Tiny Tooth
+            if (strpos($pet["specials"],"TinyTooth") !== false) {
+                $url = 'Layers/Faces/' . $mood . '/TinyTooth.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);      
+            }
+            $url = 'Layers/Faces/' . $mood . '/Lines/' .  $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+
+            if ($pet['mood'] === 'Overwhelmed') {
+                $url = 'Layers/tear.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y); 
+
+            }
+        }
+        
+        
+        
+        
+        //Different Tails = Different Orders
+        if ($pet["tailType"] === "Dragon") {
+            //Dragon Tail
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+            $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns")) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                } 
+            }
+             if (strlen($pet['clothesTop']) > 1 && strpos($pet["clothesTop"], "SpikedBracelet") !== false) {
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "SpikedBracelet") {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+        } }
+            //Bed Code
+            /* if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            } */
+            $url = 'Layers/Tail/Dragon/End/' .  $pet['tailColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            $url = 'Layers/Tail/Dragon/' .  $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+
+        } elseif ($pet['tailType'] === "Mermaid" ) {
+            //Mermaid Tail
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+            $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns")) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                   $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                } 
+            }
+             if (strlen($pet['clothesTop']) > 1 && strpos($pet["clothesTop"], "SpikedBracelet") !== false) {
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "SpikedBracelet") {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+        } }
+            
+            //Bed Code
+            /* if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            } */
+            $url = 'Layers/Tail/Mermaid/' .  $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            
+        } else if ($pet['tailType'] == "Pom" ) {
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+        $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns")) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                } 
+            }
+            $url = 'Layers/Tail/Pom/' .  $pet['tailColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+             if (strlen($pet['clothesTop']) > 1 && strpos($pet["clothesTop"], "SpikedBracelet") !== false) {
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "SpikedBracelet") {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+        } }
+            
+            //Bed Code
+            /* if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            } */
+            
+        } else if ($pet['tailType'] == "Panther" || $pet['tailType'] == "Holiday") {
+            //Panther or Holiday Tail
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+        $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns")) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                } 
+            }
+             if (strlen($pet['clothesTop']) > 1 && strpos($pet["clothesTop"], "SpikedBracelet") !== false) {
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "SpikedBracelet") {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+        } }
+            
+            //Bed Code
+            /* if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            } */
+            
+            $url = 'Layers/Tail/' . $pet["tailType"] . '/' .  $pet['tailColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        
+        } else if ($pet['tailType'] == "Lizard") {
+            //Lizard Type
+            if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+            $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns")) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                } 
+            }
+             if (strlen($pet['clothesTop']) > 1 && strpos($pet["clothesTop"], "SpikedBracelet") !== false) {
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "SpikedBracelet") {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+        } }
+            
+            //Bed Code
+            /* if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            } */
+            
+            $url = 'Layers/Tail/Lizard/Spikes/' .  $pet['tailColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            $url = 'Layers/Tail/Lizard/' .  $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else {
+            //Any Other Tail
+        if (strlen($pet['clothesBottom']) > 1) {
+            $clothesBottom = explode(' ', $pet['clothesBottom']);
+            foreach ($clothesBottom as $clothing) {
+                $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } }
+            if (strlen($pet['clothesBoth']) > 1) {
+        $clothesBoth = explode(' ', $pet['clothesBoth']);
+            foreach ($clothesBoth as $clothing) {
+                if(!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns")) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } } }
+            if ($pet['clothesHoodie']) {
+                $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+                foreach ($clothesHoodies as $clothing) {
+                    $url = 'Layers/ClothesBottom/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                } 
+            }
+            
+            $url = 'Layers/Tail/' . $pet["tailType"] . '/' .  $pet['tailColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+
+             if (strlen($pet['clothesTop']) > 1 && strpos($pet["clothesTop"], "SpikedBracelet") !== false) {
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "SpikedBracelet") {
+                    $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                    $image = imagecreatefrompng($url);
+                    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+        } }
+            
+        //Bed Code
+        /* if(($class === "arttwo") || ($class === "artlarge" && $pet['showbed'] == "1")) {
+                echo "<div class='${class}'>";
+                echo "<img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'>";
+                echo "</div>";
+            }
+     */
+        }
+        
+        //Hair Code
+        if (!$pet['clothesHoodie']) {
+        if ($pet["hairType"] === "Floof") {
+            $url = 'Layers/Hair/' . $pet["hairType"] . '/' .  $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else {
+            if (strpos($pet["specials"], "FeatheredWings") !== false && $pet["hairType"] == "Knitted") {
+                
+            } else {
+            $url = 'Layers/Hair/' . $pet["hairType"] . '/' .  $pet['hairColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+        } }
+            
+        }
+    
+    //Bandana Code
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+    if ($mood == "Cheeky" && str_contains($clothing, "Bandana")) {
+        $url = 'Layers/ClothesTop/' . $clothing . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    } }
+    
+    //Cheeky Expression
+    if($mood == "Cheeky") {
+        $url = 'Layers/Faces/Cheeky/Tongue/' . $pet['noseColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y); 
+        if (strpos($pet["specials"],"TinyTooth") !== false) {
+                $url = 'Layers/Faces/Cheeky/TinyTooth.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y); 
+            }
+        
+        $url = 'Layers/Faces/Cheeky/Tongue/' . $pet['noseColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);    
+        } 
+    
+    //Front Mothfluff
+    if ($mothtype) {
+        $url = 'Layers/Other/MothFluff/' . $moth . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+
+        //Noses
+        $url = 'Layers/Noses/' . $pet['noseColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    
+    //Non Bandana / Spiked Bracelet Top Clothing
+    if (strlen($pet['clothesTop']) > 1) {
+    $clothesTop = explode(' ', $pet['clothesTop']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "SpikedBracelet" || ($mood == "Cheeky" && str_contains($clothing, "Bandana"))) {
+                
+            } else {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+
+            }
+            
+        } }
+   
+    //Top Layer of Both Clothing
+        if (strlen($pet['clothesBoth']) > 1) {
+    $clothesBoth = explode(' ', $pet['clothesBoth']);
+        foreach ($clothesBoth as $clothing) {
+            if (!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "StripedHolidaySweater")) {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y); 
+        } } }
+    
+    //Wings
+    if (strpos($pet["specials"], "BugWings") !== false) {
+            $url = 'Layers/Wings/BugWingTop.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        if (strpos($pet["specials"], "FeatheredWings") !== false) {
+            $url = 'Layers/Wings/Pegasus/Top/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            if ($pet["hairType"] === "Knitted" && strlen($pet['clothesHoodie']) < 1) {
+                $url = 'Layers/Hair/Knitted/' . $pet['hairColor'] . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } else {
+                
+            }
+        }
+    
+    //Ram Horns
+    if (strlen($pet['clothesBoth']) > 1 && strpos($pet["clothesBoth"], "RamHorns") !== false) {
+    $clothesTop = explode(' ', $pet['clothesBoth']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "RamHorns") {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+            
+        } }
+    
+    //Holiday Sweater Fix
+    if (strlen($pet['clothesBoth']) > 1 && strpos($pet["clothesBoth"], "HolidaySweater") !== false) {
+    $clothesTop = explode(' ', $pet['clothesBoth']);
+        foreach ($clothesTop as $clothing) {
+            if ($clothing == "StripedHolidaySweater") {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+            
+        } }
+
+        
+        //Clothes Hoodie Top
+        if ($pet['clothesHoodie']) {
+            $clothesHoodies = explode(' ', $pet['clothesHoodie']);
+        foreach ($clothesHoodies as $clothing) {
+            $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } 
+    }
+    
+    if ($pet['hairType'] == "Holiday") {
+        $hairCheck = 1;
+    }
+        if (strlen($pet['clothesBoth']) > 1) {
+    $clothesBoth = explode(' ', $pet['clothesBoth']);
+        foreach ($clothesBoth as $clothing) {
+            if ($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "TwiggyAntlers" || $clothing === "DeerAntlers") {
+            $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else if ($clothing == "StripedHolidaySweater") {
+                $url = 'Layers/ClothesTop/' . $clothing . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                if ($hairCheck == 1) {
+                $url = 'Layers/Hair/Holiday/' . $pet['hairColor'] . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                }
+            } 
+        }
+    }
+
+    
+    imagepng($outputImage, $dest);
+    
+    
+    imagedestroy($outputImage);
                         
 }

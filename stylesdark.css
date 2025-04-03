@@ -127,6 +127,23 @@ body {
     font-size: 1.55rem;
 }
 
+#newsBox {
+    border: 2px dashed #705874;
+    border-radius: 15px;
+    background: #382c3a;
+    padding: 6px;
+    width: 85%;
+    margin-right: auto;
+    margin-left: auto;
+    font-size:1.5rem;
+    margin-bottom: 8px;
+}
+
+#newsBox a:hover {
+    font-weight: bold;
+    color:white;
+}
+
 .notificationbox {
     margin-bottom: .8rem;
 }
@@ -809,6 +826,10 @@ background: #221C35;
     margin-left: auto;
 }
 
+.petrowholder {
+    width: 40%;
+}
+
 .petinfo-container {
     display: flex;
     flex-direction: column;
@@ -1149,6 +1170,7 @@ a.selected {
 .farmBox {
     width: 100%;
     margin-bottom: 0;
+    margin-top:4px;
 }
 
 
@@ -1401,7 +1423,7 @@ a.critterbox:hover{
 /* Return Bar Styles (Explore, Farming, Crafting, Etc) */
 
 .returnBar {
-    border: 2px dashed #888888;
+    border: 2px dashed #827188;
     width: 70%;
     border-radius: 20px;
     padding: 20px;
@@ -1409,8 +1431,22 @@ a.critterbox:hover{
     margin-left: auto;
 }
 
-#craftingdesk {
-    width: 300px;
+.craftingDeskContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.craftingDesk {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+    z-index: 1;
+}
+
+.craftingDeskContainer img {
+    -webkit-transform: none;
+    transform: none;
+    width: 350px;
 }
 
 
@@ -1783,6 +1819,10 @@ select {
         align-items: center;
     }
     
+    #backpackImage {
+        display:none;
+    }
+    
     #mc_embed_shell {
         display:none;
     }
@@ -2032,6 +2072,18 @@ select {
 }
     
     .displaycontainerright {
+        width: auto;
+    }
+    
+    .petrowtwo {
+     width: auto;   
+    }
+    
+    .petrowthree {
+     width: auto;   
+    }
+    
+    .petrowholder {
         width: auto;
     }
     
