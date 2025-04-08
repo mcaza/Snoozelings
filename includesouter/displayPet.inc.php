@@ -84,22 +84,6 @@ function displayPet($pet, $class) {
             echo "</div>";
         }
         
-        
-        echo "<div class='${class}'>";
-        echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
-        echo "</div>";
-        $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluff'];
-        foreach ($mothArray as $moth) {
-            if (strpos($pet["specials"], $moth) !== false) {
-                $mothtype = $moth;
-                break;
-            }
-        }
-        if ($mothtype) {
-            echo "<div class='${class}'>";
-        echo "<img src='Layers/Other/MothFluff/Behind/" . $moth . ".png' id = 'BackFluffOne'>";
-        echo "</div>";
-        }
         if($mood != "Cheeky") {            
             echo "<div class='${class}'>";
             echo "<img src='Layers/Faces/" . $mood . "/Eyes/" . $pet["eyeColor"] . ".png' id = 'Eyesone'>";
@@ -119,6 +103,24 @@ function displayPet($pet, $class) {
                 echo "</div>";
             }
         }
+        
+        echo "<div class='${class}'>";
+        echo "<img src='Layers/MainLines/" . $pet["mainColor"] . ".png' id = 'Mainlinesone'>";
+        echo "</div>";
+        
+        $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluff'];
+        foreach ($mothArray as $moth) {
+            if (strpos($pet["specials"], $moth) !== false) {
+                $mothtype = $moth;
+                break;
+            }
+        }
+        if ($mothtype) {
+            echo "<div class='${class}'>";
+        echo "<img src='Layers/Other/MothFluff/Behind/" . $moth . ".png' id = 'BackFluffOne'>";
+        echo "</div>";
+        }
+        
         
         
         
@@ -529,7 +531,7 @@ function displayPet($pet, $class) {
         echo "<div class='${class}'>";
         echo "<a href='profile?id=" . $pet['owner_id'] . "'><img src='Layers/transparentSquare.png'></a>";
         echo "</div>";
-    } else if (!$pet['mainColor'] || $class === "artcrafting" || $class === "artfriends" || $class === "mailPetAnon") {
+    } else if (!$pet['mainColor'] || $class === "artcrafting" || $class === "artfriends" || $class === "mailPetAnon" || $class === "artStarter") {
         echo "<div class='${class}'>";
         echo "<img src='Layers/transparentSquare.png'>";
         echo "</div>";

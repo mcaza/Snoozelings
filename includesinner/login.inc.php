@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once '../../includes/login_model.inc.php';
         require_once '../../includes/login_contr.inc.php';
         
+        
         //ERROR HANDLERS
         $errors = [];
         
@@ -25,7 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $errors["wrong_password"] = "Your password is incorrect";
         }
         
-        require_once '../../includes/config_session.inc.php';
+
+        //require_once '../../includes/config_session.inc.php';
         
         if ($errors) {
             $_SESSION["errors_login"] = $errors;
@@ -35,8 +37,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } 
         
         $newSessionId = session_create_id();
-        $sessionId = $newSessionId . "_" . $results["id"];
-        //session_id($sessionId);
+        $sessionId = $newSessionId . $results["id"];
+        session_id($sessionId);
+        $id = session_id();    
+        session_start();
+        
+        //Insert into Server
+        $now = new DateTime("now", new DateTimezone('EST'));
+        $formatted = $now->format('Y-m-d H:i:s');
+
+        $query = "INSERT INTO sessions (user_id, username, session, datetime) VALUES (:user_id, :username, :session, :datetime)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $results["id"]);
+        $stmt->bindParam(":username", $results["username"]);
+        $stmt->bindParam(":session", $sessionId);
+        $stmt->bindParam(":datetime", $formatted);
+        $stmt->execute();
+
+
         
         //Set Bonded Pet Name
         $name = petName($pdo, $results['bonded']);

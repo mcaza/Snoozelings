@@ -167,9 +167,11 @@ h4 {
 
 h5 {
     font-size: 1.75rem;
-    border: 2px dashed #888888;
-    padding-top: .8rem;
-    margin-bottom: 0;
+    border-top: 2px dashed #888888;
+    border-bottom: 2px dashed #888888;
+    margin-bottom: .1rem;
+    padding-top: .6rem;
+    padding-bottom: .5rem;
 }
 
 h6 {
@@ -239,7 +241,11 @@ hr {
 
  .profilenavimage {
         width: 150px;
-    }
+}
+
+.profilenavimage:hover {
+    width:155px;
+}
 
 .profilecontainerleft {
     width: 40%;
@@ -1226,6 +1232,10 @@ a.selected {
     width: 90%;
 }
 
+.arttwo:hover {
+    
+}
+
 /* Item Page Styles */
 .itemPageRow {
     border: 2px dashed #888888;
@@ -1564,7 +1574,7 @@ a.recipe:hover {
 }
 
 .innerbar {
-    background-color: #D8BFD8;
+    background-color: #301934;
     height: 30px;
     font-size: 2rem;
     border-radius: 15px;

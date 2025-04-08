@@ -243,7 +243,7 @@ if ($id == $userId) {
     echo '</div>';
 echo '<div class="displaycontainerright" >';
 if ($id === "4") {
-    echo '<img src="resources/seedNPC.png" style="height: 40rem;">';
+    echo '<img src="resources/seedNPC.png" style="height: 40rem;margin-bottom: 2rem;">';
 } elseif ($id === "3") {
     $today = new DateTime();
     
@@ -257,18 +257,18 @@ if ($id === "4") {
     } else if ($today >= $summer && $today < $fall) {
         echo '<img src="resources/snowsummerNPC.png" style="height: 40rem;">';
     } else if ($today >= $fall && $today < $winter) {
-        echo '<img src="resources/snowNPC.png" style="height: 40rem;">';
+        echo '<img src="resources/snowNPC.png" style="height: 40rem;margin-bottom: 2rem;">';
     } else {
-        echo '<img src="resources/snowNPC.png" style="height: 40rem;">';
+        echo '<img src="resources/snowNPC.png" style="height: 40rem;margin-bottom: 2rem;">';
     }
 } elseif ($id === "5") {
-    echo '<img src="resources/adoptNPC.png" style="height: 40rem;">';
+    echo '<img src="resources/adoptNPC.png" style="height: 40rem;margin-bottom: 2rem;">';
 } elseif ($id === "6") {
-    echo '<img src="resources/sewingprofileNPC.png" style="height: 40rem;">';
+    echo '<img src="resources/sewingprofileNPC.png" style="height: 40rem;margin-bottom: 2rem;">';
 } elseif ($id === "7") {
-    echo '<img src="resources/simonNPC.png" style="height: 40rem;">';
+    echo '<img src="resources/simonNPC.png" style="height: 40rem;margin-bottom: 2rem;">';
 } elseif ($id === "8") {
-    echo '<img src="resources/kindnessNPC.png" style="height: 40rem;">';
+    echo '<img src="resources/kindnessNPC.png" style="height: 40rem;margin-bottom: 2rem;">';
 } elseif ($id === "9") {
     echo '<img src="resources/bakerNPC.png" style="height: 40rem;margin-left: 1rem;margin-bottom: 2rem;">';
 } else if (!$pet) {

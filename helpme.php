@@ -1,6 +1,6 @@
 <?php
-require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
+require_once '../includes/config_session.inc.php';
 require_once '../includes/login_view.inc.php';
 require_once '../includes/loginRedirect.inc.php';
 

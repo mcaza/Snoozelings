@@ -1,6 +1,6 @@
 <?php
-require_once '../includes/config_session.inc.php';
 require_once '../includes/dbh-inc.php';
+require_once '../includes/config_session.inc.php';
 require_once '../includes/logincheck.inc.php';
 require_once '../includes/adminCheck.inc.php';
 
@@ -72,6 +72,10 @@ require_once '../includes/adminCheck.inc.php';
         <!-- All Main Content -->
         <div class="main-container"><?php require_once '../includes/news.inc.php'; ?><div  class="bottomPush">
             <?php
+            
+            $token = $_COOKIE['PHPSESSID'];
+            
+            echo $token;
             
             echo '<hr>';
             

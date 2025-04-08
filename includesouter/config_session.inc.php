@@ -2,11 +2,6 @@
 
 
 
-ini_set('session.gc_maxlifetime', 30*60);
-
-ini_set('session.use_only_cookies', 1);
-ini_set('session.use_strict_mode', 1);
-
 session_set_cookie_params([
    'lifetime' => 0, 
     'domain' => 'snoozelings.com',
@@ -15,9 +10,47 @@ session_set_cookie_params([
     'httponly' => true
 ]);
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+$token = $_COOKIE['PHPSESSID'];
+
+if ($token) {
+    $query = "SELECT * FROM sessions WHERE session = :token";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":token", $token);
+    $stmt->execute();
+    $testToken = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($testToken) {
+        $now = new DateTime("now", new DateTimezone('EST'));
+        $formatted = $now->format('Y-m-d H:i:s');
+        //$checkOne = $now->format('Y-m-d');
+        
+        $query = "UPDATE sessions SET datetime = :datetime WHERE session = :token";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":datetime", $formatted);
+        $stmt->bindParam(":token", $testToken['session']);
+        $stmt->execute();
+        
+        /*
+        if ($CheckOne == $testToken['datetime']) {
+            echo 'success';
+            die();
+        }
+        */
+        $userId = $testToken['username'];
+        session_start();
+        session_id($token);
+        
+        
+        
+        
+    } 
+    
+    
 }
+
+/* if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+} */
 
 //Code to Keep All Non Staff Out
 /* if (isset($_SESSION['user_id'])) {
