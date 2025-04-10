@@ -1,7 +1,7 @@
 <?php
 
 //Grab User ID
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Grab Journal Type
 $query = 'SELECT * FROM journals WHERE user_id = :id';

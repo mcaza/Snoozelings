@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 //Get Variables
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 $id = $_GET['id'];
 date_default_timezone_set('UTC');
 
@@ -39,7 +39,13 @@ $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check if Pet is Crafter or Jack
 if (!($pet['job'] === "jack" || $pet['job'] === "Crafter")) {
-    $_SESSION['reply'] = $pet['name'] . ' needs the crafter or jack of all trades profession to craft.';
+    $greeting = $pet['name'] . ' needs the crafter or jack of all trades profession to craft.';
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../crafting");
     die();
 }
@@ -91,7 +97,12 @@ foreach ($items as $item) {
     $key = array_search($item, $items);
     
     if ($count < $numbers[$key]) {
-        $_SESSION['reply'] = "You do not have all the needed items to craft this.";
+            $reply = "You do not have all the needed items to craft this.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../crafting");
         die();
     }

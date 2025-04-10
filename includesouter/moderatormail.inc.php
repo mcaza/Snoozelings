@@ -1,7 +1,7 @@
 <?php
 
-if ($_SESSION['user_id']) {
-    $userId = $_SESSION['user_id'];
+if ($_COOKIE['user_id']) {
+    $userId = $_COOKIE['user_id'];
     $query = 'SELECT * FROM modtickets WHERE submitter = :id ORDER BY ticketid';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
@@ -9,20 +9,27 @@ if ($_SESSION['user_id']) {
     $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-if ($_SESSION['reply']) {
-    $reply = $_SESSION['reply'];
-    unset($_SESSION['reply']);
-}
+
+//Replies
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Mailbox Form
 echo '<h3 style="margin-bottom:1.5rem">Moderator Mailbox</h3>';
-echo '<form method="post" action="includes/moderatorreport.inc.php">';
+echo '<form method="post" action="includes/moderatorreport.inc.php" style="margin-bottom:20px;">';
 
 //Notification
 if ($reply) {
-    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 2rem;">';
-    echo '<p>' . $reply . '</p>';
-    echo '</div><br><br>';
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
+    echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
 }
 
 //User ID (Input automatically if logged in)
@@ -136,6 +143,9 @@ echo '</div>';
 
 //End Form
 echo '</form>';
+
+//Email Support
+echo '<hr><p>For account or purchase support, you can also email <a href="support@snoozelings.com">support@snoozelings.com</a></p>';
 
 if ($tickets) {
     echo '<h1>Open Tickets</h1>';

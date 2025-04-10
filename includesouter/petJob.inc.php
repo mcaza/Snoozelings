@@ -1,6 +1,6 @@
 <?php
 //Get Values
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 $id = $_GET['id'];
 
 //Get Pet EXP

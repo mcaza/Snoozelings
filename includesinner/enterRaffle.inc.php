@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Values
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Make sure they have 1 coin
     $query = 'SELECT coinCount FROM users WHERE id = :id';
@@ -15,7 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $coincount = $stmt->fetch(PDO::FETCH_ASSOC);
     $coins = intval($coincount['coinCount']);
     if ($coins < 1) {
-        $_SESSION['reply'] = 'You do not have enough snooze coins to do this.';
+            $reply = "You do not have enough snooze coins to buy a ticket.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../raffle");
         die();
     }
@@ -51,8 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":price", $price);
     $stmt->execute();
     
-    $_SESSION['reply'] = 'You have entered today\'s raffle.';
-        header("Location: ../raffle");
+        $reply = "You have bought a ticket for today's raffle.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+    header("Location: ../raffle");
     
 } else {
     header("Location: ../index");

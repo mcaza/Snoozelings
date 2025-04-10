@@ -6,7 +6,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 //Get Variables
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Get Dye Batch
     $query = 'SELECT * FROM dyebatches WHERE user_id = :id AND finished = 0';

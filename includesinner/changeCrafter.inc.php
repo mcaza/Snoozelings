@@ -6,7 +6,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 //Get Variables
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $id = $_POST['snoozeling'];
     
     //Get Pet Info
@@ -35,7 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $table = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!($table['display'] == NULL)) {
-        $_SESSION['reply'] = "You cannot change pets while crafting.";
+            $reply = "You cannot change pets while crafting.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../crafting");
         die();
     }

@@ -5,6 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
+    $userId = $_COOKIE['user_id'];
     $email = trim($_POST["email"]);
     if ($_POST["number"]) {
         $id = $_POST["number"];
@@ -19,7 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($result) {
-        $_SESSION['reply'] = "That email is already taken.";
+            $reply = "That email is already taken.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../earlyaccess");
         die();
     }
@@ -32,7 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
-            $_SESSION['reply'] = "That ID number is already taken.";
+                $reply = "That ID number is already taken.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
             header("Location: ../earlyaccess");
             die();
         }
@@ -71,7 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mail($address, $title, $msg, $headers);
     
     //Reply and Reroute
-    $_SESSION['reply'] = "Email Sent";
+        $reply = "Email Sent.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../earlyaccess");
 } else {
     header("Location: ../index");

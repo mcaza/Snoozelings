@@ -13,15 +13,15 @@ $query = "SELECT owner_id, name FROM snoozelings WHERE id = :id;";
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
              
-if ($_SESSION["user_id"] == $result["owner_id"]) { 
+if ($_COOKIE["user_id"] == $result["owner_id"]) { 
     $query = "UPDATE users SET bonded = :id WHERE id = :ownerID";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
-    $stmt->bindParam(":ownerID", $_SESSION["user_id"]);
+    $stmt->bindParam(":ownerID", $_COOKIE["user_id"]);
     $stmt->execute();
     $pdo = null;
     $stmt = null;
-    $_SESSION['bonded'] = htmlspecialchars($result['name']);
+    setcookie('bonded', htmlspecialchars($result['name']), 60, '/');
     header("Location: ../pet?id=" . $id);
     die();
 } else {

@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = $_POST["name"];
     $id = $_POST["id"];
     $pronouns = $_POST["pronouns"];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $todaysDate = date("Y-m-d");
     $job = "jack";
     $mood = "Happy";
@@ -181,7 +181,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Reroute 
-    $_SESSION['reply'] = 'Thanks again! ' . $name . ' is so excited to be home.';
+    $greeting = 'Thanks again! ' . $name . ' is so excited to be home.';
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $greeting);
+    $stmt->execute();
     header("Location: ../stitcher?page=new");
     
 } else {

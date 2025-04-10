@@ -1,6 +1,6 @@
 <?php
 //Get Values
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 $count = 1;
 $now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d');

@@ -4,8 +4,8 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 //Get User Info
-if ($_SESSION['user_id']) {
-    $userId = $_SESSION['user_id'];
+if ($_COOKIE['user_id']) {
+    $userId = $_COOKIE['user_id'];
 } else {
     header("Location: ../login");
     die();
@@ -38,7 +38,12 @@ if (!$results) {
 if ($user['covers']) {
     $covers = $user['covers'];
     if (str_contains($covers, $string)) {
-        $_SESSION['reply'] = "Your account already has that bed cover.";
+            $reply = "Your account already has that bed cover.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../pack");
         die();
     } else {
@@ -63,5 +68,10 @@ $stmt->bindParam(":item", $item);
 $stmt->execute();
 
 //Reply & Reroute
-$_SESSION['reply'] = "You have successfully added a new bed cover to your account.";
+    $reply = "You have successfully added a new bed cover to your account.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
 header("Location: ../pack");

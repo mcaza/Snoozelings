@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 //Get Values
 $id = $_GET['id'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Check if they have Friends Open
 $query = 'SELECT blockRequests FROM users WHERE id = :id';
@@ -14,14 +14,24 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($result['blockRequests'] === 1) {
-    $_SESSION['reply'] = "This user does not allow friend requests.";
+    $reply = "This user does not allow friend requests.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../friends?id=" . $userId);
     die();
 }
 
 //Check if they exist
 if(!$result) {
-    $_SESSION['reply'] = "There is no account with this user id.";
+    $reply = "There is no account with this user id.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../friends?id=" . $userId);
     die();
 }
@@ -36,9 +46,14 @@ if ($result) {
     $list = explode(" ", $result['friendList']);
     $count = count($list);
     if ($count === 50) {
-        $_SESSION['reply'] = "Your friend list is full. There is a limit of 50 friends.";
-        header("Location: ../friends?id=" . $userId);
-        die();
+            $reply = "Your friend list is full. There is a limit of 50 friends.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
+            header("Location: ../friends?id=" . $userId);
+            die();
     }
 }
     
@@ -53,11 +68,16 @@ if ($id === $userId) {
 if ($result) {
     $list = explode(" ", $result['friendList']);
     if (in_array($id, $list)) {
-        $_SESSION['reply'] = "This user is already in your friend list.";
-        header("Location: ../friends?id=" . $userId);
-        die();
+            $reply = "This user is already in your friend list.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
+            header("Location: ../friends?id=" . $userId);
+            die();
+        }
     }
-}
 
 //Add Friend
 if ($result) {
@@ -72,6 +92,11 @@ $stmt->bindParam(":friends", $friends);
 $stmt->execute();
 
 //Reply & Reroute to Friend Page
-$_SESSION['reply'] = "Your new friend has been successfully added.";
+    $reply = "A friend request has been successfully sent.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
 header("Location: ../friends?id=" . $userId);
 die();

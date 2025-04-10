@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Get Variables
     $tail = $_POST["tails"];
@@ -35,7 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $count = intval($coins['coinCount']);
     
     if ($count < 10) {
-        $_SESSION['reply'] = "You do not have enough snooze coins.";
+            $reply = "You do not have enough snooze coins.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../trendytails");
         die();
     } else {
@@ -54,7 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
         
     //Update Session message
-    $_SESSION['reply'] = htmlspecialchars($name['name'] . ' loves ' . $pronouns . ' new tailstyle!!!');
+    $greeting = htmlspecialchars($name['name'] . ' loves ' . $pronouns . ' new tailstyle!!!');
+            $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     
     //Reroute to trendytails
     header("Location: ../trendytails");

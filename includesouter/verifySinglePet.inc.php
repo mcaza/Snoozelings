@@ -1,8 +1,8 @@
 <?php
 
-if (isset($_SESSION['user_id'])) {
+if (isset($_COOKIE['user_id'])) {
     function verifySinglePet($pdo) {
-        $userId = $_SESSION['user_id'];
+        $userId = $_COOKIE['user_id'];
         $id = $_GET['id'];
 
 

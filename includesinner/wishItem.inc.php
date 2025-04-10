@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $item = $_POST["itemid"];
     
     //Check Still have Wish Token
@@ -47,7 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Return
-    $_SESSION['reply'] = "Your wish has come true!";
+        $reply = "Your wish has come true!";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../pack");
     die();
 } else {

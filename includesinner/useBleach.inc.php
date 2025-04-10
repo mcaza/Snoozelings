@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") { 
 
     //Get Values
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $id = $_POST['item'];
 
     //Check if Owner Owns that ITem
@@ -41,7 +41,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
 
     //Message and Return
-    $_SESSION['reply'] = 'You have successfully removed the dye from '. $itemCheck['display'] . '.';
+    $greeting = 'You have successfully removed the dye from '. $itemCheck['display'] . '.';
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../pack");
 
 } else {

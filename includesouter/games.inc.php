@@ -1,7 +1,7 @@
 <?php
 
-$userId = $_SESSION['user_id'];
-$name = $_SESSION['petName'];
+$userId = $_COOKIE['user_id'];
+$name = $_COOKIE['petName'];
 $month = ltrim(date('m'), "0");
 
 

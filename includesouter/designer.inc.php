@@ -546,8 +546,8 @@ echo '</div>';
 echo '</div>';
 
 
-if ($_SESSION['user_id']) {
-    $userId = $_SESSION['user_id'];
+if ($_COOKIE['user_id']) {
+    $userId = $_COOKIE['user_id'];
     
     echo '<hr>';
 

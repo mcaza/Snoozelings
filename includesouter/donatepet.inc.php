@@ -1,6 +1,6 @@
 <?php
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 $query = 'SELECT name, id FROM snoozelings WHERE owner_id = :id';
 $stmt = $pdo->prepare($query);

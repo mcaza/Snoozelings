@@ -1,6 +1,6 @@
 <?php
 $id = $_GET['id'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Get How Many of Item
 $query = "SELECT * FROM items WHERE list_id = :item AND user_id = :id AND test = 0";

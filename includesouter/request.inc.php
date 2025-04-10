@@ -1,6 +1,6 @@
 <?php
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 $id = $_GET['id'];
 
 //Get Request Information

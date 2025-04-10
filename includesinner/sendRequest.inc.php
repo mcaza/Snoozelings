@@ -4,13 +4,18 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") { 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Check if selection is empty. If so redirect.
     if ($_POST['item']) {
         $item = $_POST['item'];
     } else {
-        $_SESSION['reply'] = "Ticket Information Has Been Submitted";
+            $reply = "You have not selected an item.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../requests");
     }
     
@@ -36,8 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $count = count($results);
     if ($count > 5) {
-        $_SESSION['reply'] = "You have already submitted the max number of requests possible.";
+            $reply = "You have already submitted the max number of requests possible.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../requests");
+        die();
     }
     
     //Double check less than 2 posts today. If not redirect
@@ -47,8 +58,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($requests > 1) {
-        $_SESSION['reply'] = "You have already submitted the max number of requests today.";
+            $reply = "You have already submitted the max number of requests today.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../requests");
+        die();
     }
     
     //Get Datetime
@@ -79,7 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Redirect with Reply
-    $_SESSION['reply'] = "Your Request Has Been Submitted";
+        $reply = "Your Request Has Been Submitted.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../requests");
     
     

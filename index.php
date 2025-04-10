@@ -4,7 +4,7 @@ require_once '../includes/config_session.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
-if ($_SESSION['user_id']) {
+if ($_COOKIE['user_id']) {
     $title = "Bulletin Board";
 } else {
     $title = "Snoozelings ‪‪<3‬";
@@ -59,7 +59,7 @@ if ($_SESSION['user_id']) {
 
 
                 <!-- To Do List -->
-                <?php if(isset($_SESSION['user_id'])) {
+                <?php if(isset($_COOKIE['user_id'])) {
                echo '<div class="bar-container">
                     <h2>To Do</h2>
                     ';  require_once "../includes/notifications.inc.php"; 

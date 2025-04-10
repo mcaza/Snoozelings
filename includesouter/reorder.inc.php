@@ -1,8 +1,12 @@
 <?php
 
 //Grab User ID
-$userId = $_SESSION['user_id'];
-$error = $_SESSION['error'];
+$userId = $_COOKIE['user_id'];
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Grab All Pets
 $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
@@ -11,9 +15,9 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($_SESSION['reply']) {
-    $reply = $_SESSION['reply'];
-    unset($_SESSION['reply']);
+if ($_COOKIE['reply']) {
+    $reply = $_COOKIE['reply'];
+    setcookie("reply", "", time()-3600);
 }
 
 //Back Arrow
@@ -23,7 +27,13 @@ echo '</div>';
 
 //Session Reply Area
 if ($reply) {
-    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 1rem;"><p>' . $reply . '</p></div>';
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
+    echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
 }
 
 //Title

@@ -1,6 +1,6 @@
 <?php
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Get all Products
 $query = "SELECT * FROM products WHERE hidden = 0 ORDER BY price ASC;";

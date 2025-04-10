@@ -1,12 +1,12 @@
 <?php 
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 date_default_timezone_set('America/Los_Angeles');
 $month = ltrim(date('m'), "0");
 
 
-    if (isset($_SESSION["user_id"])) {
-        $userId = $_SESSION['user_id'];
+    if (isset($_COOKIE['user_id'])) {
+        $userId = $_COOKIE['user_id'];
         $query = "SELECT * FROM users WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
@@ -26,9 +26,9 @@ $month = ltrim(date('m'), "0");
         }
         
         echo '<div class="dropdown">
-            <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_SESSION['user_id'] . '">' . $_SESSION["user_username"] . '\'s ' . $home . '</a></button>
+            <button class="menu dropdown dropbtn" id="drop"><a href="profile?id=' . $_COOKIE['user_id'] . '">' . $id['username'] . '\'s ' . $home . '</a></button>
             <div class="dropdown-content">
-                <a href="/collection?id=' . $_SESSION['user_id'] . '">Snoozeling Nests</a>
+                <a href="/collection?id=' . $_COOKIE['user_id'] . '">Snoozeling Nests</a>
                 <a href="/crafting">Crafting Table</a>
                 <a href="dyes">Dye Station</a>
                 <a href="farm">Farm Plots</a>

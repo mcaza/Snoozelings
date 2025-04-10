@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") { 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $name = $_POST['type'];
     
     if ($name === "FarmChest") {
@@ -116,7 +116,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $word = " Snooze Coins, 1 ";
     }
-    $_SESSION['reply'] = "You open the chest and find: " . $coins . $word . $prizes[0] . ', 1 ' . $prizes[1];
+    $greeting = "You open the chest and find: " . $coins . $word . $prizes[0] . ', 1 ' . $prizes[1];
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../pack");
     
 } else {

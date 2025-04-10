@@ -3,7 +3,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 //Important Variables
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 $common = "Common";
 
 //Erase Guest Snoozelings

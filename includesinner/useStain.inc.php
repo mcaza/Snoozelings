@@ -76,5 +76,10 @@ $stmt->execute();
 
 
 //Reply & Reroute
-$_SESSION['reply'] = "You have successfully applied stain to your snoozeling.";
+    $reply = "You have successfully applied stain to your snoozeling.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
 header("Location: ../pack");

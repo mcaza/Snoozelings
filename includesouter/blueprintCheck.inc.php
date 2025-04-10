@@ -2,7 +2,7 @@
 
 //Get Values
 $id = $_GET['id'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 
 //Check if There is a Breeding
@@ -41,7 +41,12 @@ if ($result['user_id'] == $userId) {
 
 //Check if it has already been selected
 if (!empty($result['blueprint'])) {
-    $_SESSION['reply'] = 'You have already selected a blueprint for this breeding.';
+    $reply = "You have already selected a blueprint for this breeding.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../stitcher");
     die();
 } 

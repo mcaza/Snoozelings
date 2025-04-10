@@ -1,8 +1,8 @@
 <?php
 
 function verifyErrors() {
-    if (isset($_SESSION['errors_verify'])) {
-        $errors = $_SESSION['errors_verify'];
+    if (isset($_COOKIE['errors_verify'])) {
+        $errors = $_COOKIE['errors_verify'];
         
         echo "<br>";
             
@@ -10,7 +10,7 @@ function verifyErrors() {
             echo '<p class="form-error">' . $error . '</p>';
         }   
         
-        unset($_SESSION['errors_signup']);
+        setcookie("errors_signup", "", time()-3600);
     }
 }
 

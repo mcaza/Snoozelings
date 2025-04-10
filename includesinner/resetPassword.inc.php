@@ -10,8 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check Code is Entered
     if (!$code || !$pwd || !$two) {
-        $_SESSION["reply"] = "You must enter both the code, password, and confirm your password.";
-        header("Location: ../helpme");
+        header("Location: ../helpme?error=5");
         die();
     }
     
@@ -23,23 +22,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$user) {
-        $_SESSION["reply"] = "The temporary code you entered is incorrect.";
-        header("Location: ../helpme");
+        header("Location: ../helpme?error=6");
         die();
     }
     
     //Check if Passwords Match
     if (!($pwd === $two)) {
-        $_SESSION["reply"] = "The passwords entered do not match.";
-        header("Location: ../helpme?code=" . $code);
+        header("Location: ../helpme?code=" . $code . '?error=7');
         die();
     }
     
     //Check Password Length
     $count = strlen($pwd);
     if ($count < 8) {
-        $_SESSION["reply"] = "Your password must be at least 8 characters long.";
-        header("Location: ../helpme?code=" . $code);
+        header("Location: ../helpme?code=" . $code . '?error=8');
         die();
     }
     
@@ -59,8 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Reply & Reroute
-    $_SESSION["reply"] = "Your password has been reset. You may now log in.";
-    header("Location: ../helpme?code=" . $code);
+    header("Location: ../helpme?reset=2");
     
 } else {
     header("Location: ../index");

@@ -1,9 +1,15 @@
 <?php
 
 //Basic Info
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 $jack = "jack";
 $explorer = "Explorer";
+
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check if Area
 $query = "SELECT lastExplore FROM users WHERE id = :id";
@@ -18,15 +24,15 @@ $temp = $lastexplore['lastExplore'];
     $temp = "Farmland";
 }
 
-$coins = intval($_SESSION['coins']);
-$items = $_SESSION['items'];
-$error = $_SESSION['error'];
-$name = $_SESSION['petName'];
+$coins = intval($_COOKIE['coins']);
+$items = $_COOKIE['items'];
+$error = $_COOKIE['error'];
+$name = $_COOKIE['petName'];
 
-unset($_SESSION['coins']);
-unset($_SESSION['error']);
-unset($_SESSION['items']);
-unset($_SESSION['petName']);
+setcookie("coins", "", time()-3600);
+setcookie("error", "", time()-3600);
+setcookie("items", "", time()-3600);
+setcookie("petName", "", time()-3600);
 
 $itemString = "";
 
@@ -61,35 +67,15 @@ if ($temp === "Farmland") {
 }
 echo '<div class="returnItems">';
 
-//Item Display After
-if ($items || $coins > 0) {
-    echo '<div class="returnBar" style="margin-top: 1rem;">';
-    if ($coins === 1) {
-        echo '<p>' . $name . ' brought you 1 coin.</p>';
-    } elseif ($coins > 1) {
-        echo '<p>' . $name . ' brought you ' . $coins . ' snooze coins.</p>';
-    }
-    if ($items) {
-        if ($coins > 1) {
-            echo '<p>They also brought back the following: ';
-        } else {
-            echo '<p>' . $name . ' brought you the following: ';
-        }
-        foreach ($items as $item) {
-            $number = intval($item) - 1;
-            $itemString .= $itemQuery[$number]['display'];
-            $itemString .= ', ';
-        }
-        echo substr($itemString, 0, -2);
-        echo '</p>';
-    }
-    echo '</div>';
-}
 
-if ($error) {
-    echo '<div class="returnBar" style="margin-top: 1rem;">';
-    echo '<p>' . $error . '</p>';
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 2rem;margin-bottom:1rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
     echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
 }
 
 

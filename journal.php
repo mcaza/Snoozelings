@@ -4,7 +4,7 @@ require_once '../includes/config_session.inc.php';
 require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php';  
 
-$username = $_SESSION['user_username'];
+$username = $_COOKIE['user_username'];
 
 
 ?>
@@ -52,7 +52,7 @@ $username = $_SESSION['user_username'];
 
 
                 <!-- To Do List -->
-                <?php if(isset($_SESSION['user_id'])) {
+                <?php if(isset($_COOKIE['user_id'])) {
                echo '<div class="bar-container">
                     <h2>To Do</h2>
                     ';  require_once "../includes/notifications.inc.php"; 

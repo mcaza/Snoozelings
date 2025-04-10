@@ -2,7 +2,7 @@
 
 //Get Values
 $id = $_GET['id'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 
 $query = 'SELECT * FROM blueprints WHERE id = :id';

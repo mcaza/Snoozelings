@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $status = $_POST['status'];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Change
     $query = 'UPDATE users SET newsletter = :news WHERE id = :id';
@@ -15,7 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Reply & Reroute
-    $_SESSION['reply'] = "Your newsletter choice has been changed.";
+        $reply = "Your newsletter choice has been changed.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../updateaccount");
     die();
     

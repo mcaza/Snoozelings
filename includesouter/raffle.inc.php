@@ -1,11 +1,13 @@
 <?php
 
 //Grab Values
-$userId = $_SESSION['user_id'];
-if ($_SESSION['reply']) {
-    $reply = $_SESSION['reply'];
-    unset($_SESSION['reply']);
-}
+$userId = $_COOKIE['user_id'];
+
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Grab Coins
 $query = 'SELECT coinCount FROM users WHERE id = :id';
@@ -55,7 +57,13 @@ echo '</div>';
 
 //Session Reply Area
 if ($reply) {
-    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 1rem;"><p>' . $reply . '</p></div><br>';
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
+    echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
 }
 
 echo '<h3>Daily Raffle #' . $day['id'] . '</h3>';
@@ -67,9 +75,21 @@ foreach ($results as $result) {
     $stmt->bindParam(":id", $result['donator']);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $query = 'SELECT type FROM itemList WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $result['list_id']);
+    $stmt->execute();
+    $type = $stmt->fetch(PDO::FETCH_ASSOC);
+    
     echo '<div class="raffleitem">';
     echo '<p><i>Donated by <br>' . $user['username'] . '</i></p>';
-    echo '<a href="item?id=' . $result['list_id'] . '"><img src="items/' . $result['item'] . '.png" style="height: 100px;"></a>';
+    if ($type['type'] == "clothesBottom" || $type['type'] == "clothesTop" || $type['type'] == "clothesHoodie" || $type['type'] == "clothesBoth") {
+            echo '<a href="item?id=' . $result['list_id'] . '"><img src="items/' . $result['item'] . '.png" style="height: 100px;border-radius: 30px;border:2px solid silver;"></a>';
+    } else {
+            echo '<a href="item?id=' . $result['list_id'] . '"><img src="items/' . $result['item'] . '.png" style="height: 100px;"></a>';
+    }
+    
     echo '<p><strong>' . $result['display'] . '</strong></p>';
     echo '</div>';
 }
@@ -117,11 +137,20 @@ if (!($day['id'] == "1")) {
     $stmt->bindParam(":id", $results[3]['winner']);
     $stmt->execute();
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
+    $query = 'SELECT type FROM itemList WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $results[3]['list_id']);
+    $stmt->execute();
+    $type = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitems" style="margin-bottom:2rem;">';
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[3]['item'] . '.png" style="margin-top: 1rem;height: 100px;"">';
+    if ($type['type'] == "clothesBottom" || $type['type'] == "clothesTop" || $type['type'] == "clothesHoodie" || $type['type'] == "clothesBoth") {
+            echo '<img src="items/' . $results[3]['item'] . '.png" style="margin-top: 1rem;height: 100px;border-radius: 30px;border:2px solid silver;">';
+    } else {
+            echo '<img src="items/' . $results[3]['item'] . '.png" style="margin-top: 1rem;height: 100px;">';
+    }
     if ($winner) {
-        echo '<p><i>' . $winner['username'] . '</i></p>';
+        echo '<p><b>Winner: </b><br><i>' . $winner['username'] . '</i></p>';
     } else {
         echo '<p><i>No Winner</i></p>';
     }
@@ -131,10 +160,19 @@ if (!($day['id'] == "1")) {
     $stmt->bindParam(":id", $results[4]['winner']);
     $stmt->execute();
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
+    $query = 'SELECT type FROM itemList WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $results[4]['list_id']);
+    $stmt->execute();
+    $type = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[4]['item'] . '.png" style="margin-top: 1rem;height: 100px;">';
+    if ($type['type'] == "clothesBottom" || $type['type'] == "clothesTop" || $type['type'] == "clothesHoodie" || $type['type'] == "clothesBoth") {
+            echo '<img src="items/' . $results[4]['item'] . '.png" style="margin-top: 1rem;height: 100px;border-radius: 30px;border:2px solid silver;">';
+    } else {
+            echo '<img src="items/' . $results[4]['item'] . '.png" style="margin-top: 1rem;height: 100px;">';
+    }
     if ($winner) {
-        echo '<p><i>' . $winner['username'] . '</i></p>';
+        echo '<p><b>Winner: </b><br><i>' . $winner['username'] . '</i></p>';
     } else {
         echo '<p><i>No Winner</i></p>';
     }
@@ -144,10 +182,19 @@ if (!($day['id'] == "1")) {
     $stmt->bindParam(":id", $results[5]['winner']);
     $stmt->execute();
     $winner = $stmt->fetch(PDO::FETCH_ASSOC);
+    $query = 'SELECT type FROM itemList WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $results[5]['list_id']);
+    $stmt->execute();
+    $type = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="raffleitem">';
-    echo '<img src="items/' . $results[5]['item'] . '.png" style="margin-top: 1rem;height: 100px;">';
+    if ($type['type'] == "clothesBottom" || $type['type'] == "clothesTop" || $type['type'] == "clothesHoodie" || $type['type'] == "clothesBoth") {
+            echo '<img src="items/' . $results[5]['item'] . '.png" style="margin-top: 1rem;height: 100px;border-radius: 30px;border:2px solid silver;">';
+    } else {
+            echo '<img src="items/' . $results[5]['item'] . '.png" style="margin-top: 1rem;height: 100px;">';
+    }
     if ($winner) {
-        echo '<p><i>' . $winner['username'] . '</i></p>';
+        echo '<p><b>Winner: </b><br><i>' . $winner['username'] . '</i></p>';
     } else {
         echo '<p><i>No Winner</i></p>';
     }

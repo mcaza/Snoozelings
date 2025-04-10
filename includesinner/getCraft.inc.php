@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $id = $_POST['id'];
     
     //Get Crafting Table Info
@@ -72,7 +72,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Reply & Reroute
-    $_SESSION['reply'] = $result['display'] . ' has been added to your inventory.';
+    $greeting = $result['display'] . ' has been added to your inventory.';
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../crafting");
     
 } else {

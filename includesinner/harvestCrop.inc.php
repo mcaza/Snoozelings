@@ -9,8 +9,8 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 //Get Variables
-    if ($_SESSION['user_id']) {
-        $userId = $_SESSION['user_id'];
+    if ($_COOKIE['user_id']) {
+        $userId = $_COOKIE['user_id'];
     } else {
         header("Location: ../login");
         die();
@@ -37,7 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $future_date = new DateTime($table['finishtime']);
             if ($table['finishtime']) {
                 if ($future_date >= $now) {
-                    $_SESSION['reply'] = "That snoozeling is currently crafting.";
+                        $reply = "That snoozeling is currently crafting.";
+                        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                        $stmt = $pdo->prepare($query);
+                        $stmt->bindParam(":user_id", $userId);
+                        $stmt->bindParam(":message", $reply);
+                        $stmt->execute();
                     header("Location: ../farm");
                     die(); 
                 }
@@ -46,7 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     if(!$farmer) {
-        $_SESSION['reply'] = 'You need to select a farmer';
+            $reply = "You need to select a farmer.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../farm");
         die();
     }
@@ -131,7 +141,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     }
     } else {
-         $_SESSION['reply'] = "There was a small glitch in the snoozeling internet, but we promise your plant was harvested.";
+            $reply = "There was a small glitch in the snoozeling internet, but we promise your plant was harvested.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../farm");
         die();
     }
@@ -184,11 +199,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":plot", $plot);
     $stmt->execute(); 
     
+    if ($amount === 1 ) {
+            $greeting = htmlspecialchars($snooze['name']) . ' harvested ' . $farm['plantName'] . '.';
+        } elseif ($amount === 2 && ($name === "Cocoa Beans" || $name === "Black Beans")) {
+            $greeting = htmlspecialchars($snooze['name']) . ' harvested 2 ' . $farm['plantName'] . '.';
+    } else {
+        $greeting = htmlspecialchars($snooze['name']) . ' harvested 2 ' . $farm['plantName'] . 's.';
+        }
+    
+        if ($seed == 1) {
+            $greeting = $greeting . '<br><br>They have also found a single ' . $farm['plantName'] . ' Seed.';
+        }
+    
     //Set Session Variables
-    $_SESSION['amount'] = $amount;
-    $_SESSION['item'] = $farm['plantName'];
-    $_SESSION['name'] = htmlspecialchars($snooze['name']);
-    $_SESSION['seed'] = $seed;
+    $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+
                    
     //Return
     header("Location: ../farm");

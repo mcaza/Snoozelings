@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") { 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $id = $_POST['request'];
     
     //Get Request Information
@@ -33,7 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Redirect with Reply
-    $_SESSION['reply'] = "Your Request Has Been Cancelled";
+        $reply = "Your request has been cancelled.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../requests");
     
     

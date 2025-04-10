@@ -6,7 +6,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 //Get Variables
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $farmer = $_POST['farmer'];
     $seed = $_POST['seed'];
     $plot = $_POST['plot'];
@@ -30,7 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $future_date = new DateTime($table['finishtime']);
             if ($table['finishtime']) {
                 if ($future_date >= $now) {
-                    $_SESSION['reply'] = "That snoozeling is currently crafting.";
+                        $reply = "That snoozeling is currently crafting.";
+                    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(":user_id", $userId);
+                    $stmt->bindParam(":message", $reply);
+                    $stmt->execute();
                     header("Location: ../farm");
                     die(); 
                 }
@@ -39,7 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     if(!$farmer) {
-        $_SESSION['reply'] = 'You need to select a farmer';
+            $reply = "You need to select a farmer.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../farm");
         die();
     }
@@ -55,7 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $seedId = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if(!$seedId) {
-        $_SESSION["reply"] = "You do not own any of that seed.";
+            $reply = "You do not own any of that seed.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../farm");
         die();
     }
@@ -201,6 +216,14 @@ if ($snooze['job'] === "Farmer") {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $seedId['id']);
     $stmt->execute();  
+    
+    //Reply
+    $reply = 'You have planted a single ' . $plantName . ' seed.';
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
 
 //Redirect
     header("Location: ../farm.php");

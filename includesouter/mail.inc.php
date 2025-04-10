@@ -2,7 +2,7 @@
 
 //Get User ID & Mail ID
 $id = $_GET['id'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Get Mail Info
 $query = "SELECT * FROM mail WHERE id = :id";

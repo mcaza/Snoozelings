@@ -1,5 +1,5 @@
 <?php
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Grab all the Blueprints From User
 $query = "SELECT * FROM blueprints WHERE owner_id = :id";

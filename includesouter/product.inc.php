@@ -1,7 +1,7 @@
 <?php
 
 $id = $_GET['id'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Grab Name of Product
 $query = 'SELECT * FROM products WHERE id = :id';

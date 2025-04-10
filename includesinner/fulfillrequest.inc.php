@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") { 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $id = $_POST['request'];
     
     //Get Request Information
@@ -75,7 +75,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":points", $new);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
-        $_SESSION['reply'] = "Request Fulfilled. You have also recieved a Kindness Coin";
+            $reply = "Request Fulfilled. You have also recieved a Kindness Coin.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         
         //Increase Daily Records +1
         $query = 'UPDATE dailyRecords SET requestsFilled = requestsFilled + 1, kindnessCoins = kindnesscoins + 1 ORDER BY id DESC LIMIT 1';
@@ -87,7 +92,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":points", $points);
         $stmt->bindParam(":id", $userId);
         $stmt->execute();
-        $_SESSION['reply'] = "Request Successfully Fulfilled";
+        $reply = "Request fulfilled. Thank you for helping the snoozeling community.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         
         //Increase Daily Records +1
         $query = 'UPDATE dailyRecords SET requestsFilled = requestsFilled + 1 ORDER BY id DESC LIMIT 1';

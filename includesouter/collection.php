@@ -2,8 +2,7 @@
 
 require_once 'displayPet.inc.php';
 
-$userId = $_SESSION['user_id'];
-$username = $_SESSION['user_username'];
+$userId = $_COOKIE['user_id'];
 $id = $_GET['id'];
 
 

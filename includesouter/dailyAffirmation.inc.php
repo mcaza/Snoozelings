@@ -1,7 +1,7 @@
 <?php
 
-if (isset($_SESSION["user_id"])) {
-$userId = $_SESSION['user_id'];
+if (isset($_COOKIE["user_id"])) {
+$userId = $_COOKIE['user_id'];
 
 $query = "SELECT affirmation FROM users WHERE id = :id";
     $stmt = $pdo->prepare($query);

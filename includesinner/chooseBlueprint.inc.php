@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $bp = $_POST['snoozeling'];
     
     //Grab Breeding ID
@@ -17,13 +17,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check if breeding is already selected
     if (!empty($result['blueprint'])) {
-        $_SESSION['reply'] = 'You have already selected a blueprint for this breeding.';
+            $reply = "You have already selected a blueprint for this breeding.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../stitcher");
         die();
     } 
     
     if (!$bp) {
-        $_SESSION['reply'] = "You must pick a snoozeling.";
+            $reply = "You must pick a snoozeling.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../blueprints?id=" . $result['id']);
         die();
     }
@@ -58,7 +68,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":picture", $picture);
     $stmt->execute();
     
-    $_SESSION['reply'] = 'I\'ll send your new snoozeling in the mail as soon as I\'m finished.';
+        $reply = "I\'ll send your new snoozeling in the mail as soon as I\'m finished.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../stitcher");
     
 } else {

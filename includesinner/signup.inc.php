@@ -21,47 +21,161 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         // Error Handlers
         $errors = [];
+        $username = $_POST["username"];
+        $pwd = $_POST["pwd"];
+        $pwd2 = $_POST["pwd2"];
+        $email = strtolower($_POST["email"]);
+        $birthday = $_POST["birthday"];
+        $pronouns = $_POST["pronouns"];
+        $code = $_POST["code"];
         
         if (isInputEmpty($username, $pwd, $email)) {
-            $errors["empty_input"] = "You must fill in all fields.";
+            header("Location: ../signup?error=1");
+            die();
         }
         if (isEmailInvalid($email)) {
-            $errors["invalid_email"] = "Invalid email used.";
+            header("Location: ../signup?error=2");
+            die();
         }
         if (isUsernameTaken($pdo, $username)) {
-            $errors["username_taken"] = "Username already taken.";
+            $link = "Location: ../signup?error=3";
+            if ($code) {
+                $link = $link . '&code=' . $code;
+            }
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            header($link);
+            die();
         }
         if (isEmailRegistered($pdo, $email)) {
-            $errors["email_registered"] = "Email already registered.";
+            $link = "Location: ../signup?error=4";
+            if ($code) {
+                $link = $link . '&code=' . $code;
+            }
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            if ($birthday) {
+                $link = $link . '&birthday=' . $birthday;
+            }
+            header($link);
+            die();
         }
         
         if (futureDate($birthday)) {
-            $errors["future_date"] = "Your birth date cannot be in the future.";
+            $link = "Location: ../signup?error=5";
+            if ($code) {
+                $link = $link . '&code=' . $code;
+            }
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            if ($email) {
+                $link = $link . '&email=' . $email;
+            }
+            header($link);
+            die();
         }
         
         if(thirteenYears($birthday)) {
-            $errors["too_young"] = "You need to be 13 or older to register.";
+            $link = "Location: ../signup?error=6";
+            if ($code) {
+                $link = $link . '&code=' . $code;
+            }
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            if ($email) {
+                $link = $link . '&email=' . $email;
+            }
+            header($link);
+            die();
         } 
         if(passwordCheck($pwd, $pwd2)) {
-            $errors["no_match"] = "Your passwords do not match.";
+            $link = "Location: ../signup?error=7";
+            if ($code) {
+                $link = $link . '&code=' . $code;
+            }
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            if ($email) {
+                $link = $link . '&email=' . $email;
+            }
+            if ($birthday) {
+                $link = $link . '&birthday=' . $birthday;
+            }
+            header($link);
+            die();
         }
         if(passwordLength($pwd)) {
-            $errors["short_password"] = "Your password must be at least 8 characters in length.";
+            $link = "Location: ../signup?error=8";
+            if ($code) {
+                $link = $link . '&code=' . $code;
+            }
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            if ($email) {
+                $link = $link . '&email=' . $email;
+            }
+            if ($birthday) {
+                $link = $link . '&birthday=' . $birthday;
+            }
+            header($link);
+            die();
         }
         if (earlyAccessCode($pdo, $code)) {
-            $errors["code_not_found"] = "You have entered an incorrect early access code.";
+            $link = "Location: ../signup?error=9";
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            if ($email) {
+                $link = $link . '&email=' . $email;
+            }
+            if ($birthday) {
+                $link = $link . '&birthday=' . $birthday;
+            }
+            header($link);
+            die();
         }
         if (earlyAccessCodeCheck($pdo, $code)) {
-            $errors["code_used"] = "Your code has already been used on another account.";
+            $link = "Location: ../signup?error=10";
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            if ($email) {
+                $link = $link . '&email=' . $email;
+            }
+            if ($birthday) {
+                $link = $link . '&birthday=' . $birthday;
+            }
+            header($link);
+            die();
         }
         if (!($pronouns === "She/Her" || $pronouns === "He/Him" || $pronouns === "Any" || $pronouns === "They/Them" || $pronouns === "She/Them" || $pronouns === "He/Them" || $pronouns === "She/Him")) {
-            $errors["pronouns"] = "Please do not enter custom pronouns.";
+            $link = "Location: ../signup?error=11";
+            if ($code) {
+                $link = $link . '&code=' . $code;
+            }
+            if ($username) {
+                $link = $link . '&username=' . $username;
+            }
+            if ($email) {
+                $link = $link . '&email=' . $email;
+            }
+            if ($birthday) {
+                $link = $link . '&birthday=' . $birthday;
+            }
+            header($link);
+            die();
         }
         
         require_once '../../includes/config_session.inc.php';
         
         if ($errors) {
-            $_SESSION["errors_signup"] = $errors;
+            setcookie('errors_signup', $errors, 60, '/');
             
             $signupData = [
                 "username" => $username,
@@ -69,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 "birthday" => $birthday,
                 "code" => $code
             ];
-            $_SESSION['signupData'] = $signupData;
+            setcookie('signupData', $signupData, 60, '/');
             
             header("Location: ../signup.php");
             die();
@@ -100,7 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         mail($address, $title, $msg, $headers);
         
-        header("Location: ../login");
+        header("Location: ../login?success=1");
         
         $pdo = null;
         $stmt = null;

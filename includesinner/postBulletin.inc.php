@@ -8,15 +8,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = $_POST["title"];
     $post = $_POST["post"];
     $type= $_POST["type"];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $likes = 0;
     $new = 0;
     
-    if (!($type === 'general' || $type === 'fandom' || $type === 'artwork' || $type === 'roleplay' || $type === 'giveaways' || $type === 'guides' || $type === 'questions' || ($type === 'news' && $userId == "1") || ($type === 'submissions' && $userId == "1" || ($type === 'hidden' && $userId == "1")))) {
-        $_SESSION['title'] = $title;
-        $_SESSION['post'] = $post;
-        header("Location: ../newPost");
-        die();
+    if (isset($_POST['publish'])) {
+        if (!($type === 'general' || $type === 'fandom' || $type === 'artwork' || $type === 'roleplay' || $type === 'giveaways' || $type === 'guides' || $type === 'questions' || ($type === 'news' && $userId == "1") || ($type === 'submissions' && $userId == "1" || ($type === 'hidden' && $userId == "1")))) {
+            setcookie('title', $title, 0, '/');
+            setcookie('post', $post, 0, '/');
+            header("Location: ../newPost");
+            die();
+        }
     }
     
     if (isset($_POST['publish'])) {
@@ -47,9 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ../post?id=" . $id['id']);
     }
     elseif (isset($_POST['save'])) {
-        $_SESSION['post'] = $post;
-        $_SESSION['title'] = $title;
-        $_SESSION['type'] = $type;
+
+        setcookie('post', $post, 0, '/');
+        setcookie('title', $title, 0, '/');
+        setcookie('type', $type, 0, '/');
         
         //Reroute
         header("Location: ../newPost");

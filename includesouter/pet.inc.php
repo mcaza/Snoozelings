@@ -1,6 +1,6 @@
 <?php
 $id = $_GET['id'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 $query = "SELECT * FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);
@@ -34,7 +34,7 @@ $query = "SELECT owner_id FROM snoozelings WHERE id = :id;";
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Buttons
-if ($_SESSION["user_id"] == $result["owner_id"]) { 
+if ($_COOKIE["user_id"] == $result["owner_id"]) { 
     echo '<div class="button-bar">
                 <button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Edit Pet</button>
                 <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Change Job</button>';

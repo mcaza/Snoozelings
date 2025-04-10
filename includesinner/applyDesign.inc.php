@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $design = $_POST['design'];
     $pet = $_POST['pet'];
 
@@ -34,7 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":design", $name);
         $stmt->bindParam(":id", $pet);
         $stmt->execute();
-        $_SESSION['reply'] = $petname['name'] . " loves their new tail!!";
+        $greeting = $petname['name'] . " loves their new tail!!";
+            $reply = $greeting;
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         
     } else if (str_contains($designid['name'], "Hair") || str_contains($designid['name'], "Spikes")) {
         $name = str_replace("Design", "", $designid['name']);
@@ -50,7 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":design", $name);
         $stmt->bindParam(":id", $pet);
         $stmt->execute();
-        $_SESSION['reply'] = $petname['name'] . " loves their new hair!!";
+        $greeting = $petname['name'] . " loves their new hair!!";
+            $reply = $greeting;
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
     } else {
         //Get Specials String
         $specials = $petname['specials'];
@@ -70,7 +82,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":id", $pet);
         $stmt->execute();
         
-        $_SESSION['reply'] = $petname['name'] . " loves their new look!!";
+        $greeting = $petname['name'] . " loves their new look!!";
+            $reply = $greeting;
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
     }
     
     

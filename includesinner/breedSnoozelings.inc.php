@@ -6,8 +6,8 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Get Values
-    if ($_SESSION['user_id']) {
-        $userId = $_SESSION['user_id'];
+    if ($_COOKIE['user_id']) {
+        $userId = $_COOKIE['user_id'];
     } else {
         header("Location: ../login");
         die();
@@ -23,12 +23,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     if ($breedid) {
         if ($breedid === $first) {
-            $_SESSION['reply'] = 'You need to use 2 different snoozelings as inspiration.';
+                $reply = "You need to use 2 different snoozelings as inspiration.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
             header("Location: ../stitcher?page=new");
             die();
         }
     } if ($second === $first) {
-        $_SESSION['reply'] = 'You need to use 2 different snoozelings as inspiration.';
+        $reply = "You need to use 2 different snoozelings as inspiration.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
         header("Location: ../stitcher?page=new");
         die();
     }
@@ -41,7 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $blueprintCheck = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     if ($blueprintCheck) {
-        $_SESSION['reply'] = 'You have already have blueprints arriving soon in the mail.';
+            $reply = "You have already have blueprints arriving soon in the mail.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../stitcher?page=new");
         die();
     }
@@ -61,7 +76,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bedscheck = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (intval($bedscheck['petBeds']) <= $count) {
-        $_SESSION['reply'] = 'You do not have any empty pet beds.';
+            $reply = "You do not have any empty pet beds.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
         header("Location: ../stitcher?page=new");
         die();
     }
@@ -76,7 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $status = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($status['breedStatus'] === 'Closed') {
-            $_SESSION['reply'] = 'This snoozeling is not allowed to be used for inspiration.';
+                $reply = "This snoozeling is not allowed to be used for inspiration.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
             header("Location: ../stitcher?page=new");
             die();
         }
@@ -91,7 +116,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bps = $stmt->fetch(PDO::FETCH_ASSOC);
     $bpcount = count($bps);
     if ($bpcount < $blueprints) {
-        $_SESSION['reply'] = 'You have used more blueprints than is in your inventory.';
+            $reply = "You have used more blueprints than you have in your inventory.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../stitcher?page=new");
         die();
     }
@@ -191,7 +221,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Return Message
-    $_SESSION['reply'] = 'That should be everything. I\'ll send you a letter when your blueprints are finished.';
+        $reply = "That should be everything. I\'ll send you a letter when your blueprints are finished.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../stitcher?page=new");
     
     

@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Get Journal Id
     $query = 'SELECT id FROM journals WHERE user_id = :id';
@@ -246,10 +246,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Set Session for Coins
     if ($_POST['newHabitOne']) {
-            $_SESSION['finish'] = 3;
+        //Set Session for Coins
+        $reply = "You earned 5 snooze coins.<br><br>You have also set new habits. Be sure to edit your journal when you complete them today.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
 
     } else {
-            $_SESSION['finish'] = 1;
+        //Set Session for Coins
+        $reply = "You earned 5 snooze coins.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
 
     }
     

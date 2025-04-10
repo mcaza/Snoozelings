@@ -2,7 +2,7 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Check How Many Boxes. Max is Currently 9
 $query = 'SELECT * FROM farms WHERE user_id = :id';
@@ -27,12 +27,22 @@ if ($count < 9) {
     $stmt->execute();
     
     //Variables
-    $_SESSION['reply'] = "You have successfully installed a new farm plot.";
+        $reply = "You have successfully installed a new farm plot.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
 
     //Reroute to Pack
     header("Location: ../pack");
     
 } else {
-    $_SESSION['message'] = "You already have the maximum amount of farm plots.";
+        $reply = "You already have the maximum amount of farm plots.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../pack");
 }

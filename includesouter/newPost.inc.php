@@ -1,11 +1,9 @@
 <?php
 
-$userId = $_SESSION['user_id'];
-$title = $_SESSION['title'];
-$post = $_SESSION['post'];
-unset($_SESSION['title']);
-unset($_SESSION['post']);
-unset($_SESSION['type']);
+$userId = $_COOKIE['user_id'];
+$title = $_COOKIE['title'];
+$post = $_COOKIE['post'];
+
 
 
  //Back to Pack Arrows
@@ -71,8 +69,11 @@ if (!$result || $userId == 1) {
     
 
     //End Form
-    echo '<input class="fancyButton" type="submit" name="publish" value="Post" style="margin-right:20px;width:80px;">
-    <input class="fancyButton" type="submit" name="save" value="Preview">';
+    echo '<input class="fancyButton" type="submit" name="publish" value="Post" style="margin-right:20px;width:80px;">';
+    if ($userId == 1) {
+        echo '<input class="fancyButton" type="submit" name="save" value="Preview">';
+    }
+    
     echo '</form>';
     
     if ($post) {

@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Grab Form Variables
     $snooze = $_POST['snoozeling'];
     $dye = $_POST['dye'];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Check if user has coins
     $query = "SELECT coinCount FROM users WHERE id = :id";
@@ -20,7 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $count = intval($coins['coinCount']);
     
     if ($count < 25) {
-        $_SESSION['reply'] = "You do not have enough snooze coins.";
+            $reply = "You do not have enough snooze coins.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../trendytails");
         die();
     } 
@@ -72,7 +77,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if($dyeCheck) {
         
     } else {
-        $_SESSION['reply'] = "You do not have any of the selected dye.";
+            $reply = "You do not have any of the selected dye.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../trendytails");
         die();
     }
@@ -105,7 +115,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check if MothFluff is the Same
     if ($name == $type) {
-        $_SESSION['reply'] = "You snoozelings's moth fluff is already that color.";
+            $reply = "You snoozelings\'s moth fluff is already that color.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
         header("Location: ../trendytails");
         die();
     }
@@ -140,7 +155,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Update Session message
-    $_SESSION['reply'] = htmlspecialchars($snoozeling['name'] . ' loves ' . $pronouns . ' new moth fluffies!!!');
+    $greeting = htmlspecialchars($snoozeling['name'] . ' loves ' . $pronouns . ' new moth fluffies!!!');
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     
     //Reroute to trendytails
     header("Location: ../trendytails");

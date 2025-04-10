@@ -1,7 +1,7 @@
 <?php
 
-$userId = $_SESSION['user_id'];
-$username = $_SESSION['user_username'];
+$userId = $_COOKIE['user_id'];
+$username = $_COOKIE['user_username'];
 
 $id = $_GET['id'];
 

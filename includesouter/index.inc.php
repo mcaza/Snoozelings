@@ -2,10 +2,14 @@
 
 
 
-if (isset($_SESSION['user_id'])) {
+if (isset($_COOKIE['user_id'])) {
     
-    $userId = $_SESSION['user_id'];
-    $username = $_SESSION['user_username'];
+    $userId = $_COOKIE['user_id'];
+    $query = "SELECT * FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $reply = $stmt->fetch(PDO::FETCH_ASSOC);
     date_default_timezone_set('UTC');
 
 
@@ -202,10 +206,14 @@ if (isset($_SESSION['user_id'])) {
     echo '</div>';
 
 } else {
-    if (isset($_SESSION['reply'])) {
-    $reply = $_SESSION['reply'];
-    unset($_SESSION['reply']);
-        echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;"><p>' . $reply . '</p></div>';
+    if ($reply) {
+        echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+        echo '<p>' . $reply['message'] . '</p>';
+        echo '</div>';
+        $query = "DELETE FROM replies WHERE user_id = :id;";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
     }
     echo '<img src="resources/wip.png" style="width:90%;">';
     echo '<h3 style="font-size:4rem;border-bottom: 2px dashed #827188;padding-bottom:1.5rem;margin-top:1.5rem;">🎉 Welcome Early Access Players 🎉</h3>';
@@ -272,7 +280,7 @@ if (isset($_SESSION['user_id'])) {
     echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;"><a href="https://discord.gg/HDs66g7QeJ"><img style="width: 10%;"src="https://static-00.iconduck.com/assets.00/discord-icon-2048x2048-nnt62s2u.png"></a></p>';
     echo '<img src="resources/Banner9.png" style="width:70%"><br>';
     echo '<div style="display:flex;">';
-    echo '<div id="mc_embed_shell" style="margin-left:auto;margin-right:auto;">
+    echo '<div id="mc_embed_shell" style="margin-left:auto;margin-right:auto;color:black;">
       <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
   <style type="text/css">
         #mc_embed_signup{background:#fff; false;clear:left; font:14px Helvetica,Arial,sans-serif; width: 600px;}
@@ -281,7 +289,7 @@ if (isset($_SESSION['user_id'])) {
 </style>
 <div id="mc_embed_signup">
     <form action="https://snoozelings.us14.list-manage.com/subscribe/post?u=bd00f10336c35561599f83e2a&amp;id=5593074c95&amp;f_id=00468de0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-        <div id="mc_embed_signup_scroll"><h2>Snoozelings Newsletter</h2>
+        <div id="mc_embed_signup_scroll" style="color:black"><h2>Snoozelings Newsletter</h2>
             <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
             <div class="mc-field-group"><label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div>
         <div id="mce-responses" class="clear foot">

@@ -50,7 +50,7 @@ require_once '../includes/verifySinglePet.inc.php';
 
 
                 <!-- To Do List -->
-                <?php if(isset($_SESSION['user_id'])) {
+                <?php if(isset($_COOKIE['user_id'])) {
                echo '<div class="bar-container">
                     <h2>To Do</h2>
                     ';  require_once "../includes/notifications.inc.php"; 

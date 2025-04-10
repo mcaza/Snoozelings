@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") { 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $sending = $_POST['to'];
     $title = $_POST['title'];
     $message = $_POST['reply'];
@@ -24,7 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":sendtime", $result);
     $stmt->execute();
     
-    $_SESSION['reply'] = "Your letter is in the postbox and will be delivered soon.";
+    $reply = "Your letter is in the postbox and will be delivered soon.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     
     header("Location: ../mailbox");
 

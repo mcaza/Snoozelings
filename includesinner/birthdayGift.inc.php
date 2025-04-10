@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $gift = $_POST['gift'];
     $id = $_POST['postId'];
     

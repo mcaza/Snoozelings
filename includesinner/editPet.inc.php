@@ -14,7 +14,7 @@ $id = $_POST['id'];
 $bed = $_POST['bed'];
 $showbed = $_POST['showbed'];
 $bio = $_POST['bio'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
     
     $query = "SELECT * FROM users WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -354,7 +354,12 @@ $userId = $_SESSION['user_id'];
     //Update Bio
     if ($bio) {
         if (strlen($bio) > 500) {
-            $_SESSION['reply'] = "The bio entered is longer than 500 characters.";
+                $reply = "The bio entered is longer than 500 characters.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
             header("Location: ../editPet?id=" . $id);
             die();
         } else {
@@ -378,7 +383,7 @@ $userId = $_SESSION['user_id'];
     $one = intval($user['bonded']);
     $two = intval($id);
     if ($one === $two) {
-    $_SESSION['bonded'] = htmlspecialchars($name);
+        setcookie('bonded', htmlspecialchars($name), 60, '/');
     }
     
     

@@ -1,7 +1,7 @@
 <?php
 
 //Grab User ID
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Grab Coins
 $query = 'SELECT coinCount FROM users WHERE id = :id';
@@ -17,10 +17,11 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($_SESSION['reply']) {
-    $reply = $_SESSION['reply'];
-    unset($_SESSION['reply']);
-}
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Top Div
 echo '<div class="topShop">';
@@ -42,7 +43,13 @@ echo '</div>';
 
 //Session Reply Area
 if ($reply) {
-    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;"><p>' . $reply . '</p></div>';
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
+    echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
 }
 
 

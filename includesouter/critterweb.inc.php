@@ -1,6 +1,6 @@
 <?php
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
 //Go Back Arrow

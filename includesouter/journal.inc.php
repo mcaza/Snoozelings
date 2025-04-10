@@ -1,12 +1,13 @@
 <?php
 
 //Grab User ID
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
-if ($_SESSION['finish']) {
-    $finish = $_SESSION['finish'];
-    unset($_SESSION['finish']);
-}
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check for Journals
 $query = 'SELECT * FROM journals WHERE user_id = :id';
@@ -121,13 +122,15 @@ if (!$journal) {
     
 } elseif ($latestEntry['closed'] == "0") {
     //Check if Any Messages (Earn Coins OR Journal Edit)
-    if ($finish == 1) {
-        echo '<div class="returnBar" style="margin-top: 1rem;"><p>You earned 5 snooze coins.</p></div>';
-    } elseif ($finish == 2) {
-        echo '<div class="returnBar" style="margin-top: 1rem;"><p>Your journal has been edited.</p></div>';
-    } else if ($finish == 3) {
-        echo '<div class="returnBar" style="margin-top: 1rem;"><p>You earned 5 snooze coins.<br><br>You have also set new habits. Be sure to edit your journal when you complete them today.</p></div>';
-    }
+    if ($reply) {
+        echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+        echo '<p>' . $reply['message'] . '</p>';
+        echo '</div>';
+        $query = "DELETE FROM replies WHERE user_id = :id;";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+}
     
     //Journal Completed for Today
     echo '<h4  style="margin-top: 2rem;">Journal Completed</h4>';

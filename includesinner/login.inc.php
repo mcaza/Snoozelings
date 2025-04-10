@@ -9,28 +9,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once '../../includes/login_contr.inc.php';
         
         
+        
+        
         //ERROR HANDLERS
         $errors = [];
         
         if (isInputEmpty($username, $pwd)) {
-            $errors["empty_input"] = "You must fill in all fields.";
+            header("Location: ../login?error=1");
+            die();
         }
         
         $results = getUser($pdo, $username);
         
         if (isUsernameWrong($results)) {
-            $errors["login_incorrect"] = "Username Doesn't Exist.";
+            header("Location: ../login?error=2");
+            die();
         }
         
         if (!isUsernameWrong($results) && isPasswordWrong($pwd, $results["password"])) {
-            $errors["wrong_password"] = "Your password is incorrect";
+            header("Location: ../login?error=3");
+            die();
         }
         
 
         //require_once '../../includes/config_session.inc.php';
         
         if ($errors) {
-            $_SESSION["errors_login"] = $errors;
+            setcookie('errors_login', $errors, 0, '/');
             
             header("Location: ../login");
             die();
@@ -38,10 +43,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         $newSessionId = session_create_id();
         $sessionId = $newSessionId . $results["id"];
-        session_id($sessionId);
-        $id = session_id();    
-        session_start();
         
+        
+        //$id = session_id(); 
+        //session_id($sessionId);
+        //session_start();
+        session_set_cookie_params([
+           'lifetime' => 0, 
+            'domain' => 'snoozelings.com',
+            'path' => '/',
+            'secure' => true,
+            'httponly' => true
+        ]);
+        
+        //setcookie("user_id",$results["id"]);
+        setcookie('PHPSESSID', $sessionId, 0, '/');
+        setcookie('user_id',$results["id"], 0, '/');
+
         //Insert into Server
         $now = new DateTime("now", new DateTimezone('EST'));
         $formatted = $now->format('Y-m-d H:i:s');
@@ -55,15 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
 
 
-        
-        //Set Bonded Pet Name
-        $name = petName($pdo, $results['bonded']);
-        $_SESSION["user_id"] = $results["id"];
-        $_SESSION["user_username"] = htmlspecialchars($results["username"]);
-        $_SESSION['bonded'] = htmlspecialchars($name['name']);
-        
-        $_SESSION["last_regeneration"] = time();
-        
+                
         header("Location: ../");
         
         $pdo=null;

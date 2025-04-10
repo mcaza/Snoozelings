@@ -3,9 +3,9 @@
 //Connection Stuff
 require_once '../includes/displayPet.inc.php';
 
-    if (isset($_SESSION["user_id"])) {
+    if (isset($_COOKIE["user_id"])) {
         //$Results - Grab Bonded Pet ID
-        $userId = $_SESSION['user_id'];
+        $userId = $_COOKIE['user_id'];
 
         $query = "SELECT bonded FROM users WHERE id = :userID";
         $stmt = $pdo->prepare($query);

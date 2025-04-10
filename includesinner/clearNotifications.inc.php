@@ -3,8 +3,8 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 
-if (isset($_SESSION["user_id"])) {
-$userId = $_SESSION['user_id'];
+if (isset($_COOKIE["user_id"])) {
+$userId = $_COOKIE['user_id'];
 }
 
 $query = "DELETE FROM notifications WHERE user_id = :id";

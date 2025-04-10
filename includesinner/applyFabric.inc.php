@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $fabric = $_POST['fabric'];
     $pet = $_POST['pet'];
 
@@ -39,7 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute(); 
     
     //Set Message and Reroute
-    $_SESSION['reply'] = $petname['name'] . " loves their new fabric!!";
+    $greeting = $petname['name'] . " loves their new fabric!!";
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../stitcher?page=fabric");
 } else {
 header("Location: ../index");

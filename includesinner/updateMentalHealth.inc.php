@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Get Newest Entry
     $query = 'SELECT id FROM mentalHealthEntries WHERE user_id = :id ORDER BY id DESC LIMIT 1';
@@ -205,7 +205,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 
     //SPop Up
-    $_SESSION['finish'] = 2;
+    $reply = "Your journal has been edited.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     
     header("Location: ../journal");
     

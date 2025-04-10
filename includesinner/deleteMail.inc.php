@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
 }
     
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 $first = $_POST['1'];
 $second = $_POST['2'];
 $third = $_POST['3'];
@@ -68,7 +68,12 @@ if ($ninth) {
 if ($tenth) {
     deleteMail($tenth,$pdo);
 }
-    $_SESSION['reply'] = "All checked mail has been deleted.";
+        $reply = "All checked mail has been deleted.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     
     header("Location: ../mailbox");
 

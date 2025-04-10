@@ -3,8 +3,8 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
-if ($_SESSION['user_id']) {
-        $userId = $_SESSION['user_id'];
+if ($_COOKIE['user_id']) {
+        $userId = $_COOKIE['user_id'];
     } else {
         header("Location: ../login");
         die();
@@ -18,11 +18,23 @@ if ($_SESSION['user_id']) {
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+session_set_cookie_params([
+           'lifetime' => 0, 
+            'domain' => 'snoozelings.com',
+            'path' => '/',
+            'secure' => true,
+            'httponly' => true
+        ]);
+
 if ($user['mode'] == "Dark") {
     $new = "Light";
+    setcookie('MODE', "Light", 0, '/');
 } else {
     $new = "Dark";
+    setcookie('MODE', "Dark", 0, '/');
 }
+
+
 
 $query = "UPDATE users SET mode = :mode WHERE id = :id";
 $stmt = $pdo->prepare($query);

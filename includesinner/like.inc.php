@@ -3,7 +3,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 $id = $_GET['id'];
-$username = $_SESSION['user_username'];
+$username = $_COOKIE['user_username'];
 
 //Check if User has Liked
 //Get UserList

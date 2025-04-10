@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Grab All Pets
     $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
@@ -42,7 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($petCheck['owner_id'] == $userId) {
             
         } else {
-            $_SESSION['reply'] = "You have submitted a snoozeling you do not own";
+                $reply = "You have submitted a snoozeling you do not own.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
             header("Location: ../reorder");
             die();
         }
@@ -53,7 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $duplicates = sizeof($temp_array) != sizeof($pets);
     
     if ($duplicates) {
-        $_SESSION['reply'] = "You have submitted the same snoozeling more than once";
+            $reply = "You have submitted the same snoozeling more than once.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../reorder");
         die();
     }
@@ -75,7 +85,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":petOrder", $string);
     $stmt->execute();
     
-    $_SESSION['reply'] = "You have successfully changed the order of your snoozelings";
+        $reply = "You have successfully changed the order of your snoozelings.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../reorder");
     
 } else {

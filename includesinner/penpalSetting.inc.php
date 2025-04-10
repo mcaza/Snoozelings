@@ -8,7 +8,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //Grab Form Variables
     $penpal = $_POST['penpal'];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Penpal Intensity
     if ($penpal) {
@@ -28,7 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Reply Message
-    $_SESSION['reply'] = "Your penpal filter setting has been adjusted to " . $penpal;
+    $greeting = "Your penpal filter setting has been adjusted to " . $penpal;
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     
     header("Location: ../penpals");
     

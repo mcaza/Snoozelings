@@ -110,7 +110,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
     }
     
-    $_SESSION['reply'] = "Your Moderator Mail Has Been Submitted";
+    $address = "support@snoozelings.com";
+
+        $title ="Moderator Report Submitted";
+        $msg = '<h2>New Moderator Report</h2> <p><b>Type: ' . $topic . '<br></b>Link:</b> <a href="snoozelings.com/ticket?ticketid=' . $newId . '">Click Here</a><br><b>Information:</b>' . $information . '</p>';
+
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+        //From
+        $headers .= 'From: Snoozelings <autoreply@snoozelings.com>' . "\r\n";
+
+        mail($address, $title, $msg, $headers);
+        $reply = "Your Moderator Mail Has Been Submitted.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     
     header("Location: ../moderatormail");
     

@@ -2,7 +2,7 @@
 function ownerRedirect($pdo) {
 //Get Pet ID and Owner ID
 $id = $_GET['id'];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Query for Owner ID of Pet
 $query = "SELECT owner_id FROM snoozelings WHERE id = :id";

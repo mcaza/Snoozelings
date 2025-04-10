@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $id = $_POST['user'];
     $reason = $_POST['reason'];
     
@@ -54,8 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Reroute
-    $_SESSION['reply'] = 'Your letter has been sent';
-            header("Location: ../mailbox");
+        $reply = "Your letter has been sent.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+    header("Location: ../mailbox");
     
 } else {
 header("Location: ../index");

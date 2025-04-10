@@ -15,8 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check if Email Exists
     if(!$user) {
-        $_SESSION["reply"] = "There is no account associated with that email.";
-        header("Location: ../helpme");
+        header("Location: ../helpme?error=4");
         die();
     }
     
@@ -36,8 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     mail($address, $title, $msg, $headers);
     
     //Reply & Redirect
-    $_SESSION["reply"] = "An email has been sent containing your username.";
-    header("Location: ../helpme");
+    header("Location: ../helpme?reset=2");
 } else {
     header("Location: ../index");
 }

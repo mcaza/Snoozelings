@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $messages = $_POST["messages"];
     $gifts = $_POST["birthdayGifts"];
     $bonded = $_POST["bonded"];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $farmName = $_POST['farm'];
     $houseName = $_POST['house'];
     $backpackName = $_POST['backpack'];
@@ -63,7 +63,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     if ($shortCount > 5) {
-        $_SESSION['error'] = "You Cannot Have More Than 5 Shortcuts";
+            $reply = "You Cannot Have More Than 5 Shortcuts.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../editprofile");
         die(); 
     }
@@ -265,7 +270,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Update Bio
     if ($bio) {
         if (strlen($bio) > 500) {
-            $_SESSION['reply'] = "The bio entered is longer than 500 characters.";
+                $reply = "The bio entered is longer than 500 characters.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
             header("Location: ../editprofile?id=" . $userId);
             die();
         } else {

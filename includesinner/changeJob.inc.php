@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $job = $_POST['job'];
     $id = $_POST['id'];
     
@@ -36,7 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table) {
             if ($table['display']) {
-                $_SESSION['reply'] = "Your snoozeling cannot change jobs because they are currently crafting.";
+                    $reply = "Your snoozeling cannot change jobs because they are currently crafting.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
                 header("Location: ../crafting");
                 die(); 
             }

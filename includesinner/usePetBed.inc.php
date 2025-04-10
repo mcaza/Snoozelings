@@ -4,7 +4,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
 
     //Check How Many Beds. Max is Currently 9
     $query = 'SELECT * FROM users WHERE id = :id';
@@ -36,13 +36,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute();
 
             //Variables
-            $_SESSION['reply'] = "You have successfully set up a new pet bed";
+                $reply = "You have successfully set up a new pet bed.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
 
             //Reroute to Pack
             header("Location: ../pack");
 
         } else {
-            $_SESSION['reply'] = "You already have the maximum number of pet beds";
+                $reply = "You already have the maximum number of pet beds.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
             header("Location: ../pack");
         }
 

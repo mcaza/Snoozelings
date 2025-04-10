@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") { 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $user = $_POST['userid'];
     $ticket = $_POST['ticket'];
     $reply = $_POST['information1'];
@@ -53,7 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Reply Message
-    $_SESSION['reply'] = "Your Notes Have Been Submitted";
+        $reply = "Your Notes Have Been Submitted.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     
     //Redirect
     header("Location: ../ticket?ticketid=" . $ticket);

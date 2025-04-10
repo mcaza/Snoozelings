@@ -60,15 +60,37 @@ require_once '../includes/loginRedirect.inc.php';
 
         <!-- All Main Content -->
         <div class="main-container"><div class="bottomPush">
-            <div style="margin-bottom:2rem;"><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
+            <?php 
+    
+            $error = $_GET['error'];
+            $success = $_GET['success'];
+                    
+                    //Notification
+            if ($error || $success) {
+                echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;"><p>';
+                if ($error == 1) {
+                    echo 'You must fill in all fields.';
+                } else if ($error == 2) {
+                    echo 'Username is incorrect.';
+                } else if ($error == 3) {
+                    echo 'Password is incorrect';
+                } else if ($success == 1) {
+                    echo 'You have successfully registered. You may now log in.';
+                }
+                echo '</p></div>';
+
+            }
+           echo ' <div style="margin-bottom:2rem;"><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
             <h3 style="margin-bottom:1.5rem">🎉 Welcome Early Access Players 🎉</h3>
             <form action="includes/login.inc.php" method="post">
-                <label class='form' for="usernamelogin">Username:</label><br>
+                <label class="form" for="usernamelogin">Username:</label><br>
                 <input class="input" type="text" name="usernamelogin" placeholder="Username"><br>
-                <label class='form' for="pwdlogin">Password:</label><br>
+                <label class="form" for="pwdlogin">Password:</label><br>
                 <input class="input" type="password" name="pwdlogin" placeholder="Password"><br>
                 <button class="fancyButton regButton">Login</button>
-            </form>
+            </form>';
+                    
+                    ?>
             
             <?php
             checkLoginErrors();

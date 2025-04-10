@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $code = $_POST["code"];
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 $errors = [];
 $value = 1;
@@ -18,13 +18,23 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$result) {
-    $_SESSION["reply"] = "Please log into your account and try again.";
+        $reply = "Please log into your account and try again.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../verify.php");
     die();
 }
 
 if (!$code) {
-    $_SESSION["reply"] = "You forgot to enter the code.";
+        $reply = "You forgot to enter the code.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../verify.php");
     die();
 }
@@ -64,7 +74,12 @@ if ($result["tempCode"] === $code) {
     
     header("Location: ../verify");
 } else {
-    $_SESSION["reply"] = "The code you entered is incorrect.";
+        $reply = "The code you entered is incorrect.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../verify.php");
 }
 

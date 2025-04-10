@@ -1,6 +1,6 @@
 <?php
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 date_default_timezone_set('America/Los_Angeles');
 
 //Get Journal Type

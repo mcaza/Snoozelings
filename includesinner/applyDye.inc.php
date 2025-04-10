@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $color = $_POST["color"];
     $item = $_POST["item"];
     
@@ -69,7 +69,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
          if ($canDye['white'] == 1) {
         
          } else {
-             $_SESSION["reply"] = "White dye cannot be used with that item.";
+                 $reply = "White dye cannot be used with that item.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
              header("Location: ../");
              die();
         }
@@ -105,7 +110,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Reply and Reroute
-    $_SESSION["reply"] = "Your " . $itemcheck['display'] . " will be ready in 4 hours.";
+    $greeting = "Your " . $itemcheck['display'] . " will be ready in 4 hours.";
+        $reply = $greeting;
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
     header("Location: ../dyes");
     
 } else {

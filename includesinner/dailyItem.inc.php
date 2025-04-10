@@ -2,7 +2,7 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Get User Info
 $query = "SELECT dailyPrize FROM users WHERE id = :id";
@@ -89,7 +89,13 @@ $stmt->bindParam(":num", $num);
 $stmt->execute(); 
 
 //Redirect
-    $_SESSION['reply'] = "You have received the following item: " . $itemdisplay;
+    $greeting = "You have received the following item: " . $itemdisplay;
+    $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../randomitem");
 } else {
     header("Location: ../randomitem");

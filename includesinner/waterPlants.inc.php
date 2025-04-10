@@ -3,7 +3,7 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Get All Farms
 $query = "SELECT * FROM farms WHERE user_id = :id;";
@@ -37,5 +37,13 @@ foreach ($farms as $farm) {
         $stmt->bindParam(":time", $formatted);
         $stmt->execute();
 
+//Reply
+$reply = "Your snoozeling has watered the plants.";
+$query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":user_id", $userId);
+$stmt->bindParam(":message", $reply);
+$stmt->execute();
+
 //Redirect
-    header("Location: ../farm.php");
+    header("Location: ../farm");

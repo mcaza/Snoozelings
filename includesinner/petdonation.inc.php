@@ -4,13 +4,18 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $one = $_POST['petone'];
     $two = $_POST['pettwo'];
     
     //Check Pet Confirmation
     if (!($one == $two)) {
-        $_SESSION['reply'] = '<p>You have selected two different pets. Please try again.</p>';
+            $reply = "<p>You have selected two different pets. Please try again.</p>";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../adoption");
         die(); 
     }
@@ -22,7 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $bonded = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($bonded['bonded'] == $one) {
-        $_SESSION['reply'] = '<p>You can not donate the pet you are currently bonded to.</p>';
+            $reply = "<p>You can not donate the pet you are currently bonded to.</p>";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../adoption");
         die(); 
     }
@@ -40,8 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     if ($check == 0) {
-        $_SESSION['reply'] = '<p>You have selected a pet you do not own.</p>';
-        $_SESSION['reply'] = '<p>You have selected a pet you do not own.</p>';
+            $reply = "<p>You have selected a pet you do not own.</p>";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../adoption");
         die(); 
     }
@@ -53,7 +67,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $donatecheck = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($donatecheck) {
-        $_SESSION['reply'] = '<p>This pet has already been donated.</p>';
+            $reply = "<p>This pet has already been donated. Please report this bug to Moderator Mail.</p>";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
         header("Location: ../adoption");
         die(); 
     }
@@ -65,7 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $crafter = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($crafter['pet_id'] == $one) {
-        $_SESSION['reply'] = '<p>You can not donate the pet currently assigned to your crafting table.</p>';
+            $reply = "<p>You can not donate the pet currently assigned to your crafting table.</p>";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
         header("Location: ../adoption");
         die(); 
     }
@@ -145,7 +169,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check for Clothes
     if ($pet['clothesBottom'] || $pet['clothesTop'] || $pet['clothesBoth'] || $pet['clothesHoodie']) {
-        $_SESSION['reply'] = '<p>You need to remove your pet\'s clothes before donating them.</p>';
+            $reply = "<p>You need to remove your pet\'s clothes before donating them.</p>";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../adoption");
         die(); 
     }
@@ -171,8 +200,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     
-    $_SESSION['reply'] = '<p>Your pet has been donated and will be available after their spa day.</p>';
-        header("Location: ../adoption");
+        $reply = "<p>Your pet has been donated and will be available after their spa day.</p>";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+    header("Location: ../adoption");
 
 } else {
 header("Location: ../index");

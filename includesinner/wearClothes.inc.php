@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Grab Form Variables
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $id = $_POST["item"];
     $petid = $_POST["pet"];
     if ($_POST["color"]) {
@@ -73,14 +73,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Make sure item is in user inventory
     if (!$results) {
-        $_SESSION['reply'] = "You do not own any of this item.";
+            $reply = "You do not own any of this item.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../pack");
         die();
     }
     
     //Make sure item is clothing type
     if (!($type === 'clothesTop' || $type === "clothesBottom" || $type === 'clothesHoodie' || $type === 'clothesBoth')) {
-        $_SESSION['reply'] = "This is not a clothing item and cannot be worn.";
+            $reply = "This is not a clothing item and cannot be worn.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../pack");
         die();
     }
@@ -103,7 +113,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $clothes = $pet['clothesBoth'];
     }
     if (str_contains($clothes, $name)) {
-        $_SESSION['reply'] = "Your pet is already wearing this item.";
+            $reply = "Your pet is already wearing this item.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../pack");
     }
     
@@ -151,7 +166,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute(); 
     
     //Message & Reroute to Items
-    $_SESSION['reply'] = "Your pet is now wearing the following item: " . $display;
+    $greeting = "Your pet is now wearing the following item: " . $display;
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../pack");
     
 } else {

@@ -4,7 +4,7 @@ require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Get Variables
     $id = $_POST["item"];
@@ -35,7 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Check Coins
     if ($coins < $price) {
         //If Under Price, Return to Seed Shop With Error
-        $_SESSION['reply'] = "You do not have enough kindness coins.";
+            $reply = "You do not have enough kindness coins.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../kindnessshop");
     } else {
         //Remove Coins
@@ -93,11 +98,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
         //Set Response Message
         if ($color) {
-            $_SESSION['reply'] = "You have purchased 1 " . $item['display'] . ' [' . $color . ']';
+            $greeting = "You have purchased 1 " . $item['display'] . ' [' . $color . ']';
         } else {
-            $_SESSION['reply'] = "You have purchased 1 " . $item['display'];
+            $greeting = "You have purchased 1 " . $item['display'];
         }
-            
+            $reply = $greeting;
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         //Reroute to Seed Shop
         header("Location: ../kindnessshop");
     }

@@ -1,6 +1,6 @@
 <?php
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 $query = 'SELECT staff FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);

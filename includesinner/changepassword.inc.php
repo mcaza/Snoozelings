@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'];
     $pwd = $_POST['pwd'];
     $pwdtwo = $_POST['pwdtwo'];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Get Hash
     $query = 'SELECT password FROM users WHERE id = :id';
@@ -18,14 +18,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check Password
     if(!password_verify($password, $result['password'])) {
-        $_SESSION['reply'] = "Password entered is not correct.";
+            $reply = "Password entered is not correct.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../updateaccount");
         die();
     }
     
     //Check if Passwords Match
     if (!($pwd === $pwdtwo)) {
-        $_SESSION['reply'] = "Your new passwords do not match.";
+            $reply = "Your new passwords do not match.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../updateaccount");
         die();
     }
@@ -45,7 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Reply & Reroute
-    $_SESSION['reply'] = "Your password has been changed.";
+        $reply = "Your password has been changed.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../updateaccount");
     die();
     

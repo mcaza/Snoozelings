@@ -3,12 +3,11 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if(!$userId) {
-        $_SESSION["reply"] = "You must log in before requesting a new code.";
-        header("Location: ../verify.php");
+        header("Location: ../login");
         die();
     }
     
@@ -49,8 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $headers .= 'From: Snoozelings <autoreply@snoozelings.com>' . "\r\n";
 
     if(mail($address, $title, $msg, $headers)) {
-        $_SESSION["reply"] = "A new code has been sent. Please check your email.";
-        header("Location: ../verify.php");
+        $reply = "A new code has been sent. Please check your email.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
+        header("Location: ../verify");
     }
     
     

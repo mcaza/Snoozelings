@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = $_POST["name"];
     $id = $_POST["snoozeling"];
     $pronouns = $_POST["pronouns"];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $todaysDate = date("Y-m-d");
     $job = "jack";
     $mood = "Happy";

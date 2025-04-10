@@ -1,20 +1,15 @@
 <?php
 
-$userId = $_SESSION['user_id'];
-$username = $_SESSION['user_username'];
-$petName = $_SESSION['bonded'];
+$userId = $_COOKIE['user_id'];
+$petName = $_COOKIE['bonded'];
 
-$item =  $_SESSION['item'];
-$amount = $_SESSION['amount'];
-$name = $_SESSION['name'];
-$reply = $_SESSION['reply'];
-$seedCheck = $_SESSION['seed'];
 
-unset($_SESSION['item']);
-unset($_SESSION['amount']);
-unset($_SESSION['name']);
-unset($_SESSION['reply']);
-unset($_SESSION['seed']);
+//Replies
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 //Get Farmname
@@ -59,23 +54,18 @@ echo '</div>';
 echo '<h3 style="margin-bottom: 2rem;">' . $farmName['farmName'] . '</h3>';
 if ($item) {
         echo '<div class="returnBar" style="margin-bottom: 2rem;">';
-        if ($amount === 1 ) {
-            echo '<p>' . $name . ' harvested ' . $item . '</p>';
-        } elseif ($amount === 2 && ($name === "Cocoa Beans" || $name === "Black Beans")) {
-         echo '<p>' . $name . ' harvested 2 ' . $item . '.</p>';
-    } else {
-            echo '<p>' . $name . ' harvested 2 ' . $item . 's</p>';
-        }
-    
-        if ($seedCheck == 1) {
-            echo '<p>You have also found a single ' . $item . ' Seed</p>';
-        }
+        
         echo '</div>';
     }
+
 if ($reply) {
     echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
-    echo '<p>' . $reply . '</p>';
+    echo '<p>' . $reply['message'] . '</p>';
     echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
 }
 
 //Water Pop Up

@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Values
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $id = $_POST['donation'];
     
     //Check if Item is owned by person
@@ -28,7 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $item = $stmt->fetch(PDO::FETCH_ASSOC);
     if (intval($item['canDonate']) === 0) {
-        $_SESSION['reply'] = 'That item cannot be donated';
+            $reply = "That item cannot be donated.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../raffle");
     }
     
@@ -50,8 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     //Redirect
-    $_SESSION['reply'] = 'Your item has been donated';
-        header("Location: ../raffle");
+        $reply = "Your item has been donated.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+    header("Location: ../raffle");
     
 } else {
     header("Location: ../index");

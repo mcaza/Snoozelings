@@ -5,7 +5,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $code = htmlspecialchars($_POST['code']);
 
     //Turn Code to Uppercase & Remove End Spaces
@@ -49,18 +49,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
             //Redirect
-            $_SESSION['reply'] = "Code successfully redeemed. Your item has been added to your backpack.";
+                $reply = "Code successfully redeemed. Your item has been added to your inventory.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
             header("Location: ../coderedemption");
 
         } else {
             //Code already redeemed
-            $_SESSION['reply'] = "That code has already been redeemed.";
+                $reply = "That code has already been redeemed.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
             header("Location: ../coderedemption");
 
         }
     } else {
         //If no results, throw error and redirect
-        $_SESSION['reply'] = "You have entered an incorrect code. Please try again.";
+            $reply = "You have entered an incorrect code. Please try again.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../coderedemption");
 
     }

@@ -5,8 +5,8 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     //Get Values
-    if ($_SESSION['user_id']) {
-        $userId = $_SESSION['user_id'];
+    if ($_COOKIE['user_id']) {
+        $userId = $_COOKIE['user_id'];
     } else {
         header("Location: ../login");
         die();
@@ -38,7 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bpCheck = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($bpCheck) {
-        $_SESSION['reply'] = "You are unable to adopt until Minky delivers your finished snoozeling.";
+            $reply = "You are unable to adopt until Minky delivers your finished snoozeling.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../adoption");
         die();
     }
@@ -47,7 +52,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
     } else {
         //Reply & Reroute
-        $_SESSION['reply'] = "This snoozeling has already been adopted. Please report this bug to Moderator Mail";
+            $reply = "This snoozeling has already been adopted. Please report this bug to Moderator Mail.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../adoption");
         die();
     }
@@ -59,7 +69,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $coins = $stmt->fetch(PDO::FETCH_ASSOC);
     if (intval($coins['coinCount']) < intval($pet['cost'])) {
-        $_SESSION['reply'] = 'You do not have enough snooze coins to adopt that snoozeling';
+            $reply = "You do not have enough snooze coins to adopt that snoozeling.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../adoption");
         die();        
     }
@@ -72,7 +87,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $petcheck = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $emptybeds = intval($coins['petBeds']) - count($petcheck);
     if ($emptybeds < 1) {
-        $_SESSION['reply'] = 'You do not have an empty bed available';
+            $reply = "You do not have an empty bed available.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../adoption");
         die();
     }

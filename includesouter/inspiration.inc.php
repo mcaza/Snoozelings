@@ -1,5 +1,5 @@
 <?php
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 //Grab All Open Inspiration Pets
 $query = 'SELECT * FROM snoozelings WHERE breedStatus = "Open"';

@@ -62,7 +62,40 @@ require_once '../includes/loginRedirect.inc.php';
             <div style="margin-bottom: 2rem;"><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
             <h3 style="margin-bottom:1.5rem">Early Access is Open</h3>
             <?php
-            checkSignupErrors();
+            $error = $_GET['error'];
+            $code = $_GET['code'];
+            $username = $_GET['username'];
+            $email = $_GET['email'];
+                    
+                    //Notification
+            if ($error) {
+                echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;"><p>';
+                if ($error == 1) {
+                    echo 'You must fill in all fields.';
+                } else if ($error == 2) {
+                    echo 'Invalid email used.';
+                } else if ($error == 3) {
+                    echo 'Username already taken.';
+                } else if ($error == 4) {
+                    echo 'That email is already registered to an account.';
+                } else if ($error == 5) {
+                    echo 'Your birth date cannot be in the future.';
+                } else if ($error == 6) {
+                    echo 'You need to be 13 or older to register.';
+                } else if ($error == 7) {
+                    echo 'Your passwords do not match.';
+                } else if ($error == 8) {
+                    echo 'Your password must be at least 8 characters in length.';
+                } else if ($error == 9) {
+                    echo 'You have entered an incorrect early access code.';
+                } else if ($error == 10) {
+                    echo 'Your early access code has already been used on another account.';
+                } else if ($error == 11) {
+                    echo 'Please do not enter custom pronouns.';
+                }
+                echo '</p></div>';
+
+            }
             
             ?>
             <?php 

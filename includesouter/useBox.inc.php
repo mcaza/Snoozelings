@@ -4,7 +4,7 @@ require_once '../../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
 
     //Check How Many Boxes. Max is Currently 9
     $query = 'SELECT * FROM farms WHERE user_id = :id';
@@ -37,13 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute();
 
             //Variables
-            $_SESSION['reply'] = "You have successfully installed a new farm plot";
+            setcookie('reply', 'You have successfully installed a new farm plot.', 60, '/');
 
             //Reroute to Pack
             header("Location: ../pack");
 
         } else {
-            $_SESSION['reply'] = "You already have the maximum amount of farm plots";
+            setcookie('reply', 'You already have the maximum amount of farm plots.', 60, '/');
             header("Location: ../pack");
         }
 

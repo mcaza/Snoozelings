@@ -1,11 +1,12 @@
 <?php
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
-if ($_SESSION['reply']) {
-    $reply = $_SESSION['reply'];
-    unset($_SESSION['reply']);
-}
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Top Div
 echo '<div class="topShop">';
@@ -18,7 +19,13 @@ echo '</div>';
 
 //Session Reply Area
 if ($reply) {
-    echo '<div class="returnBar" style="margin-top: 1rem;"><p>' . $reply . '</p></div><br>';
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
+    echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
 }
 
 //Show Image. Change Later

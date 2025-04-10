@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $tempname = $_POST['username'];
     $username = strtolower($_POST['username']);
     $pwd = $_POST['password'];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Get Hash
     $query = 'SELECT password FROM users WHERE id = :id';
@@ -18,7 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check Password
     if(!password_verify($pwd, $result['password'])) {
-        $_SESSION['reply'] = "Password entered is not correct.";
+            $reply = "Password entered is not correct.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../updateaccount");
         die();
     }
@@ -31,7 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($result) {
-        $_SESSION['reply'] = "That username is currently taken.";
+            $reply = "That username is currently taken.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../updateaccount");
         die();
     }
@@ -43,12 +53,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":name", $tempname);
     $stmt->bindParam(":data", $username);
     $stmt->execute();
-    
-    //Change Session 
-    $_SESSION["user_username"] = $tempname;
-    
+        
     //Reply & Reroute
-    $_SESSION['reply'] = "Your username has been changed.";
+        $reply = "Your username has been changed.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../updateaccount");
     die();
     

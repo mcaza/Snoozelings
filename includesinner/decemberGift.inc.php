@@ -2,7 +2,7 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 date_default_timezone_set('America/Los_Angeles');
 $weekday = date('d');
 
@@ -23,14 +23,24 @@ if ($result['decGift']) {
 if ($day < $weekday) {
     
 } else {
-    $_SESSION['reply'] = "You have already recieved today's gift.";
+        $reply = "You have already recieved today\'s gift.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../decemberGifts");
     die();
 }
 
 if ($weekday > 24 && $weekday < 31) {
     if ($day > 24) {
-        $_SESSION['reply'] = "You have already recieved today's gift.";
+            $reply = "You have already recieved today\'s gift.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../decemberGifts");
         die();
     }
@@ -83,10 +93,22 @@ $stmt->execute();
 
 //Return
 if (intval($gift['quantity']) > 1) {
-    $_SESSION['reply'] = $gift['quantity'] . " " . $iteminfo['multiples'] . " have been added to your pack.";
+    $greeting = $gift['quantity'] . " " . $iteminfo['multiples'] . " have been added to your pack.";
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
 
 } else {
-    $_SESSION['reply'] = $gift['quantity'] . " " . $iteminfo['display'] . " has been added to your pack.";
+    $greeting = $gift['quantity'] . " " . $iteminfo['display'] . " has been added to your pack.";
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
 
 }
 header("Location: ../decemberGifts");

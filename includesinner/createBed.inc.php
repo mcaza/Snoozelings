@@ -6,7 +6,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Get User Info
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $query = "SELECT * FROM users WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
@@ -126,7 +126,12 @@ if ($total == 2) {
     $stmt->execute();
     
     //Set Message and Reroute
-    $_SESSION['reply'] = "So many feathers!!! Oh also your new bed is in your inventory.";
+        $reply = '"So many feathers!!! Oh also your new bed is in your inventory."';
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../bedShop");
 } else {
     header("Location: ../index");

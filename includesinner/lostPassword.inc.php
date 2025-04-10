@@ -8,8 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = strtolower($_POST["username"]);
     
     if(!$email || !$username) {
-        $_SESSION["reply"] = "You must enter both your email and username to change your password.";
-        header("Location: ../helpme");
+        header("Location: ../helpme?error=1");
         die();
     }
     
@@ -22,15 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check if Email Exists
     if (!$user) {
-        $_SESSION["reply"] = "There is no account associated with that email.";
-        header("Location: ../helpme");
+        header("Location: ../helpme?error=2");
         die();
     }
     
     //Check if Email Matches Username
     if (!($username === strtolower($user['username']))) {
-        $_SESSION["reply"] = "That username and email do not match. Please try again.";
-        header("Location: ../helpme");
+        header("Location: ../helpme?error=3");
         die();
     }
     
@@ -65,8 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     mail($address, $title, $msg, $headers);
     
-    $_SESSION["reply"] = "A password reset code has been sent to the email on file.";
-        header("Location: ../helpme");
+    header("Location: ../helpme?reset=1");
     
 } else {
     header("Location: ../index");

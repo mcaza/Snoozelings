@@ -1,14 +1,13 @@
 <?php
 
 //Grab User ID
-$userId = $_SESSION['user_id'];
-$error = $_SESSION['error'];
-unset($_SESSION['error']);
+$userId = $_COOKIE['user_id'];
 
-if ($_SESSION['reply']) {
-    $reply = $_SESSION['reply'];
-    unset($_SESSION['reply']);
-}
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Grab Pet Info from Database
 $query = "SELECT * FROM users WHERE id = :id";
@@ -79,16 +78,15 @@ if ($result['emailVerified'] == 0) {
 echo '</div>';
 echo '</div>';
 
-//Error
-if ($error) {
-    echo '<div class="returnBar" style="margin-top: 1rem;">';
-    echo '<p>' . $error . '</p>';
-    echo '</div><br>';
-}
-
 //Session Reply Area
 if ($reply) {
-    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom: 1rem;"><p>' . $reply . '</p></div>';
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
+    echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
 }
 
 //Title

@@ -11,7 +11,7 @@ $petId = $_POST["explorer"];
     
 if ($petId) {
 $area = $_POST["area"];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     $farmCommon = ['28','29','30','31','32','37','38','39'];
     $farmUncommon = ['65','64','66','14','73','75','74','55'];
     $farmRare = ['78', '79', '80', '92', '93', '94', '95', '98'];
@@ -55,7 +55,12 @@ $area = $_POST["area"];
         $stmt->execute();
         $table = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($table['name']) {
-            $_SESSION['error'] = "That snoozeling is currently crafting.";
+            $reply = "That snoozeling is currently crafting.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
                 header("Location: ../explore");
                 die(); 
         }
@@ -65,7 +70,12 @@ $area = $_POST["area"];
     $now = new DateTime("now", new DateTimezone('UTC'));
     $result = $now->format('Y-m-d H:i:s');
     if ($result < $name['cooldownTime']) {
-        $_SESSION['error'] = "That snoozeling is unable to explore at this time.";
+        $reply = "That snoozeling is unable to explore at this time.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
         header("Location: ../explore");
         die(); 
     } 
@@ -121,6 +131,7 @@ $area = $_POST["area"];
     }
     $stmt->execute();
     
+    $itemNames = [];
    //Insert Items Into Player's Table
     foreach ($itemsWon as $item) {
         $query = 'SELECT * FROM itemList WHERE id = :id';
@@ -140,6 +151,8 @@ $area = $_POST["area"];
         $stmt->bindParam(":rarity", $iteminfo['rarity']);
         $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
         $stmt->execute();
+        
+        array_push($itemNames, $iteminfo['display']);
     } 
     
     if ($coinsWon) {
@@ -186,13 +199,55 @@ $area = $_POST["area"];
     $stmt->bindParam(":last", $area);
     $stmt->execute();
     
-    $_SESSION['coins'] = $coinsWon;
-    $_SESSION['items'] = $itemsWon;
-    $_SESSION['petName'] = htmlspecialchars($name['name']);
+    $count = count($itemsWon);
+    $i = 1;
+    
+    $itemString = implode(", ",$itemNames);
+    
+    setcookie('coins', $coinsWon, 60, '/');
+    setcookie('items', $itemString, 60, '/');
+    setcookie('petName', htmlspecialchars($name['name']), 60, '/');
+    
+
+    if ($itemString || $coinsWon > 0) {
+    if ($coins === 1) {
+        if ($itemString) {
+            $greeting = htmlspecialchars($name['name']) . ' brought you 1 snooze coin.<br><br>';
+        } else {
+            $greeting = htmlspecialchars($name['name']) . ' brought you 1 snooze coin.';
+        }
+    } elseif ($coins > 1) {
+        if ($itemString) {
+            $greeting = htmlspecialchars($name['name']) . ' brought you ' . $coinsWon . ' snooze coins.<br><br>';
+        } else {
+            $greeting = htmlspecialchars($name['name']) . ' brought you ' . $coinsWon . ' snooze coins.';
+        }
+        
+    }
+    if ($itemString) {
+        if ($coins > 1) {
+            $greeting = $greeting . ' They also brought back the following: ' . $itemString;
+        } else {
+            $greeting = htmlspecialchars($name['name']) . ' brought you the following: ' . $itemString;
+        }
+    }
+}
+    $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+    
     header("Location: ../explore"); 
 } else {
-    $_SESSION['error'] = 'You must select an explorer.';
-        header("Location: ../explore");
+    $reply = "You must select an explorer.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+    header("Location: ../explore");
 }
 } else {
     header("Location: ../index.php");

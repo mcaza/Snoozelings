@@ -24,5 +24,10 @@ foreach ($users as $user) {
     mail($address, $title, $msg, $headers);
     
     //Reply and Reroute
-    $_SESSION['reply'] = "Email Sent";
+    $reply = "Email Sent.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
 }

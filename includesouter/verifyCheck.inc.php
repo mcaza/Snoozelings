@@ -1,8 +1,11 @@
 <?php
 
-if (isset($_SESSION['user_id'])) {
+
+
+if (isset($_COOKIE['user_id'])) {
+
 function verifyEmail($pdo) {
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 
 $query = "SELECT * FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);
@@ -11,7 +14,7 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Check for Logged in 
-if (isset($_SESSION["user_id"])) {
+if (isset($_COOKIE["user_id"])) {
     if ($result['emailVerified'] == 0) {
             header("Location:../verify");
         die();
@@ -20,8 +23,9 @@ if (isset($_SESSION["user_id"])) {
     }
 }
 
+    
 function logCheck($pdo) {
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     if ($userId) {
     
     $query = "SELECT lastLog FROM users WHERE id = :id";
@@ -29,6 +33,8 @@ function logCheck($pdo) {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+
     
     if ($result['lastLog'] === "1") {
         
@@ -39,6 +45,7 @@ function logCheck($pdo) {
         $stmt->bindParam(":id", $userId);
         $stmt->bindParam(":num", $num);
         $stmt->execute();
+
     }
     }
 }

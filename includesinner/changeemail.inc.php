@@ -6,7 +6,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = strtolower($_POST["email"]);
     $password = $_POST['password'];
-    $userId = $_SESSION['user_id'];
+    $userId = $_COOKIE['user_id'];
     
     //Get Hash
     $query = 'SELECT password FROM users WHERE id = :id';
@@ -17,14 +17,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Check Password
     if(!password_verify($pwd, $result['password'])) {
-        $_SESSION['reply'] = "Password entered is not correct.";
+            $reply = "Password entered is not correct.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../updateaccount");
         die();
     }
     
     //Verify Email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['reply'] = "This email could not be validated.";
+            $reply = "This email could not be validated.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../updateaccount");
         die();
     }
@@ -37,7 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($result) {
-        $_SESSION['reply'] = "That email is currently associated with another account.";
+            $reply = "That email is currently associated with another account.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
         header("Location: ../updateaccount");
         die();
     }
@@ -68,7 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Reroute
-    $_SESSION["reply"] = "Please check your email account to verify your new email.";
+        $reply = "Please check your email account to verify your new email.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
     header("Location: ../updateaccount");
     die();
 } else {

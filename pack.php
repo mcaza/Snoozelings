@@ -5,7 +5,7 @@ require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
-$userId = $_SESSION['user_id'];
+$userId = $_COOKIE['user_id'];
 $query = 'SELECT bonded FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
@@ -63,7 +63,7 @@ $petname = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
                 <!-- To Do List -->
-                <?php if(isset($_SESSION['user_id'])) {
+                <?php if(isset($_COOKIE['user_id'])) {
                echo '<div class="bar-container">
                     <h2>To Do</h2>
                     ';  require_once "../includes/notifications.inc.php"; 
