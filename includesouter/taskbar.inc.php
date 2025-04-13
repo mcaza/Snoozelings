@@ -39,6 +39,7 @@ $month = ltrim(date('m'), "0");
             <button class="menu dropdown dropbtn" id="drop"><a href="snoozevillage">Snooze Village</a></button>
             <div class="dropdown-content">
                 <a href="explore">Exploring</a>
+                <a href="wishingwell">Wishing Well</a>
                 <a href="shops">Snooze Shops</a>
                 <a href="requests">Request Board</a>
             </div>

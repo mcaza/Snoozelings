@@ -26,6 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pronouns = "their";
     }
     
+    //Check Selection
+    if ($tail == "Braid" || $tail == "Pom" || $tail == "Dragon" || $tail == "Long" || $tail == "Nub") {
+        
+    } else {
+        header("Location: ../");
+        die();
+    }
+    
     //Check for Coins. If no coins, reroute to trendytails with error message
     $query = "SELECT coinCount FROM users WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -49,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = 'UPDATE users SET coinCount = coinCount - 10 WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->execute();
+    $stmt->execute(); 
         
     //Change Tailstyle
     $query = 'UPDATE snoozelings SET tailType = :tail WHERE id = :id';

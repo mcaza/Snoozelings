@@ -34,4 +34,11 @@ echo '<h4>Request Board</h4>';
 echo '</div>';
 echo '</a>';
 
+echo '<a href="wishingwell" class="shopBox">';
+echo '<div>';
+echo '<img src="resources/wishingWell.png" class="shopImg" style="width: 90%;">';
+echo '<h4>Wishing Well</h4>';
+echo '</div>';
+echo '</a>';
+
 echo '</div>';

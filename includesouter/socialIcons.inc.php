@@ -63,6 +63,8 @@ if ($userId) {
                 case "Pack":
                 $link = "pack";
                 break;
+                case "Collection":
+                $link = "collection?id=" . $userId;
             }
             echo '<li><a href="' . $link . '" ><img src="resources/Icon' . $short . '.png"></a></li>';
         }

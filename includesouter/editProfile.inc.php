@@ -273,6 +273,10 @@ echo '</select><br>';
 
 //Shortcuts
 echo '<label for="shortcuts" class="form">Preferred Shortcuts:</label><br>';
+echo '<input type="checkbox" id="Collection" name="Collection" value="Collection">';
+echo '<label style="font-size: 1.7rem;" for="Collection">Collection</label><br><br>';
+echo '<input type="checkbox" id="Pack" name="Pack" value="Pack">';
+echo '<label style="font-size: 1.7rem;" for="Pack">Backpack</label><br><br>';
 echo '<input type="checkbox" id="Crafting" name="Crafting" value="Crafting">';
 echo '<label style="font-size: 1.7rem;" for="Crafting">Crafting</label><br><br>';
 echo '<input type="checkbox" id="Dyes" name="Dyes" value="Dyes">';
@@ -289,8 +293,7 @@ echo '<input type="checkbox" id="Penpals" name="Penpals" value="Penpals">';
 echo '<label style="font-size: 1.7rem;" for="Penpals">Find Penpal</label><br><br>';
 echo '<input type="checkbox" id="Snoozeling" name="Snoozeling" value="Snoozeling">';
 echo '<label style="font-size: 1.7rem;" for="Snoozeling">Bonded Snoozeling</label><br><br>';
-echo '<input type="checkbox" id="Pack" name="Pack" value="Pack">';
-echo '<label style="font-size: 1.7rem;" for="Pack">Backpack</label><br><br>';
+
 
 echo '<hr>';
 echo '<label for="bio"  class="form">User Bio:</label><br>';

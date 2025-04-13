@@ -7,6 +7,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //Grab Form Variables
 $petId = $_POST["explorer"];
+    $userId = $_COOKIE['user_id'];
 
     
 if ($petId) {
@@ -203,20 +204,17 @@ $area = $_POST["area"];
     $i = 1;
     
     $itemString = implode(", ",$itemNames);
-    
-    setcookie('coins', $coinsWon, 60, '/');
-    setcookie('items', $itemString, 60, '/');
-    setcookie('petName', htmlspecialchars($name['name']), 60, '/');
+
     
 
     if ($itemString || $coinsWon > 0) {
-    if ($coins === 1) {
+    if ($coinsWon == 1) {
         if ($itemString) {
             $greeting = htmlspecialchars($name['name']) . ' brought you 1 snooze coin.<br><br>';
         } else {
             $greeting = htmlspecialchars($name['name']) . ' brought you 1 snooze coin.';
         }
-    } elseif ($coins > 1) {
+    } elseif ($coinsWon > 1) {
         if ($itemString) {
             $greeting = htmlspecialchars($name['name']) . ' brought you ' . $coinsWon . ' snooze coins.<br><br>';
         } else {
@@ -225,7 +223,7 @@ $area = $_POST["area"];
         
     }
     if ($itemString) {
-        if ($coins > 1) {
+        if ($coinsWon > 0) {
             $greeting = $greeting . ' They also brought back the following: ' . $itemString;
         } else {
             $greeting = htmlspecialchars($name['name']) . ' brought you the following: ' . $itemString;

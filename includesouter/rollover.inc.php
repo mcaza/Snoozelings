@@ -221,33 +221,27 @@ $query = 'UPDATE kindnessShop SET daily = 0';
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 
-$kindArray = [7];
-$query = 'SELECT * FROM kindnessShop WHERE name != "SewingKit"';
+$query = 'SELECT * FROM kindnessShop WHERE name != "SewingKit" ORDER BY rand() LIMIT 7';
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$count = count($items) - 1;
-
-$i = 0;
-while ($i < 8) {
-    $num = rand(0, $count);
-    if (in_array($num,$kindArray)) {
-        
-    } else {
-        array_push($kindArray, $num);
-        $i++;
-    }
-}
 
 
-
-foreach ($kindArray as $kind) {
+foreach ($items as $kind) {
     $query = 'UPDATE kindnessShop SET daily = 1 WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $kind);
+    $stmt->bindParam(":id", $kind['id']);
     $stmt->execute();
 }
+
+$query = 'DELETE FROM requests WHERE fulfilled = 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
+$query = 'DELETE FROM requests WHERE expired = 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
 
     echo "Rollover Finished!";
 

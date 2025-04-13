@@ -1829,6 +1829,10 @@ select {
         align-items: center;
     }
     
+    .profilenavimage:hover {
+        width:75px;
+    }
+    
     #backpackImage {
         display:none;
     }

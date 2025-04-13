@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $address = "support@snoozelings.com";
 
         $title ="Moderator Report Submitted";
-        $msg = '<h2>New Moderator Report</h2> <p><b>Type: ' . $topic . '<br></b>Link:</b> <a href="snoozelings.com/ticket?ticketid=' . $newId . '">Click Here</a><br><b>Information:</b>' . $information . '</p>';
+        $msg = '<h2>New Moderator Report</h2> <p><b>Type: ' . $topic . '<br></b>Link:</b> <a href="snoozelings.com/ticket?ticketid=' . $newId . '">Click Here</a><br><b>Information: </b>' . $information . '</p>';
 
         // Always set content-type when sending HTML email
         $headers = "MIME-Version: 1.0" . "\r\n";

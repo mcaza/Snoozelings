@@ -1,6 +1,14 @@
 <?php
 $id = $_GET['id'];
 $userId = $_COOKIE['user_id'];
+$year = date("Y"); 
+
+//Replies
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $query = "SELECT * FROM users WHERE id = :id;";
     $stmt = $pdo->prepare($query);
@@ -58,6 +66,18 @@ if ($id == $userId) {
                 <button class="fancyButton" onClick="window.location.href=\'/updateaccount\'">Update Account</button>
                 <button class="fancyButton" onClick="window.location.href=\'/editprofile\'">Edit Profile</button>
             </div>';
+    
+    //Notification
+    if ($reply) {
+        echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+        echo '<p>' . $reply['message'] . '</p>';
+        echo '</div>';
+        $query = "DELETE FROM replies WHERE user_id = :id;";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
     //Left Side Profile Info + Right Side Active Pet
     echo '<div class="profilerow">';
     echo '<div class="profilecontainerleft">';
@@ -95,6 +115,18 @@ if ($id == $userId) {
       // }  
 
     echo '</div>';
+    
+    //Notification
+    if ($reply) {
+        echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+        echo '<p>' . $reply['message'] . '</p>';
+        echo '</div>';
+        $query = "DELETE FROM replies WHERE user_id = :id;";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
     //Left Side Profile Info + Right Side Active Pet
     echo '<div class="profilerow">';
     echo '<div class="profilecontainerleft">';
@@ -362,12 +394,12 @@ if ($id === "4") {
         echo '<div id="bottomSpace"></div>';
     } else if ($userId == $id) {
         echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';
-    } else if ($tester->format('2024-m-d') == $now->format('Y-m-d')) {
+    } else if ($tester->format($year . '-m-d') == $now->format('Y-m-d')) {
         echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';
-    } else if ($result['birthdayOptOut'] == 1 && $tester->format('2024-m-d') > $now->format('Y-m-d') && $tester->format('2024-m-d') < $fiveDays->format('Y-m-d')) {
+    } else if ($result['birthdayOptOut'] == 1 && $tester->format($year . '-m-d') > $now->format('Y-m-d') && $tester->format($year . '-m-d') < $fiveDays->format('Y-m-d')) {
         echo '<div><h3><a href="collection?id=' . $id . '">Go To Collection >></a><hr></div>';
             echo '<p><b>This user has opted out of receiving birthday gifts</b></p>';
-    } else if ($tester->format('2024-m-d') > $now->format('Y-m-d') && $tester->format('2024-m-d') < $fiveDays->format('Y-m-d')) {
+    } else if ($tester->format($year . '-m-d') > $now->format('Y-m-d') && $tester->format($year . '-m-d') < $fiveDays->format('Y-m-d')) {
             $query = 'SELECT * FROM birthdayGifts WHERE gifter = :gifter AND giftee = :giftee';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":gifter", $userId);

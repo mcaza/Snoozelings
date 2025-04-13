@@ -218,10 +218,10 @@ if ($pet) {
     }
 } else {
     echo "<div class='artlarge'>";
-    echo "<img src='Layers/Tail/Dragon/End/Alexandrite.png' id = 'Taildesigner'>";
+    echo "<img src='Layers/Tail/Braid/Alexandrite.png' id = 'Taildesigner'>";
     echo "</div>";
     echo "<div class='artlarge'>";
-    echo "<img src='Layers/Tail/Dragon/Alexandrite.png' id = 'TailTopdesigner'>";
+    echo "<img src='' id = 'TailTopdesigner'>";
     echo "</div>";
 }
 
@@ -252,7 +252,7 @@ if ($pet) {
         echo "<img src='Layers/Hair/" . $pet['hairType'] . "/" . $pet['hairColor'] . ".png' id = 'Hairdesigner'>";
     }
 } else {
-    echo "<img src='Layers/Hair/Floof/Alexandrite.png' id = 'Hairdesigner'>";
+    echo "<img src='Layers/Hair/Braid/Alexandrite.png' id = 'Hairdesigner'>";
 }
 echo "</div>";
 
@@ -381,8 +381,8 @@ foreach ($colors as $color) {
 }
 echo '</select><br>';
 
-$hairs = ['Floof', 'Forelock', 'Holiday', 'Knitted', 'LizardSpikes', 'Mane', 'Mohawk', 'Wave'];
-$hairDisplay = ['Floof', 'Forelock', 'Holiday', 'Knitted', 'Lizard Spikes', 'Mane', 'Mohawk', 'Wave'];
+$hairs = ['Braid','Floof', 'Forelock', 'Holiday', 'Knitted', 'LizardSpikes', 'Mane', 'Mohawk', 'Wave'];
+$hairDisplay = ['Braid','Floof', 'Forelock', 'Holiday', 'Knitted', 'Lizard Spikes', 'Mane', 'Mohawk', 'Wave'];
 $round = 0;
 echo '<label for="hairType" class="form">Hair Style:</label><br>';
 echo '<select id="hairType"  class="input">';
@@ -423,8 +423,8 @@ foreach ($colors as $color) {
 }
 echo '</select><br>';
 
-$tails = ['Dragon','Knitted', 'Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
-$tailDisplay = ['Dragon','Knitted','Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
+$tails = ['Braid','Dragon','Knitted', 'Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
+$tailDisplay = ['Braid','Dragon','Knitted','Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
 $round = 0;
 echo '<label for="tailType" class="form">Tail Style:</label><br>';
 echo '<select id="tailType"  class="input">';

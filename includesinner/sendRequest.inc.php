@@ -39,7 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $count = count($results);
+    $count = 0;
+    foreach ($results as $result) {
+        if ($result['fulfilled'] == 1 || $result['expired'] == 1) {
+            
+        } else {
+            $count++;
+        }
+    }
     if ($count > 5) {
             $reply = "You have already submitted the max number of requests possible.";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
@@ -57,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($requests > 1) {
+    if ($result['requests'] > 1) {
             $reply = "You have already submitted the max number of requests today.";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
         $stmt = $pdo->prepare($query);

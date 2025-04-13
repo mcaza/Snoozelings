@@ -34,7 +34,7 @@ if ($id > 2 && $id <10) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$username ?>'s Collection</title>
+    <title><?=$result['username'] ?>'s Collection</title>
     <?php require_once '../includes/css.inc.php'; ?>
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>

@@ -5,6 +5,8 @@
 if (isset($_COOKIE['user_id'])) {
     
     $userId = $_COOKIE['user_id'];
+    $year = date("Y");
+    
     $query = "SELECT * FROM replies WHERE user_id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
@@ -127,7 +129,7 @@ if (isset($_COOKIE['user_id'])) {
     $check = 0;
     foreach ($dates as $date) {
         $tester = new DateTime($date['birthdate']);
-        if ($tester->format('2024-m-d') == $now->format('Y-m-d')) {
+        if ($tester->format($year . '-m-d') == $now->format('Y-m-d')) {
             $check = 1;
         }
     }
@@ -137,7 +139,7 @@ if (isset($_COOKIE['user_id'])) {
         echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Today\'s Birthdays</h4>';
         foreach ($dates as $date) {
             $tester = new DateTime($date['birthdate']);
-            if ($tester->format('2024-m-d') == $now->format('Y-m-d')) {
+            if ($tester->format($year . '-m-d') == $now->format('Y-m-d')) {
                 echo '<p><b><a href="profile?id=' . $date['id'] . '">' . $date['username'] . '</a></b></p><p>' . $tester->format('F jS') . '</p>';
             }
         }
@@ -151,12 +153,12 @@ if (isset($_COOKIE['user_id'])) {
 
 
     $tester = new DateTime($dates[1]['birthdate']);
-    $tester->format('2024-m-d');
+    $tester->format($year . '-m-d');
 
     $check = 0;
     foreach ($dates as $date) {
         $tester = new DateTime($date['birthdate']);
-        if ($tester->format('2024-m-d') > $now->format('Y-m-d') && $tester->format('2024-m-d') < $fiveDays->format('Y-m-d')) {
+        if ($tester->format($year . '-m-d') > $now->format('Y-m-d') && $tester->format($year . '-m-d') < $fiveDays->format('Y-m-d')) {
             $check = 1;
         }
     }
@@ -166,7 +168,7 @@ if (isset($_COOKIE['user_id'])) {
         echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Upcoming Birthdays</h4>';
              foreach ($dates as $date) {
                 $tester = new DateTime($date['birthdate']);
-                if ($tester->format('2024-m-d') > $now->format('Y-m-d') && $tester->format('2024-m-d') < $fiveDays->format('Y-m-d')) {
+                if ($tester->format($year . '-m-d') > $now->format('Y-m-d') && $tester->format($year . '-m-d') < $fiveDays->format('Y-m-d')) {
                     echo '<p><b><a href="profile?id=' . $date['id'] . '">' . $date['username'] . '</a></b></p><p>' . $tester->format('F jS') . '</p>';
                 }
             }

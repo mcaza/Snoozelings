@@ -26,6 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pronouns = "their";
     }
     
+    //Check Selection
+    if ($hair == "Braid" || $hair == "Mane" || $hair == "Floof" || $hair == "Forelock" || $hair == "Mohawk" || $hair == "Wave") {
+        
+    } else {
+        header("Location: ../");
+        die()
+    }
+    
     //Check for Coins. If no coins, reroute to trendytails with error message
     $query = "SELECT coinCount FROM users WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -44,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ../trendytails");
         die();
     } else {
+        
     //Remove 10 coins
     $query = 'UPDATE users SET coinCount = coinCount - 10 WHERE id = :id';
     $stmt = $pdo->prepare($query);

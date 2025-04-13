@@ -221,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
     //Return Message
-        $reply = "That should be everything. I\'ll send you a letter when your blueprints are finished.";
+        $reply = "That should be everything. I'll send you a letter when your blueprints are finished.";
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id", $userId);

@@ -103,7 +103,9 @@ require_once '../includes/verifySinglePet.inc.php';
              document.getElementById('HairLayer').src = "resources/Trendymohawk.png";
          } else if (inputText === "Mane") {
              document.getElementById('HairLayer').src = "resources/Trendymane.png";
-         }   
+         }   else if (inputText === "Braid") {
+             document.getElementById('HairLayer').src = "resources/Trendybraidhair.png";
+         }
      }
      
      document.getElementById('TailChoice').onchange = (event) => {
@@ -116,6 +118,8 @@ require_once '../includes/verifySinglePet.inc.php';
              document.getElementById('TailLayer').src = "resources/Trendynub.png";
          } else if (inputText === "Pom") {
              document.getElementById('TailLayer').src = "resources/Trendypom.png";
+         }  else if (inputText === "Braid") {
+             document.getElementById('TailLayer').src = "resources/Trendybraidtail.png";
          }  
      }
     

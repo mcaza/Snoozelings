@@ -241,6 +241,7 @@ hr {
 
 .profilenavimage:hover {
     width:155px;
+    
 }
 
 .profilecontainerleft {
@@ -1796,6 +1797,10 @@ select {
         align-items: center;
     }
     
+    .profilenavimage:hover {
+        width:75px;
+    }
+    
     #backpackImage {
         display:none;
     }
@@ -1966,10 +1971,10 @@ select {
         width: 88%;
     }
     
-    #craftingdesk {
-        width:  170px;
-        margin-bottom: -60px;
-        margin-right: -70px;
+    .craftingDeskContainer img {
+        width: 400px;
+        margin-left:75px;
+        margin-right:0;
     }
     
     .recipe {
@@ -2072,6 +2077,16 @@ select {
 @media only screen and (max-width: 400px) {
     .footer-container {
        height: 52px; 
+    }
+    
+    .craftimages {
+        height:180px;
+    }
+    
+    .craftingDeskContainer img {
+        width: 175px;
+        margin-bottom: -60px;
+        margin-right: -70px;
     }
     
 }

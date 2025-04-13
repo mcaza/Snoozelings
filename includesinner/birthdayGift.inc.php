@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_COOKIE['user_id'];
     $gift = $_POST['gift'];
     $id = $_POST['postId'];
+    $year = date("Y");
     
     //Get Item Info
     $query = 'SELECT * FROM items WHERE id = :id';
@@ -45,10 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $now = new DateTime($times['mailone']);
     $tester = new DateTime($result['birthdate']);
     
-    if ($tester->format('2024-m-d') == $now->format('Y-m-d')) {
+    if ($tester->format($year . '-m-d') == $now->format('Y-m-d')) {
         header("Location: ../index");
         die();
-    } else if ($tester->format('2024-m-d') < $now->format('Y-m-d') || $tester->format('2024-m-d') > $fiveDays->format('Y-m-d')) {
+    } else if ($tester->format($year . '-m-d') < $now->format('Y-m-d') || $tester->format($year . '-m-d') > $fiveDays->format('Y-m-d')) {
         header("Location: ../index");
         die();
     }
@@ -77,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":gifter", $userId);
     $stmt->bindParam(":giftee", $id);
-    $stmt->bindParam(":birthdate", $tester->format('2024-m-d'));
+    $stmt->bindParam(":birthdate", $tester->format($year . '-m-d'));
     $stmt->bindParam(":list_id", $item['list_id']);
     $stmt->bindParam(":display", $item['display']);
     $stmt->bindParam(":dye", $item['dye']);
@@ -87,6 +88,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = 'DELETE FROM items WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $gift);
+    $stmt->execute();
+    
+    $reply = "Your birthday gift has been dropped in the local postbox.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
     $stmt->execute();
     
     //Reply & Reroute

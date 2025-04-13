@@ -62,6 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $shortcutArray = $shortcutArray . $_POST['Pack'] . " ";
     }
     
+    if (isset($_POST['Collection'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['Collection'] . " ";
+    }
+    
     if ($shortCount > 5) {
             $reply = "You Cannot Have More Than 5 Shortcuts.";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
