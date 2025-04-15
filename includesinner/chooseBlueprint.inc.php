@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":picture", $picture);
     $stmt->execute();
     
-        $reply = "I\'ll send your new snoozeling in the mail as soon as I'm finished.";
+        $reply = "I'll send your new snoozeling in the mail as soon as I'm finished.";
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id", $userId);

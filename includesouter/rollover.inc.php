@@ -61,7 +61,7 @@
     foreach ($users as $user) {
         //Assign Affirmations & Reset lastLog & DailyItem & Reset Requests
         $randomNum = rand(1, $affirmlength);
-        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0, penpalRequests = 0 WHERE id = :id AND lastLog = 1";
+        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0, penpalRequests = 0, dailyWish = 0 WHERE id = :id AND lastLog = 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":affirmation", $affirmresults[$randomNum]["affirmation"]);
         $stmt->bindParam(":id", $user["id"]);

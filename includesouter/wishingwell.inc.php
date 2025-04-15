@@ -46,8 +46,7 @@ echo '<h4>Your snoozeling approaches the wishing well.</h4>';
 
 
 //Prize Button
-$number = 1;
-if ($result['dailyPrize'] == 1) {
+if ($result['dailyWish'] == 1) {
     echo '<p><i>You have already taken made a wish today.</i></p>';
     echo '<p><i>Please come back tomorrow.</i></p>';
 } else if (!$coins) {
@@ -56,7 +55,9 @@ if ($result['dailyPrize'] == 1) {
 } else {
     echo '<p>Making a wish will cost you a single Old Coin.</p>';
     echo '<p><i>Would you like to make a wish?</i></p>';
-    echo '<button class="fancyButton" style="width: 200px; margin-right: auto; margin-left: auto;margin-bottom: 1.5rem;" onClick="window.location.href=\'../includes/wishStain.inc.php\'">Wish For Stain</button>';
+    echo "<form method='POST' action='includes/wishStain.inc.php' onsubmit=\"return confirm('Are you sure you want to throw 1 Old Coin into the well?');\">";  
+    echo '<button  class="fancyButton">Wish for Stain</button>';
+    echo "</form>";
 }
 
 /* if ($number == 0) {

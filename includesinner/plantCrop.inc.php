@@ -218,6 +218,11 @@ if ($snooze['job'] === "Farmer") {
     $stmt->execute();  
     
     //Reply
+    if ($seed == "MysterySeed") {
+        $reply = 'You have planted a single Mystery Seed.';
+    } else {
+        $reply = 'You have planted a single ' . $plantName . ' Seed.';
+    }
     $reply = 'You have planted a single ' . $plantName . ' seed.';
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);

@@ -56,6 +56,13 @@ echo '<h4>Snoozeling Stitcher</h4>';
 echo '</div>';
 echo '</a>';
 
+echo '<a href="clothingshop" class="shopBox">';
+echo '<div >';
+echo '<img src="resources/clothingShopCocoa.png" class="shopImg" style="width: 100%";">';
+echo '<h4>Clothing Shop</h4>';
+echo '</div>';
+echo '</a>';
+
 echo '<a href="coderedemption" class="shopBox">';
 echo '<div >';
 $today = new DateTime();
@@ -77,6 +84,8 @@ if ($today >= $spring && $today < $summer) {
 echo '<h4>Code Redemption</h4>';
 echo '</div>';
 echo '</a>';
+
+
 
 
     

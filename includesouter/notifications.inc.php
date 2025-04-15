@@ -206,6 +206,19 @@ if ($tutorial < 4) {
         $count++;
     }
     
+    //Daily Wishing Well
+    $query = "SELECT * FROM items WHERE list_id = 73 AND user_id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $coinCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($coinCheck) {
+        if ($user['dailyWish'] == 0) {
+            echo '<div class="notificationbox"><a href="wishingwell" class="notif">' . $count . '. Wishing Well</a></div>';
+            $count++;
+        }
+    }
+    
     //Free Item December
     if ($month == 12) {
         $gift = 0;

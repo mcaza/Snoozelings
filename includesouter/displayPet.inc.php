@@ -509,7 +509,7 @@ function displayPet($pet, $class) {
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if (!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "StripedHolidaySweater")) {
+            if (!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || str_contains($clothing, "Sweater"))) {
             echo "<div class='${class}'>";
          echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
@@ -544,10 +544,10 @@ function displayPet($pet, $class) {
             
         } }
     
-    if (strlen($pet['clothesBoth']) > 1 && strpos($pet["clothesBoth"], "StripedHolidaySweater") !== false) {
+    if (strlen($pet['clothesBoth']) > 1 && strpos($pet["clothesBoth"], "Sweater") !== false) {
     $clothesTop = explode(' ', $pet['clothesBoth']);
         foreach ($clothesTop as $clothing) {
-            if ($clothing == "StripedHolidaySweater") {
+            if (str_contains($clothing, "Sweater")) {
                 echo "<div class='${class}'>";
                 echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
                 echo "</div>";
@@ -565,17 +565,17 @@ function displayPet($pet, $class) {
             echo "</div>";
         } 
     }
-    if ($pet['hairType'] == "Holiday" || $pet['hairType'] == "Braid") {
+    if ($pet['hairType'] == "Holiday" || $pet['hairType'] == "Braid" || $pet['hairType'] == "Knitted") {
         $hairCheck = 1;
     }
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if ($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "TwiggyAntlers" || $clothing === "DeerAntlers") {
+            if ($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "TwiggyAntlers" || $clothing === "DeerAntlers" || str_contains($clothing,"Cloak")) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
-        } else if ($clothing == "StripedHolidaySweater") {
+        } else if (str_contains($clothing, "Sweater")) {
                 echo "<div class='${class}'>";
             echo "<img src='Layers/ClothesTop/" . $clothing . ".png'>";  
             echo "</div>";
@@ -584,6 +584,13 @@ function displayPet($pet, $class) {
                 echo '<img src="Layers/Hair/' . $pet['hairType'] . '/' . $pet['hairColor'] . '.png" id="Hairone">';
                 echo "</div>";
                 }
+            } 
+            
+         if (str_contains($clothing,"Cloak") && $hairCheck == 1) {
+                echo 'test2';
+                echo "<div class='${class}'>";
+                echo '<img src="Layers/Hair/' . $pet['hairType'] . '/' . $pet['hairColor'] . '.png" id="Hairone">';
+                echo "</div>";
             } 
         }
     }
@@ -1176,7 +1183,7 @@ function singleImage($pet) {
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if (!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "StripedHolidaySweater")) {
+            if (!($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || str_contains($clothing, "Sweater") || str_contains($clothing, "Cloak"))) {
                 $url = 'Layers/ClothesTop/' . $clothing . '.png';
                 $image = imagecreatefrompng($url);
                 imagecopy($outputImage,$image,0,0,0,0, $x, $y); 
@@ -1214,10 +1221,10 @@ function singleImage($pet) {
         } }
     
     //Holiday Sweater Fix
-    if (strlen($pet['clothesBoth']) > 1 && strpos($pet["clothesBoth"], "HolidaySweater") !== false) {
+    if (strlen($pet['clothesBoth']) > 1 && strpos($pet["clothesBoth"], "Sweater") !== false) {
     $clothesTop = explode(' ', $pet['clothesBoth']);
         foreach ($clothesTop as $clothing) {
-            if ($clothing == "StripedHolidaySweater") {
+            if (str_contains($clothing, "Sweater")) {
                 $url = 'Layers/ClothesTop/' . $clothing . '.png';
                 $image = imagecreatefrompng($url);
                 imagecopy($outputImage,$image,0,0,0,0, $x, $y);
@@ -1236,17 +1243,17 @@ function singleImage($pet) {
         } 
     }
     
-    if ($pet['hairType'] == "Holiday" || $pet['hairType'] == "Braid") {
+    if ($pet['hairType'] == "Holiday" || $pet['hairType'] == "Braid" || $pet['hairType'] == "Knitted") {
         $hairCheck = 1;
     }
         if (strlen($pet['clothesBoth']) > 1) {
     $clothesBoth = explode(' ', $pet['clothesBoth']);
         foreach ($clothesBoth as $clothing) {
-            if ($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "TwiggyAntlers" || $clothing === "DeerAntlers") {
+            if ($clothing === "AngelSet" || $clothing === "AngelWings" || $clothing === "ImpHorns" || $clothing === "TwiggyAntlers" || $clothing === "DeerAntlers" || str_contains($clothing, "Cloak")) {
             $url = 'Layers/ClothesTop/' . $clothing . '.png';
                 $image = imagecreatefrompng($url);
                 imagecopy($outputImage,$image,0,0,0,0, $x, $y);
-        } else if ($clothing == "StripedHolidaySweater") {
+        } else if (str_contains($clothing, "Sweater")) {
                 $url = 'Layers/ClothesTop/' . $clothing . '.png';
                 $image = imagecreatefrompng($url);
                 imagecopy($outputImage,$image,0,0,0,0, $x, $y);
@@ -1256,6 +1263,11 @@ function singleImage($pet) {
                 imagecopy($outputImage,$image,0,0,0,0, $x, $y);
                 }
             } 
+            if ($hairCheck == 1) {
+                $url = 'Layers/Hair/' . $pet['hairType'] . '/' . $pet['hairColor'] . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
         }
     }
 
