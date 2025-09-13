@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
     } else {
         header("Location: ../");
-        die()
+        die();
     }
     
     //Check for Coins. If no coins, reroute to trendytails with error message

@@ -4,8 +4,18 @@ require_once '../includes/config_session.inc.php';
 require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php';  
 
-$username = $_COOKIE['user_username'];
+$userId = $_COOKIE['user_id'];
+$query = 'SELECT bonded FROM users WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+$query = 'SELECT name FROM snoozelings WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $result['bonded']);
+$stmt->execute();
+$petname = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -15,7 +25,7 @@ $username = $_COOKIE['user_username'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $username ?>'s Journal</title>
+    <title><?php echo $petname['name'] ?>'s Journal</title>
     <?php require_once '../includes/css.inc.php'; ?>
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>

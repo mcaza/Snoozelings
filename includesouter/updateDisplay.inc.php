@@ -18,8 +18,6 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-singleImage($result);
-
 //Grab USer Info from Database
 $query = "SELECT * FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);

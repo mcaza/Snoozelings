@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_COOKIE['user_id'];
     $id = $_POST['item'];
 
-    //Check if Owner Owns that ITem
+    //Check if Owner Owns that Item
     $query = "SELECT * FROM items WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
@@ -25,6 +25,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         header("Location: ../index");
         die();
+    }
+    
+    if ($id == 213) {
+        $greeting = 'This item cannot be bleached.';
+        $reply = $greeting;
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
+        header("Location: ../pack");
     }
 
     //Remove Dye

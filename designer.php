@@ -131,6 +131,14 @@ require_once '../includes/verifySinglePet.inc.php';
         if (checkBox.checked == true) {
             document.getElementById('Cupiddesigner').src = "Layers/Markings/Cupid/" + inputText + ".png";
         }
+     var checkBox = document.getElementById("foxy");
+        if (checkBox.checked == true) {
+            document.getElementById('Foxydesigner').src = "Layers/Markings/Foxy/" + inputText + ".png";
+        }
+     var checkBox = document.getElementById("scales");
+        if (checkBox.checked == true) {
+            document.getElementById('Scalesdesigner').src = "Layers/Markings/Scales/" + inputText + ".png";
+        }
  }
  
  document.getElementById('skinColor').onchange = (event) => {
@@ -267,6 +275,35 @@ require_once '../includes/verifySinglePet.inc.php';
             document.getElementById('Sublimationdesigner').src = "Layers/Markings/Sublimation/" + mainColor + ".png";
         } else {
             document.getElementById('Sublimationdesigner').src = "";
+        }
+ }
+    
+    document.getElementById('collie').onchange = (event) => {
+        var checkBox = document.getElementById("collie");
+        if (checkBox.checked == true) {
+            document.getElementById('Colliedesigner').src = "Layers/Other/Collie.png";
+        } else {
+            document.getElementById('Colliedesigner').src = "";
+        }
+    }
+    
+    document.getElementById('foxy').onchange = (event) => {
+        var mainColor = document.getElementById('mainColor').value;
+        var checkBox = document.getElementById("foxy");
+        if (checkBox.checked == true) {
+            document.getElementById('Foxydesigner').src = "Layers/Markings/Foxy/" + mainColor + ".png";
+        } else {
+            document.getElementById('Foxydesigner').src = "";
+        }
+ }
+    
+    document.getElementById('scales').onchange = (event) => {
+        var mainColor = document.getElementById('mainColor').value;
+        var checkBox = document.getElementById("scales");
+        if (checkBox.checked == true) {
+            document.getElementById('Scalesdesigner').src = "Layers/Markings/Scales/" + mainColor + ".png";
+        } else {
+            document.getElementById('Scalesdesigner').src = "";
         }
  }
     

@@ -20,6 +20,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die(); 
     }
     
+    //Check for Clothes
+    if ($pet['clothesBottom'] || $pet['clothesTop'] || $pet['clothesBoth'] || $pet['clothesHoodie']) {
+            $reply = "<p>You need to remove your pet\'s clothes before donating them.</p>";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
+        header("Location: ../adoption");
+        die(); 
+    }
+    
     //Check if Pet is Bonded
     $query = 'SELECT bonded FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
@@ -167,17 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     
-    //Check for Clothes
-    if ($pet['clothesBottom'] || $pet['clothesTop'] || $pet['clothesBoth'] || $pet['clothesHoodie']) {
-            $reply = "<p>You need to remove your pet\'s clothes before donating them.</p>";
-        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":user_id", $userId);
-        $stmt->bindParam(":message", $reply);
-        $stmt->execute();
-        header("Location: ../adoption");
-        die(); 
-    }
+    
     
     //Fix Pet Values
     $closed = "Closed";

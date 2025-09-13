@@ -235,6 +235,10 @@ foreach ($items as $kind) {
     $stmt->execute();
 }
 
+$query = 'UPDATE kindnessShop SET daily = 1 WHERE name = "SewingKit"';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
 $query = 'DELETE FROM requests WHERE fulfilled = 1';
     $stmt = $pdo->prepare($query);
     $stmt->execute();

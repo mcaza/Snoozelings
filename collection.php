@@ -4,12 +4,10 @@ require_once '../includes/config_session.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
 
-$username = $_COOKIE['user_username'];
-
-$id = $_GET['id'];
+$id = $_COOKIE['user_id'];
 
 //User Name
-$query = 'SELECT id FROM users WHERE id = :id';
+$query = 'SELECT username FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $id);
 $stmt->execute();
@@ -34,7 +32,7 @@ if ($id > 2 && $id <10) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$result['username'] ?>'s Collection</title>
+    <title><?=$result['username']?>'s Collection</title>
     <?php require_once '../includes/css.inc.php'; ?>
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>

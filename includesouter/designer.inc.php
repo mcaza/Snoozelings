@@ -90,6 +90,30 @@ if (strpos($pet["specials"], "Sublimation") !== false) {
 echo "</div>";  
 
 echo "<div class='artlarge'>";
+if (strpos($pet["specials"], "Collie") !== false) {
+    echo "<img src='Layers/Other/Collie.png' id = 'Colliedesigner'>";
+} else {
+    echo "<img src='' id = 'Colliedesigner'>";
+}
+echo "</div>";
+
+echo "<div class='artlarge'>";
+if (strpos($pet["specials"], "Foxy") !== false) {
+    echo "<img src='Layers/Markings/Foxy/" . $pet["mainColor"] . ".png' id = 'Foxydesigner'>";
+} else {
+    echo "<img src='' id = 'Foxydesigner'>";
+}
+echo "</div>";  
+
+echo "<div class='artlarge'>";
+if (strpos($pet["specials"], "Scales") !== false) {
+    echo "<img src='Layers/Markings/Scales/" . $pet["mainColor"] . ".png' id = 'Scalesdesigner'>";
+} else {
+    echo "<img src='' id = 'Scalesdesigner'>";
+}
+echo "</div>"; 
+
+echo "<div class='artlarge'>";
 if (strpos($pet["specials"], "EarTip") !== false) {
     echo "<img src='Layers/Other/EarTip.png' id = 'Eartipdesigner'>";
 } else {
@@ -536,7 +560,30 @@ if (strpos($pet["specials"], "Skeleton") !== false) {
 } else {
     echo '<input type="checkbox" id="skeleton"><label class="designerCheck" for="skeleton">Skeleton</label><br>';
 }
+echo '</div>';
 
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "Collie") !== false) {
+    echo '<input type="checkbox" id="collie" checked><label class="designerCheck" for="collie">Collie</label><br>';
+} else {
+    echo '<input type="checkbox" id="collie"><label class="designerCheck" for="collie">Collie</label><br>';
+}
+echo '</div>';
+
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "Foxy") !== false) {
+    echo '<input type="checkbox" id="foxy" checked><label class="designerCheck" for="foxy">Foxy</label><br>';
+} else {
+    echo '<input type="checkbox" id="foxy"><label class="designerCheck" for="foxy">Foxy</label><br>';
+}
+echo '</div>';
+
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "Scales") !== false) {
+    echo '<input type="checkbox" id="scales" checked><label class="designerCheck" for="scales">Scales</label><br>';
+} else {
+    echo '<input type="checkbox" id="scales"><label class="designerCheck" for="scales">Scales</label><br>';
+}
 echo '</div>';
 
 

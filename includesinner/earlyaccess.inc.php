@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Send Email
     $address = $email;
     $title ="Snoozelings Early Access Confirmation";
-        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $email . ',<br><br>Thank you so much for registering for the Snoozelings Early Access!!! <br><br>We are sending you this email as confirmation of your chosen ID and alpha code. To make things easy, you can use this link. It will insert the code for you. <a href="https://snoozelings.com/signup?code=' . $randomString . '">CLICK HERE!!!</a><br><br>If the link doesn\'nt work, Copy/Pasting the code is best so the characters don\'t get mistyped.<br><br>You can also join our discord server if haven\'t already: <a href="https://discord.gg/sqjMSepvet">Discord Link</a><br><br><b>Account ID:</b> ' . $id . '<br><br><b>Alpha Code: </b>' . $randomString . '<br><br>See you soon,<br><i>Snoozelings</i></p>';
+        $msg = '<h2>Email Confirmation</h2> <p>Dear ' . $email . ',<br><br>Thank you so much for registering for the Snoozelings Early Access!!! <br><br>We are sending you this email as confirmation of your chosen ID and alpha code. To make things easy, you can use this link. It will insert the code for you. <a href="https://snoozelings.com/signup?code=' . $randomString . '">CLICK HERE!!!</a><br><br>If the link doesn\'nt work, Copy/Pasting the code is best so the characters don\'t get mistyped.<br><br>You can also join our discord server if haven\'t already: <a href="https://discord.gg/p6wr4NBrx9">Discord Link</a><br><br><b>Account ID:</b> ' . $id . '<br><br><b>Alpha Code: </b>' . $randomString . '<br><br>See you soon,<br><i>Snoozelings</i></p>';
     
 
         // Always set content-type when sending HTML email

@@ -15,6 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $design);
     $stmt->execute();
     $designid = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Make Sure Item Exists
+    if($designid) {
+        
+    } else {
+        header("Location: ../index");
+        die();
+    }
 
     
     //Get Pet Name

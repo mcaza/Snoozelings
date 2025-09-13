@@ -180,7 +180,7 @@ if (isset($_COOKIE['user_id'])) {
     echo '<div class="indexBox">';
     echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Game Resources</h4>';
     echo '<p><a href="gameGuides" class="notif">1. Reference Pages</a></p>';
-    echo '<p><a href="https://discord.gg/sqjMSepvet" class="notif">2. Discord Server</a></p>';
+    echo '<p><a href="https://discord.gg/p6wr4NBrx9" class="notif">2. Discord Server</a></p>';
     echo '</div>';
     
     echo '</div>';

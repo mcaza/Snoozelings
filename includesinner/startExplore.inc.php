@@ -13,16 +13,18 @@ $petId = $_POST["explorer"];
 if ($petId) {
 $area = $_POST["area"];
     $userId = $_COOKIE['user_id'];
+    $farmSeeds = ['3','5','11','13','9'];
     $farmCommon = ['28','29','30','31','32','37','38','39'];
     $farmUncommon = ['65','64','66','14','73','75','74','55'];
     $farmRare = ['78', '79', '80', '92', '93', '94', '95', '98'];
     $woodsCommon = ['40','41','50','51','43','47','42','35'];
+    $woodsSeeds = ['12','6','10','4'];
     $woodsUncommon = ['69','48','49','14','73','76','74','55'];
     $woodsRare = ['81', '82', '83', '84', '85', '96', '99', '223'];
+    $oceanSeeds = ['2','214','8','1','7'];
     $oceanCommon = ['52','53','54','59','58','60','57','45'];
     $oceanUncommon = ['70','56','72','14','73','77','74','55'];
     $oceanRare = ['86', '87', '88', '89', '90', '91', '97', '100'];
-    $seeds = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13','214'];
     $itemsWon = [];
     $coinsWon = 0;
     
@@ -272,10 +274,12 @@ function rollRarity() {
 }
 
 function pickItem($rarity, $area) {
+    global $farmSeeds;
+    global $woodsSeeds;
+    global $oceanSeeds;
     global $farmCommon;
     global $farmUncommon;
     global $farmRare;
-    global $seeds;
     global $coinsWon;
     global $itemsWon;
     global $woodsCommon;
@@ -319,9 +323,9 @@ function pickItem($rarity, $area) {
             $item = $farmCommon[$randomNum];
             array_push($itemsWon, $item);
         } else {
-            $count = count($seeds) - 1;
+            $count = count($farmSeeds) - 1;
             $randomNum = rand(0, $count);
-            $item = $seeds[$randomNum];
+            $item = $farmSeeds[$randomNum];
             array_push($itemsWon, $item);
         }
     } elseif ($area === "Forest") {
@@ -354,9 +358,9 @@ function pickItem($rarity, $area) {
             $item = $woodsCommon[$randomNum];
             array_push($itemsWon, $item);
         } else {
-            $count = count($seeds) - 1;
+            $count = count($woodsSeeds) - 1;
             $randomNum = rand(0, $count);
-            $item = $seeds[$randomNum];
+            $item = $woodsSeeds[$randomNum];
             array_push($itemsWon, $item);
         }
     } elseif ($area === "Beach") {
@@ -389,9 +393,9 @@ function pickItem($rarity, $area) {
             $item = $oceanCommon[$randomNum];
             array_push($itemsWon, $item);
         } else {
-            $count = count($seeds) - 1;
+            $count = count($oceanSeeds) - 1;
             $randomNum = rand(0, $count);
-            $item = $seeds[$randomNum];
+            $item = $oceanSeeds[$randomNum];
             array_push($itemsWon, $item);
         }
     }

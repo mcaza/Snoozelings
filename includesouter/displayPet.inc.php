@@ -65,6 +65,25 @@ function displayPet($pet, $class) {
             echo "<img src='Layers/Markings/Sublimation/" . $pet["mainColor"] . ".png' id = 'Sublimationone'>";
             echo "</div>";
         }
+        
+        if (strpos($pet["specials"], "Collie") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Other/Collie.png' id = 'Collieone'>";
+            echo "</div>";
+        }
+        
+        if (strpos($pet["specials"], "Foxy") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Foxy/" . $pet["mainColor"] . ".png' id = 'Foxyone'>";
+            echo "</div>";
+        }
+        
+        if (strpos($pet["specials"], "Scales") !== false) {
+            echo "<div class='${class}'>";
+            echo "<img src='Layers/Markings/Scales/" . $pet["mainColor"] . ".png' id = 'Scalesone'>";
+            echo "</div>";
+        }
+        
         if (strpos($pet["specials"], "EarTip") !== false) {
             echo "<div class='${class}'>";
             echo "<img src='Layers/Other/EarTip.png' id = 'EarTipone'>";
@@ -587,7 +606,6 @@ function displayPet($pet, $class) {
             } 
             
          if (str_contains($clothing,"Cloak") && $hairCheck == 1) {
-                echo 'test2';
                 echo "<div class='${class}'>";
                 echo '<img src="Layers/Hair/' . $pet['hairType'] . '/' . $pet['hairColor'] . '.png" id="Hairone">';
                 echo "</div>";
@@ -698,6 +716,25 @@ function singleImage($pet) {
             $image = imagecreatefrompng($url);
             imagecopy($outputImage,$image,0,0,0,0, $x, $y);
         }
+        
+        if (strpos($pet["specials"], "Collie") !== false) {
+            $url = 'Layers/Other/Collie.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        
+        if (strpos($pet["specials"], "Foxy") !== false) {
+            $url = 'Layers/Markings/Foxy/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        
+        if (strpos($pet["specials"], "Scales") !== false) {
+            $url = 'Layers/Markings/Scales/' . $pet['noseColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+        
         if (strpos($pet["specials"], "EarTip") !== false) {
             $url = 'Layers/Other/EarTip.png';
             $image = imagecreatefrompng($url);

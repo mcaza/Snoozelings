@@ -4,9 +4,15 @@ require_once '../includes/config_session.inc.php';
 require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
-$username = $_COOKIE['user_username'];
 
+$id = $_COOKIE['user_id'];
 
+//User Name
+$query = 'SELECT username FROM users WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $id);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -16,7 +22,7 @@ $username = $_COOKIE['user_username'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$username?>'s Mailbox</title>
+    <title><?=$result['username']?>'s Mailbox</title>
     <?php require_once '../includes/css.inc.php'; ?>
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>

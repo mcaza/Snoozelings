@@ -1,7 +1,13 @@
 <?php
 
 $userId = $_COOKIE['user_id'];
-$username = $_COOKIE['user_username'];
+
+//Get Username 
+    $query = 'SELECT * FROM users WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $nameCheck = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $id = $_GET['id'];
 
@@ -22,20 +28,26 @@ if ($post) {
     $stmt->execute();
     $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $count = count($comments);
+    $check = 0;
     
     //Check Likers
-    $likers = explode(" ", $post['likers']);
-    if (in_array($username, $likers)) {
-        $check = true;
+    if ($post['likers']) {
+        $likers = explode(" ", $post['likers']);
+        if (in_array($nameCheck['username'], $likers)) {
+            $check = 1;
+        }
     }
-    
     
     echo '<div class="leftRightButtons">';
     echo '<a href="critterweb"><<</a>';
     echo '</div>';
-        echo '<div class="button-bar">';
-    if (!$check)  {
-        echo '                <button class="fancyButton" onClick="window.location.href=\'includes/like.inc.php?id=' . $id . '\'">Like</button>';
+    echo '<div class="button-bar">';
+    if ($check == 0)  {
+        echo "<form method='POST' action='includes/like.inc.php'>";
+        echo '<input type="hidden" name="post" value="' . $id . '">';
+        echo '<button class="fancyButton">Like</button>';
+        echo '</form>';
+        //echo '<button class="fancyButton" onClick="window.location.href=\'includes/like.inc.php?id=' . $id . '\'">Like</button>';
     }
     echo '<button class="fancyButton" id="commentButton">Comment</button></div>';
     

@@ -47,7 +47,7 @@ echo '<h4>Your snoozeling approaches the wishing well.</h4>';
 
 //Prize Button
 if ($result['dailyWish'] == 1) {
-    echo '<p><i>You have already taken made a wish today.</i></p>';
+    echo '<p><i>You have already made a wish today.</i></p>';
     echo '<p><i>Please come back tomorrow.</i></p>';
 } else if (!$coins) {
     echo '<p><i>You are unable to make a wish without an old coin.</i></p>';

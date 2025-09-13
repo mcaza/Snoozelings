@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Make Sure Pet is Owned by User
-    if (!($pet['owner_id'] === $userId)) {
+    if (!($pet['owner_id'] == $userId)) {
         header("Location: ../index");
         die();
     }
