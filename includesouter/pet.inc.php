@@ -116,7 +116,12 @@ if ($pet['job'] === 'jack') {
     $job = $pet['job'];
 }
 echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $job;
-echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>' . $pet['breedStatus'];
+if ($pet['breedStatus'] == "Friends") {
+    echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>Friends Only';
+} else {
+    echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>' . $pet['breedStatus'];
+}
+
 
 echo '</div>';
 echo '</div>';

@@ -342,7 +342,7 @@ echo '<label for="status"  class="form">Pet Inspiration:</label><br>';
 echo '<select  class="input" name="status" id="status"><br>';
 echo '<option value="Closed"' . $closed . '>Closed</option>';
 echo '<option value="Open"' . $open . '>Open</option>';
-//echo '<option value="Friends"' . $friends . '>Friends Only</option>';
+echo '<option value="Friends"' . $friends . '>Friends Only</option>';
 echo '</select><br>';
 
 //Breeding Status Javascript

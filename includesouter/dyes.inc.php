@@ -1,6 +1,7 @@
 <?php
 
 $userId = $_COOKIE['user_id'];
+date_default_timezone_set('UTC');
 
 
 //Replies

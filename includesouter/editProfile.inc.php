@@ -236,13 +236,18 @@ switch ($result['blockMessages']) {
     case "0":
         $yes = "selected";
         break;
+    case "2":
+        $friends = "selected";
+        break;
 }
 echo '<select class="input" name="messages">';
 echo '<option value="0"' . $yes . '>Yes</option>';
 echo '<option value="1"' . $no . '>No</option>';
+echo '<option value="2"' . $friends . '>Friends Only</option>';
 echo '</select><br>';
 $yes = "";
 $no = "";
+$friends = "";
 
 //Allow Birthday Gifts
 echo '<label for="birthdayGifts" class="form">Allow Birthday Gifts:</label><br>';

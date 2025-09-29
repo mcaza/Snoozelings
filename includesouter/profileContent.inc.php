@@ -3,6 +3,29 @@ $id = $_GET['id'];
 $userId = $_COOKIE['user_id'];
 $year = date("Y"); 
 
+//Friend Request Check
+$query = "SELECT * FROM friendRequests WHERE newFriend = :id AND sender = :sender;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->bindParam(":sender", $id);
+$stmt->execute();
+$friendRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($friendRequests) {
+    echo '<h4>You have a friend request from this user.</h4>';
+    echo '<div style="display: flex;flex-direction: row;flex-wrap: wrap; justify-content: center;">';
+    echo '<form action="../includes/acceptRequest.inc.php" method="post">';
+    echo '<input type="hidden" name="sender" value="' . $id . '">';
+    echo '<button class="fancyButton" style="margin-right:20px;width:100px;">Accept</button>';
+    echo '</form>';
+    echo '<form action="../includes/denyRequest.inc.php" method="post">';
+    echo '<input type="hidden" name="sender" value="' . $id . '">';
+    echo '<button class="redButton" style="width:100px;">Deny</button>';
+    echo '</form>';
+    echo '</div>';
+    echo '<hr>';
+}
+
 //Replies
 $query = "SELECT * FROM replies WHERE user_id = :id;";
 $stmt = $pdo->prepare($query);
@@ -105,14 +128,25 @@ if ($id == $userId) {
     echo '</div>';
     //Right Side Buttons
     echo '<div class="button-bar">';
-    /* $count = intval($result['blockRequests']);
+    $count = intval($result['blockRequests']);
        if (!$count) {
            echo '<button class="fancyButton" onClick="window.location.href=\'/includes/addFriend.inc.php?id=' . $id . '\'">Add Friend</button>';
        }   
-    //$count = intval($result['blockMessages']);
-    if (!$count) { */
+    $count = intval($result['blockMessages']);
+    if ($count == 0) { 
            echo '<button class="fancyButton" onClick="window.location.href=\'sendmessage?id=' . $id . '\'">Send Message</button>';
-      // }  
+       }  else if ($count == 2) {
+        //Check if Friends
+                $query = 'SELECT friendList FROM users WHERE id = :id';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":id", $userId);
+                $stmt->execute();
+                $friendCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+            $list = explode(" ", $friendCheck['friendList']);
+            if (in_array($id, $list)) {
+                echo '<button class="fancyButton" onClick="window.location.href=\'sendmessage?id=' . $id . '\'">Send Message</button>';
+            } 
+    }
 
     echo '</div>';
     
@@ -230,6 +264,7 @@ if ($id == $userId) {
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Trail Mix</p>';
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Responsible & Hard Working</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Crossbreeding Plants</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Sprout holds the Snooze Land record for most plants harvested in a single lifetime.</p>';
               echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Sprout holds the Snooze Land record for most plants harvested in a single lifetime.</p>';
         } elseif ($id === "3") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Polymath</p>';
@@ -452,10 +487,14 @@ if ($id === "4") {
         echo '<div id="bottomSpace"><h3 ><a href="collection?id=' . $id . '">Go To Collection >></a></div>';
     }
     
+    //Block Button
+    echo '<button class="fancyButton" onClick="window.location.href=\'/includes/addFriend.inc.php?id=' . $id . '\'">Add Friend</button>';
 
+    //Kindness
     if ($userId == "1") {
     echo '<div style="text-align: right;"><form action="includes/rewardCoin.inc.php" method="POST"><input type="hidden" name="user" value="' . $id . '"><input name="reason" type="text" class="input"><br><button class="modButton">Kindness Coin</button></form></div>';
     }
+
 
     echo "<script>
     //Profile / Snoozeling / Collection Fix When Only Right Arrow

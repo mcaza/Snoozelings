@@ -300,7 +300,7 @@ $userId = $_COOKIE['user_id'];
     } 
     //Pet Inspiration
     if ($status) {
-        if (!($status === "Closed" || $status === "Open")) {
+        if (!($status === "Closed" || $status === "Open" || $status === "Friends")) {
             header("Location: ../editPet?id=" . $id);
             die();
         } else {

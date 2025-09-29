@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $exp = $snooze['farmEXP'] + .5;
     
     //Get First Seed ID
-    $query = "SELECT id FROM items WHERE name = :name && user_id = :id ORDER BY id LIMIT 1";
+    $query = "SELECT id, list_id FROM items WHERE name = :name && user_id = :id ORDER BY id LIMIT 1";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":name", $seed);
     $stmt->bindParam(":id", $userId);
@@ -218,12 +218,11 @@ if ($snooze['job'] === "Farmer") {
     $stmt->execute();  
     
     //Reply
-    if ($seed == "MysterySeed") {
+    if ($seedId['list_id'] == 14) {
         $reply = 'You have planted a single Mystery Seed.';
     } else {
         $reply = 'You have planted a single ' . $plantName . ' Seed.';
     }
-    $reply = 'You have planted a single ' . $plantName . ' seed.';
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id", $userId);

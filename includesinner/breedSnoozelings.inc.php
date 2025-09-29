@@ -87,10 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     
-    
+
     //If using an ID, check permissions
     if ($breedid) {
-    $query = 'SELECT breedStatus FROM snoozelings WHERE id = :id';
+    $query = 'SELECT breedStatus, owner_id FROM snoozelings WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $breedid);
     $stmt->execute();
@@ -104,6 +104,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt->execute();
             header("Location: ../stitcher?page=new");
             die();
+        } else if ($status['breedStatus'] === 'Friends') {
+            
+            //Check if Friends
+                $query = 'SELECT friendList FROM users WHERE id = :id';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":id", $userId);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $list = explode(" ", $result['friendList']);
+            if (in_array($status['owner_id'], $list)) {
+
+            } else {
+                $reply = "You are not friends with this user or their snoozelings.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
+                header("Location: ../stitcher?page=new");
+                die();
+            }
         }
     }
     

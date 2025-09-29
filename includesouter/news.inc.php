@@ -1,3 +1,3 @@
 <?php
 
-echo '<div id="newsBox">The fix for logging in is live. Please clear cookies. If you are still unable to log in after clearing cookies, email <a href="support@snoozelings.com">support@snoozelings.com</a> and we will do our best to assist you.</div>';
+echo '<div id="newsBox">We ask that all members fill out this survey about the game: <a href="https://forms.gle/t4vAtVW2jwvY37gr6">Click Here</a></div>';

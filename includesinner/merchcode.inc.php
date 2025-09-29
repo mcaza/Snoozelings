@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    
     //If results
     if ($result) {
         if ($result['redeemed'] == 0) {

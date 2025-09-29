@@ -49,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $specials = explode(" ", $snoozeling['specials']);
     $check = 0;
     $spot = 0;
+    
     foreach ($specials as $special) {
         if (str_contains($special, "MothFluff")) {
             $check = 1;
@@ -58,8 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $spot++;
         }
     }
+
     
-    if($spot) {
+    if($check) {
         
     } else {
         header("Location: ..");

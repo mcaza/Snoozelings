@@ -4,6 +4,10 @@
 $id = $_GET['id'];
 $userId = $_COOKIE['user_id'];
 
+if ($id == 0) {
+    $id = $userId;
+}
+
 //Replies
 $query = "SELECT * FROM replies WHERE user_id = :id;";
 $stmt = $pdo->prepare($query);
@@ -11,22 +15,17 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Check for Friend Requests
+$query = "SELECT * FROM friendRequests WHERE newFriend = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $id . '"><<</a>';
 echo '</div>';
-
-//Title
-if ($id === $userId) {
-    echo '<h3 style="margin-bottom: 2rem;">Your Friend List</h3>';
-} else {
-    $query = 'SELECT username FROM users WHERE id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo '<h3 style="margin-bottom: 2rem;">' . $result['username'] . '\'s Friend List</h3>';
-}
 
 //Notification
 if ($reply) {
@@ -38,6 +37,52 @@ if ($reply) {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
 }
+
+//Title
+if ($id === $userId) {
+    
+    //Display Requests if Any
+    if ($requests) {
+        echo '<h3 style="margin-bottom: 2rem;">Friend Requests</h3>';
+        //Friend Div
+        echo '<div style="display: flex;flex-direction: row;flex-wrap: wrap; justify-content: center;row-gap: 2rem; column-gap: 2rem">';
+        foreach ($requests as $request) {
+            //User Info
+            $query = "SELECT * FROM users WHERE id = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $request['sender']);
+            $stmt->execute();
+            $userinfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            //Bonded Pet Info
+            $query = "SELECT * FROM snoozelings WHERE id = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $userinfo['bonded']);
+            $stmt->execute();
+            $pet = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            echo '<a href="profile?id=' . $request['sender'] . '" style="border: 2px dashed #827188; border-radius: 20px;width: 30%;">';
+            displayPet($pet, "artfriends"); 
+            echo '<p><strong>' . $userinfo['username'] . '</strong></p>';
+            echo '</a>';
+
+        }
+        echo '</div>';
+        echo '<hr>';
+    }
+    
+    
+    echo '<h3 style="margin-bottom: 2rem;">Your Friend List</h3>';
+} else {
+    $query = 'SELECT username FROM users WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo '<h3 style="margin-bottom: 2rem;">' . $result['username'] . '\'s Friend List</h3>';
+}
+
+
 
 //Friend Div
 echo '<div style="display: flex;flex-direction: row;flex-wrap: wrap; justify-content: center;row-gap: 2rem; column-gap: 2rem">';

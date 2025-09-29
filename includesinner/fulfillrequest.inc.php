@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Check that Ticket isn't closed or fulfilled
     if ($request['fulfilled'] == 1 || $request['expired'] == 1) {
         header("Location: ../requests");
+        die();
     }
     
     //Check that user has the item (and dye = NULL)

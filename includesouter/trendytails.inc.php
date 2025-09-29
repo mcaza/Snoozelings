@@ -143,11 +143,12 @@ echo '</div>';
 $mothCheck = 0;
 $snoozeArray = [];
 foreach ($snoozelings as $snooze) {
-    if (strpos($snooze["specials"], "MothFluff")) {
+    if (str_contains($snooze["specials"], "MothFluff")) {
         $mothCheck = 1;
         array_push($snoozeArray,$snooze);
     }
 }
+
 if ($mothCheck == 1) {
     //Select All Dyes
     $query = 'SELECT * FROM items WHERE user_id = :id AND type = "dye"';
