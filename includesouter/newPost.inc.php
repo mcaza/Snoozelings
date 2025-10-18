@@ -6,12 +6,18 @@ $post = $_COOKIE['post'];
 $type = $_GET['type'];
 
 //Check if User is 18+
-
 $query = "SELECT * FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//Grab Snoozelings
+$query = "SELECT * FROM snoozelings WHERE owner_id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
  $date = strtotime($result['birthdate']);
     $today = strtotime("-18 year");
@@ -75,7 +81,7 @@ if ($num == 1 || $userId == 1) {
 
     //Pick Category
     echo '<label style="margin-top: 2rem;" for="type" class="form" required>Category:</label><br>';
-    echo '<select class="input"  name="type" style="width: auto;">';
+    echo '<select class="input" id="type"  name="type" style="width: auto;">';
     echo '<option value=""></option>';
     if ($userId == "1") {
     echo '<option value="news" ' . $news . '>News</option>';
@@ -113,6 +119,32 @@ if ($num == 1 || $userId == 1) {
         echo '<input class="input" type="text" name="title" required><br>';
     }
     
+    //Attach Snoozeling
+    if ($type == "share") {
+        echo '<div id="hiddenSnooze" style="display:block;">';
+    } else {
+        echo '<div id="hiddenSnooze" style="display:none;">';
+    }
+    echo '<label style="margin-top: 2rem;" for="title" class="form">Attach Snoozeling:</label><br>';
+    echo '<select class="input"  name="snooze" style="width: auto;">';
+    echo '<option value=""></option>';
+    foreach ($pets as $snooze) {
+        echo '<option value="' . $snooze['id'] . '">' . $snooze['name'] . '</option>';
+    }
+    echo '</select>';
+    echo '<p style="font-size:12px;margin-top:0;">*Snoozeling is Optional*</p>';
+    echo '</div>';
+    
+    //Attach Image
+    if ($type == "creative") {
+        echo '<div id="hiddenImage" style="display:block;">';
+    } else {
+        echo '<div id="hiddenImage" style="display:none;">';
+    }
+    echo '<label style="margin-top: 2rem;" for="title" class="form">Direct Image Link:</label><br>';
+    echo '<input class="input" type="text" name="image">';
+    echo '<p style="font-size:12px;margin-top:0;">*Image is Optional*</p>';
+    echo '</div>';
     
     //Enter Text
     echo '<label style="margin-top: 2rem;" for="post" class="form">Post:</label><br>';

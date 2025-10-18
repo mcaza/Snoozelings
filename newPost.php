@@ -93,3 +93,21 @@ require_once '../includes/verifySinglePet.inc.php';
 </body>
 
 </html>
+
+<script>
+    document.getElementById('type').onchange = (event) => {
+         var inputText = event.target.value;
+        
+        if (inputText === 'share') {
+            document.getElementById("hiddenSnooze").style.display = "block";
+            document.getElementById("hiddenImage").style.display = "none";
+        } else if (inputText === 'share') {
+            document.getElementById("hiddenSnooze").style.display = "none";
+            document.getElementById("hiddenImage").style.display = "block";     
+        } else {
+            document.getElementById("hiddenSnooze").style.display = "none";
+            document.getElementById("hiddenImage").style.display = "none";  
+        }
+        
+    }
+</script>

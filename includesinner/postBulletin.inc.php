@@ -10,16 +10,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $type= $_POST["type"];
     $userId = $_COOKIE['user_id'];
     $likes = 0;
-    $new = 0;
+    $new = 1;
     
-    if (isset($_POST['publish'])) {
-        if (!($type === 'general' || $type === 'fandom' || $type === 'artwork' || $type === 'roleplay' || $type === 'giveaways' || $type === 'guides' || $type === 'questions' || ($type === 'news' && $userId == "1") || ($type === 'submissions' && $userId == "1" || ($type === 'hidden' && $userId == "1")))) {
-            setcookie('title', $title, 0, '/');
-            setcookie('post', $post, 0, '/');
+    if ($_POST['snooze']) {
+        $snooze = $_POST['snooze'];
+        
+        //Check if Owned by Owner
+        $query = 'SELECT * FROM snoozelings WHERE owner_id = :owner AND id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":owner", $userId);
+        $stmt->bindParam(":id", $snooze);
+        $stmt->execute();
+        $snoozecheck = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($snoozecheck) {
+            
+        } else {
             header("Location: ../newPost");
             die();
         }
     }
+    
+     if ($_POST['image']) {
+        $image = $_POST['image'];
+    }
+    
     
     if (isset($_POST['publish'])) {
         //Get Date
@@ -27,7 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $formatted = $now->format('Y-m-d H:i:s');
 
         //Post Bulletin
-        $query = 'INSERT INTO posts (user_id, category, datetime, likes, title, text, new) VALUES (:id, :category, :date, :likes, :title, :text, :new)';
+        if ($snooze) {
+            $query = 'INSERT INTO posts (user_id, category, datetime, likes, title, text, new, snoozeling) VALUES (:id, :category, :date, :likes, :title, :text, :new, :snoozeling)';
+        } else if ($image) {
+            $query = 'INSERT INTO posts (user_id, category, datetime, likes, title, text, new, image) VALUES (:id, :category, :date, :likes, :title, :text, :new, :image)';
+        } else {
+            $query = 'INSERT INTO posts (user_id, category, datetime, likes, title, text, new) VALUES (:id, :category, :date, :likes, :title, :text, :new)';
+        }
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $userId);
         $stmt->bindParam(":date", $formatted);
@@ -36,6 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":title", $title);
         $stmt->bindParam(":text", $post);
         $stmt->bindParam(":new", $new);
+        if ($snooze) {
+            $stmt->bindParam(":snoozeling", $snooze);
+        }
+        if ($image) {
+            $stmt->bindParam(":image", $image);
+        }
         $stmt->execute();
 
         //Get Bulletin ID
