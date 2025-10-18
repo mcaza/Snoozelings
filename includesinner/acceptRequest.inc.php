@@ -29,11 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Check for Friend Limit
     $query = 'SELECT friendList FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":id", $id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($result) {
-        $list = explode(" ", $result['friendList']);
+    if ($result2) {
+        $list = explode(" ", $result2['friendList']);
         $count = count($list);
         if ($count === 50) {
                 $reply = "Your friend list is full. There is a limit of 50 friends.";
@@ -46,6 +46,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 die();
         }
     }
+    
+    //Check if they are on friend list
+    if ($result) {
+        $list = explode(" ", $result['friendList']);
+        if (in_array($id, $list)) {
+                $reply = "This user is already in your friend list.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
+                header("Location: ../friends?id=" . $userId);
+                die();
+            }
+        }
     
     if ($result) {
     $list = explode(" ", $result['friendList']);
@@ -70,6 +85,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = 'UPDATE users SET friendList = :friends WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":friends", $friends);
+    $stmt->execute();
+    
+    //Add to Their Friend List
+    if ($result2) {
+        $friends = $result2['friendList'] . " " . $userId;
+    } else {
+        $friends = $userId;
+    }
+    $query = 'UPDATE users SET friendList = :friends WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
     $stmt->bindParam(":friends", $friends);
     $stmt->execute();
     

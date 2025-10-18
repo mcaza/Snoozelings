@@ -8,6 +8,24 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
+
+//Get Owner ID
+$query = "SELECT owner_id FROM snoozelings WHERE id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+
+//Check for Blocks
+$block = 0;
+$list = explode(" ", $result['blockList']);
+if (in_array($userId, $list)) {
+    $block = 1;
+}
+
 //Navigation
 echo '<div id="onlyOne" class="leftRightButtons">';
 if ($id > 1) {
@@ -26,12 +44,7 @@ $query = "SELECT id FROM snoozelings WHERE owner_id = :id;";
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
  */
-//Get Owner ID
-$query = "SELECT owner_id FROM snoozelings WHERE id = :id;";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 //Buttons
 if ($_COOKIE["user_id"] == $result["owner_id"]) { 
@@ -49,12 +62,19 @@ if ($_COOKIE["user_id"] == $result["owner_id"]) {
      echo '<div class="button-bar"><p style="font-size: 2rem;" >Up for Adoption</p></div>';
 } else {
     //Get Username
-    $query = "SELECT username FROM users WHERE id = :id;";
+    $query = "SELECT * FROM users WHERE id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $result["owner_id"]);
     $stmt->execute();
     $name = $stmt->fetch(PDO::FETCH_ASSOC);
     echo '<div class="button-bar"><p style="font-size: 2rem;" ><strong>Owned By: </strong><a href="profile?id=' . $result["owner_id"] . '">' . htmlspecialchars($name["username"]) . '</a></p></div>';
+}
+
+//Check for Blocks
+$block = 0;
+$list = explode(" ", $name['blockList']);
+if (in_array($userId, $list)) {
+    $block = 1;
 }
 
 //Pet Title
@@ -118,6 +138,8 @@ if ($pet['job'] === 'jack') {
 echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $job;
 if ($pet['breedStatus'] == "Friends") {
     echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>Friends Only';
+} else if ($block = 1) {
+    echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong> Closed';
 } else {
     echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>' . $pet['breedStatus'];
 }
@@ -266,10 +288,11 @@ echo  '</ul>';
 echo '</div>';
 
 //Bio Box
-echo '<div class="petrowtwo">';
+    echo '<div class="petrowtwo">';
 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Bio</h4>';
+if ($block == 0) {
     echo '<p class="snoozelinginfo">' . nl2br(htmlspecialchars($pet['bio'])) . '</p>';
-
+}
 echo '</div>';
 echo '</div>';
 echo '<hr>';

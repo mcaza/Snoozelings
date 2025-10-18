@@ -8,6 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $one = $_POST['petone'];
     $two = $_POST['pettwo'];
     
+    //Pet Info
+    $query = "SELECT * FROM snoozelings WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $one);
+    $stmt->execute();
+    $pet = $stmt->fetch(PDO::FETCH_ASSOC);
+    
     //Check Pet Confirmation
     if (!($one == $two)) {
             $reply = "<p>You have selected two different pets. Please try again.</p>";
@@ -20,9 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die(); 
     }
     
+    
+    
     //Check for Clothes
     if ($pet['clothesBottom'] || $pet['clothesTop'] || $pet['clothesBoth'] || $pet['clothesHoodie']) {
-            $reply = "<p>You need to remove your pet\'s clothes before donating them.</p>";
+            $reply = "<p>You need to remove your pet's clothes before donating them.</p>";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id", $userId);
@@ -113,11 +122,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $formatted = $modified->format('Y-m-d H:i:s');
     
     //Calculate Coin Cost
-    $query = "SELECT * FROM snoozelings WHERE id = :id";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $one);
-    $stmt->execute();
-    $pet = $stmt->fetch(PDO::FETCH_ASSOC);
     $colors = [];
     $coins = 0;
     array_push($colors, $pet['mainColor'], $pet['hairColor'], $pet['tailColor'], $pet['eyeColor'], $pet['noseColor']);

@@ -11,6 +11,7 @@ $stmt->bindParam(":sender", $id);
 $stmt->execute();
 $friendRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
 if ($friendRequests) {
     echo '<h4>You have a friend request from this user.</h4>';
     echo '<div style="display: flex;flex-direction: row;flex-wrap: wrap; justify-content: center;">';
@@ -26,6 +27,8 @@ if ($friendRequests) {
     echo '<hr>';
 }
 
+
+
 //Replies
 $query = "SELECT * FROM replies WHERE user_id = :id;";
 $stmt = $pdo->prepare($query);
@@ -38,6 +41,13 @@ $query = "SELECT * FROM users WHERE id = :id;";
     $stmt->bindParam(":id", $id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//Check for Blocks
+$block = 0;
+$list = explode(" ", $result['blockList']);
+if (in_array($userId, $list)) {
+    $block = 1;
+}
 
 if ($result['backpackColor']) {
     $backpackColor = $result['backpackColor'];
@@ -129,13 +139,17 @@ if ($id == $userId) {
     //Right Side Buttons
     echo '<div class="button-bar">';
     $count = intval($result['blockRequests']);
-       if (!$count) {
+    $check = 0;
+       if (!$count && $block == 0) {
+           $check = 1;
            echo '<button class="fancyButton" onClick="window.location.href=\'/includes/addFriend.inc.php?id=' . $id . '\'">Add Friend</button>';
        }   
     $count = intval($result['blockMessages']);
-    if ($count == 0) { 
+    if ($count == 0 && $block == 0) { 
+        $check = 1;
            echo '<button class="fancyButton" onClick="window.location.href=\'sendmessage?id=' . $id . '\'">Send Message</button>';
        }  else if ($count == 2) {
+        $check = 1;
         //Check if Friends
                 $query = 'SELECT friendList FROM users WHERE id = :id';
                 $stmt = $pdo->prepare($query);
@@ -147,7 +161,9 @@ if ($id == $userId) {
                 echo '<button class="fancyButton" onClick="window.location.href=\'sendmessage?id=' . $id . '\'">Send Message</button>';
             } 
     }
-
+    if ($check == 1) {
+        echo '<div style="height:50px;"></div>';
+    }
     echo '</div>';
     
     //Notification
@@ -357,20 +373,24 @@ if ($id === "4") {
                <div class="profilerowtwo" style="overflow:auto;overflow-x: hidden;" >
 <h4 class="profileh4">&nbsp;&nbsp;&nbsp;Bio</h4>
                                    <div  >';
-   echo '<p class="snoozelinginfo">' . nl2br(htmlspecialchars($result['bio'])) . '</p>';
+if ($block == 1) {
+    $bio = "";
+} else {
+    $bio = nl2br(htmlspecialchars($result['bio']));
+}
+   echo '<p class="snoozelinginfo">' . $bio . '</p>';
 
 
              echo   '</div>';
              echo   '</div>
                 <div class="profilerowtwo" >';
-                 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Friends</h4>';
-                /* echo   '<h4 style="text-align: left; margin-top: 1rem; padding-bottom: .5rem; font-size: 2.2rem;border-bottom: 2px dashed #827188;" ><a href="friends?id=' . $id . '">&nbsp;&nbsp;&nbsp;Friends</a></h4>';
+                 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;<a href="https://testsnoozelings.com/friends">Friends</a></h4>';
+
     
                  //Friend Display
                 echo '<div style="display: flex; flex-direction: row; column-gap: 3rem;">';
-                 if ($result['friendList']) {
+                 if ($result['friendList'] && $block == 0) {
                      $friends = explode(" ", $result['friendList']);
-                     array_shift($friends);
                      $friends = array_slice($friends, 0, 11);
                      $length = count($friends);
                      $count = 0;
@@ -393,7 +413,7 @@ if ($id === "4") {
                      }
                      
                  }
-    echo '</div>'; */
+    echo '</div>';
     echo '</div></div> ';
 
 //Nav section
@@ -488,10 +508,17 @@ if ($id === "4") {
     }
     
     //Block Button
-    echo '<button class="fancyButton" onClick="window.location.href=\'/includes/addFriend.inc.php?id=' . $id . '\'">Add Friend</button>';
+    
+    if (($id == 2 || $id > 9) && $userId != $id) {
+        echo '<div class="button-bar" style="margin-bottom:20px;">';
+        echo '<div style="text-align: right;"><form onsubmit="return confirm(\'Are you sure you want to block this user?\');" action="includes/blockUser.inc.php" method="POST"><input type="hidden" name="user" value="' . $id . '"><br><button class="redButton">Block User</button></form></div>';
+        echo '</div>';
+    }
+    
 
     //Kindness
     if ($userId == "1") {
+        echo '<hr>';
     echo '<div style="text-align: right;"><form action="includes/rewardCoin.inc.php" method="POST"><input type="hidden" name="user" value="' . $id . '"><input name="reason" type="text" class="input"><br><button class="modButton">Kindness Coin</button></form></div>';
     }
 

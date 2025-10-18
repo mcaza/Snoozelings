@@ -100,7 +100,7 @@ $friends = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($friends) {
     $list = explode(" ", $friends['friendList']);
-    array_shift($list);
+    $list = array_filter($list);
     foreach ($list as $friend) {
         //User Info
         $query = "SELECT * FROM users WHERE id = :id";
@@ -123,6 +123,7 @@ if ($friends) {
         echo '</a>';
     }
     
+    
 //If user Has 0 Friends    
 } else {
     if ($id === $userId) {
@@ -135,3 +136,28 @@ if ($friends) {
 
 
 echo '</div>';
+
+//Delete Friends
+echo '<hr>';
+echo '<h3>Manage Friend List</h3><br>';
+echo '<form action="includes/deleteFriend.inc.php" onsubmit="return confirm(\'Are you sure you want to remove this friend from your friend list?\');" method="POST">';
+echo '<select class="input" name="friend">';
+foreach ($list as $friend) {
+    //User Info
+    $query = "SELECT * FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $friend);
+    $stmt->execute();
+    $userinfo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    echo '<option value="' . $userinfo['id'] . '">' . $userinfo['username'] . '</option>';
+}
+echo '</select>';
+echo '<br><button class="redButton">Delete Friend</button></form>';
+
+
+
+
+
+
+

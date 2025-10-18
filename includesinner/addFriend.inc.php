@@ -39,6 +39,27 @@ if(!$result) {
 //Check for Friend Limit
 $query = 'SELECT friendList FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $id);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($result) {
+    $list = explode(" ", $result['friendList']);
+    $count = count($list);
+    if ($count === 50) {
+            $reply = "The user you are sending the request to already has 50 friends.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
+            header("Location: ../friends?id=" . $userId);
+            die();
+    }
+}
+
+//Check Their Friend Limit
+$query = 'SELECT friendList FROM users WHERE id = :id';
+$stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -79,7 +100,7 @@ if ($result) {
         }
     }
 
-//Add Friend
+//Add Friend to Your List
 if ($result) {
     $friends = $result['friendList'] . " " . $id;
 } else {

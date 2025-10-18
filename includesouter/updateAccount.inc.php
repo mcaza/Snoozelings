@@ -77,7 +77,8 @@ echo '<input class="input" type="text" name="password" id="password"><br>';
 echo '<button  class="fancyButton">Submit</button>';
 echo '</form>';
 echo '<hr>';
-    
+
+/*
 //Toggle Newsletter
 echo '<h4>Newsletter Status</h4>';
 echo '<label class="form" for="pwd" style="margin-top: 1rem;">Subscribe to Newsletter:</label><br>';
@@ -88,7 +89,7 @@ echo '<option value="0"' . $no . '>No</option>';
 echo '</select><br>';
 echo '<button  class="fancyButton">Submit</button>';
 echo '</form>';
-
+*/
 
 
 

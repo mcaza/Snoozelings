@@ -45,7 +45,14 @@ echo '<a href="critterweb"><<</a>';
 echo '</div>';
 
 //Post Button (Right)
-echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newPost\'">New Post</button></div>';
+if ($type == "news" || $type == "submissions") {
+    if ($userId == 1) {
+        echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newPost?type=' . $type . '\'">New Post</button></div>';
+    }
+} else {
+    echo '<div style="text-align: right;"><button  class="fancyButton" onClick="window.location.href=\'newPost?type=' . $type . '\'">New Post</button></div>';
+}
+
 echo '</div>';
 
 //Title
@@ -57,8 +64,20 @@ if ($type === "submissions") {
     echo '<h3 style="margin-bottom: 3rem">User Made Guides</h3>';
 } elseif ($type === "questions") {
     echo '<h3 style="margin-bottom: 3rem">Questions & Answers</h3>';
-} else {
-    echo '<h3 style="margin-bottom: 3rem">' . $_GET['type'] . ' Posts</h3>';
+} elseif ($type == "share") {
+    echo '<h3 style="margin-bottom: 3rem">Snoozeling Sharing</h3>';
+}  elseif ($type == "helpcenter") {
+    echo '<h3 style="margin-bottom: 3rem">Help Center</h3>';
+}  elseif ($type == "virtualpets") {
+    echo '<h3 style="margin-bottom: 3rem">Virtual Pets Board</h3>';
+} elseif ($type == "findfriends") {
+    echo '<h3 style="margin-bottom: 3rem">Find Friendships</h3>';
+}  elseif ($type == "forumgames") {
+    echo '<h3 style="margin-bottom: 3rem">Forum Games</h3>';
+}  elseif ($type == "mature") {
+    echo '<h3 style="margin-bottom: 3rem">18+ Exclusive Boards</h3>';
+}  else {
+    echo '<h3 style="margin-bottom: 3rem">' . $_GET['type'] . ' Board</h3>';
 }
 
 

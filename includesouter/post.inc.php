@@ -61,13 +61,25 @@ if ($post) {
     echo '<button class="fancyButton">Post Comment</button></div>';
     echo '</div>';
     
+    $content = htmlspecialchars($post['text'], ENT_QUOTES);
+    
+    $turned = array('&lt;b&gt;', '&lt;/b&gt;', '&lt;em&gt;', '&lt;/em&gt;', '&lt;u&gt;', '&lt;/u&gt;', '&lt;ul&gt;', '&lt;/ul&gt;', '&lt;li&gt;', '&lt;/li&gt;', '&lt;ol&gt;', '&lt;/ol&gt;', '&lt;i&gt;', '&lt;/i&gt;' );
+    $turn_back = array('<b>', '</b>', '<em>', '</em>', '<u>', '</u>', '<ul>', '</ul>', '<li>', '</li>', '<ol>', '</ol>', '<i>', '</i>' );
+
+    $content = str_replace( $turned, $turn_back, $content );
+    
+    $content = nl2br($content);
     
     echo '<h3>' . htmlspecialchars($post['title']) . '</h3>';
+    
     if ($post['category'] === 'submissions' || $post['category'] === 'news') {
         echo '<div class="staffpost" style="margin-top: 3rem;margin-bottom: 3rem;width: 70%;margin-left: auto;margin-right: auto;line-height: 2rem;">' . nl2br($post['text']) . '</div>';
     } else {
-        echo '<p style="margin-top: 3rem;margin-bottom: 3rem;width: 70%;margin-left: auto;margin-right: auto;line-height: 2rem;">' . nl2br(htmlspecialchars($post['text'])) . '</p>';
+        echo '<div  class="forumPost">';
+        echo '<p >' . $content . '</p>';
+        echo '</div>';
     }
+    
     
     echo '</div>';
     
