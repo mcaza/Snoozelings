@@ -1316,6 +1316,11 @@ a.selected {
     font-weight: bold;
 }
 
+.forumPhoto {
+    width:70%;
+    height:auto;
+}
+
 
 .critterbox {
     display: flex;
@@ -1378,6 +1383,29 @@ a.critterbox:hover{
 .postContent {
     overflow: auto;
     padding: 1rem;
+    width:100%;
+}
+
+.postContent > p {
+    font-size: 16px;
+}
+
+.postContent > ul {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align:left;
+}
+
+.postContent > ol {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align:left;
+}
+
+.postContent h1 {
+    text-align:left;
+    font-size:16px;
+    font-weight: bold;
 }
 
 .readMore {
@@ -2126,6 +2154,25 @@ select {
     
     .itemPageRow {
         width: 80%;
+    }
+    
+    .forumPhoto {
+        width:90%;
+        height:auto;
+    }
+    
+    #comment {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+ 
+    
+    .tinyPet img {
+        width: 13rem;
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
     }
 }
 

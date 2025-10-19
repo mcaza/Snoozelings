@@ -1,8 +1,11 @@
 <?php
 require_once '../includes/dbh-inc.php';
 require_once '../includes/config_session.inc.php';
+require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
 require_once '../includes/verifySinglePet.inc.php'; 
+require_once '../includes/verifyEighteen.inc.php'; 
+require_once '../includes/verifyBlock.inc.php'; 
 
 $id = $_GET['id'];
 

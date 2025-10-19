@@ -29,7 +29,7 @@ $total = count($posts);
 //Pages Amount
 $pages = ceil($total / $perPage);
 
-//Get Mail
+//Get Posts
 $query = 'SELECT * FROM posts WHERE category = :type ORDER BY id DESC LIMIT :start , :perPage';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(':start', $start, PDO::PARAM_INT);
@@ -37,6 +37,18 @@ $stmt->bindParam(':perPage', $perPage, PDO::PARAM_INT);
 $stmt->bindParam(':type', $type);
 $stmt->execute();
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$turned = array('&lt;b&gt;', '&lt;/b&gt;', '&lt;em&gt;', '&lt;/em&gt;', '&lt;u&gt;', '&lt;/u&gt;', '&lt;ul&gt;', '&lt;/ul&gt;', '&lt;li&gt;', '&lt;/li&gt;', '&lt;ol&gt;', '&lt;/ol&gt;', '&lt;i&gt;', '&lt;/i&gt;', '&lt;h1&gt;', '&lt;/h1&gt;', '&lt;s&gt;', '&lt;/s&gt;', '&lt;pre&gt;', '&lt;/pre&gt;', '&lt;table&gt;', '&lt;/table&gt;', '&lt;tr&gt;', '&lt;/tr&gt;', '&lt;th&gt;', '&lt;/th&gt;', '&lt;td&gt;', '&lt;/td&gt;', '&lt;B&gt;', '&lt;/B&gt;', '&lt;EM&gt;', '&lt;/EM&gt;', '&lt;U&gt;', '&lt;/U&gt;', '&lt;UL&gt;', '&lt;/UL&gt;', '&lt;LI&gt;', '&lt;/LI&gt;', '&lt;OL&gt;', '&lt;/OL&gt;', '&lt;I&gt;', '&lt;/I&gt;', '&lt;H1&gt;', '&lt;/H1&gt;', '&lt;S&gt;', '&lt;/S&gt;', '&lt;PRE&gt;', '&lt;/PRE&gt;', '&lt;TABLE&gt;', '&lt;/TABLE&gt;', '&lt;TR&gt;', '&lt;/TR&gt;', '&lt;TH&gt;', '&lt;/TH&gt;', '&lt;TD&gt;', '&lt;/TD&gt;' );
+$turn_back = array('<b>', '</b>', '<em>', '</em>', '<u>', '</u>', '<ul>', '</ul>', '<li>', '</li>', '<ol>', '</ol>', '<i>', '</i>', '<h1>', '</h1>', '<s>', '</s>', '<pre>', '</pre>', '<table>', '</table>', '<tr>', '</tr>', '<th>', '</th>', '<td>', '</td>', '<b>', '</b>', '<em>', '</em>', '<u>', '</u>', '<ul>', '</ul>', '<li>', '</li>', '<ol>', '</ol>', '<i>', '</i>', '<h1>', '</h1>', '<s>', '</s>', '<pre>', '</pre>', '<table>', '</table>', '<tr>', '</tr>', '<th>', '</th>', '<td>', '</td>');
+
+//Get Blocked List
+$query = 'SELECT * FROM users WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(':id', $userId);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$blocks = explode(" ", $user['blockedBy']);
 
 echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
 //Go Back Arrow
@@ -97,27 +109,41 @@ foreach ($posts as $post) {
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    echo '<div class="post">';
-    echo '<div class="postRowOne">';
-    echo '<div class="postUser">';
-    echo '<a href="profile?id=' . $post['user_id'] . '"><h4 style="margin-top: 0;">'  . htmlspecialchars($user['username']) . '</h4></a>';
-    displayPet($pet, "articon");
-    
-    echo '</div>';
+    if(!in_array($post['user_id'], $blocks)) {
+        echo '<div class="post">';
+        echo '<div class="postRowOne">';
+        echo '<div class="postUser">';
+        echo '<a href="profile?id=' . $post['user_id'] . '"><h4 style="margin-top: 0;">'  . htmlspecialchars($user['username']) . '</h4></a>';
+        displayPet($pet, "articon");
 
-    echo '<div class="postContent" style="margin-right: auto; margin-left: auto;">';
-    echo '<h3>' . htmlspecialchars($post['title']) . '</h3>';
-    if ($post['category'] === "news" || $post['category'] === "submissions") {
-        echo '<p>' . nl2br($post['text']) . '</p></div>';
-    } else {
-        echo '<p>' . nl2br(htmlspecialchars($post['text'])) . '</p></div>';
+        echo '</div>';
+
+        echo '<div class="postContent" style="margin-right: auto; margin-left: auto;">';
+        echo '<h3>' . htmlspecialchars($post['title']) . '</h3>';
+        if ($post['category'] === "news" || $post['category'] === "submissions") {
+            echo '<p>' . nl2br($post['text']) . '</p></div>';
+        } else {
+            $content = htmlspecialchars($post['text'], ENT_QUOTES);
+            $content = str_replace( $turned, $turn_back, $content );
+            $content = nl2br($content);
+            
+            echo '<p>' . $content . '</p>';
+
+            if ($post['image']) {
+                echo '<br><br><img src="' . $post['image'] . '" class="forumPhoto">';
+            }
+
+            echo '</div>';
+        }
+
+        echo '</div>';
+        echo '<div class="readMore"><a href="post?id=' . $post['id'] . '"><h4>Read More >></h4></a></div>';
+        echo '</div>';
     }
     
-    echo '</div>';
-    echo '<div class="readMore"><a href="post?id=' . $post['id'] . '"><h4>Read More >></h4></a></div>';
-    echo '</div>';
     
 }
+
 
 if ($pages > 1) {
 //Pagination

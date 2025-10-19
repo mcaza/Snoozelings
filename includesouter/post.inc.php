@@ -20,6 +20,16 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $post = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Get Blocked List
+$query = 'SELECT * FROM users WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(':id', $userId);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$blocks = explode(" ", $user['blockedBy']);
+
+
 if ($post) {
     //Grab All Comments
     $query = "SELECT * FROM comments WHERE post_id = :id ORDER BY id DESC";
@@ -49,7 +59,7 @@ if ($post) {
         echo '</form>';
         //echo '<button class="fancyButton" onClick="window.location.href=\'includes/like.inc.php?id=' . $id . '\'">Like</button>';
     }
-    echo '<button class="fancyButton" id="commentButton">Comment</button></div>';
+    echo '<button class="fancyButton" id="commentButton">Comment</button></div><br>';
     
     echo '<div class="postSquare">';
     
@@ -106,6 +116,10 @@ if ($post) {
         displayPet($petInfo, "art");
         echo '<p><b>' . $petInfo['name'] . '</b></p>';
     }
+    
+    if ($post['image']) {
+        echo '<br><br><img src="' . $post['image'] . '" class="forumPhoto">';
+    }
     echo '</div>';
     
     echo '<hr>';
@@ -120,7 +134,9 @@ if ($post) {
     
     
     foreach ($comments as $comment) {
-        //Get Bonded Pet Number
+        
+        if(!in_array($comment['user_id'], $blocks)) {
+             //Get Bonded Pet Number
         $query = 'SELECT bonded, username FROM users WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $comment['user_id']);
@@ -151,9 +167,13 @@ if ($post) {
         echo '</div>';
         echo '<div class="commentText" >';
         echo '<p>' . $content . '</p>';
-        echo '</div>';
-        echo '</div>';
+        echo '</div></div>';
+        
+        }
+       
     }
+    echo '<hr>';
+    
     
 } else {
      header("Location: boards");

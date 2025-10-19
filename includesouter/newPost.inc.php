@@ -22,9 +22,8 @@ $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
  $date = strtotime($result['birthdate']);
     $today = strtotime("-18 year");
 
-
     if ($date < $today) {
-       $mature = 1;
+       $matureCheck = 1;
     } 
 
 if ($type == "news") {
@@ -74,7 +73,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 //Check if Posted Today
 $num = $result['new'];
 
-if ($num == 1 || $userId == 1) {
+if ($num == 0 || $userId == 1) {
     
     //Form
     echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 topic in the critter web per day.');\">";  
@@ -97,7 +96,8 @@ if ($num == 1 || $userId == 1) {
     echo '<option value="findfriends" ' . $friends . '>Find Friendships</option>';
     
     //Mature
-    if ($mature == 1) {
+    echo $matureCheck;
+    if ($matureCheck == 1) {
         echo '<option value="mature" ' . $mature . '>Mature Boards</option>';
     }
     
@@ -168,58 +168,8 @@ if ($num == 1 || $userId == 1) {
     }
     
 } else {
-    if ( $result['new'] == "1" || $userId == 1) {
-        //Form
-    echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 bulletin board per day.');\">";  
-
-    //Pick Category
-    echo '<label style="margin-top: 2rem;" for="type" class="form" required>Category:</label><br>';
-    echo '<select class="input"  name="type" style="width: 8rem;">';
-    echo '<option value=""></option>';
-    if ($userId == "1") {
-    echo '<option value="news">News</option>';
-    echo '<option value="submissions">Submissions</option>';
-    //echo '<option value="hidden">Hidden</option>';
-    }
-   /* echo '<option value="general">General</option>';
-    echo '<option value="fandom">Fandom</option>';
-    echo '<option value="artwork">Artwork</option>';
-    echo '<option value="roleplay">Roleplay</option>';
-    echo '<option value="giveaways">Giveaways</option>';
-    echo '<option value="guides">Guides</option>';
-    echo '<option value="questions">Questions</option>'; */
+        echo '<p style="margin-top: 2rem;"><strong>You have already made your daily Critter Web post.</strong></p>';
     
-    //Edit to 1 After Testing
-    if ($userId == "1") {
-        echo '<option value="official">Official</option>';
-    }
-    
-    echo '</select><br>';
-    
-    //Enter Title
-    echo '<label style="margin-top: 2rem;" for="title" class="form">Title:</label><br>';
-    if ($title) {
-        echo '<input class="input" type="text" name="title" value="' . $title . '" required><br>';
-    } else {
-        echo '<input class="input" type="text" name="title" required><br>';
-    }
-    
-    
-    //Enter Text
-    echo '<label style="margin-top: 2rem;" for="post" class="form">Post:</label><br>';
-    if ($post) {
-        echo '<textarea name="post" cols="72" class="input" style="height: 20rem;" required>' . $post . '</textarea><br>';
-    } else {
-        echo '<textarea name="post" cols="72" class="input" style="height: 20rem;" required></textarea><br>';
-    }
-    
-
-    //End Form
-    echo '<button  class="fancyButton" style="width: 8rem;">Post</button>';
-    echo '</form>';
-    } else {
-        echo '<p style="margin-top: 2rem;"><strong>Only Staff Can Make New Posts on the Critter Web</strong></p>';
-    }
 }
   
 
