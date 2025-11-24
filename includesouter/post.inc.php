@@ -28,7 +28,7 @@ $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $blocks = explode(" ", $user['blockedBy']);
-
+$blocking = explode(" ", $user['blockList']);
 
 if ($post) {
     //Grab All Comments
@@ -135,7 +135,7 @@ if ($post) {
     
     foreach ($comments as $comment) {
         
-        if(!in_array($comment['user_id'], $blocks)) {
+        if((!in_array($post['user_id'], $blocks)) && (!in_array($post['user_id'], $blocking))) {
              //Get Bonded Pet Number
         $query = 'SELECT bonded, username FROM users WHERE id = :id';
         $stmt = $pdo->prepare($query);

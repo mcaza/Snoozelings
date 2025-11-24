@@ -77,6 +77,7 @@ if (in_array($userId, $list)) {
     $block = 1;
 }
 
+
 //Pet Title
 $query = "SELECT * FROM snoozelings WHERE id = :id;";
 $stmt = $pdo->prepare($query);
@@ -138,7 +139,7 @@ if ($pet['job'] === 'jack') {
 echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $job;
 if ($pet['breedStatus'] == "Friends") {
     echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>Friends Only';
-} else if ($block = 1) {
+} else if ($block == 1) {
     echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong> Closed';
 } else {
     echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>' . $pet['breedStatus'];
@@ -290,6 +291,7 @@ echo '</div>';
 //Bio Box
     echo '<div class="petrowtwo">';
 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Bio</h4>';
+
 if ($block == 0) {
     echo '<p class="snoozelinginfo">' . nl2br(htmlspecialchars($pet['bio'])) . '</p>';
 }

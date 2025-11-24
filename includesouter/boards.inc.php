@@ -49,6 +49,7 @@ $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $blocks = explode(" ", $user['blockedBy']);
+$blocking = explode(" ", $user['blockList']);
 
 echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
 //Go Back Arrow
@@ -109,7 +110,7 @@ foreach ($posts as $post) {
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if(!in_array($post['user_id'], $blocks)) {
+    if((!in_array($post['user_id'], $blocks)) && (!in_array($post['user_id'], $blocking))) {
         echo '<div class="post">';
         echo '<div class="postRowOne">';
         echo '<div class="postUser">';

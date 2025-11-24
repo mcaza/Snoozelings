@@ -152,6 +152,20 @@ $dyefix = array_unique($dyelist);
          }
      }
     </script>
+    
+    <script>
+        var count = 0;
+    document.getElementById('snoozelingid').onchange = (event) => {
+         var inputText = event.target.value;
+        if (count == 0) {
+            document.getElementById(inputText).style.display = "block";
+            count++;
+        } else {
+            document.getElementById("error").style.display = "block";
+        }
+
+    }
+    </script>
 
 </body>
 

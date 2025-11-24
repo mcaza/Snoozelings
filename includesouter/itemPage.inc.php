@@ -18,6 +18,8 @@ $stmt->bindParam(":item", $id);
 $stmt->execute();
 $item = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
+
 //Get Snoozelings
 $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
 $stmt = $pdo->prepare($query);
@@ -132,6 +134,7 @@ echo '<p><strong>Quantity: </strong>' . $count . '</p>';
 echo '</div>';
 
 if ($results) {
+
     //Planter Box - Add Farm Plot
     if ($item['name'] === "PlanterBox") {
         echo '<form method="post" action="includes/useBox.inc.php">';
@@ -143,6 +146,32 @@ if ($results) {
         echo '<form method="post" action="includes/usePetBed.inc.php">';
         echo '<button class="fancyButton">Add Pet Bed</button>';
         echo '</form>';
+    } 
+    if ($item['name'] === "SeamRipper") {
+        echo '<form method="post" action="includes/useSeamRipper.inc.php">';
+        echo '<label style="margin-top: 2rem;" for="part" class="form">Select Snoozeling:</label><br>';
+        echo '<select  class="input" name="snoozelingid" id="snoozelingid" required><br>';
+        echo '<option value="" disabled="disabled"  selected="selected"></option>';
+        foreach ($snoozelings as $pet) {
+            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+        }
+        echo '</select><br>';
+        foreach($snoozelings as $pet) {
+            echo '<div id="' . $pet['id'] . '" style="display:none">';
+            echo '<label style="margin-top: 2rem;" for="special" class="form">Select Trait to Remove:</label><br>';
+            echo '<select  class="input" name="special" style="width:120px;"><br>';
+            echo '<option value="" disabled="disabled"  selected="selected"></option>';
+            $list = explode(" ", $pet['specials']);
+            $list = array_filter($list);
+            foreach ($list as $trait) {
+                echo '<option value="' . $trait . '">' . $trait . "</option>";
+            }
+            echo '</select>';
+            echo '</div>';
+        }
+        echo '<div id="error" style="display:none;"><h2>ERROR - Please Reset Page</h2></div>';
+        echo '<button class="fancyButton">Use Seam Ripper</button>';
+        echo '</form>';   
     }
     
     if ($item['type'] == "stain") {
@@ -293,10 +322,7 @@ if ($results) {
         echo '<input type="hidden" name="item" value="' . $id . '">';
         echo '<button class="fancyButton">Add Bed Cover</button>';
         echo '</form>';
-    }
-
-
-    if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
+    } else if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
         echo '<form method="post" action="includes/wearClothes.inc.php">';
         echo '<input type="hidden" name="item" value="' . $id . '">';
         echo '<label for="pet"  class="form">Choose A Pet:</label><br>';
@@ -392,7 +418,7 @@ if ($results) {
             
         }
         echo '</select>';
-        echo '<div><button class="fancyButton">Wear Item</button></div>';
+        echo '<div><button class="fancyButton">Use Bleach</button></div>';
         echo '</form>';
     }
 }

@@ -384,7 +384,7 @@ if ($block == 1) {
              echo   '</div>';
              echo   '</div>
                 <div class="profilerowtwo" >';
-                 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;<a href="https://testsnoozelings.com/friends">Friends</a></h4>';
+                 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;<a href="/friends">Friends</a></h4>';
 
     
                  //Friend Display

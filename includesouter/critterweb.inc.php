@@ -87,7 +87,7 @@ foreach ($topics1 as $topic) {
         echo '<a class="critterbox" style="border-left: 2px dashed #827188;border-right: 2px dashed #827188;border-bottom: 2px dashed #827188;" href="boards?type=' . $topic . '">';
     }
     echo '<h4 style="margin-top: 0;text-align: center;">>> ' . $name . ' <<</h4><br>';
-    echo '<p>' . $descriptions3[$round -1] . '</p>';
+    echo '<p>' . $descriptions1[$round -1] . '</p>';
     echo '<p style="margin-top: 1.5rem;"><strong>Read More</strong></p>';
     echo '</a>';
     

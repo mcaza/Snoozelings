@@ -1258,6 +1258,10 @@ a.selected {
     align-items: center;
 }
 
+.invItem > img {
+    width: 100px;   
+}
+
 /* Shop Styles */
 
 .seedItem {
@@ -1874,6 +1878,23 @@ select {
 }
 
 @media only screen and (max-width: 1081px) {
+    
+    .invItem {
+        width: 75px;
+        justify-content: space-around;
+        
+    }
+    #inventory {
+        column-gap: 2px;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+    
+    .invItem > img {
+        width: 68px;
+    }
+
+    
     .body-container {
         flex-direction: column-reverse;
         row-gap: 1.5rem;
