@@ -1273,6 +1273,10 @@ a.selected {
     align-items: center;
 }
 
+.invItem > img {
+        width: 100px;
+    }
+
 /* Shop Styles */
 
 .seedItem {
