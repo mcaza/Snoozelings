@@ -230,8 +230,14 @@ $specialArray = explode(" ", $result["specials"]);
     foreach ($specialArray as $special) {
         if ($special == "FeatheredWings") {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Wings</li>';
+        } else if ($special == "NoTail") {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">No Tail</li>';
+        } else if ($special == "DualNose") {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Dual Nose</li>';
         } else if ($special == "BugWings") {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Bug Wings</li>';
+        } else if ($special == "EarBands") {
+            echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Ear Bands</li>';
         } else if ($special == "EarTip") {
             echo '<li style="margin-bottom:.3rem;margin-left:3rem;">Ear Tip</li>';
         } else if ($special == "TinyTooth") {

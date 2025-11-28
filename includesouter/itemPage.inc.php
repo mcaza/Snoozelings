@@ -116,7 +116,7 @@ if ($dyefix || $item['type'] === 'clothesBottom' || $item['type'] === 'clothesTo
         echo '<img id="itemicon" src="items/' . $item['name'] . '.png" style="width: 150px;">';
         echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
     } else {
-        echo '<img id="itemicon" src="items/' . $item['name'] . $dyefix[0] . '.png" style="width: 150px;border-radius:50px;border:4px solid silver;">';
+        echo '<img id="itemicon" src="items/' . $item['name'] . $dyefix[0] . '.png" style="width: 150px;border-radius:10px;">';
         echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
     }
 } else {

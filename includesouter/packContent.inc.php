@@ -173,7 +173,7 @@ foreach ($categories as $cat) {
                 $name = $items[$round-1]['display'];
             }
                 if (str_contains($items[$round-1]['type'], "clothes")) {
-                        echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="border-radius: 25px; border: 2px silver solid;">';
+                        echo '<img src="items/' . $items[$round-1]['name'] . '.png" style="border-radius:10px;">';
                     } else {
                         echo '<img src="items/' . $items[$round-1]['name'] . '.png" >';
                     }
