@@ -65,7 +65,7 @@ if ($page === "questions") {
         $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         echo '<h4>Fabrics You Currently Own</h4>';
-        echo "<form method='POST' action='includes/applyFabric.inc.php' onsubmit=\"return confirm('Are you sure you want to apply this fabric? This action cannot be reversed.');\">";    
+        echo "<form method='POST' action='includes/applyFabric.inc.php' onsubmit=\"return confirm('Are you sure you want to apply this fabric? It will remove Dual Nose and Ear Bands from any snoozelings. This action cannot be reversed. ');\">";    
         echo '<div class="fabricItems">';
         foreach ($fabrics as $result) {
             echo '<div>';

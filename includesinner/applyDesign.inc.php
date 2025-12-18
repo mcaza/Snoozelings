@@ -33,9 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $petname = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (str_contains($designid['name'], "Tail")) {
-        
         $name = str_replace("Design", "", $designid['name']);
-        $name = str_replace("Tail", "", $name);
+        if(str_contains($designid['name'], "Tailless")) {
+        
+        } else {
+            $name = str_replace("Tail", "", $name);
+        }
+        
         //Apply Fabric to Snoozeling
         $query = "UPDATE snoozelings SET tailType = :design WHERE id = :id";
         $stmt = $pdo->prepare($query);
@@ -71,6 +75,53 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":user_id", $userId);
             $stmt->bindParam(":message", $reply);
             $stmt->execute();
+    } else if (str_contains($designid['name'], "DualNose") || str_contains($designid['name'], "EarBands")) {
+        //Check if Fabric
+        $query = "SELECT * FROM fabrics WHERE name = :name";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $petname['noseColor']);
+        $stmt->execute();
+        $fabricCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        //Fix Name
+        if ($fabricCheck) {
+            $reply = "Snoozelings with fabric applied cannot use this design.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
+            header("Location: ../stitcher?page=design");
+            die();
+        }
+        
+        //Get Specials String
+        $specials = $petname['specials'];
+        
+        //Add to String
+        $wings = str_replace("Design", "", $designid['name']);
+        $string = " " . $wings;
+        $specials .= $string;
+        
+        //Clean String
+        $clean = trim($specials);
+        
+        //Update Specials
+        $query = "UPDATE snoozelings SET specials = :design WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":design", $clean);
+        $stmt->bindParam(":id", $pet);
+        $stmt->execute();
+        
+        $greeting = $petname['name'] . " loves their new look!!";
+            $reply = $greeting;
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
+        
+        //Update Snoozeling
     } else {
         //Get Specials String
         $specials = $petname['specials'];

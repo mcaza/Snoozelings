@@ -123,7 +123,12 @@ echo "</div>";
 
 echo "<div class='artlarge'>";
 if ($pet) {
-    echo "<img src='Layers/Ear/" . $pet['noseColor'] . ".png' id = 'Eardesigner'>";
+    if (strpos($pet["specials"], "EarBands") !== false) {
+        echo "<img src='Layers/Other/EarBands/" . $pet['noseColor'] . ".png' id = 'Eardesigner'>";
+    } else {
+        echo "<img src='Layers/Ear/" . $pet['noseColor'] . ".png' id = 'Eardesigner'>";
+    }
+    
 } else {
     echo "<img src='Layers/Ear/Alexandrite.png' id = 'Eardesigner'>";
 }
@@ -232,6 +237,13 @@ if ($pet) {
         echo "<div class='artlarge'>";
         echo "<img src='' id = 'TailTopdesigner'>";
         echo "</div>";
+    } else if ($pet['tailType'] == "Tailless") {
+        echo "<div class='artlarge'>";
+        echo "<img src='' id = 'Taildesigner'>";
+        echo "</div>";
+        echo "<div class='artlarge'>";
+        echo "<img src='' id = 'TailTopdesigner'>";
+        echo "</div>";
     } else {
         echo "<div class='artlarge'>";
         echo "<img src='Layers/Tail/" . $pet['tailType'] . "/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
@@ -332,7 +344,11 @@ if ($check == 0) {
 
 echo "<div class='artlarge'>";
 if ($pet) {
-    echo "<img src='Layers/Noses/" . $pet['noseColor'] . ".png' id = 'Nosedesigner'>";
+    if (strpos($pet["specials"], "DualNose") !== false) {
+        echo "<img src='Layers/Other/DualNose/" . $pet['noseColor'] . ".png' id = 'Nosedesigner'>";
+    } else {
+        echo "<img src='Layers/Noses/" . $pet['noseColor'] . ".png' id = 'Nosedesigner'>";
+    } 
 } else {
     echo "<img src='Layers/Noses/Alexandrite.png' id = 'Nosedesigner'>";
 }
@@ -447,8 +463,8 @@ foreach ($colors as $color) {
 }
 echo '</select><br>';
 
-$tails = ['Braid','Dragon','Knitted', 'Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
-$tailDisplay = ['Braid','Dragon','Knitted','Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Wooly'];
+$tails = ['Braid','Dragon','Knitted', 'Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Ribbon','Tailless','Wooly'];
+$tailDisplay = ['Braid','Dragon','Knitted','Holiday', 'Lizard','Long','Mermaid','Nub','Panther','Pom','Ribbon','Tailless','Wooly'];
 $round = 0;
 echo '<label for="tailType" class="form">Tail Style:</label><br>';
 echo '<select id="tailType"  class="input">';
@@ -583,6 +599,22 @@ if (strpos($pet["specials"], "Scales") !== false) {
     echo '<input type="checkbox" id="scales" checked><label class="designerCheck" for="scales">Scales</label><br>';
 } else {
     echo '<input type="checkbox" id="scales"><label class="designerCheck" for="scales">Scales</label><br>';
+}
+echo '</div>';
+
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "DualNose") !== false) {
+    echo '<input type="checkbox" id="dualnose" checked><label class="designerCheck" for="dualnose">Dual Nose</label><br>';
+} else {
+    echo '<input type="checkbox" id="dualnose"><label class="designerCheck" for="dualnose">Dual Nose</label><br>';
+}
+echo '</div>';
+
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "EarBands") !== false) {
+    echo '<input type="checkbox" id="earbands" checked><label class="designerCheck" for="earbands">Ear Bands</label><br>';
+} else {
+    echo '<input type="checkbox" id="earbands"><label class="designerCheck" for="earbands">Ear Bands</label><br>';
 }
 echo '</div>';
 

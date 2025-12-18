@@ -25,6 +25,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $petname = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    //Check and Remove Specials if Dual Nose / Ear Bands
+    if (strpos($petname["specials"], "EarBands") !== false || strpos($petname["specials"], "EarBands") !== false) {
+        $list = explode(" ", $petname['specials']);
+        if (strpos($petname["specials"], "EarBands")) {
+            $remove = "EarBands";
+            $key = array_search($remove, $list);
+            unset($list[$key]);
+            $newList = array_values($list); 
+        }
+        if (strpos($petname["specials"], "DualNose")) {
+            $remove = "DualNose";
+            $key = array_search($remove, $newList);
+            unset($newList[$key]);
+            $newListTwo = array_values($newList); 
+        }
+            
+        if (count($newListTwo) == 0) {
+            $finalList = "";
+        } else if (count($newListTwo) == 1) {
+            $finalList = $newListTwo[0];
+        } else {
+            $finalList = "";
+            foreach ($newListTwo as $item) {
+                $finalList = $finalList . $item . ' ';
+            }
+            $finalList = trim($finalList);
+        }
+            
+        $query = 'UPDATE snoozelings SET specials = :specials WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $pet);
+        $stmt->bindParam(":specials", $finalList);
+        $stmt->execute();
+            
+
+    }
+    
     //Apply Fabric to Snoozeling
     $query = "UPDATE snoozelings SET noseColor = :fabric WHERE id = :id";
     $stmt = $pdo->prepare($query);

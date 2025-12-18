@@ -143,8 +143,24 @@ require_once '../includes/verifySinglePet.inc.php';
  
  document.getElementById('skinColor').onchange = (event) => {
      var inputText = event.target.value;
-     document.getElementById('Eardesigner').src = "Layers/Ear/" + inputText + ".png";
-     document.getElementById('Nosedesigner').src = "Layers/Noses/" + inputText + ".png";
+     var checkBox = document.getElementById("earbands");
+     var checkBoxTwo = document.getElementById("dualnose");
+     if (checkBox.checked == true) {
+         document.getElementById('Eardesigner').src = "Layers/Other/EarBands/" + inputText + ".png";
+         if (checkBoxTwo.checked == true) {
+             document.getElementById('Nosedesigner').src = "Layers/Other/DualNose/" + inputText + ".png";
+         } else {
+             document.getElementById('Nosedesigner').src = "Layers/Noses/" + inputText + ".png";
+         }
+     } else {
+         document.getElementById('Eardesigner').src = "Layers/Ear/" + inputText + ".png";
+         if (checkBoxTwo.checked == true) {
+             document.getElementById('Nosedesigner').src = "Layers/Other/DualNose/" + inputText + ".png";
+         } else {
+             document.getElementById('Nosedesigner').src = "Layers/Noses/" + inputText + ".png";
+         }
+     }
+     
  }
  
   document.getElementById('eyeColor').onchange = (event) => {
@@ -188,6 +204,9 @@ require_once '../includes/verifySinglePet.inc.php';
             var mainColor = document.getElementById('mainColor').value;
             document.getElementById('Taildesigner').src = "Layers/Tail/Lizard/Spikes/" + color + ".png";
             document.getElementById('TailTopdesigner').src = "Layers/Tail/Lizard/" + mainColor + ".png";
+        } else if (inputText === 'Tailless') {
+            document.getElementById('Taildesigner').src = "";
+            document.getElementById('TailTopdesigner').src = "";
         } else {
             document.getElementById('Taildesigner').src = "Layers/Tail/" + inputText + "/" + color + ".png";
             document.getElementById('TailTopdesigner').src = "";
@@ -209,7 +228,10 @@ require_once '../includes/verifySinglePet.inc.php';
             var mainColor = document.getElementById('mainColor').value;
             document.getElementById('Taildesigner').src = "Layers/Tail/Lizard/Spikes/" + inputText + ".png";
             document.getElementById('TailTopdesigner').src = "Layers/Tail/Lizard/" + mainColor + ".png";
-        } else {
+        }  else if (type === 'Tailless') {
+            document.getElementById('Taildesigner').src = "";
+            document.getElementById('TailTopdesigner').src = "";
+        }  else {
             document.getElementById('Taildesigner').src = "Layers/Tail/" + type + "/" + inputText + ".png";
             document.getElementById('TailTopdesigner').src = "";
         }
@@ -304,6 +326,26 @@ require_once '../includes/verifySinglePet.inc.php';
             document.getElementById('Scalesdesigner').src = "Layers/Markings/Scales/" + mainColor + ".png";
         } else {
             document.getElementById('Scalesdesigner').src = "";
+        }
+ }
+    
+    document.getElementById('earbands').onchange = (event) => {
+        var skinColor = document.getElementById('skinColor').value;
+        var checkBox = document.getElementById("earbands");
+        if (checkBox.checked == true) {
+            document.getElementById('Eardesigner').src = "Layers/Other/EarBands/" + skinColor + ".png";
+        } else {
+            document.getElementById('Eardesigner').src = "Layers/Ear/" + skinColor + ".png";
+        }
+ }
+    
+    document.getElementById('dualnose').onchange = (event) => {
+        var skinColor = document.getElementById('skinColor').value;
+        var checkBox = document.getElementById("dualnose");
+        if (checkBox.checked == true) {
+            document.getElementById('Nosedesigner').src = "Layers/Other/DualNose/" + skinColor + ".png";
+        } else {
+            document.getElementById('Nosedesigner').src = "Layers/Noses/" + skinColor + ".png";
         }
  }
     
