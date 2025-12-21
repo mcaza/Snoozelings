@@ -89,7 +89,33 @@ require_once '../includes/verifySinglePet.inc.php';
 
 
     <!-- Script Link -->
-   <script src="main.js"></script>
+      <script src="main.js"></script>
+    <script>
+    //Profile / Snoozeling / Collection Fix When Only Right Arrow
+var leftArrow = document.getElementById('leftArrow');
+if (!leftArrow) {
+    document.getElementById('onlyOne').style.justifyContent = 'flex-end';
+}
+    </script>
+            <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
+        
+        const before = id - 1;
+        const after = parseInt(id) + 1;
+
+        document.onkeydown = arrowChecker;
+
+function arrowChecker(e) {  
+    e = e || window.event;
+    if (e.keyCode == '37') { //left
+        document.location.href = "snoozeTests?id=" + before;
+    }
+    else if (e.keyCode == '39') { //right
+        document.location.href = "snoozeTests?id=" + after;
+    }
+}</script>
 
 </body>
 
