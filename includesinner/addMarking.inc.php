@@ -28,6 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $snoozeling);
     $stmt->execute();
     $petcheck = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo var_dump($petcheck);
+    die();
     if ($petcheck['owner_id'] == $userId) {
         
     } else {

@@ -298,7 +298,7 @@ if ($results) {
         echo '<h1>Add Marking</h1>';
         echo '<form method="post" action="includes/addMarking.inc.php">';
         echo '<label for="pet"  class="form">Choose A Pet:</label><br>';
-        echo '<select  class="input" name="m" id="snoozelingid" required><br>';
+        echo '<select  class="input" name="snoozelingid" id="snoozelingid" required><br>';
         echo '<option value="" disabled="disabled"  selected="selected"></option>';
         foreach ($snoozelings as $pet) {
             echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
