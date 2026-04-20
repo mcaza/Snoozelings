@@ -157,7 +157,7 @@ $stmt->execute();
 $petInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
 echo '<div class="displaycontainerright">';
-displayPet($petInfo, "artlarge");
+echo '<img src="snoozeImages/' . $id . '.png?timestamp=' . $pet['timestamp'] . '"  class="artlarge">';
 echo "<p><strong>" . htmlspecialchars($petInfo["name"]) . "'s Pronouns:</strong> " . htmlspecialchars($petInfo["pronouns"]) . "</p>";
 echo '</div>';
 echo '</div>';
@@ -358,31 +358,13 @@ echo '<div class="itemsapplied box petrowthree" >';
 echo '<h4 class="profileh4">&nbsp;&nbsp;&nbsp;Snooze Clothes</h4>';
 $clothes = [];
 $list = "";
-if ($pet['clothesBoth']) {
-    $temp = explode(" ", $pet['clothesBoth']);
-    foreach ($temp as $tempie) {
-        array_push($clothes, $tempie);
-    }
+if ($pet['clothes']) {
+    $temp = explode(" ", $pet['clothes']);
+        foreach ($temp as $tempie) {
+            array_push($clothes, $tempie);
+        }
     
-}
-if ($pet['clothesTop']) {
-    $temp = explode(" ", $pet['clothesTop']);
-    foreach ($temp as $tempie) {
-        array_push($clothes, $tempie);
     }
-}
-if ($pet['clothesBottom']) {
-    $temp = explode(" ", $pet['clothesBottom']);
-    foreach ($temp as $tempie) {
-        array_push($clothes, $tempie);
-    }
-}
-if ($pet['clothesHoodie']) {
-    $temp = explode(" ", $pet['clothesHoodie']);
-    foreach ($temp as $tempie) {
-        array_push($clothes, $tempie);
-    }
-}
 echo '<div style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; justify-content: center;">';
 foreach ($clothes as $item) {    
     //Color Check

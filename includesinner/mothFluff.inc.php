@@ -2,7 +2,7 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
-
+require_once '../../includes/imageFunction.inc.php';
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -134,6 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":specials", $finalSpecials);
     $stmt->execute();
     
+    
     //Remove dye from inventory
     $query = 'DELETE FROM items WHERE user_id = :id AND name = :name LIMIT 1';
     $stmt = $pdo->prepare($query);
@@ -145,7 +146,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = 'UPDATE users SET coinCount = coinCount - 25 WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->execute();
+    $stmt->execute(); 
+    
+    //Update Image
+    resetImage($snooze, $pdo);
     
     //Pronouns
     if ($snoozeling['pronouns'] === "He/Him") {

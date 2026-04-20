@@ -1,6 +1,7 @@
 <?php
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -52,11 +53,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":color", $color);
     $stmt->execute();
     
+    //Update Image
+    resetImage($snoozeling, $pdo);
+    
     //Delete Wish Token
     $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 225 LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->execute();
+    $stmt->execute(); 
     
     $reply = "Your wish has come true!";
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';

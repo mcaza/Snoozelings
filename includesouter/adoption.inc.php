@@ -87,9 +87,9 @@ foreach ($pets as $pet) {
         $stmt->execute();
         $name = $stmt->fetch(PDO::FETCH_ASSOC);
         echo '<div class="adoptPet">';
-        displayPet($petinfo, "art");
+        echo '<a href="pet?id=' . $petinfo['id'] . '"><img src="snoozeImages/' . $petinfo['id'] . '.png?timestamp=' . $petinfo['timestamp'] . '"  class="artAdopt"></a>';
         echo '<p style="font-size:1.6rem;"><b>' . $pet['name'] . ' - ' . $pet['cost'] . ' Snooze Coins' . $bed . '</b></p>';
-        echo '<p style="font-size: 1.6rem;">Donated By ' . $name['username'] . '</p>';
+        echo '<p style="font-size: 1.6rem;">Donated By <a href="profile?id=' . $userId . '">' . $name['username'] . '</p></a>';
         echo '<form method="POST" action="includes/adoptSnoozeling.inc.php" onsubmit=\'return confirm("Are you sure that you want to adopt this pet for ' . $pet['cost'] . ' snooze coins?");\'>';
         echo '<input type="hidden" name="pet" value="' . $pet['id'] . '">';
         echo '<button  class="fancyButton">Adopt Pet</button>';

@@ -9,7 +9,8 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-displayPet($result, "artlarge");
+displayPet($result, "artStarter");
+
 echo '<p><i>"I think I\'m ready to come home now."</i></p>';
 echo '<form  method="post" action="includes/addSnoozeling.inc.php">';
     echo '<label style="margin-top:2rem" class="form" for="name" required>Name Your Snoozeling:</label><br>';

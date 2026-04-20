@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Check for Clothes
-    if ($pet['clothesBottom'] || $pet['clothesTop'] || $pet['clothesBoth'] || $pet['clothesHoodie']) {
+    if ($pet['clothes']) {
             $reply = "<p>You need to remove your pet's clothes before donating them.</p>";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
         $stmt = $pdo->prepare($query);
@@ -190,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $jack = "jack";
     $zero = 0;
     $title = "Up for Adoption";
-    $query = 'UPDATE snoozelings SET owner_id = :erase, breedStatus = :closed, job = :jack, farmEXP = :zero, craftEXP = :zero, exploreEXP = :zero, title = :title, clothesbottom = NULL, clothesTop = NULL, clothesBoth = NULL, clothesHoodie = NULL WHERE id = :id';
+    $query = 'UPDATE snoozelings SET owner_id = :erase, breedStatus = :closed, job = :jack, farmEXP = :zero, craftEXP = :zero, exploreEXP = :zero, title = :title, clothes = NULL WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":erase", $zero);
     $stmt->bindParam(":closed", $closed);

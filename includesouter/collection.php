@@ -82,8 +82,21 @@ echo "<div class='pets'>";
 foreach ($results as $pet) {
 
     echo "<div class='nestpet'>";
-    
-    displayPet($pet, "arttwo");
+    echo '<div class="art-container">';
+    echo "<div class='arttwo'>";
+    echo "<img src='Layers/Beds/Back/" . $pet['bedcolor'] . ".png'>";
+    echo "</div>";
+    echo "<div class='arttwo'>";
+    echo '<a href="pet?id=' . $pet['id'] . '"><img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '" style="width:90%"></a>'; 
+    echo '</div>';
+    echo "<div class='arttwo'>";
+    if ($pet['tailType'] == 'Panther' || $pet['tailType'] == 'Mermaid'|| $pet['tailType'] == 'Dragon'|| $pet['tailType'] == 'Holiday') {
+        echo "<a href='pet?id=" . $pet['id'] . "'><img src='Layers/Beds/Clipped/" . $pet['bedcolor'] . ".png'></a>";
+    } else {
+        echo "<a href='pet?id=" . $pet['id'] . "'><img src='Layers/Beds/Front/" . $pet['bedcolor'] . ".png'></a>";
+    }
+    echo "</div>";
+    echo '</div>';
     echo '<h5><a href="pet?id=' . $pet['id'] . '">'. htmlspecialchars($pet['name']) . '</a></h5>';
     echo '<p class="slogan">' . $pet['title'] . '</p>';
     echo "</div>";

@@ -2,6 +2,7 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_COOKIE['user_id'];
@@ -57,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = 'UPDATE users SET coinCount = coinCount - 10 WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->execute();
+    $stmt->execute(); 
         
     //Change Hairstyle
     $query = 'UPDATE snoozelings SET hairType = :hair WHERE id = :id';
@@ -65,6 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $id);
     $stmt->bindParam(":hair", $hair);
     $stmt->execute();
+        
+    //Update Image
+    resetImage($id, $pdo);
         
     //Update Session message
     $greeting = '<p>' . htmlspecialchars($name['name']) . ' loves ' . $pronouns . ' new hairstyle!!!</p>';

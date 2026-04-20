@@ -64,7 +64,7 @@ if ($reply) {
 //Desk and Snoozeling
 echo '<div class="craftimages" style="align-items:flex-end;">';
 echo '<img src="resources/dyePot.png" id="dyepotimage">';
-displayPet($pet, "artcrafting");
+echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '" class="artcrafting">';
 echo '</div>';
 echo '<hr>';
 

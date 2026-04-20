@@ -70,7 +70,7 @@ echo '</div>';
 
 //Title
 if ($type === "submissions") {
-    echo '<h3 style="margin-bottom: 3rem">Monthly Submissions</h3>';
+    echo '<h3 style="margin-bottom: 3rem">Snooze Button News</h3>';
 } elseif ($type === "giveaways") {
     echo '<h3 style="margin-bottom: 3rem">Giveaways & Freebies</h3>';
 } elseif ($type === "guides") {
@@ -89,9 +89,11 @@ if ($type === "submissions") {
     echo '<h3 style="margin-bottom: 3rem">Forum Games</h3>';
 }  elseif ($type == "mature") {
     echo '<h3 style="margin-bottom: 3rem">18+ Exclusive Boards</h3>';
+}  elseif ($type == "news") {
+    echo '<h3 style="margin-bottom: 3rem">Game Updates</h3>';
 }  else {
     echo '<h3 style="margin-bottom: 3rem">' . $_GET['type'] . ' Board</h3>';
-}
+} 
 
 
 //Display Posts
@@ -115,7 +117,7 @@ foreach ($posts as $post) {
         echo '<div class="postRowOne">';
         echo '<div class="postUser">';
         echo '<a href="profile?id=' . $post['user_id'] . '"><h4 style="margin-top: 0;">'  . htmlspecialchars($user['username']) . '</h4></a>';
-        displayPet($pet, "articon");
+        echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '"  class="articon">';
 
         echo '</div>';
 

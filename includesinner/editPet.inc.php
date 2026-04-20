@@ -2,6 +2,8 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -13,6 +15,7 @@ $title = $_POST["title"];
 $id = $_POST['id'];
 $bed = $_POST['bed'];
 $showbed = $_POST['showbed'];
+$clothing = $_POST['clothing'];
 $bio = $_POST['bio'];
 $userId = $_COOKIE['user_id'];
     
@@ -35,219 +38,94 @@ $userId = $_COOKIE['user_id'];
         die();
     }
     
+    if ($clothing) {
     //Remove Clothing
-    $clothesarray = [];
-    $namearray = [];
-    $query = 'SELECT * FROM itemList';
+    
+    //Clothing Array
+    $query = 'SELECT * FROM snoozelings WHERE id = :id';
     $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
     $stmt->execute();
-    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $itemcount = count($items) + 2;
-    for ($i = 1; $i < $itemcount; $i++) {
-        if ($_POST[$i]) {
-            $temp = $_POST[$i];
-            $temp2 = rtrim($temp, '0123456789');
-            $item = (int)filter_var($temp2, FILTER_SANITIZE_NUMBER_INT);
-            $name = str_replace($item,"",$temp);
-            array_push($clothesarray, $item);
-            array_push($namearray, $name);
-            $item = "";
-            $name = "";
-        } 
+    $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+    $list = explode(" ", $snooze["clothes"]);
+    
+    //Check if Dyed
+    $dyeCheck = explode(" ", $clothing);
+    
+    //Get Name of Item
+    $query = 'SELECT * FROM itemList WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $dyeCheck[0]);
+    $stmt->execute();
+    $item = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (count($dyeCheck) > 1) {
+        $dye = true;
+        $trueName = $item['name'] . $dyeCheck[1];
+    } else {
+        $dye = false;
+        $trueName = $item['name'];
     }
-    $count = 0;
-        foreach ($clothesarray as $item) {
-            
-            //Snoozeling Info
-            $query = 'SELECT clothesBottom, clothesTop, clothesHoodie, clothesBoth, owner_id FROM snoozelings WHERE id = :id';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":id", $id);
-            $stmt->execute();
-            $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
-            $i = $item;
-            //Get Type
-            $type = $items[$i-1]['type'];
-            //Adjust Pet Clothes
-            if ($type === "clothesBottom") {
-                    $list = explode(" ", $snooze["clothesBottom"]);
-                    //Check if Still Equipt
-                    $temp = $namearray[$count];
-                    if(!in_array($temp, $list)) {
-                        header("Location: ../index");
-                        die();
-                    }
-                    if (count($list) === 1) {
-                        $final = "";
-                    } else {
-                        $key = array_search($namearray[$count], $list);
-                        unset($list[$key]);
-                        $newList = array_values($list);
-                        if (count($newList) === 1) {
-                            $final = $newList[0];
-                        } else {
-                            $final = implode(" ", $newList);
-                        }
-                    }
-                    $query = 'UPDATE snoozelings SET clothesBottom = :clothes WHERE id = :id';
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->bindParam(":clothes", $final);
-                    $stmt->execute();
-                    $final = "";
-                    $list = "";
-                    $newList = "";
-            } elseif ($type === "clothesTop") {
-                    $list = explode(" ", $snooze["clothesTop"]);
-                //Check if Still Equipt
-                    $temp = $namearray[$count];
-                    if(!in_array($temp, $list)) {
-                        header("Location: ../index");
-                        die();
-                    }
-                    if (count($list) === 1) {
-                        $final = "";
-                    } else {
-                        $key = array_search($namearray[$count], $list);
-                        unset($list[$key]);
-                        $newList = array_values($list);
-                        if (count($newList) === 1) {
-                            $final = $newList[0];
-                        } else {
-                            $final = implode(" ", $newList);
-                        }
-                    }
-                    $query = 'UPDATE snoozelings SET clothesTop = :clothes WHERE id = :id';
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->bindParam(":clothes", $final);
-                    $stmt->execute();
-                    $final = "";
-                    $list = "";
-                    $newList = "";
-            } elseif ($type === "clothesHoodie") {
-                    $list = explode(" ", $snooze["clothesHoodie"]);
-                //Check if Still Equipt
-                    $temp = $namearray[$count];
-                    if(!in_array($temp, $list)) {
-                        header("Location: ../index");
-                        die();
-                    }
-                    if (count($list) === 1) {
-                        $final = "";
-                    } else {
-                        $key = array_search($namearray[$count], $list);
-                        unset($list[$key]);
-                        $newList = array_values($list);
-                        if (count($newList) === 1) {
-                            $final = $newList[0];
-                        } else {
-                            $final = implode(" ", $newList);
-                        }
-                    }
-                    $query = 'UPDATE snoozelings SET clothesHoodie = :clothes WHERE id = :id';
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->bindParam(":clothes", $final);
-                    $stmt->execute();
-                    $final = "";
-                    $list = "";
-                    $newList = "";
-            } elseif ($type === "clothesBoth") {
-                
-                    $list = explode(" ", $snooze["clothesBoth"]);
-                //Check if Still Equipt
-                    $temp = $namearray[$count];
-                    if(!in_array($temp, $list)) {
-                        header("Location: ../index");
-                        die();
-                    }
-                    if (count($list) === 1) {
-                        $final = "";
-                    } else {
-                        $key = array_search($namearray[$count], $list);
-                        unset($list[$key]);
-                        $newList = array_values($list);
-                        if (count($newList) === 1) {
-                            $final = $newList[0];
-                        } else {
-                            $final = implode(" ", $newList);
-                        }
-                    }
-                    $query = 'UPDATE snoozelings SET clothesBoth = :clothes WHERE id = :id';
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":id", $id);
-                    $stmt->bindParam(":clothes", $final);
-                    $stmt->execute();
-                    $final = "";
-                    $list = "";
-                    $newList = "";
-            }
-            
+    
+    //Snoozeling Info
+    $query = 'SELECT clothes, owner_id FROM snoozelings WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Double Check Item is in List
+    
+    if (in_array($trueName,$list)) {
         
-            //FetchDyes
-            $query = "SELECT * FROM dyes";
-            $stmt = $pdo->prepare($query);
-            $stmt->execute();
-            $dyelist = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        header("Location: ../index");
+        die();
+    }
+    
+    //Remove from Snoozeling
+    $key = array_search($trueName, $list);
+    unset($list[$key]);
+    $newList = array_values($list);
+    
+    if (count($newList) == 0) {
+        $final = "";
+    } else {
+        $final = implode(" ", $newList);
+    }
+    
+    $query = 'UPDATE snoozelings SET clothes = :clothes WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":clothes", $final);
+    $stmt->execute();
+    
+    //Return Item
+    if ($item['name'] == "Bandana") {
+        $bandana = 'Bandana [' . $color . ']';
+    } 
             
-            $newname = "";
-            $color = "";
-            foreach ($dyelist as $dye) {
-                    if (str_ends_with($namearray[$count], $dye['name'])) {
-                        $newname = str_replace($dye['name'],"",$namearray[$count]);
-                        $color = $dye['name'];
-                    } else {
-
-                    }
-                }
-            
-            $othercolors = ['Gold', 'Silver'];
-                foreach ($othercolors as $x) {
-                    if (str_ends_with($namearray[$count], $x)) {
-                        $newname = str_replace($x,"",$namearray[$count]);
-                        $color = $x;
-                        $colordisplay = $x;
-                    }
-                }
-
-            //Return Item
-            $query = 'SELECT * FROM itemList WHERE id = :id';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":id", $item);
-            $stmt->execute();
-            $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if ($iteminfo['name'] == "Bandana") {
-                $newName = 'Bandana [' . $color . ']';
-            } else {
-                $newName = $iteminfo['name'];
-            }
-            
-            if ($newname) {
-                $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate, dye) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate, :dye);";
-            } else {
-                $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
-            }
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":list", $item);
-            $stmt->bindParam(":user", $userId);
-            $stmt->bindParam(":name", $iteminfo['name']);
-            $stmt->bindParam(":display", $iteminfo['display']);
-            $stmt->bindParam(":description", $iteminfo['description']);
-            $stmt->bindParam(":type", $iteminfo['type']);
-            $stmt->bindParam(":rarity", $iteminfo['rarity']);
-            $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
-            if ($newname) {
-                $stmt->bindParam(":dye", $color);
-            }
-            $stmt->execute(); 
-            
-            $count++;
-        } 
+    if ($dye == true) {
+        $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate, dye) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate, :dye);";
+    } else {
+        $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+    }
+   $stmt = $pdo->prepare($query);
+   $stmt->bindParam(":list", $item['id']);
+   $stmt->bindParam(":user", $userId);
+   $stmt->bindParam(":name", $item['name']);
+   $stmt->bindParam(":display", $item['display']);
+   $stmt->bindParam(":description", $item['description']);
+    $stmt->bindParam(":type", $item['type']);
+    $stmt->bindParam(":rarity", $item['rarity']);
+    $stmt->bindParam(":canDonate", $item['canDonate']);
+    if ($dye == true) {
+        $stmt->bindParam(":dye", $dyeCheck[1]);
+    }
+    $stmt->execute(); 
     
     
-            
-
+    }
         
     
 
@@ -263,7 +141,7 @@ $userId = $_COOKIE['user_id'];
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":pronouns", $pronouns);
             $stmt->execute();
-    }
+        }
     } 
     //Snoozeling Title
 
@@ -387,7 +265,8 @@ $userId = $_COOKIE['user_id'];
     }
     
     
-    
+    //Update Image
+    resetImage($id, $pdo);
 //Redirect to Pet Page
 header("Location: ../pet?id=" . $id);
 } else {

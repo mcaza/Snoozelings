@@ -187,21 +187,29 @@ if (isset($_COOKIE['user_id'])) {
 
     //Right Column
     echo '<div class="rightColumnHome">';
-
-    //Recent News
-    echo '<div class="indexBox">';
-    echo '<h3>Recent News</h3>';
-    echo '<h4 style="margin-top: 0;">' . $news['title'] . '</h4>';
-    echo '<div style="height: 250px; overflow: hidden;">' . nl2br($news['text']) . '</div>';
-    echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $news['id'] . '">Read More >></a></div>';
-    echo '</div>';
-
+    
+    
     //Recent Submissions
     echo '<div class="indexBox">';
-    echo '<h3 >Kindness Coins</h3>';
+    echo '<h3 >Snooze Button News</h3>';
     echo '<h4 style="margin-top: 0;">' . $submissions['title'] . '</h4>';
     echo '<div style="height: 250px; overflow: hidden;">' . nl2br($submissions['text']) . '</div>';
     echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $submissions['id'] . '">Read More >></a></div>';
+    echo '</div>';
+
+    //Recent News
+    $cat = "news";
+    $query = "SELECT * FROM posts WHERE category = :cat;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":cat", $cat);
+    $stmt->execute();
+    $catcount = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $num = count($catcount) - 1;
+    echo '<div class="indexBox">';
+    echo '<h3>Game Update #' . $num . '</h3>';
+    echo '<h4 style="margin-top: 0;">' . $news['title'] . '</h4>';
+    echo '<div style="height: 250px; overflow: hidden;">' . nl2br($news['text']) . '</div>';
+    echo '<div style="text-align: right; margin-right: 1rem;margin-top: .5rem;margin-bottom: .5rem;"><a style="font-size: 2rem; font-weight: bold" href="post?id=' . $news['id'] . '">Read More >></a></div>';
     echo '</div>';
 
     echo '</div>';

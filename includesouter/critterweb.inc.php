@@ -37,7 +37,7 @@ echo '</div>';
 echo '<h3 style="margin-bottom: 3rem">World Wide Critter Web</h3>';
 
 $adminTopics = ['News', 'Submissions'];
-$adminDescriptions = ['The Official Hub for all Snoozelings News', 'Help Improve Snoozelings and Earn Kindness Coins'];
+$adminDescriptions = ['The Official Hub for Game Updates and In Game Events', 'Read the Weekly News and Win Fun Prizes'];
 $topics1 = ['Discussion', 'Share','HelpCenter'];
 $topics2 = ['General', 'VirtualPets', 'FindFriends','Mature'];
 $topics3 = ['Creative', 'Roleplay', 'ForumGames'];
@@ -50,6 +50,11 @@ $round = 1;
 $count = count($adminTopics);
 echo "<h3 style='margin-bottom:8px;'>Staff News</h3>";
 foreach ($adminTopics as $topic) {
+    if ($topic == "News") {
+        $name = "Game Updates";
+    } else if ($topic == "Submissions") {
+        $name = "Snooze Button News";
+    }
     if ($round === 1) {
         echo '<a class="critterbox" style="border: 2px dashed #827188; border-radius: 20px 20px 0px 0px;" href="boards?type=' . $topic . '">';
     } elseif ($round === $count) {
@@ -58,7 +63,7 @@ foreach ($adminTopics as $topic) {
     } else {
         echo '<a class="critterbox" style="border-left: 2px dashed #827188;border-right: 2px dashed #827188;border-bottom: 2px dashed #827188;" href="boards?type=' . $topic . '">';
     }
-    echo '<h4 style="margin-top: 0;text-align: center;">>> ' . $topic . ' <<</h4><br>';
+    echo '<h4 style="margin-top: 0;text-align: center;">>> ' . $name . ' <<</h4><br>';
     echo '<p >' . $adminDescriptions[$round -1] . '</p>';
     echo '<p style="margin-top: 1.5rem;"><strong>Read More</strong></p>';
     echo '</a>';

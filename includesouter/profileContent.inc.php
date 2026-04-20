@@ -357,7 +357,7 @@ if ($id === "4") {
 } else if (!$pet) {
     echo '<img src="Layers/transparentSquare.png" style="height: 40rem;margin-left: 1rem;margin-bottom: 2rem;">';
 } else {
-    displayPet($pet, "artlarge");
+    echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '"   class="artlarge">';
     echo "<p><strong>Bonded Snoozeling:</strong> " . "<a href='pet?id=" . $pet['id'] . "'>" . htmlspecialchars($pet["name"]) . "</a></p>";
 }
     

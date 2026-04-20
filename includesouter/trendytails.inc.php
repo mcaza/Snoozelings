@@ -55,13 +55,13 @@ if ($reply) {
 
 //Will have cute snoozeling for alpha. Custom art later
 echo '<div class="art-container">';
-    echo "<div class='artlarge'>";
+    echo "<div class='artStyle'>";
     echo "<img src='resources/trendyNPC.png' id='Base'>";
     echo "</div>";
-    echo "<div class='artlarge'>";
+    echo "<div class='artStyle'>";
     echo "<img src='resources/Trendymane.png' id='HairLayer'>";
     echo "</div>";
-echo "<div class='artlarge'>";
+echo "<div class='artStyle'>";
     echo "<img src='resources/Trendypom.png' id='TailLayer'>";
     echo "</div>";
 echo "</div>";

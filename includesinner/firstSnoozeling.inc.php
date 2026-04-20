@@ -2,6 +2,8 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
@@ -57,6 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     $newId = $result["id"];
+    
+    //Update Image
+    resetImage($newId, $pdo);
     
     $query = "UPDATE users SET bonded = :id WHERE id = :userId";
     $stmt = $pdo->prepare($query);

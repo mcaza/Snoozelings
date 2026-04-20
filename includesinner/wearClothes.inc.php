@@ -2,6 +2,7 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Grab Form Variables
@@ -12,17 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $color = $_POST["color"];
     }
     
-
-     
-    //Fetch Type of Clothes Item
-    $query = 'SELECT * FROM itemList WHERE id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $type = $result['type'];
-    
-    //Fetch Items
+    //Fetch Color
     if ($color == "Basic") {
         
         $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user AND dye IS NULL';
@@ -84,8 +75,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Make sure item is clothing type
-    if (!($type === 'clothesTop' || $type === "clothesBottom" || $type === 'clothesHoodie' || $type === 'clothesBoth')) {
-            $reply = "This is not a clothing item and cannot be worn.";
+    $query = 'SELECT * FROM clothes WHERE list_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $clothingCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $itemName = $clothingCheck['name'] . $color;
+    
+    if(!$clothingCheck) {
+        $reply = "This is not a clothing item.";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id", $userId);
@@ -96,55 +95,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
       
     //Fetch Current Pet Clothes of that Type. 
-    $query = 'SELECT clothesTop, clothesBottom, clothesHoodie, clothesBoth FROM snoozelings WHERE id = :id';
+    $query = 'SELECT * FROM snoozelings WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $petid);
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Check if Pet is already wearing that item
-    if ($type === 'clothesTop') {
-        $clothes = $pet['clothesTop'];
-    } elseif ($type === 'clothesBottom') {
-        $clothes = $pet['clothesBottom'];
-    } elseif ($type === 'clothesHoodie') {
-        $clothes = $pet['clothesHoodie'];
-    } elseif ($type === 'clothesBoth') {
-        $clothes = $pet['clothesBoth'];
-    }
-    if (str_contains($clothes, $name)) {
-            $reply = "Your pet is already wearing this item.";
+    $clothes = $pet['clothes'];
+    if (str_contains($clothes, $itemName)) {
+        $reply = "Your pet is already wearing this item.";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id", $userId);
         $stmt->bindParam(":message", $reply);
         $stmt->execute();
         header("Location: ../pack");
+        die();
     }
     
-    //Add to Clothes String. Update Clothes String of that Type
-    if ($type === 'clothesTop') {
-        $string = $pet['clothesTop'];
-        $string .= ' ' . $name;
-        $string = trim($string);
-        $query = 'UPDATE snoozelings SET clothesTop = :clothes WHERE id = :id';
-    } elseif ($type === 'clothesBottom') {
-        $string = $pet['clothesBottom'];
-        $string .= ' ' . $name;
-        $string = trim($string);
-        $query = 'UPDATE snoozelings SET clothesBottom = :clothes WHERE id = :id';
-    } elseif ($type === 'clothesHoodie') {
-        $string = $pet['clothesHoodie'];
-        $string .= ' ' . $name;
-        $string = trim($string);
-        $query = 'UPDATE snoozelings SET clothesHoodie = :clothes WHERE id = :id';
-    } 
-    elseif ($type === 'clothesBoth') {
-        $string = $pet['clothesBoth'];
-        $string .= ' ' . $name;
-        $string = trim($string);
-        $query = 'UPDATE snoozelings SET clothesBoth = :clothes WHERE id = :id';
-    }
+    //Fetch Items
+    
+    //Add to Clothes String.
+    $string = $pet['clothes'];
+    $string .= ' ' . $itemName;
+    $string = trim($string);
+    $query = 'UPDATE snoozelings SET clothes = :clothes WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $petid);
     $stmt->bindParam(":clothes", $string);
@@ -165,8 +141,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     $stmt->execute(); 
     
+    //Update Image
+    resetImage($petid, $pdo);
+    
     //Message & Reroute to Items
-    $greeting = "Your pet is now wearing the following item: " . $display;
+    if ($color) {
+        $query = 'SELECT * FROM dyes WHERE name = :name';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":name", $color);
+        $stmt->execute();
+        $colorDisplay = $stmt->fetch(PDO::FETCH_ASSOC);
+        $greeting = "Your pet is now wearing the following item: " . $clothingCheck['display'] . ' [' . $colorDisplay['display'] . ']';
+    } else {
+        $greeting = "Your pet is now wearing the following item: " . $clothingCheck['display'];
+    }
+    
         $reply = $greeting;
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);

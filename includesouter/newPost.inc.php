@@ -60,8 +60,9 @@ echo '</div>';
 
 //Title
 echo '<h3>Post a Bulletin</h3>';
-echo '<p style="margin-top:1.2rem">Only Staff Can Make New Posts on the Critter Web</p>';
+//echo '<p style="margin-top:1.2rem">Only Staff Can Make New Posts on the Critter Web</p>';
 
+/*
 //Check for Post
 $query = 'SELECT * FROM posts WHERE user_id = :id ORDER BY datetime DESC LIMIT 1';
 $stmt = $pdo->prepare($query);
@@ -71,12 +72,12 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 //Check if Posted Today
-$num = $result['new'];
+$num = $result['new']; */
 
-if ($num == 0 || $userId == 1) {
+//if ($num == 0 || $userId == 1) {
     
     //Form
-    echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('You can only post 1 topic in the critter web per day.');\">";  
+    echo "<form method='POST' action='includes/postBulletin.inc.php' onsubmit=\"return confirm('Click OK if you are ready to post. Click Cancel if you are not yet finished your post.');\">";  
 
     //Pick Category
     echo '<label style="margin-top: 2rem;" for="type" class="form" required>Category:</label><br>';
@@ -167,9 +168,9 @@ if ($num == 0 || $userId == 1) {
         echo '<div style="width:70%;margin-left:auto;margin-right:auto;">' . $post . '</div>';
     }
     
-} else {
+/* } else {
         echo '<p style="margin-top: 2rem;"><strong>You have already made your daily Critter Web post.</strong></p>';
     
-}
+} */
   
 

@@ -2,6 +2,7 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = $_POST["name"];
@@ -151,6 +152,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":one", $one);
     $stmt->execute();
 
+    //Update Image
+    resetImage($newsnooze['id'], $pdo);
     
     //Increase Daily Records +1
     $query = 'UPDATE dailyRecords SET snoozelingsCrafted = snoozelingsCrafted + 1 ORDER BY id DESC LIMIT 1';

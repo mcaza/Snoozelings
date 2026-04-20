@@ -548,53 +548,42 @@ a:visited {
     grid-template-rows: 1fr;
 }
 
-.art {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-}
 
 .artlarge {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-}
-
-.artlarge img {
     width: 40rem;
 }
 
-.artcrafting {
+.articon {
+    width: 20rem;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.artStyle {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
 }
 
-.artcrafting img {
+.artStyle img {
+    width: 40rem;
+}
+
+
+.artcrafting {
     width: 30rem;
 }
 
 .mailPet {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-}
-
-.mailPet img {
     width: 270px;
 }
+
 
 .mailPetAnon {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-}
-
-.mailPetAnon img {
     width: 270px;
 }
 
-.artJournal {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-}
 
-.artJournal img {
+.artJournal {
     width: 40rem;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
@@ -609,20 +598,16 @@ a:visited {
     width: 25rem;
 }
 
-.art img {
+.artAdopt {
     width: 25rem;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
 
-.tinyPet {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-}
 
-.tinyPet img {
+.tinyPet {
     width: 20rem;
-        -webkit-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
 
@@ -1349,16 +1334,7 @@ a.critterbox:hover{
     column-gap: 5rem;
 }
 
-.articon {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-}
 
-.articon img {
-    width: 20rem;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-}
 
 .post {
     width: 90%;

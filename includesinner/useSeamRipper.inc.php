@@ -2,6 +2,7 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 
 
@@ -81,12 +82,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":specials", $finalList);
         $stmt->execute();
         
+        //Update Image
+        resetImage($pet['id'], $pdo);
+        
         //Remove 1 Seam Ripper
-        //Delete Item
-            $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 418 LIMIT 1';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":id", $userId);
-            $stmt->execute();
+        $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 418 LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
     
         $greeting = "You have successfully removed " . $remove . ' from ' . $pet['name'] . '.';
         $reply = $greeting;

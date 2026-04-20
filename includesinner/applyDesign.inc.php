@@ -2,6 +2,7 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Get Values
@@ -149,6 +150,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":message", $reply);
             $stmt->execute();
     }
+    
+    //Update Image
+    resetImage($pet, $pdo);
     
     
     //Remove Item

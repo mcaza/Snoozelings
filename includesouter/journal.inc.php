@@ -66,7 +66,7 @@ echo '<h3>Daily Journal</h3>';
 echo '<div class="journalRow">';
 
 //Left Pet Display
-displayPet($pet, "artJournal");
+echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '"  class="artJournal">';
 
 //Journal Display
 echo '<div class="journalDisplay">';

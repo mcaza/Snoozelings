@@ -2,6 +2,7 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_COOKIE['user_id'];
@@ -65,6 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $id);
     $stmt->bindParam(":tail", $tail);
     $stmt->execute();
+        
+    //Update Image
+    resetImage($id, $pdo);
         
     //Update Session message
     $greeting = htmlspecialchars($name['name'] . ' loves ' . $pronouns . ' new tailstyle!!!');

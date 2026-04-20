@@ -59,7 +59,7 @@ if ($letter['picture']) {
     $stmt->bindParam(":bonded", $sender['bonded']);
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
-    displayPet($pet, "mailPet");
+    echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '"  class="mailPet">';
 }
 $num = intval($letter['sender']);
 if ($num < 2 || $num > 3 && $num < 10) {

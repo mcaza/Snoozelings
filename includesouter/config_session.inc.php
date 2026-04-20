@@ -12,6 +12,7 @@ session_set_cookie_params([
 
 $token = $_COOKIE['PHPSESSID'];
 
+
 if ($_COOKIE['user_id']) {
     $query = "SELECT * FROM sessions WHERE session = :token AND user_id = :username";
     $stmt = $pdo->prepare($query);
@@ -20,6 +21,9 @@ if ($_COOKIE['user_id']) {
     $stmt->execute();
     $testToken = $stmt->fetch(PDO::FETCH_ASSOC);
     
+
+    
+    //if ($testToken && $_COOKIE['user_id'] == 1) {
     if ($testToken) {
         $now = new DateTime("now", new DateTimezone('EST'));
         $formatted = $now->format('Y-m-d H:i:s');
@@ -58,14 +62,7 @@ if ($_COOKIE['user_id']) {
 } */
 
 //Code to Keep All Non Staff Out
-/* if (isset($_COOKIE['user_id'])) {
-    if (intval($_COOKIE['user_id']) > 10) {
-        session_unset();
-        session_destroy();
-        header("Location: ../login.php");
-        die();
-    }
-} */
+/*  */
 
 /* if (isset($_COOKIE["user_id"])) {
     if (!isset($_SESSION['last_regeneration'])) {

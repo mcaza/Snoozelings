@@ -2,6 +2,7 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -28,7 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $result['bonded']);
     $stmt->bindParam(":mood", $mood);
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    //Update Image
+    resetImage($result['bonded'], $pdo);
     
     //Redirect to Profile
     header("Location: ../profile?id=" . $userId);

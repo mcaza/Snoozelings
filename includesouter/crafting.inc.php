@@ -126,7 +126,7 @@ if ($level > 4) {
 }
 
 echo '</div>';
-displayPet($pet, "artcrafting");
+echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '" class="artcrafting">';
 echo '</div>';
 echo '<hr>';
 

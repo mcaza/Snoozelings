@@ -66,7 +66,7 @@ if ($post) {
     //Hidden Form
     echo '<div id="makeComment">';
     echo '<form method="POST" id="comment" name="comment" action="includes/comment.inc.php">';
-    if ($post['category'] == "share") {
+    if ($post['category'] == "share" || $post['category'] == "submissions") {
         //Grab Snoozelings
         $query = 'SELECT * FROM snoozelings WHERE owner_id = :id';
         $stmt = $pdo->prepare($query);
@@ -113,7 +113,7 @@ if ($post) {
         $stmt->bindParam(":id", $post['snoozeling']);
         $stmt->execute();
         $petInfo = $stmt->fetch(PDO::FETCH_ASSOC);
-        displayPet($petInfo, "art");
+        echo '<img src="snoozeImages/' . $petInfo['id'] . '.png?timestamp=' . $pet['timestamp'] . '"  class="art">';
         echo '<p><b>' . $petInfo['name'] . '</b></p>';
     }
     
@@ -162,7 +162,7 @@ if ($post) {
         
         echo '<div class="commentBox">';
         echo '<div class="commentPet" style="border-right: 	#E5E4E2 1px solid;">';
-        displayPet($pet, "tinyPet");
+        echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '"  class="tinyPet">';
         echo '<p style="margin-top: 0;"><b><a href="profile?id=' . $comment['user_id'] . '">' . htmlspecialchars($result['username']) . '</a></b></p>';
         echo '</div>';
         echo '<div class="commentText" >';

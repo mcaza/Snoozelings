@@ -2,12 +2,14 @@
 
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $userId = $_COOKIE['user_id'];
     $snoozeling = $_POST["snoozelingid"];
     $marking = $_POST["marking"];
+
     
     //Check Still have Wish Token
     $query = 'SELECT * FROM items WHERE user_id = :id AND list_id = 225';
@@ -28,8 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $snoozeling);
     $stmt->execute();
     $petcheck = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo var_dump($petcheck);
-    die();
+    
     if ($petcheck['owner_id'] == $userId) {
         
     } else {
@@ -57,15 +58,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":specials", $newmarkings);
     $stmt->execute();
     
+    
     //Delete Wish Token
     $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 225 LIMIT 1';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->execute();
+    $stmt->execute(); 
     
+    //Update Image
+    resetImage($snoozeling, $pdo);
     
     //Return
-        $reply = "Your wish has come true!";
+    $reply = "Your wish has come true!";
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id", $userId);

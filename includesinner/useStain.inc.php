@@ -3,6 +3,7 @@
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 require_once '../../includes/log.inc.php';
+require_once '../../includes/imageFunction.inc.php';
 
 //Get Values
 $pet = $_POST['pet'];
@@ -67,12 +68,16 @@ $stmt->bindParam(":color", $string);
 $stmt->bindParam(":id", $pet);
 $stmt->execute();
 
+//Update Image
+resetImage($pet, $pdo);
+
+
 //Delete Stain
 $query = 'DELETE FROM items WHERE user_id = :id AND list_id = :item LIMIT 1';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->bindParam(":item", $item);
-$stmt->execute();
+$stmt->execute(); 
 
 
 //Reply & Reroute

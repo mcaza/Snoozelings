@@ -372,6 +372,7 @@ function displayPet($pet, $class) {
             echo "</div>";
              if (strlen($pet['clothesTop']) > 1 && strpos($pet["clothesTop"], "SpikedBracelet") !== false) {
     $clothesTop = explode(' ', $pet['clothesTop']);
+    $clothesTop = explode(' ', $pet['clothesTop']);
         foreach ($clothesTop as $clothing) {
             if ($clothing == "SpikedBracelet") {
                 echo "<div class='${class}'>";
@@ -837,6 +838,11 @@ function singleImage($pet) {
     $outputImage = $background;
     
     $dest = 'snoozelings/' . $pet['id'] . '.png';
+    
+    //Get All Clothes
+    if (strlen($pet['clothes']) > 1) {
+        $clothes = explode(' ', $pet['clothes']);
+    }
         
     if ($pet['mainColor']) {
     //Bed Code
