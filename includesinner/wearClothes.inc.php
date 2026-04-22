@@ -114,11 +114,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
     
-    //Fetch Items
+    //Convert if Ends in Basic
+    if (str_ends_with($itemName, "Basic")) {
+        $newName = str_replace("Basic","",$itemName);
+    }
     
     //Add to Clothes String.
     $string = $pet['clothes'];
-    $string .= ' ' . $itemName;
+    $string .= ' ' . $newName;
     $string = trim($string);
     $query = 'UPDATE snoozelings SET clothes = :clothes WHERE id = :id';
     $stmt = $pdo->prepare($query);

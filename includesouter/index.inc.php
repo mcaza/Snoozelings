@@ -204,7 +204,7 @@ if (isset($_COOKIE['user_id'])) {
     $stmt->bindParam(":cat", $cat);
     $stmt->execute();
     $catcount = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $num = count($catcount) - 1;
+    $num = count($catcount) - 5;
     echo '<div class="indexBox">';
     echo '<h3>Game Update #' . $num . '</h3>';
     echo '<h4 style="margin-top: 0;">' . $news['title'] . '</h4>';

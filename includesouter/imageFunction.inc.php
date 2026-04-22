@@ -312,11 +312,19 @@ function resetImage($snooze, $pdo) {
     }
 
     //Nose
-    $url = '../Layers/Noses/' . $pet['noseColor'] . '.png';
-    $image = imagecreatefrompng($url);
-    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    if(strpos($pet["specials"], "DualNose") !== false) {
+        $url = '../Layers/Other/DualNose/' . $pet['noseColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    } else {
+        $url = '../Layers/Noses/' . $pet['noseColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    }
+    
 
     //Back Moth Piece
+    $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluff'];
     $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluff'];
          foreach ($mothArray as $moth) {
               if (strpos($pet["specials"], $moth) !== false) {
@@ -429,7 +437,20 @@ function resetImage($snooze, $pdo) {
 
         $url = '../Layers/Faces/Cheeky/Lines/' . $pet['mainColor'] . '.png';
         $image = imagecreatefrompng($url);
-        imagecopy($outputImage,$image,0,0,0,0, $x, $y); 
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        
+        if ($pet['mainColor'] == "Rave") {
+            if(strpos($pet["specials"], "DualNose") !== false) {
+                $url = '../Layers/Other/DualNose/' . $pet['noseColor'] . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            } else {
+                $url = '../Layers/Noses/' . $pet['noseColor'] . '.png';
+                $image = imagecreatefrompng($url);
+                imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+            }
+        }
     } 
 
 

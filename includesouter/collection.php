@@ -82,7 +82,7 @@ echo "<div class='pets'>";
 foreach ($results as $pet) {
 
     echo "<div class='nestpet'>";
-    echo '<div class="art-container">';
+    echo '<div class="artcontainertwo">';
     echo "<div class='arttwo'>";
     echo "<img src='Layers/Beds/Back/" . $pet['bedcolor'] . ".png'>";
     echo "</div>";

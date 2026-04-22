@@ -29,9 +29,9 @@ echo '<a href="gameGuides"><<</a>';
 echo '</div>';
 
 echo '<h3 style="margin-top: 1rem; margin-bottom: 2rem;">Snoozeling Designer</h3>';
-echo '<div class="art-container">';
+echo '<div class="artcontainerdesigner">';
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "FeatheredWings") !== false) {
     echo "<img src='Layers/Wings/Pegasus/Bottom/" . $pet["mainColor"] . ".png' id = 'BottomWingdesigner'>";
 } else {
@@ -40,7 +40,7 @@ if (strpos($pet["specials"], "FeatheredWings") !== false) {
 echo "</div>";
 
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "BugWings") !== false) {
     echo "<img src='Layers/Wings/BugWingBottom.png' id = 'Bottombugdesigner'>";
 } else {
@@ -48,7 +48,7 @@ if (strpos($pet["specials"], "BugWings") !== false) {
 }
 echo "</div>";
         
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if ($pet) {
     echo "<img src='Layers/Primary/" . $pet['mainColor'] . ".png' id = 'Primarydesigner'>";
 } else {
@@ -56,7 +56,7 @@ if ($pet) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Cupid") !== false) {
     echo "<img src='Layers/Markings/Cupid/" . $pet["mainColor"] . ".png' id = 'Cupiddesigner'>";
 } else {
@@ -64,7 +64,7 @@ if (strpos($pet["specials"], "Cupid") !== false) {
 }
 echo "</div>";  
    
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Spots") !== false) {
     echo "<img src='Layers/Markings/Spots/" . $pet["mainColor"] . ".png' id = 'Spotsdesigner'>";
 } else {
@@ -73,7 +73,7 @@ if (strpos($pet["specials"], "Spots") !== false) {
 echo "</div>";
             
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Boots") !== false) {
     echo "<img src='Layers/Markings/Boots/" . $pet["mainColor"] . ".png' id = 'Bootsdesigner'>";
 } else {
@@ -81,7 +81,7 @@ if (strpos($pet["specials"], "Boots") !== false) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Sublimation") !== false) {
     echo "<img src='Layers/Markings/Sublimation/" . $pet["mainColor"] . ".png' id = 'Sublimationdesigner'>";
 } else {
@@ -89,7 +89,7 @@ if (strpos($pet["specials"], "Sublimation") !== false) {
 }
 echo "</div>";  
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Collie") !== false) {
     echo "<img src='Layers/Other/Collie.png' id = 'Colliedesigner'>";
 } else {
@@ -97,7 +97,7 @@ if (strpos($pet["specials"], "Collie") !== false) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Foxy") !== false) {
     echo "<img src='Layers/Markings/Foxy/" . $pet["mainColor"] . ".png' id = 'Foxydesigner'>";
 } else {
@@ -105,7 +105,7 @@ if (strpos($pet["specials"], "Foxy") !== false) {
 }
 echo "</div>";  
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Scales") !== false) {
     echo "<img src='Layers/Markings/Scales/" . $pet["mainColor"] . ".png' id = 'Scalesdesigner'>";
 } else {
@@ -113,7 +113,7 @@ if (strpos($pet["specials"], "Scales") !== false) {
 }
 echo "</div>"; 
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "EarTip") !== false) {
     echo "<img src='Layers/Other/EarTip.png' id = 'Eartipdesigner'>";
 } else {
@@ -121,7 +121,7 @@ if (strpos($pet["specials"], "EarTip") !== false) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if ($pet) {
     if (strpos($pet["specials"], "EarBands") !== false) {
         echo "<img src='Layers/Other/EarBands/" . $pet['noseColor'] . ".png' id = 'Eardesigner'>";
@@ -134,7 +134,7 @@ if ($pet) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Skeleton") !== false) {
     echo "<img src='Layers/Skeleton.png' id = 'Skeletondesigner'>";
 } else {
@@ -142,7 +142,7 @@ if (strpos($pet["specials"], "Skeleton") !== false) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "Belly") !== false) {
     echo "<img src='Layers/Markings/Belly/" . $pet["mainColor"] . ".png' id = 'Bellydesigner'>";
 } else {
@@ -152,7 +152,7 @@ echo "</div>";
 
 
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if ($pet) {
     echo "<img src='Layers/MainLines/" . $pet['mainColor'] . ".png' id = 'Mainlinesdesigner'>";
 } else {
@@ -171,13 +171,13 @@ foreach ($moths as $moth) {
             $letters = $specialsone[$num];
             
             if ($letters == 9) {
-                echo "<div class='artlarge'>";
+                echo "<div class='artdesigner'>";
                 echo "<img src='Layers/Other/MothFluff/Behind/" . $moth . ".png' id = 'BottomMothdesigner'>";
                 echo "</div>";
                 $check++;
             }
         } else {
-            echo "<div class='artlarge'>";
+            echo "<div class='artdesigner'>";
             echo "<img src='Layers/Other/MothFluff/Behind/" . $moth . ".png' id = 'BottomMothdesigner'>";
             echo "</div>";
             $check++;
@@ -185,13 +185,13 @@ foreach ($moths as $moth) {
     } 
 }
 if ($check == 0) {
-    echo "<div class='artlarge'>";
+    echo "<div class='artdesigner'>";
         echo "<img src='' id = 'BottomMothdesigner'>";
         echo "</div>";
 }
 
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if (strpos($pet["specials"], "TinyTooth") !== false) {
     echo "<img src='Layers/Faces/Happy/TinyTooth.png' id = 'Tinytoothdesigner'>";
 } else {
@@ -199,7 +199,7 @@ if (strpos($pet["specials"], "TinyTooth") !== false) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if ($pet) {
     echo "<img src='Layers/Faces/Happy/Eyes/" . $pet['eyeColor'] . ".png' id = 'Eyesdesigner'>";
 } else {
@@ -207,7 +207,7 @@ if ($pet) {
 }
 echo "</div>";
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if ($pet) {
     echo "<img src='Layers/Faces/Happy/Lines/" . $pet['mainColor'] . ".png' id = 'Facedesigner'>";
 } else {
@@ -217,53 +217,53 @@ echo "</div>";
 
 if ($pet) {
     if ($pet['tailType'] == "Lizard") {
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='Layers/Tail/Lizard/Spikes/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
         echo "</div>";
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='Layers/Tail/Lizard/" . $pet['mainColor'] . ".png' id = 'TailTopdesigner'>";
         echo "</div>";
     } else if ($pet['tailType'] == "Dragon") {
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='Layers/Tail/Dragon/End/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
         echo "</div>";
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='Layers/Tail/Dragon/" . $pet['mainColor'] . ".png' id = 'TailTopdesigner'>";
         echo "</div>";
     } else if ($pet['tailType'] == "Mermaid") {
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='Layers/Tail/Mermaid/" . $pet['mainColor'] . ".png' id = 'Taildesigner'>";
         echo "</div>";
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='' id = 'TailTopdesigner'>";
         echo "</div>";
     } else if ($pet['tailType'] == "Tailless") {
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='' id = 'Taildesigner'>";
         echo "</div>";
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='' id = 'TailTopdesigner'>";
         echo "</div>";
     } else {
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='Layers/Tail/" . $pet['tailType'] . "/" . $pet['tailColor'] . ".png' id = 'Taildesigner'>";
         echo "</div>";
-        echo "<div class='artlarge'>";
+        echo "<div class='artdesigner'>";
         echo "<img src='' id = 'TailTopdesigner'>";
         echo "</div>";
     }
 } else {
-    echo "<div class='artlarge'>";
+    echo "<div class='artdesigner'>";
     echo "<img src='Layers/Tail/Braid/Alexandrite.png' id = 'Taildesigner'>";
     echo "</div>";
-    echo "<div class='artlarge'>";
+    echo "<div class='artdesigner'>";
     echo "<img src='' id = 'TailTopdesigner'>";
     echo "</div>";
 }
 
 
 if ($pet['hairType'] == "Knitted") {
-    echo "<div class='artlarge'>";
+    echo "<div class='artdesigner'>";
     if (strpos($pet["specials"], "BugWings") !== false) {
         echo "<img src='Layers/Wings/BugWingTop.png' id = 'Topbugdesigner'>";
     } else {
@@ -271,7 +271,7 @@ if ($pet['hairType'] == "Knitted") {
     }
     echo "</div>";
 
-    echo "<div class='artlarge'>";
+    echo "<div class='artdesigner'>";
     if (strpos($pet["specials"], "FeatheredWings") !== false) {
         echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingdesigner'>";
     } else {
@@ -280,7 +280,7 @@ if ($pet['hairType'] == "Knitted") {
     echo "</div>";
 }
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if ($pet) {
     if ($pet['hairType'] == "Floof") {
         echo "<img src='Layers/Hair/Floof/" . $pet['mainColor'] . ".png' id = 'Hairdesigner'>";
@@ -293,7 +293,7 @@ if ($pet) {
 echo "</div>";
 
 if ($pet['hairType'] != "Knitted") {
-    echo "<div class='artlarge'>";
+    echo "<div class='artdesigner'>";
     if (strpos($pet["specials"], "BugWings") !== false) {
         echo "<img src='Layers/Wings/BugWingTop.png' id = 'Topbugdesigner'>";
     } else {
@@ -301,7 +301,7 @@ if ($pet['hairType'] != "Knitted") {
     }
     echo "</div>";
 
-    echo "<div class='artlarge'>";
+    echo "<div class='artdesigner'>";
     if (strpos($pet["specials"], "FeatheredWings") !== false) {
         echo "<img src='Layers/Wings/Pegasus/Top/" . $pet["mainColor"] . ".png' id = 'TopWingdesigner'>";
     } else {
@@ -320,13 +320,13 @@ foreach ($moths as $moth) {
             $letters = $specialsone[$num];
             
             if ($letters == 9) {
-                echo "<div class='artlarge'>";
+                echo "<div class='artdesigner'>";
                 echo "<img src='Layers/Other/MothFluff/" . $moth . ".png' id = 'TopMothdesigner'>";
                 echo "</div>";
                 $check++;
             }
         } else {
-            echo "<div class='artlarge'>";
+            echo "<div class='artdesigner'>";
             echo "<img src='Layers/Other/MothFluff/" . $moth . ".png' id = 'TopMothdesigner'>";
             echo "</div>";
             $check++;
@@ -334,7 +334,7 @@ foreach ($moths as $moth) {
     } 
 }
 if ($check == 0) {
-    echo "<div class='artlarge'>";
+    echo "<div class='artdesigner'>";
         echo "<img src='' id = 'TopMothdesigner'>";
         echo "</div>";
 }
@@ -342,7 +342,7 @@ if ($check == 0) {
 
 
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 if ($pet) {
     if (strpos($pet["specials"], "DualNose") !== false) {
         echo "<img src='Layers/Other/DualNose/" . $pet['noseColor'] . ".png' id = 'Nosedesigner'>";
@@ -358,7 +358,7 @@ echo "</div>";
 
 
 
-echo "<div class='artlarge'>";
+echo "<div class='artdesigner'>";
 echo "<img src='Layers/transparentSquare.png'>";
 echo "</div>";
     

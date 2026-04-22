@@ -1178,6 +1178,24 @@ a.selected {
     z-index: 1;
 }
 
+.artcontainerdesigner {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.artdesigner {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+    z-index: 1;
+}
+
+.artdesigner img {
+    -webkit-transform: none;
+    transform: none;
+    width: 60%;
+}
+
 .pets {
     display: flex;
     flex-wrap: wrap;
