@@ -6,6 +6,7 @@ require_once '../../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") { 
     $userId = $_COOKIE['user_id'];
     $mailID = $_POST['mail'];
+    $express = $_POST['speedSend'];
     
     //Get Info
     $query = "SELECT * FROM mail WHERE id = :id";
@@ -42,7 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":reciever", $sending);
     $stmt->bindParam(":title", $title);
     $stmt->bindParam(":message", $message);
-    $stmt->bindParam(":sent", $zero);
+    if ($express) {
+        $stmt->bindParam(":sent", $one);
+    } else {
+        $stmt->bindParam(":sent", $zero);
+    }
     $stmt->bindParam(":opened", $zero);
     $stmt->bindParam(":sendtime", $result);
     if ($mail['anon'] == 1) {
@@ -51,7 +56,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     $stmt->execute();
     
-        $reply = "Your letter is in the postbox and will be delivered soon.";
+    //Take 2 Coins if Express Post
+    if ($express) {
+        $price = 2;
+        $query = 'UPDATE users SET coinCount = coinCount - :price WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":price", $price);
+        $stmt->execute();
+    }
+    
+    $reply = "Your letter is in the postbox and will be delivered soon.";
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id", $userId);

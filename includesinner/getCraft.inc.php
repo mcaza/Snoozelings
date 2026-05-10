@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Get Job
-    $query = "SELECT job, name FROM snoozelings WHERE id = :id";
+    $query = "SELECT * FROM snoozelings WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $result['pet_id']);
     $stmt->execute();
@@ -51,15 +51,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":null", $null);
     $stmt->execute();
     
-    if ($snooze['job'] === "Crafter") {
-        //Add EXP to Pet
-        $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $result['pet_id']);
-        $stmt->execute();
-    }
-    
-    
+
+    //Add EXP to Pet
+    $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $result['pet_id']);
+    $stmt->execute();
+
+      
     //Add +1 Journal to Daily Record
     $query = 'UPDATE dailyRecords SET itemsCrafted = itemsCrafted + 1 ORDER BY id DESC LIMIT 1';
     $stmt = $pdo->prepare($query);
@@ -73,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Reply & Reroute
     $greeting = $result['display'] . ' has been added to your inventory.';
-        $reply = $greeting;
+    $reply = $greeting;
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id", $userId);

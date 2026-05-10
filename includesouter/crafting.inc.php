@@ -84,11 +84,6 @@ $allRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $userId . '"><<</a>';
-if ($pet['job'] == "Crafter") {
-    echo '<p><b>Crafting EXP:</b> Activated</p>';
-} else {
-    echo '<p><b>Crafting EXP:</b> Off</p>';
-}
 
 echo '</div>';
 
@@ -325,16 +320,11 @@ foreach ($allRecipes as $recipe) {
 echo '</div>';
 
 
-
 //Change Crafter
 if (!($result['recipe_id'])) {   
     echo '<br><hr>';
-$crafter = "Crafter";
-$jack = "jack";
-$query = "SELECT * FROM snoozelings WHERE (job = :jack OR job = :crafter) && owner_id = :id";
+$query = "SELECT * FROM snoozelings WHERE owner_id = :id";
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":jack", $jack);
-$stmt->bindParam(":crafter", $crafter);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);

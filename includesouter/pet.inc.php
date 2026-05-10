@@ -50,7 +50,7 @@ $query = "SELECT id FROM snoozelings WHERE owner_id = :id;";
 if ($_COOKIE["user_id"] == $result["owner_id"]) { 
     echo '<div class="button-bar">
                 <button class="fancyButton" onClick="window.location.href=\'/editPet?id=' . $id . '\'">Edit Pet</button>
-                <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Change Job</button>';
+                <button class="fancyButton" onClick="window.location.href=\'/petJob?id=' . $id . '\'">Job EXP</button>';
     
     if ($user['bonded'] != $id) {
         echo  '<button class="fancyButton" onClick="window.location.href=\'../includes/bondSoul.inc.php?id=' . $id . '\'">Bond Souls</button>';
@@ -84,6 +84,7 @@ $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $id);
 $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
+$experience = $pet['farmEXP'] + $pet['exploreEXP'] + $pet['craftEXP'];
 
 //Birthday Calculation
 $birthday = substr($pet['birthDate'], 5);
@@ -131,12 +132,8 @@ echo '<p class="snoozelinginfo"><strong>Birthday: </strong>' . $monthArray[$mont
 if (!($pet['gotchaDate'] === null)) {
     echo '<p class="snoozelinginfo"><strong>Gotcha Day: </strong>' . $monthArray[$joinMonth -1] . " " . $joinDay;
 }
-if ($pet['job'] === 'jack') {
-    $job = "Jack of All Trades";
-} else {
-    $job = $pet['job'];
-}
-echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $job;
+echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $pet['work'];
+echo '<p class="snoozelinginfo"><strong>Total Experience: </strong>' . $experience . ' / 3000'; 
 if ($pet['breedStatus'] == "Friends") {
     echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>Friends Only';
 } else if ($block == 1) {

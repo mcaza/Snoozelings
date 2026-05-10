@@ -8,7 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sending = $_POST['to'];
     $title = $_POST['title'];
     $message = $_POST['reply'];
+    $express = $_POST['speedSend'];
     $zero = 0;
+    $one = 1;
     
     $now = new DateTime("now", new DateTimezone('UTC'));
     $result = $now->format('Y-m-d H:i:s');
@@ -19,10 +21,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":reciever", $sending);
     $stmt->bindParam(":title", $title);
     $stmt->bindParam(":message", $message);
-    $stmt->bindParam(":sent", $zero);
+    if ($express) {
+        $stmt->bindParam(":sent", $one);
+    } else {
+        $stmt->bindParam(":sent", $zero);
+    }
     $stmt->bindParam(":opened", $zero);
     $stmt->bindParam(":sendtime", $result);
     $stmt->execute();
+    
+    //Take 2 Coins if Express Post
+    if ($express) {
+        $price = 2;
+        $query = 'UPDATE users SET coinCount = coinCount - :price WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":price", $price);
+        $stmt->execute();
+    }
     
     $reply = "Your letter is in the postbox and will be delivered soon.";
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';

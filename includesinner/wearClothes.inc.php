@@ -117,6 +117,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Convert if Ends in Basic
     if (str_ends_with($itemName, "Basic")) {
         $newName = str_replace("Basic","",$itemName);
+    } else {
+        $newName = $itemName;
     }
     
     //Add to Clothes String.
@@ -128,6 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $petid);
     $stmt->bindParam(":clothes", $string);
     $stmt->execute();
+    
     
     
     //Remove Item from Inventory

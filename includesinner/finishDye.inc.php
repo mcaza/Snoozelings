@@ -8,6 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //Get Variables
     $userId = $_COOKIE['user_id'];
     
+    //Get Crafting Table Info
+    $query = 'SELECT * FROM craftingtables WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
     //Get Dye Batch
     $query = 'SELECT * FROM dyebatches WHERE user_id = :id AND finished = 0';
     $stmt = $pdo->prepare($query);
@@ -20,6 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         header("Location: ../");
     }
+    
+    //Add EXP to Pet
+    $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $result['pet_id']);
+    $stmt->execute();
     
     //Get Item Information
     $query = "SELECT * FROM itemList WHERE id = :id";
@@ -46,6 +59,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = "UPDATE dyebatches SET finished = 1 WHERE user_id = :id AND finished = 0";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    
+    //Reply & Reroute
+    $greeting = $itemInfo['display'] . ' [' . $dyebatch['dye'] . '] has been added to your inventory.';
+    $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
     $stmt->execute();
     
     //Return

@@ -70,13 +70,16 @@ echo '<button  class="fancyButton" onClick="window.location.href=\'reorder\'">Re
 //Post Button (Right)
 echo '<button  class="fancyButton" onClick="window.location.href=\'newsletter\'" style="margin-left:15px">Newsletter</button>';
 
+//Post Button (Right)
+echo '<button class="fancyButton" onClick="window.location.href=\'mailSettings\'" style="margin-left:15px">Mail Settings</button>';
+
 
 //Verify Email Button
 if ($result['emailVerified'] == 0) {
     echo '<button  class="fancyButton" onClick="window.location.href=\'verify\'" style="margin-left:15px;">Verify Email</button>';
 }
 echo '</div>';
-echo '</div>';
+echo '</div><br>';
 
 //Session Reply Area
 if ($reply) {
@@ -199,17 +202,6 @@ foreach ($backpackNames as $name) {
 }
 echo '</select><br>';
 
-//Mailbox Color
-echo '<label for="mailbox" class="form">Change Mailbox Color:</label><br>';
-echo '<select class="input" name="mailbox">';
-echo '<option value=""></option>';
-echo '<option value="blue">Blue</option>';
-echo '<option value="cyan">Cyan</option>';
-echo '<option value="orange">Orange</option>';
-echo '<option value="purple">Purple</option>';
-echo '<option value="red">Red</option>';
-echo '</select><br>';
-
 //Allow Friend Requests
 echo '<label for="friends" class="form">Allow Friend Requests:</label><br>';
 switch ($result['blockRequests']) {
@@ -226,28 +218,6 @@ echo '<option value="1"' . $no . '>No</option>';
 echo '</select><br>';
 $yes = "";
 $no = "";
-
-//Allow Messages
-echo '<label for="messages" class="form">Allow Messages:</label><br>';
-switch ($result['blockMessages']) {
-    case "1":
-        $no = "selected";
-        break;
-    case "0":
-        $yes = "selected";
-        break;
-    case "2":
-        $friends = "selected";
-        break;
-}
-echo '<select class="input" name="messages">';
-echo '<option value="0"' . $yes . '>Yes</option>';
-echo '<option value="1"' . $no . '>No</option>';
-echo '<option value="2"' . $friends . '>Friends Only</option>';
-echo '</select><br>';
-$yes = "";
-$no = "";
-$friends = "";
 
 //Allow Birthday Gifts
 echo '<label for="birthdayGifts" class="form">Allow Birthday Gifts:</label><br>';

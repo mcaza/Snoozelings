@@ -25,42 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    //Check if Pet is Crafting
-    if ($snooze['job'] === "jack") {
-        $query = 'SELECT * FROM craftingtables WHERE pet_id = :id';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $farmer);
-        $stmt->execute();
-        $table = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($table) {
-            $now = new DateTime("now", new DateTimezone('UTC'));
-            $future_date = new DateTime($table['finishtime']);
-            if ($table['finishtime']) {
-                if ($future_date >= $now) {
-                        $reply = "That snoozeling is currently crafting.";
-                        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
-                        $stmt = $pdo->prepare($query);
-                        $stmt->bindParam(":user_id", $userId);
-                        $stmt->bindParam(":message", $reply);
-                        $stmt->execute();
-                    header("Location: ../farm");
-                    die(); 
-                }
-            }
-        }
-    }
-    
-    if(!$farmer) {
-            $reply = "You need to select a farmer.";
-        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":user_id", $userId);
-        $stmt->bindParam(":message", $reply);
-        $stmt->execute();
-        header("Location: ../farm");
-        die();
-    }
-    
     //Get Information from Farms
     $query = "SELECT * FROM farms WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -69,16 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $farm = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Reward EXP To Pet
-    if ($snooze['job'] === "Farmer") {
     $exp = $snooze['farmEXP'] + .5;
-    
     $query = "UPDATE snoozelings SET farmEXP = :exp WHERE id = :id";
-     $stmt = $pdo->prepare($query);
+    $stmt = $pdo->prepare($query);
     $stmt->bindParam(":exp", $exp);
     $stmt->bindParam(":id", $farmer);
     $stmt->execute();
-        
-}
 
     
     //Grab Item Info
@@ -200,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute(); 
     
     if ($amount === 1 ) {
-            $greeting = htmlspecialchars($snooze['name']) . ' harvested ' . $farm['plantName'] . '.';
+            $greeting = htmlspecialchars($snooze['name']) . ' harvested a single ' . $farm['plantName'] . '.';
         } elseif ($amount === 2 && ($name === "Cocoa Beans" || $name === "Black Beans")) {
             $greeting = htmlspecialchars($snooze['name']) . ' harvested 2 ' . $farm['plantName'] . '.';
     } else {

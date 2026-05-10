@@ -123,5 +123,22 @@ foreach ($farms as $farm) {
 }
 echo '</div>';
 
-//Add New Farm Button
+//Change Farmer
+echo '<br><hr>';
+$query = "SELECT * FROM snoozelings WHERE owner_id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo '<div><h3 style="margin-bottom: 1rem;">Change Farmer</div>';
+echo '<form method="POST" action="includes/changeFarmer.inc.php">';
+echo '<label for="status"  class="form">Main Farmer:</label><br>';
+echo '<select  class="input" name="snoozeling" id="snoozeling"><br>';
+foreach ($results as $snooze) {
+    echo '<option value="' . $snooze['id'] . '">#' . $snooze['id'] . ' - ' . htmlspecialchars($snooze['name']) . '</option>';
+}
+echo '</select><br>';
+echo '<button  class="fancyButton">Change Pet</button>';
+echo '</form>';
 

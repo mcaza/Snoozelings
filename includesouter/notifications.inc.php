@@ -1,11 +1,13 @@
 <?php
+
+date_default_timezone_set('UTC');
 //Get Values
 $userId = $_COOKIE['user_id'];
 $count = 1;
 $now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d');
 
-date_default_timezone_set('America/Los_Angeles');
+
 $weekday = date('d');
 $month = ltrim(date('m'), "0");
 
@@ -54,27 +56,11 @@ if ($tutorial < 4) {
         $stmt = $pdo->prepare($query);
         $stmt->execute();
         $records = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($records['backup'] == 0) {
-            echo '<div class="notificationbox"><p style="color:red;margin-bottom:0">' . $count . '. Daily Data Backup</p></div>';
-            $count++;
-            
-            $query = 'SELECT * FROM users WHERE newsletter = 0 And emailVerified = 1';
-            $stmt = $pdo->prepare($query);
-            $stmt->execute();
-            $emails = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($emails) {
+        if ($emails) {
                 echo '<div class="notificationbox"><a href="secretemailpage" class="notif" style="color:red;">' . $count . '. Add Emails</a></div>';
                 $count++;
             }
-            
-            $now = new DateTime("now", new DateTimezone('UTC'));
-            $result = $now->format('Y-m-d');
-            if ($now->format('Y-m-d') == '2025-01-01') {
-                echo '<div class="notificationbox"><a href="secretemailpage" class="notif" style="color:red;">' . $count . '. Update all 2024 to 2025</a></div>';
-                $count++;
-            }
-        }
+        
     }
 
    
@@ -89,7 +75,35 @@ if ($tutorial < 4) {
         echo '<div class="notificationbox"><a href="mailbox" class="notif">' . $count . '. Check Mail</a></div>';
         $count++;
     }
-
+    
+    //Check for Breedings
+    $zero = 0;
+    $query = "SELECT * FROM breedings WHERE user_id = :id AND completed = :zero";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->bindParam(":zero", $zero);
+    $stmt->execute();
+    $breeding = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($breeding['status'] == 1 && $breeding['blueprint'] == false) {
+        echo '<div class="notificationbox"><a href="blueprints?id=' . $breeding['id'] . '" class="notif">' . $count . '. Pick Blueprint</a></div>';
+        $count++;
+    }
+    if ($breeding['status'] == 2 && $breeding['completed'] == false) {
+        echo '<div class="notificationbox"><a href="delivery?id=' . $breeding['blueprint'] . '" class="notif">' . $count . '. Snoozeling Delivery</a></div>';
+        $count++;
+    }
+    
+    //Friend Request
+    $query = "SELECT * FROM friendRequests WHERE newFriend = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $newFriend = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($newFriend) {
+        echo '<div class="notificationbox"><a href="profile?id=' . $newFriend['sender'] . '" class="notif">' . $count . '. Friend Request</a></div>';
+        $count++;
+    }
+    
     //Daily Journal Check
     $query = 'SELECT * FROM journals WHERE user_id = :id';
     $stmt = $pdo->prepare($query);
@@ -113,30 +127,24 @@ if ($tutorial < 4) {
     $journal = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($journal['closed'] == "1" || !$journal) {
-                echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
-                $count++; 
-            }
-
-     
+        echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Journal Entry</a></div>';
+        $count++; 
+    }
 
     //Explore Check
-    $jack = "jack";
-    $explorer = "Explorer";
-    $query = "SELECT * FROM snoozelings WHERE (job = :jack OR job = :explorer) && owner_id = :id";
+    $query = "SELECT * FROM exploringParties WHERE user_id = :id";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":jack", $jack);
-    $stmt->bindParam(":explorer", $explorer);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
-    $explorers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $party = $stmt->fetch(PDO::FETCH_ASSOC);
     $now = new DateTime("now", new DateTimezone('UTC'));
     $result = $now->format('Y-m-d H:i:s');
-    foreach ($explorers as $pet) {
-        if ($result > $pet['cooldownTime']) {
-            '<div class="notificationbox"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
-            break;
-        }
+    
+    if (!$party || $result > $party['cooldownTime']) {
+        echo '<div class="notificationbox"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
+        $count++;
     }
+
 
     //Crops Harvest Check
     $query = 'SELECT * FROM farms WHERE user_id = :id';
@@ -167,24 +175,6 @@ if ($tutorial < 4) {
     if ($result > $user['lastWater']) {
         echo '<div class="notificationbox"><a href="farm" class="notif">' . $count . '. Water Plants</a></div>';
         $count++;
-    }
-
-    //Exploring Check
-    $jack = "jack";
-    $explorer = "Explorer";
-    $query = 'SELECT * FROM snoozelings WHERE owner_id = :id AND (job = :jack OR job = :explorer)';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->bindParam(":jack", $jack);
-    $stmt->bindParam(":explorer", $explorer);
-    $stmt->execute();
-    $explorers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($explorers as $explorer) {
-        if ($result > $explorer['cooldownTime']) {
-            echo '<div class="notificationbox"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
-            $count++;
-            break;
-        }
     }
 
     //Daily Raffle

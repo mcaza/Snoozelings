@@ -12,39 +12,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $plot = $_POST['plot'];
     
     //Get Snoozeling Info 
-    $query = "SELECT job, farmEXP FROM snoozelings WHERE id = :farmer";
+    $query = "SELECT * FROM snoozelings WHERE id = :farmer";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":farmer", $farmer);
     $stmt->execute(); 
     $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    //Check if Pet is Crafting
-    if ($snooze['job'] === "jack") {
-        $query = 'SELECT * FROM craftingtables WHERE pet_id = :id';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $farmer);
-        $stmt->execute();
-        $table = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($table) {
-            $now = new DateTime("now", new DateTimezone('UTC'));
-            $future_date = new DateTime($table['finishtime']);
-            if ($table['finishtime']) {
-                if ($future_date >= $now) {
-                        $reply = "That snoozeling is currently crafting.";
-                    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
-                    $stmt = $pdo->prepare($query);
-                    $stmt->bindParam(":user_id", $userId);
-                    $stmt->bindParam(":message", $reply);
-                    $stmt->execute();
-                    header("Location: ../farm");
-                    die(); 
-                }
-            }
-        }
-    }
     
     if(!$farmer) {
-            $reply = "You need to select a farmer.";
+        $reply = "You need to select a farmer.";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id", $userId);
@@ -87,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     
     //Get Time Reducer
-    if ($snooze['job'] === "jack" || $exp < 50) {
+    if ($exp < 50) {
         $reduce = 1;
     } elseif ($exp < 150) {
         $reduce = .90;
@@ -142,13 +118,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     
-    //Error Email
+    /* //Error Email
     if (!$plantName) {
         $message = "Plant name crash = Plot: " . $plot . ", Seed: " . $seed . ", User: " . $userId . ", Farmer: " . $farmer;
             error_log($message, 1, "megan.caza@gmail.com");
             echo 'There has been an error with planting your crop. An email with complete details has been sent to lead developer Slothie.';
             die();
-    }
+    } */
     
     
 //Calculate Times
@@ -203,13 +179,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     
 //Add EXP to Snoozeling
-if ($snooze['job'] === "Farmer") {
     $query = "UPDATE snoozelings SET farmEXP = :exp WHERE id = :id";
-     $stmt = $pdo->prepare($query);
+    $stmt = $pdo->prepare($query);
     $stmt->bindParam(":exp", $exp);
     $stmt->bindParam(":id", $farmer);
     $stmt->execute();
-}
     
     //Delete Seed from Inventory
     $query = 'DELETE FROM items WHERE id = :id';
@@ -219,9 +193,9 @@ if ($snooze['job'] === "Farmer") {
     
     //Reply
     if ($seedId['list_id'] == 14) {
-        $reply = 'You have planted a single Mystery Seed.';
+        $reply = $snooze['name'] . ' has planted a single Mystery Seed.';
     } else {
-        $reply = 'You have planted a single ' . $plantName . ' Seed.';
+        $reply = $snooze['name'] . ' has planted a single ' . $plantName . ' Seed.';
     }
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
     $stmt = $pdo->prepare($query);

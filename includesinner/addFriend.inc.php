@@ -100,16 +100,11 @@ if ($result) {
         }
     }
 
-//Add Friend to Your List
-if ($result) {
-    $friends = $result['friendList'] . " " . $id;
-} else {
-    $friends = $id;
-}
-$query = 'UPDATE users SET friendList = :friends WHERE id = :id';
+//Send Friend Request
+$query = 'INSERT INTO friendRequests (sender, newFriend) VALUES (:sender, :newFriend)';
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":id", $userId);
-$stmt->bindParam(":friends", $friends);
+$stmt->bindParam(":sender", $userId);
+$stmt->bindParam(":newFriend", $id);
 $stmt->execute();
 
 //Reply & Reroute to Friend Page

@@ -48,7 +48,7 @@ if ($today >= $spring && $today < $summer) {
 echo '<p><i>So many packages!!! I\'ll need your code to find the right one.</i></p><br>';
 
 //Redeem Merch Code
-echo '<h1>Merchandise Code:</h1>';
+echo '<h1>Enter Your Code:</h1>';
 echo '<form method="post" action="includes/merchcode.inc.php">';
 echo '<input type="text" id="code" name="code"><br><br>';
 echo "<button class='fancyButton'>Submit Code</button>";

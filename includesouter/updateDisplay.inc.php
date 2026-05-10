@@ -37,6 +37,12 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $dyelist = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Grab All Jobs
+$query = "SELECT * FROM jobs ORDER BY name";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="pet?id=' . $id . '"><<</a>';
@@ -125,6 +131,27 @@ if ($result['craftEXP'] > 999.5) {
     echo '<option value="Hooked on Crafts">Hooked on Crafts</option>';
 }
 echo "</select><br>";
+
+//Job
+echo '<label for="job"  class="form">Snoozeling\'s Job:</label><br>';
+echo '<select  class="input" name="job"><br>';
+echo '<option value=""></option>';
+foreach ($jobs as $job) {
+    echo '<option value="' . $job['name'] . '">' . $job['name'] . '</option>';
+}
+echo '</select><br>';
+
+//Snoozeling's Mood
+echo '<label for="mood"  class="form">Snoozeling\'s Mood:</label><br>';
+echo '<select  class="input" name="mood"><br>';
+echo '<option value=""></option>';
+echo '<option value="Happy">Happy</option>';
+echo '<option value="Anxious">Anxious</option>';
+echo '<option value="Overwhelmed">Overwhelmed</option>';
+echo '<option value="Sleepy">Sleepy</option>';
+echo '<option value="Cheeky">Cheeky</option>';
+echo '</select><br>';
+
 
 //Bed Color
 echo '<label for="bed"  class="form">Bed Color:</label><br>';

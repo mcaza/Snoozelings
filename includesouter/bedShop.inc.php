@@ -25,36 +25,60 @@ $total = $user['petBeds'] + count($beds);
 
 //Calculate Bed Cost
 if ($total == 2) {
-    $amount = 5;
+    $amount = 2;
 } else if ($total == 3) {
-    $amount = 10;
+    $amount = 5;
 } else if ($total == 4) {
-    $amount = 20;
+    $amount = 10;
 } else if ($total == 5) {
-    $amount = 30;
+    $amount = 16;
 } else if ($total == 6) {
-    $amount = 40;
+    $amount = 22;
 } else if ($total == 7) {
-    $amount = 50;
+    $amount = 33;
 } else if ($total == 8) {
-    $amount = 75;
+    $amount = 44;
+} else if ($total == 9) {
+    $amount = 55;
+} else if ($total == 10) {
+    $amount = 66;
+} else if ($total == 11) {
+    $amount = 77;
+} else if ($total == 12) {
+    $amount = 88;
+} else if ($total == 13) {
+    $amount = 100;
+} else if ($total == 14) {
+    $amount = 125;
 } 
 
 //Coin Cost
 if ($total == 2) {
-    $coinAmount = 50;
+    $coinAmount = 25;
 } else if ($total == 3) {
-    $coinAmount = 100;
+    $coinAmount = 50;
 } else if ($total == 4) {
-    $coinAmount = 200;
+    $coinAmount = 100;
 } else if ($total == 5) {
-    $coinAmount = 400;
+    $coinAmount = 200;
 } else if ($total == 6) {
-    $coinAmount = 800;
+    $coinAmount = 400;
 } else if ($total == 7) {
-    $coinAmount = 1600;
+    $coinAmount = 800;
 } else if ($total == 8) {
-    $coinAmount = 3200;
+    $coinAmount = 1400;
+} else if ($total == 9) {
+    $coinAmount = 2000;
+} else if ($total == 10) {
+    $coinAmount = 3500;
+} else if ($total == 11) {
+    $coinAmount = 5000;
+} else if ($total == 12) {
+    $coinAmount = 6500;
+} else if ($total == 13) {
+    $coinAmount = 8000;
+} else if ($total == 14) {
+    $coinAmount = 10000;
 } 
 
 //Future Updates -> 150, 250, 400, 600, 800, 1000
@@ -91,7 +115,7 @@ if ($reply) {
 //Show Image. Change Later
 echo '<img src="resources/bedNPC.png" style="width: 45%;">';
 
-if ($total < 9) {
+if ($total < 15) {
     
     //Check Feather Counts
     $query = "SELECT * FROM items WHERE user_id = :id AND list_id = 29";

@@ -1,13 +1,10 @@
 <?php
 $id = $_GET['id'];
 $userId = $_COOKIE['user_id'];
-$farmer = "Farmer";
-$jack = "jack";
 $seed = "seed";
 $plot = $_GET['id'];
 date_default_timezone_set('UTC');
-
-
+    
 //Get All Seeds
 $query = "SELECT * FROM items WHERE user_id = :id AND type = :seed ORDER BY display";
 $stmt = $pdo->prepare($query);
@@ -16,7 +13,7 @@ $stmt->bindParam(":seed", $seed);
 $stmt->execute();
 $seeds = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//Get Snoozelings
+//Get Farms
 $query = "SELECT * FROM farms WHERE id = :id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $plot);
@@ -24,16 +21,26 @@ $stmt->execute();
 $farm = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Get Farmers & Jacks
-$query = "SELECT * FROM snoozelings WHERE (job = :jack OR job = :farmer) && owner_id = :id";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":jack", $jack);
-    $stmt->bindParam(":farmer", $farmer);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$query = "SELECT * FROM snoozelings WHERE owner_id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//Get Farmer
+$query = "SELECT * FROM users WHERE id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($user['farmer']) {
+    $farmer = $user['farmer'];
+} else {
+    $farmer = $results[0]['id'];
+}
 
 //Back to Pack Arrows
- echo '<div class="leftRightButtons">';
+echo '<div class="leftRightButtons">';
 echo '<a href="farm"><<</a>';
 echo '</div>';
 
@@ -76,8 +83,13 @@ if ($int === 0) {
     echo '<label for="farmer"  class="form pushDown">Choose A Farmer:</label><br>';
     echo '<select  class="input" name="farmer"><br>';
     foreach ($results as $pet) {
-        if ($pet['job']== "Farmer") {
-                echo '<option value="' . $pet['id'] . '">*' . htmlspecialchars($pet['name']) . '*</option>';
+        if ($pet['id'] == $farmer) {
+            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+        }
+    }
+    foreach ($results as $pet) {
+        if ($pet['id'] == $farmer) {
+                
             } else {
                 echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
             }
@@ -111,13 +123,16 @@ if ($int === 0) {
         echo '<input type="hidden" name="plot" value="' . $plot . '">';
         echo '<select  class="input" name="farmer"><br>';
         foreach ($results as $pet) {
-            if ($pet['job']== "Farmer") {
-                echo '<option value="' . $pet['id'] . '">*' . htmlspecialchars($pet['name']) . '*</option>';
+        if ($pet['id'] == $farmer) {
+            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+        }
+    }
+    foreach ($results as $pet) {
+        if ($pet['id'] == $farmer) {
+                
             } else {
                 echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
             }
-        
-        
     }
     echo '</select></br>';
         echo "<button class='fancyButton'>Harvest</button>";

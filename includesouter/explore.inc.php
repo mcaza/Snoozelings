@@ -5,21 +5,23 @@ $userId = $_COOKIE['user_id'];
 $jack = "jack";
 $explorer = "Explorer";
 
+date_default_timezone_set('UTC');
+
 $query = "SELECT * FROM replies WHERE user_id = :id;";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
-//Check if Area
-$query = "SELECT lastExplore FROM users WHERE id = :id";
+//Check if Party is Saved
+$query = "SELECT * FROM exploringParties WHERE user_id = :id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $lastexplore = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($lastexplore['lastExplore']) {
-$temp = $lastexplore['lastExplore'];
+if ($lastexplore['lastArea']) {
+    $temp = $lastexplore['lastArea'];
 } else {
     $temp = "Farmland";
 }
@@ -36,19 +38,17 @@ setcookie("petName", "", time()-3600);
 
 $itemString = "";
 
-$query = "SELECT * FROM snoozelings WHERE (job = :jack OR job = :explorer) && owner_id = :id";
+$query = "SELECT * FROM snoozelings WHERE owner_id = :id";
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":jack", $jack);
-$stmt->bindParam(":explorer", $explorer);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Get Items
-    $query = "SELECT * FROM itemList";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    $itemQuery = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$query = "SELECT * FROM itemList";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$itemQuery = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
@@ -81,33 +81,202 @@ if ($reply) {
 
 
 //Form Details
-echo '<form method="post" action="includes/startExplore.inc.php">';
-echo '<label for="explorer"  class="form pushDown">Choose An Explorer:</label><br>';
-echo '<select  class="input" name="explorer"><br>';
 
-$now = new DateTime("now", new DateTimezone('UTC'));
-$result = $now->format('Y-m-d H:i:s');
-foreach ($results as $pet) {
-    if ($result > $pet['cooldownTime']) {
-        if ($pet['job'] == "Explorer") {
-            echo '<option value="' . $pet['id'] . '">*' . htmlspecialchars($pet['name']) . '*</option>';
-        } else {
-            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
-        }
+
+
+    $now = new DateTime("now", new DateTimezone('UTC'));
+    $result = $now->format('Y-m-d H:i:s');
     
+    
+    if ($result > $lastexplore['cooldownTime']) {
+        echo '<form method="post" action="includes/startExplore.inc.php">';
+        echo '<label for="explorer"  class="form pushDown">Choose Party Explorers:</label><br>';
+       //Check if More than 4 Snoozelings
+        if (count($results) > 4) {
+            $many = true;
+        } else {
+            $many = false;
+        }
+        
+        //Owner Check
+        $ownercheck = true;
+        $groupPets = [];
+        array_push($groupPets,$lastexplore['one']);
+        array_push($groupPets,$lastexplore['two']);
+        array_push($groupPets,$lastexplore['three']);
+        array_push($groupPets,$lastexplore['four']);
+        foreach ($groupPets as $round) {
+            $query = "SELECT * FROM snoozelings WHERE id = :id;";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $round);
+            $stmt->execute();
+            $snoozeCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($snoozeCheck['owner_id'] == $userId) {
+                
+            } else {
+                $ownercheck = false;
+            }
+        }
+        
+        echo '<div>';
+        echo '<div>';
+
+        echo '<select  class="input" name="one"  style="margin-right:30px;width:120px;"><br>';
+            if ($many == false) {
+                echo '<option value="' . $results[0]['id'] . '">' . htmlspecialchars($results[0]['name']) . '</option>';
+            } else if ($lastexplore && $ownercheck) {
+                foreach ($results as $pet) {
+                    if ($pet['id'] == $lastexplore['one']) {
+                        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                    }
+                }
+                foreach ($results as $pet) {
+                    if ($pet['id'] != $lastexplore['one']) {
+                        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                    }
+                }
+            } else {
+                foreach ($results as $pet) {
+                echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+            }
+        }
+        echo '</select>';
+
+        echo '<select class="input" name="two" style="width:120px;">';
+        if ($many == false) {
+            if (count($results) > 1) {
+                echo '<option value="' . $results[1]['id'] . '">' . htmlspecialchars($results[1]['name']) . '</option>';
+            }  else {
+                echo '<option value=""></option>';
+            }
+
+        } else if ($lastexplore && $ownercheck) {
+                if ($lastexplore['two']) {
+                    foreach ($results as $pet) {
+                        if ($pet['id'] == $lastexplore['two']) {
+                            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                        }
+                    }
+                    foreach ($results as $pet) {
+                    if ($pet['id'] != $lastexplore['two']) {
+                        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                    }
+                }
+                } else {
+                    echo '<option value=""></option>';
+                }
+            } else {
+            $i = 0;
+            foreach ($results as $pet) {
+                if ($i < 1) {
+                    $i++;
+                } else {
+                    echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                }
+            }
+        }
+        echo '</select>';
+
+        echo '</div>';
+        echo '<div>';
+
+        echo '<select class="input" name="three" style="margin-right:30px;width:120px;">';
+        if ($many == false) {
+            if (count($results) > 2) {
+                echo '<option value="' . $results[2]['id'] . '">' . htmlspecialchars($results[2]['name']) . '</option>';
+            } else {
+                echo '<option value=""></option>';
+            }
+
+        } else if ($lastexplore && $ownercheck) {
+                if ($lastexplore['three']) {
+                    foreach ($results as $pet) {
+                        if ($pet['id'] == $lastexplore['three']) {
+                            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                        }
+                    }
+                    foreach ($results as $pet) {
+                    if ($pet['id'] != $lastexplore['three']) {
+                        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                    }
+                }
+                } else {
+                    echo '<option value=""></option>';
+                }
+            } else {
+            $i = 0;
+            foreach ($results as $pet) {
+                if ($i < 2) {
+                    $i++;
+                } else {
+                    echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                }
+            }
+        }
+        echo '</select>';
+
+        echo '<select class="input" name="four" style="width:120px;">';
+        if ($many == false) {
+            if (count($results) > 3) {
+                echo '<option value="' . $results[3]['id'] . '">' . htmlspecialchars($results[3]['name']) . '</option>';
+            } else {
+                echo '<option value=""></option>';
+            }
+        } else if ($lastexplore && $ownercheck) {
+                if ($lastexplore['four']) {
+                    foreach ($results as $pet) {
+                        if ($pet['id'] == $lastexplore['four']) {
+                            echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                        }
+                    }
+                    foreach ($results as $pet) {
+                    if ($pet['id'] != $lastexplore['four']) {
+                        echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                    }
+                }
+                } else {
+                    echo '<option value=""></option>';
+                }
+            } else {
+            $i = 0;
+            foreach ($results as $pet) {
+                if ($i < 3) {
+                    $i++;
+                } else {
+                    echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
+                }
+            }
+        }
+        echo '</select>';
+
+        echo '</div>';
+        echo '</div>';
+
+
+
+        echo '<label for="area"  class="form">Choose An Area:</label><br>';
+        echo '<select  class="input" name="area" id="exploreArea"><br>';
+        echo '<option value="Farmland" ' . $optionone . '>Snoozeling Ranch</option>';
+        echo '<option value="Forest" ' . $optiontwo . '>Wistful Woods</option>';
+        echo '<option value="Beach" ' . $optionthree . '>Dazzling Coast</option>';
+        echo '</select></br>';
+        echo '<button  class="fancyButton editButton">Send Exploring</button>';
+        echo '</form>';
+    } else {
+        echo '<h1 style="margin-top:25px;"><b>Explorer Countdown:</b></h1><br>';
+        
+        //Date Stuff
+        $now = new DateTime('now', new DateTimezone('UTC'));
+        $future_date = new DateTime($lastexplore['cooldownTime']);
+        $interval = $future_date->diff($now);
+        echo '<p>' . $interval->format("%h hours, %i minutes, %s seconds") . '</p>';
     }
-}
-echo '</select></br>';
 
 
-echo '<label for="area"  class="form">Choose An Area:</label><br>';
-echo '<select  class="input" name="area" id="exploreArea"><br>';
-echo '<option value="Farmland" ' . $optionone . '>Snoozeling Ranch</option>';
-echo '<option value="Forest" ' . $optiontwo . '>Wistful Woods</option>';
-echo '<option value="Beach" ' . $optionthree . '>Dazzling Coast</option>';
-echo '</select></br>';
-echo '<button  class="fancyButton editButton">Send Exploring</button>';
-echo '</form>';
+
+
+echo '<br><br><hr><br>';
+
 //if ($temp === "Farmland") {
 echo '<div id="Farmland">';
 echo '<h6>Snoozeling Ranch Items</h6>';
@@ -171,7 +340,7 @@ echo '<td>Sewing Kit</td>';
 echo '<td></td>';
 echo '<td></td>';
 echo '</tr>';
-echo '</table>';
+echo '</table><br><br>';
 echo '</div>';
 //} elseif ($temp === "Forest") {
 echo '<div id="Forest">';
@@ -237,7 +406,7 @@ echo '<td></td>';
 echo '<td></td>';
 echo '</tr>';
 echo '</table>';
-echo '</div>';
+echo '</div><br><br>';
 //} elseif ($temp === "Beach") {
 echo '<div id="Beach">';
 echo '<h6>Dazzling Coast Items</h6>';

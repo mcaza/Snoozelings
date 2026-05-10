@@ -12,9 +12,11 @@ $name = $_POST["name"];
 $pronouns = $_POST["pronouns"];
 $status = $_POST["status"];
 $title = $_POST["title"];
+$job = $_POST["job"];
 $id = $_POST['id'];
 $bed = $_POST['bed'];
-$showbed = $_POST['showbed'];
+$mood = $_POST['mood'];
+//$showbed = $_POST['showbed'];
 $clothing = $_POST['clothing'];
 $bio = $_POST['bio'];
 $userId = $_COOKIE['user_id'];
@@ -143,8 +145,8 @@ $userId = $_COOKIE['user_id'];
             $stmt->execute();
         }
     } 
+    
     //Snoozeling Title
-
     if ($title) {
         $query = 'SELECT * FROM titles';
         $stmt = $pdo->prepare($query);
@@ -176,21 +178,58 @@ $userId = $_COOKIE['user_id'];
             $stmt->execute();
         } 
     } 
+    
+    //Snoozeling Job
+    if ($job) {
+        $query = 'SELECT * FROM jobs';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $check = 0;
+        foreach ($jobs as $jobcheck) {
+            if ($job === $jobcheck['name']) {
+                $check = 1;
+            }
+        }
+        if ($check == 0) {
+            header("Location: ../editPet?id=" . $id);
+            die();
+        } else {
+            $query = 'UPDATE snoozelings SET work = :work WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":work", $job);
+            $stmt->execute();
+        } 
+    } 
+    
+    //Pet's Mood
+    if ($mood) {
+        if(!($mood === "Happy" || $mood === "Sleepy" || $mood === "Overwhelmed" || $mood === "Anxious" || $mood === "Cheeky")) {
+            header("Location: ../index");
+            die();
+        }
+        
+        $query = "UPDATE snoozelings SET mood = :mood WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":mood", $mood);
+        $stmt->execute();
+    }
+    
     //Pet Inspiration
     if ($status) {
         if (!($status === "Closed" || $status === "Open" || $status === "Friends")) {
             header("Location: ../editPet?id=" . $id);
             die();
         } else {
-        $query = 'UPDATE snoozelings SET breedStatus = :breedStatus WHERE id = :id';
+            $query = 'UPDATE snoozelings SET breedStatus = :breedStatus WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":breedStatus", $status);
             $stmt->execute();
-    }
+        }
     } 
-    
-    
     
     //Bed
     if ($bed) {

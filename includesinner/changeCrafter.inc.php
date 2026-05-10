@@ -22,12 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
     
-    //Make Sure Pet has Correct Job
-    if (!($pet['job'] === "jack" || $pet['job'] === "Crafter")) {
-        header("Location: ../index");
-        die();
-    }
-    
     //Make Sure Pet isn't Crafting
     $query = 'SELECT * FROM craftingtables WHERE user_id = :id';
     $stmt = $pdo->prepare($query);
@@ -51,6 +45,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $id);
     $stmt->bindParam(":user", $userId);
     $stmt->execute();
+    
+    //Reply
+    $reply = $pet['name'] . " is now the lead crafter on this project.";
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+    
     header("Location: ../crafting");
     
     

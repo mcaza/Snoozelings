@@ -2071,9 +2071,13 @@ select {
     }
     
     .craftingDeskContainer img {
-        width: 400px;
-        margin-left:75px;
-        margin-right:0;
+        width:  170px;
+        margin-bottom: -60px;
+        margin-right: -40px;
+    }
+    
+    .artcrafting {
+        width: 20rem;
     }
     
     .recipe {
@@ -2098,7 +2102,8 @@ select {
     
     #dyepotimage {
         width: 130px;
-        margin-right: -50px;
+        margin-right: -20px;
+        margin-bottom: 15px;
     }
     
     .shopBox {

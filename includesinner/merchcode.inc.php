@@ -19,10 +19,67 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    
     //If results
     if ($result) {
-        if ($result['redeemed'] == 0) {
+        
+        //Unlimited Code
+        if ($result['unlimited'] == 1) {
+            
+            //Check if User has Redeemed Code Before
+            $redeemedBefore = explode(" ", $result['claimedBy']);
+            if (in_array($userId, $redeemedBefore)) {
+                //Code already redeemed
+                $reply = "That code has been previously redeemed on this account.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
+                header("Location: ../coderedemption");
+                die();
+            } else {
+                //Add User to Redeemed List
+                $newRedeemed = $result['claimedBy'] . ' ' . $userId;
+                $final = trim($newRedeemed);
+                
+                $query = 'UPDATE itemCodes SET claimedBy = :new WHERE code = :code';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":code", $cleancode);
+                $stmt->bindParam(":new", $final);
+                $stmt->execute();
+                
+                //Add Item to Inventory
+                $query = 'SELECT * FROM itemList WHERE name = :name';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":name", $result['item']);
+                $stmt->execute();
+                $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":list", $iteminfo['id']);
+                $stmt->bindParam(":user", $userId);
+                $stmt->bindParam(":name", $iteminfo['name']);
+                $stmt->bindParam(":display", $iteminfo['display']);
+                $stmt->bindParam(":description", $iteminfo['description']);
+                $stmt->bindParam(":type", $iteminfo['type']);
+                $stmt->bindParam(":rarity", $iteminfo['rarity']);
+                $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
+                $stmt->execute();
+                
+                //Redirect
+                $reply = "Code successfully redeemed. " . $iteminfo['display'] . " has been added to your backpack.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $userId);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
+                header("Location: ../coderedemption");
+                die();
+                
+            }
+            
+        } else if ($result['redeemed'] == 0) {
             //Add Item to Inventory
             $query = 'SELECT * FROM itemList WHERE name = :name';
             $stmt = $pdo->prepare($query);
@@ -47,27 +104,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":code", $cleancode);
             $stmt->execute();
-            $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
             //Redirect
-                $reply = "Code successfully redeemed. Your item has been added to your inventory.";
-        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":user_id", $userId);
-        $stmt->bindParam(":message", $reply);
-        $stmt->execute();
-            header("Location: ../coderedemption");
-
-        } else {
-            //Code already redeemed
-                $reply = "That code has already been redeemed.";
+            $reply = "Code successfully redeemed. " . $iteminfo['display'] . " has been added to your backpack.";
             $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":user_id", $userId);
             $stmt->bindParam(":message", $reply);
             $stmt->execute();
             header("Location: ../coderedemption");
+            die();
 
+        } else {
+            //Code already redeemed
+            $reply = "That code has already been redeemed.";
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":user_id", $userId);
+            $stmt->bindParam(":message", $reply);
+            $stmt->execute();
+            header("Location: ../coderedemption");
+            die();
         }
     } else {
         //If no results, throw error and redirect
@@ -78,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":message", $reply);
             $stmt->execute();
         header("Location: ../coderedemption");
-
+        die();
     }
     
 } else {

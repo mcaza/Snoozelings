@@ -11,6 +11,13 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $letter = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Get User Coin Count
+$query = "SELECT * FROM users WHERE id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$coinCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+
 //Get Sender Username
 $query = 'SELECT username, bonded FROM users WHERE id = :id';
 $stmt = $pdo->prepare($query);
@@ -83,6 +90,16 @@ if ($num < 3 || $num > 9) {
     if ($letter['anon'] == 1) {
         echo '<input type="hidden" name="penpal" value="' . $letter['penpalid'] . '">';
     }
+    
+    if(intval($coinCheck['coinCount']) > 1) {
+        echo '<label class="form" for="speedSend">Would you like to spend 2 Snooze Coins to send using Express Post?</label><br>';
+        echo '<select  class="input" name="speedSend"><br>';
+        echo '<option value="0">Nope. It can wait until the next Mail Delivery.</option>';
+        echo '<option value="1">Express Post for 2 Snooze Coins Please.</option>';
+        echo '</select><br>';
+    }
+    
+    
     echo '<button  class="fancyButton">Send Reply</button>';
     echo '</form>';
 }

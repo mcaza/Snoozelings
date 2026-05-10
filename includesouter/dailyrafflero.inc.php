@@ -26,7 +26,6 @@ if ($count > 2) {
     echo var_dump($array);
     $count = 0;
     
-    echo 'test1';
     foreach ($array as $round) {
     //Pick Winner
             $num = count($entries) - 1;
@@ -67,32 +66,41 @@ if ($count > 2) {
         $entries = array_values($entries);
         
         //Send Winner Mail
-        $zero = 0;
-        $one = 1;
-        $title = "You Won the Daily Raffle!!!";
-        $sender = 7;
-        $zero = 0;
-        $picture = "postmanNPC";
-        $now = new DateTime('now', new DateTimezone('UTC'));
-        $date = $now->format('Y-m-d H:i:s');
-        $message = 'Hello there fellow snoozeling!!!
-        
-        I brought you something. I believe it\'s a raffle prize?
-        
-        Oh yes!!! It\'s a ' . $raffles[$count]['display'] . '!
-        
-        Maybe I\'ll win next time. I could really use a new hat.';
-        $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
+        $query = 'SELECT * FROM users WHERE id = :id';
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":sender", $sender);
-        $stmt->bindParam(":reciever", $winner);
-        $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":message", $message);
-        $stmt->bindParam(":sent", $one);
-        $stmt->bindParam(":opened", $zero);
-        $stmt->bindParam(":sendtime", $date);
-        $stmt->bindParam(":picture", $picture);
+        $stmt->bindParam(":id", $winner);
         $stmt->execute();
+        $mailCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($mailCheck['raffleMail'] == 1) {
+            $zero = 0;
+            $one = 1;
+            $title = "You Won the Daily Raffle!!!";
+            $sender = 7;
+            $zero = 0;
+            $picture = "postmanNPC";
+            $now = new DateTime('now', new DateTimezone('UTC'));
+            $date = $now->format('Y-m-d H:i:s');
+            $message = 'Hello there fellow snoozeling!!!
+
+            I brought you something. I believe it\'s a raffle prize?
+
+            Oh yes!!! It\'s a ' . $raffles[$count]['display'] . '!
+
+            Maybe I\'ll win next time. I could really use a new hat.';
+            $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":sender", $sender);
+            $stmt->bindParam(":reciever", $winner);
+            $stmt->bindParam(":title", $title);
+            $stmt->bindParam(":message", $message);
+            $stmt->bindParam(":sent", $one);
+            $stmt->bindParam(":opened", $zero);
+            $stmt->bindParam(":sendtime", $date);
+            $stmt->bindParam(":picture", $picture);
+            $stmt->execute();
+        }
+        
         $count++;
         } 
     
@@ -134,33 +142,42 @@ if ($count > 2) {
             $stmt->bindParam(":price", $price);
             $stmt->execute();
             
-            //Send Letter
-            $zero = 0;
-            $one = 1;
-            $title = "You Received a Kindness Coin!!!";
-            $sender = 8;
-            $zero = 0;
-            $picture = "kindnessNPC";
-            $now = new DateTime('now', new DateTimezone('UTC'));
-            $date = $now->format('Y-m-d H:i:s');
-            $message = 'Guess what?!?!?
-            
-            An item you\'ve donated to the daily raffle has been randomly chosen. That means one lucky player will get a chance to win your item.
-            
-            Thank you so much for your contribution. It\'s donations like these that keep the kindness flowing.
-            
-            <i>One kindness coin has been added to your bank</i>';
-            $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
+            $query = 'SELECT * FROM users WHERE id = :id';
             $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":sender", $sender);
-            $stmt->bindParam(":reciever", $items[$rand]['donator_id']);
-            $stmt->bindParam(":title", $title);
-            $stmt->bindParam(":message", $message);
-            $stmt->bindParam(":sent", $one);
-            $stmt->bindParam(":opened", $zero);
-            $stmt->bindParam(":sendtime", $date);
-            $stmt->bindParam(":picture", $picture);
+            $stmt->bindParam(":id", $items[$rand]['donator_id']);
             $stmt->execute();
+            $mailCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            //Send Letter
+            if ($mailCheck['raffleMail'] == 1) {
+                $zero = 0;
+                $one = 1;
+                $title = "You Received a Kindness Coin!!!";
+                $sender = 8;
+                $zero = 0;
+                $picture = "kindnessNPC";
+                $now = new DateTime('now', new DateTimezone('UTC'));
+                $date = $now->format('Y-m-d H:i:s');
+                $message = 'Guess what?!?!?
+
+                An item you\'ve donated to the daily raffle has been randomly chosen. That means one lucky player will get a chance to win your item.
+
+                Thank you so much for your contribution. It\'s donations like these that keep the kindness flowing.
+
+                <i>One kindness coin has been added to your bank</i>';
+                $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":sender", $sender);
+                $stmt->bindParam(":reciever", $items[$rand]['donator_id']);
+                $stmt->bindParam(":title", $title);
+                $stmt->bindParam(":message", $message);
+                $stmt->bindParam(":sent", $one);
+                $stmt->bindParam(":opened", $zero);
+                $stmt->bindParam(":sendtime", $date);
+                $stmt->bindParam(":picture", $picture);
+                $stmt->execute();
+            }
+            
         } else {
             $one = 1;
             $query = 'SELECT * FROM itemList WHERE canDonate = :one';

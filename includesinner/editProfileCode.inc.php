@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pronouns = $_POST["pronouns"];
     $status = $_POST["status"];
     $friends = $_POST["friends"];
-    $messages = $_POST["messages"];
     $gifts = $_POST["birthdayGifts"];
     $bonded = $_POST["bonded"];
     $userId = $_COOKIE['user_id'];
@@ -43,10 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['Journal'])) {
         $shortCount++;
         $shortcutArray = $shortcutArray . $_POST['Journal'] . " ";
-    }
-    if (isset($_POST['Mailbox'])) {
-        $shortCount++;
-        $shortcutArray = $shortcutArray . $_POST['Mailbox'] . " ";
     }
     if (isset($_POST['Penpals'])) {
         $shortCount++;
@@ -180,22 +175,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     
-    //Alow Messages
-    if ($messages) {
-        if (!($messages === "0" || $messages === "1")) {
-            header("Location: ../editprofile?id=" . $userId);
-            die();
-        }
-    }
-    
-    //Alow Messages
-    if ($gifts) {
-        if (!($gifts === "0" || $gifts === "1")) {
-            header("Location: ../editprofile?id=" . $userId);
-            die();
-        }
-    }
-    
     //Bonded Update
     if ($bonded) {
         $query = 'SELECT * FROM snoozelings WHERE owner_id = :id AND id = :petid';
@@ -227,14 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":gifts", $gifts);
     $stmt->execute();
     
-    //Update Mailbox Color
-    if ($mailbox) {
-        $query = 'UPDATE users SET mailbox = :mailbox WHERE id = :id';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":mailbox", $mailbox);
-        $stmt->bindParam(":id", $userId);
-        $stmt->execute();
-    }
+    
     
     //Update Status
     if ($status) {

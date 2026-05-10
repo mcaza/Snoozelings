@@ -25,13 +25,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     }
     
+    
+    
     //Check Limit
     //Check for Friend Limit
-    $query = 'SELECT friendList FROM users WHERE id = :id';
+    $query = 'SELECT * FROM users WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $query = 'SELECT * FROM users WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $result2 = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    
     if ($result2) {
         $list = explode(" ", $result2['friendList']);
         $count = count($list);
@@ -47,10 +57,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     
+    if ($result) {
+        $list = explode(" ", $result['friendList']);
+        $count = count($list);
+        if ($count === 50) {
+                $reply = "The user who sent this friend request is already at the 50 friend limit.";
+                $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":user_id", $id);
+                $stmt->bindParam(":message", $reply);
+                $stmt->execute();
+                header("Location: ../friends");
+                die();
+        }
+    }
+    
     //Check if they are on friend list
     if ($result) {
         $list = explode(" ", $result['friendList']);
         if (in_array($id, $list)) {
+                $query = 'DELETE FROM friendRequests WHERE newFriend = :id AND sender = :sender;';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":id", $userId);
+                $stmt->bindParam(":sender", $id);
+                $stmt->execute();
+            
                 $reply = "This user is already in your friend list.";
                 $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
                 $stmt = $pdo->prepare($query);
@@ -62,42 +93,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
     
-    if ($result) {
-    $list = explode(" ", $result['friendList']);
-    if (in_array($id, $list)) {
-            //Delete Request
-            $query = 'DELETE FROM friendRequests WHERE newFriend = :id AND sender = :sender;';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":id", $userId);
-            $stmt->bindParam(":sender", $id);
-            $stmt->execute();
-            header("Location: ../friends");
-            die();
-        }
-    }
-    
     //Add to Friends List
-    if ($result) {
-        $friends = $result['friendList'] . " " . $id;
-    } else {
-        $friends = $id;
-    }
+    $friends = $result['friendList'] . " " . $id;
+    $final = trim($friends);
     $query = 'UPDATE users SET friendList = :friends WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
-    $stmt->bindParam(":friends", $friends);
+    $stmt->bindParam(":friends", $final);
     $stmt->execute();
     
     //Add to Their Friend List
-    if ($result2) {
-        $friends = $result2['friendList'] . " " . $userId;
-    } else {
-        $friends = $userId;
-    }
+    $friends = $result2['friendList'] . " " . $userId;
+    $final = trim($friends);
+
     $query = 'UPDATE users SET friendList = :friends WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
-    $stmt->bindParam(":friends", $friends);
+    $stmt->bindParam(":friends", $final);
     $stmt->execute();
     
     //Delete Request

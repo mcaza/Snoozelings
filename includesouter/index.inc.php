@@ -180,7 +180,7 @@ if (isset($_COOKIE['user_id'])) {
     echo '<div class="indexBox">';
     echo '<h4 style="margin-top: 0;margin-bottom: 1.5rem;">Game Resources</h4>';
     echo '<p><a href="gameGuides" class="notif">1. Reference Pages</a></p>';
-    echo '<p><a href="https://discord.gg/p6wr4NBrx9" class="notif">2. Discord Server</a></p>';
+    echo '<p><a href="https://discord.gg/EemkScrDpV" class="notif">2. Discord Server</a></p>';
     echo '</div>';
     
     echo '</div>';
@@ -283,11 +283,11 @@ if (isset($_COOKIE['user_id'])) {
     echo '<img src="resources/Banner8.png" style="width:70%">';
     echo '<p style="font-size: 2rem"><b>Early Access Code Sales:</b> <a href="premiumshop">Open</a></p>';
     echo '<p style="font-size: 2rem"><b>Early Access Launch:</b> September 1st, 2024</p>';
-    echo '<p style="font-size: 2rem; border-bottom: 2px dashed #827188;padding-bottom:2rem; margin-bottom: 2rem;"><b>Free Launch:</b> Winter 2025</p>';
+    echo '<p style="font-size: 2rem; border-bottom: 2px dashed #827188;padding-bottom:2rem; margin-bottom: 2rem;"><b>Free Launch:</b> Second Half of 2026</p>';
     
     
     echo '<img src="resources/Banner7.png" style="width:70%"><br>';
-    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;"><a href="https://discord.gg/HDs66g7QeJ"><img style="width: 10%;"src="https://static-00.iconduck.com/assets.00/discord-icon-2048x2048-nnt62s2u.png"></a></p>';
+    echo '<p style="border-bottom: 2px dashed #827188;padding-bottom:2rem;"><a href="https://discord.gg/EemkScrDpV"><img style="width: 10%;"src="resources/discordLogo.png"></a></p>';
     echo '<img src="resources/Banner9.png" style="width:70%"><br>';
     echo '<div style="display:flex;">';
     echo '<div id="mc_embed_shell" style="margin-left:auto;margin-right:auto;color:black;">
