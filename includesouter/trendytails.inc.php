@@ -56,7 +56,12 @@ if ($reply) {
 //Will have cute snoozeling for alpha. Custom art later
 echo '<div class="art-container">';
     echo "<div class='artStyle'>";
+if ($month == 6) {
+    echo "<img src='resources/trendyNakedPride.png' id='Base'>";
+} else {
     echo "<img src='resources/trendyNPC.png' id='Base'>";
+}
+    
     echo "</div>";
     echo "<div class='artStyle'>";
     echo "<img src='resources/Trendymane.png' id='HairLayer'>";

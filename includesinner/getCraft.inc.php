@@ -8,6 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_COOKIE['user_id'];
     $id = $_POST['id'];
     
+    //Pride Month Event Multiplier
+    $now = new DateTime('now', new DateTimezone('UTC'));
+    $month = $now->format('m');
+    $month = ltrim($month, '0');
+    
     //Get Crafting Table Info
     $query = 'SELECT * FROM craftingtables WHERE id = :id';
     $stmt = $pdo->prepare($query);
@@ -53,7 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 
     //Add EXP to Pet
-    $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
+    if ($month == 6) {
+        $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 2 WHERE id = :id';
+    } else {
+        $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
+    }
+    
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $result['pet_id']);
     $stmt->execute();

@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if($dyeCheck) {
         
     } else {
-            $reply = "You do not have any of the selected dye.";
+        $reply = "You do not have any of the selected dye.";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id", $userId);
@@ -92,6 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Create Array & Remove MothFluff
     unset($specials[$spot]); 
     $removedSpecials = array_values($specials);
+    
+
     
     //Add new mothfluff
     $color = str_replace("Dye", "", $dye);
@@ -110,6 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
     }
+    
     
     if ($dye == "WhiteDye") {
         $special = "MothFluff";

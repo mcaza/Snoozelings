@@ -10,7 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST["number"]) {
         $id = $_POST["number"];
     } else {
-        $id = 0;
+        do {
+            $num = rand(101,999);  
+            $query = 'SELECT * FROM earlyaccess WHERE chosenID = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $num);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$result) {
+                $id = $num;
+            } 
+        } while (!$id);
     }
     
     //Check Email

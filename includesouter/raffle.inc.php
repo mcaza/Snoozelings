@@ -208,7 +208,7 @@ echo '<h3>Donate an Item</h3>';
 echo '<p><i>Raffle items are randomly drawn from the donation pool everyday.</i></p>';
 echo '<p><i>You will recieve 1 Kindness Coin if your item is used.</i></p>';
 
-$query = 'SELECT * FROM items WHERE user_id = :id AND canDonate = 1 AND dye IS NULL GROUP BY list_id, id';
+$query = 'SELECT * FROM items WHERE user_id = :id AND canDonate = 1 AND dye IS NULL ORDER BY name';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
@@ -220,9 +220,15 @@ if ($items) {
     echo '<label for="topic"  class="form">Select an Item to Donate:</label><br>';
     echo '<select name="donation" id="donation">';
     echo '<option value="" default selected>Select an Item</option>';
-    
+    $clothesarray2 = [];
         foreach ($items as $item) {
-            echo '<option value="' . $item['list_id'] . '" default selected>' . $item['display'] . '</option>';
+            if (in_array($item['name'], $clothesarray2)) {
+
+            } else {
+                echo '<option value="' . $item['list_id'] . '">' . $item['display'] . '</option>';
+                array_push($clothesarray2,$item['name']);
+            }
+            
     }
     
     echo '</select><br><br>';

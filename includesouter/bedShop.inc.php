@@ -23,6 +23,11 @@ $beds = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $total = $user['petBeds'] + count($beds);
 
+//Set Pride Outfits
+$now = new DateTime('now', new DateTimezone('UTC'));
+$month = $now->format('m');
+$month = ltrim($month, '0');
+
 //Calculate Bed Cost
 if ($total == 2) {
     $amount = 2;
@@ -113,7 +118,12 @@ if ($reply) {
 }
 
 //Show Image. Change Later
-echo '<img src="resources/bedNPC.png" style="width: 45%;">';
+if ($month == 6) {
+    echo '<img src="resources/sleepyPride.png" style="width: 45%;">';
+} else {
+    echo '<img src="resources/bedNPC.png" style="width: 45%;">';
+}
+
 
 if ($total < 15) {
     

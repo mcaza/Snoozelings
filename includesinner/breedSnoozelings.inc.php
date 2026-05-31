@@ -442,35 +442,30 @@ function breed($pdo, $first, $second, $user, $breeding, $breedid) {
     //Nose/Ear Color Selection
     
     //Check for Fabrics
-    $count = 0;
-    foreach ($fabrics as $fabric) {
-        if ($fabric == $one['noseColor']) {
-            $noseOne = $matches[$count];
-        } else {
-            $count++;
-        }
-    }
+    $query = 'SELECT * FROM fabrics where name = :name';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $one['noseColor']);
+    $stmt->execute();
+    $fabricOne = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    $count = 0;
-    foreach ($fabrics as $fabric) {
-        if ($fabric == $two['noseColor']) {
-            $noseTwo = $matches[$count];
-        } else {
-            $count++;
-        }
-    }
-    
-    if ($noseOne) {
-        $color1 = $noseOne;
+    if ($fabricOne) {
+        $color1 = $fabricOne['fallback'];
     } else {
         $color1 = $one['noseColor'];
     }
     
-    if ($noseTwo) {
-        $color2 = $noseTwo;
+    $query = 'SELECT * FROM fabrics where name = :name';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":name", $two['noseColor']);
+    $stmt->execute();
+    $fabricTwo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($fabricTwo) {
+        $color2 = $fabricTwo['fallback'];
     } else {
         $color2 = $two['noseColor'];
     }
+
     
     //Check if rare. Roll to pass down rare.
     $num = 0;

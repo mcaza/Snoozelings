@@ -3,6 +3,11 @@
 $userId = $_COOKIE['user_id'];
 $name = $_COOKIE['petName'];
 
+//Set Pride Outfits
+$now = new DateTime('now', new DateTimezone('UTC'));
+$month = $now->format('m');
+$month = ltrim($month, '0');
+
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="snoozevillage"><<</a>';
@@ -14,21 +19,33 @@ echo '<div class="shopRows">';
 
 echo '<a href="seedshop" class="shopBox">';
 echo '<div>';
-echo '<img src="resources/seedshopNPC.png" class="shopImg" >';
+if ($month == 6) {
+    echo '<img src="resources/sproutPride.png" class="shopImg" >';
+} else {
+    echo '<img src="resources/seedshopNPC.png" class="shopImg" >';
+}
 echo '<h4>Sprout\'s Seeds</h4>';
 echo '</div>';
 echo '</a>';
   
 echo '<a href="kindnessshop" class="shopBox">';
 echo '<div >';
-echo '<img src="resources/kindnessshopNPC.png" class="shopImg">';
+if ($month == 6) {
+    echo '<img src="resources/melodyPride.png" class="shopImg">';
+} else {
+    echo '<img src="resources/kindnessshopNPC.png" class="shopImg">';
+}
 echo '<h4>Kindness Boutique</h4>';
 echo '</div>';
 echo '</a>';
 
 echo '<a href="trendytails" class="shopBox">';
 echo '<div >';
-echo '<img src="resources/trendyNPCMenu.png" class="shopImg" style="width: 100%";">';
+if ($month == 6) {
+    echo '<img src="resources/trendyPride.png" class="shopImg" style="width: 100%";">';
+} else {
+    echo '<img src="resources/trendyNPCMenu.png" class="shopImg" style="width: 100%";">';
+}
 echo '<h4>Trendy Tails</h4>';
 echo '</div>';
 echo '</a>';
@@ -37,28 +54,44 @@ echo '</a>';
 
 echo '<a href="adoption" class="shopBox">';
 echo '<div >';
-echo '<img src="resources/adoptshopNPC.png" class="shopImg" style="width: 100%";">';
+if ($month == 6) {
+    echo '<img src="resources/missluluPride.png" class="shopImg" style="width: 100%";">';
+} else {
+    echo '<img src="resources/adoptshopNPC.png" class="shopImg" style="width: 100%";">';
+}
 echo '<h4>Adoption House</h4>';
 echo '</div>';
 echo '</a>';
 
 echo '<a href="bedShop" class="shopBox">';
 echo '<div >';
-echo '<img src="resources/bedNPC.png" class="shopImg" style="width: 100%";">';
+if ($month == 6) {
+    echo '<img src="resources/sleepyPride.png" class="shopImg" style="width: 100%";">';
+} else {
+    echo '<img src="resources/bedNPC.png" class="shopImg" style="width: 100%";">';
+}
 echo '<h4>Sleepy Head Beds</h4>';
 echo '</div>';
 echo '</a>';
 
 echo '<a href="stitcher" class="shopBox">';
 echo '<div >';
-echo '<img src="resources/sewingNPC.png" class="shopImg" style="width: 100%";">';
+if ($month == 6) {
+    echo '<img src="resources/minkyPride.png" class="shopImg" style="width: 100%";">';
+} else {
+    echo '<img src="resources/sewingNPC.png" class="shopImg" style="width: 100%";">';
+}
 echo '<h4>Snoozeling Stitcher</h4>';
 echo '</div>';
 echo '</a>';
 
 echo '<a href="clothingshop" class="shopBox">';
 echo '<div >';
-echo '<img src="resources/clothingShopCocoa.png" class="shopImg" style="width: 100%";">';
+if ($month == 6) {
+    echo '<img src="resources/cocoaPride.png" class="shopImg" style="width: 100%";">';
+} else {
+    echo '<img src="resources/clothingShopCocoa.png" class="shopImg" style="width: 100%";">';
+}
 echo '<h4>Clothing Shop</h4>';
 echo '</div>';
 echo '</a>';
@@ -72,7 +105,9 @@ $summer = new DateTime('June 20');
 $fall = new DateTime('September 22');
 $winter = new DateTime('December 21');
 
-if ($today >= $spring && $today < $summer) {
+if ($month == 6) {
+    echo '<img src="resources/codePride.png" class="shopImg" style="width: 100%";">';
+} else if ($today >= $spring && $today < $summer) {
     echo '<img src="resources/snowsummerNPC.png" class="shopImg" style="width: 100%";">';
 } else if ($today >= $summer && $today < $fall) {
     echo '<img src="resources/snowsummerNPC.png" class="shopImg" style="width: 100%";">';

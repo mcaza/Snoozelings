@@ -20,6 +20,11 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Set Pride Outfits
+$now = new DateTime('now', new DateTimezone('UTC'));
+$month = $now->format('m');
+$month = ltrim($month, '0');
+
 //Top Div
 echo '<div class="topShop">';
 
@@ -53,7 +58,12 @@ if ($reply) {
 }
 
 //Show Image. Change Later
-echo '<img src="resources/clothingShopCocoa.png" style="width: 35%;">';
+if ($month == 6) {
+    echo '<img src="resources/cocoaPride.png" style="width: 35%;">';
+} else {
+    echo '<img src="resources/clothingShopCocoa.png" style="width: 35%;">';
+}
+
 
 //Get Plant Puns (Auto Set Valentine's Day or Birthday)
 echo '<p><i>"Part time mayor. Part time clothing model. Full time busy."</i></p>';

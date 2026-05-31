@@ -189,23 +189,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $previous = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($previous) {
-            if ($previous['four']) {
+            if (count($snoozes) == 4) {
                 $query = 'UPDATE exploringParties SET lastArea = :last, one = :one, two = :two, three = :three, four = :four, cooldownTime = :datetime WHERE user_id = :id';
-            } else if ($previous['three']) {
+            } else if (count($snoozes) == 3) {
                 $query = 'UPDATE exploringParties SET lastArea = :last, one = :one, two = :two, three = :three, cooldownTime = :datetime WHERE user_id = :id';
-            } else if ($previous['two']) {
+            } else if (count($snoozes) == 2) {
                 $query = 'UPDATE exploringParties SET lastArea = :last, one = :one, two = :two, cooldownTime = :datetime WHERE user_id = :id';
             } else {
                 $query = 'UPDATE exploringParties SET lastArea = :last, one = :one, cooldownTime = :datetime WHERE user_id = :id';
             }
             $stmt = $pdo->prepare($query);
-            if ($snoozes[1]) {
+            if (count($snoozes) > 1) {
                 $stmt->bindParam(":two", $snoozes[1]);
             }
-            if ($snoozes[2]) {
+            if (count($snoozes) > 2) {
                 $stmt->bindParam(":three", $snoozes[2]);
             }
-            if ($snoozes[3]) {
+            if (count($snoozes) > 3) {
                 $stmt->bindParam(":four", $snoozes[3]);
             }
             $stmt->bindParam(":id", $userId);
@@ -350,13 +350,13 @@ function pickItem($rarity, $area) {
             $randomNum = rand(0, $count);
             $item = $farmUncommon[$randomNum];
             array_push($itemsWon, $item);
-        } elseif ($rarity < 51) {
+        } elseif ($rarity < 56) {
             $coinsWon += 3;
-        } elseif ($rarity < 71) {
+        } elseif ($rarity < 81) {
             $coinsWon += 2;
-        } elseif ($rarity < 111) {
+        } elseif ($rarity < 131) {
             $coinsWon++;
-        } elseif ($rarity < 300) {
+        } elseif ($rarity < 311) {
             $count = count($farmCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $farmCommon[$randomNum];
@@ -385,13 +385,13 @@ function pickItem($rarity, $area) {
             $randomNum = rand(0, $count);
             $item = $woodsUncommon[$randomNum];
             array_push($itemsWon, $item);
-        } elseif ($rarity < 51) {
+        } elseif ($rarity < 56) {
             $coinsWon += 3;
-        } elseif ($rarity < 71) {
+        } elseif ($rarity < 81) {
             $coinsWon += 2;
-        } elseif ($rarity < 111) {
+        } elseif ($rarity < 131) {
             $coinsWon++;
-        } elseif ($rarity < 300) {
+        } elseif ($rarity < 311) {
             $count = count($woodsCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $woodsCommon[$randomNum];
@@ -420,13 +420,13 @@ function pickItem($rarity, $area) {
             $randomNum = rand(0, $count);
             $item = $oceanUncommon[$randomNum];
             array_push($itemsWon, $item);
-        } elseif ($rarity < 51) {
+        } elseif ($rarity < 56) {
             $coinsWon += 3;
-        } elseif ($rarity < 71) {
+        } elseif ($rarity < 81) {
             $coinsWon += 2;
-        } elseif ($rarity < 111) {
+        } elseif ($rarity < 131) {
             $coinsWon++;
-        } elseif ($rarity < 300) {
+        } elseif ($rarity < 311) {
             $count = count($oceanCommon) - 1;
             $randomNum = rand(0, $count);
             $item = $oceanCommon[$randomNum];

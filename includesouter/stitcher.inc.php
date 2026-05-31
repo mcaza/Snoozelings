@@ -10,6 +10,11 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Set Pride Outfits
+$now = new DateTime('now', new DateTimezone('UTC'));
+$month = $now->format('m');
+$month = ltrim($month, '0');
+
 //Get Page. Assign to 1 if no page
 $page = isset($_GET['page']) ? $_GET['page'] : "questions";
 
@@ -37,7 +42,12 @@ if ($reply) {
 }
 
 //Show Image. Change Later
-echo '<img src="resources/sewingNPC.png" style="width: 40%;">';
+if ($month == 6) {
+    echo '<img src="resources/minkyPride.png" style="width: 40%;">';
+} else {
+    echo '<img src="resources/sewingNPC.png" style="width: 40%;">';
+}
+
 
 if ($page === "questions") {
     echo '<p><i>"Welcome to my sewing studio. How can I help you?"</i></p>';

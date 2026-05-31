@@ -7,6 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = $_COOKIE['user_id'];
     $id = $_POST['request'];
     
+    //Pride Month Event Multiplier
+    $now = new DateTime('now', new DateTimezone('UTC'));
+    $month = $now->format('m');
+    $month = ltrim($month, '0');
+    
     //Get Request Information
     $query = "SELECT * FROM requests WHERE id = :id";
     $stmt = $pdo->prepare($query);
@@ -64,7 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    $points = intval($user['requestPoints']) + intval($request['points']);
+    
+    if ($month == 6) {
+        $points = intval($user['requestPoints']) + intval($request['points']) + intval($request['points']);
+    } else {
+        $points = intval($user['requestPoints']) + intval($request['points']);
+    }
+    
+    
     
     //Check if points are 10. If so, reward kindness coin and subtract 10
     if ($points > 9) {

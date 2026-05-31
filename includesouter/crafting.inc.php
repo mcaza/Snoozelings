@@ -59,7 +59,7 @@ $interval = $future_date->diff($now);
 
 //Get Level
 $exp = $pet['craftEXP'];
-if ($exp < 50 || $pet['job'] === "jack") {
+if ($exp < 50) {
     $level = 1;
 } elseif ($exp < 150) {
     $level = 2;
@@ -156,6 +156,7 @@ echo '<a href="crafting?type=clothes" class="craftbutton">Clothing</a>';
 echo '<a href="crafting?type=dye" class="craftbutton">Dyes</a>';
 echo '<a href="crafting?type=design" class="craftbutton">Designs</a>';
 echo '<a href="crafting?type=special" class="craftbutton">Special</a>';
+echo '<a href="crafting?type=event" class="craftbutton">Event</a>';
 echo '</div>';
 
 
@@ -167,6 +168,8 @@ $month = ltrim($month, '0');
 
 
 echo '<div class="recipebuttons" style="margin-top:2rem;">';
+
+/*
 foreach ($allRecipes as $recipe) {
 
     if ($month == $recipe['month']) {
@@ -194,9 +197,9 @@ foreach ($allRecipes as $recipe) {
             }
         }
         if ($yes == 1) {
-            echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe have">';
+            echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe have" onclick="this.innerHTML = \'\';">';
         } else {
-            echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe">';
+            echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe" onclick="this.innerHTML = \'\';">';
         }
         
     } else {
@@ -226,7 +229,7 @@ foreach ($allRecipes as $recipe) {
     }
     }
 }
-
+*/
 
 
 /*
@@ -246,7 +249,7 @@ $stmt->execute();
 $inv = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($allRecipes as $recipe) {
-    if ($recipe['month'] == 0) {
+    if ($recipe['month'] == 0 || $recipe['month'] == $month) {
         //Get Items & Numbers
         $items = explode(" ", $recipe['items']);
         $numbers = explode(" ", $recipe['numbers']);
@@ -285,9 +288,9 @@ foreach ($allRecipes as $recipe) {
 
             }
             if ($yes == 1) {
-                echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe have">';
+                echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe have" onclick="this.innerHTML = \'\';">';
             } else {
-                echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe">';
+                echo '<a href="includes/startrecipe.inc.php?id=' . $recipe['id'] . '" class="recipe" onclick="this.innerHTML = \'\';">';
             }
 
         } else {

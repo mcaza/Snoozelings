@@ -22,6 +22,11 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $player = $stmt->fetch(PDO::FETCH_ASSOC);
 
+//Set Pride Outfits
+$now = new DateTime('now', new DateTimezone('UTC'));
+$month = $now->format('m');
+$month = ltrim($month, '0');
+
 //Top Div
 echo '<div class="topShop">';
 
@@ -55,7 +60,12 @@ if ($reply) {
 }
 
 //Show Image. Change Later
-echo '<img src="resources/kindnessNPC.png" style="width: 35%;">';
+if ($month == 6) {
+    echo '<img src="resources/melodyPride.png" style="width: 25%;">';
+} else {
+    echo '<img src="resources/kindnessNPC.png" style="width: 35%;">';
+}
+
 
 //Get Plant Puns (Auto Set Valentine's Day or Birthday)
 echo '<p><i>"I know being kind is its own reward, but it doesn\'t hurt to spoil yourself every so often."</i></p>';

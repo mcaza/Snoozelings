@@ -30,18 +30,18 @@ if ($result['display']) {
 } 
 
 
+
 //Check if Pet is High Enough Level for Recipe
 $query = 'SELECT * FROM snoozelings WHERE id = :id';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $result['pet_id']);
 $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
+$exp = $pet['craftEXP'];
 
-if ($pet['job'] === 'jack' && $recipe['level'] > 1) {
-    header("Location: ../index");
-    die();
-} elseif ($pet['job'] === "Crafter") {
-    $exp = $pet['craftEXP'];
+
+
+    
     if ($exp < 50) {
         if ($recipe['level'] > 1) {
             header("Location: ../index");
@@ -68,7 +68,7 @@ if ($pet['job'] === 'jack' && $recipe['level'] > 1) {
             die();
         }
     }
-}
+
 
 //Check if Has Items
 $items = explode(" ", $recipe['items']);
@@ -95,18 +95,6 @@ foreach ($items as $item) {
     }
 }
 
-//Remove Items
-foreach ($items as $item) {
-    $key = array_search($item, $items);
-    for ($i = 0; $i < $numbers[$key]; $i++) {
-        $query = 'DELETE FROM items WHERE name = :name and user_id = :id LIMIT 1';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $userId);
-        $stmt->bindParam(":name", $item);
-        $stmt->execute();
-    }
-}
-
 //Set Time
 $now = new DateTime("now", new DateTimezone('UTC'));
 $minutes = 15;
@@ -122,6 +110,20 @@ $stmt->bindParam(":display", $recipe['display']);
 $stmt->bindParam(":name", $recipe['name']);
 $stmt->bindParam(":time", $formatted);
 $stmt->execute();
+
+//Remove Items
+foreach ($items as $item) {
+    $key = array_search($item, $items);
+    for ($i = 0; $i < $numbers[$key]; $i++) {
+        $query = 'DELETE FROM items WHERE name = :name and user_id = :id LIMIT 1';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":name", $item);
+        $stmt->execute();
+    }
+}
+
+
 
 //Reroute
 header("Location: ../crafting");

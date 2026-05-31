@@ -21,6 +21,11 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Set Pride Outfits
+$now = new DateTime('now', new DateTimezone('UTC'));
+$month = $now->format('m');
+$month = ltrim($month, '0');
+
 //Top Div
 echo '<div class="topShop">';
 
@@ -51,7 +56,13 @@ if ($reply) {
 }
 
 //Title & Photo
-echo '<div><img style="width: 35%;" src="resources/adoptshopNPC.png"></div>';
+echo '<div>';
+if ($month == 6) {
+    echo '<img src="resources/missluluPride.png" style="width: 35%;">';
+} else {
+    echo '<img style="width: 35%;" src="resources/adoptshopNPC.png">';
+}
+echo '</div>';
 
 //Text
 $check = 0;

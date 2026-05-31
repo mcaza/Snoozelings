@@ -99,8 +99,15 @@ if ($int === 0) {
     //Pick Seed
     echo '<label for="seed"  class="form">Choose A Seed:</label><br>';
     echo '<select  class="input" name="seed"><br>';
+    $clothesarray2 = [];
     foreach ($seeds as $seed) {
-        echo '<option value="' . $seed['name'] . '">' . $seed['display'] . '</option>';
+        if (in_array($seed['name'], $clothesarray2)) {
+
+            } else {
+                echo '<option value="' . $seed['name'] . '">' . $seed['display'] . '</option>';
+                array_push($clothesarray2,$seed['name']);
+            }
+        
     }
     echo '</select></br>';
     

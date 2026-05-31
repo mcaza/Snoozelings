@@ -36,7 +36,9 @@ $summer = new DateTime('June 20');
 $fall = new DateTime('September 22');
 $winter = new DateTime('December 21');
 
-if ($today >= $spring && $today < $summer) {
+if ($month == 6) {
+    echo '<img src="resources/codePride.png" class="shopImg" style="width: 45%";">';
+} else if ($today >= $spring && $today < $summer) {
     echo '<img src="resources/snowsummerNPC.png" class="shopImg" style="width: 50%";">';
 } else if ($today >= $summer && $today < $fall) {
     echo '<img src="resources/snowsummerNPC.png" class="shopImg" style="width: 50%";">';

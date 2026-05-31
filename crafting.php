@@ -89,7 +89,21 @@ require_once '../includes/verifySinglePet.inc.php';
 
     <!-- Script Link -->
    <script src="main.js"></script>
+    <script>
+        console.log('test1');
+    let link = document.querySelector("a");
+        
+        link.addEventListener("click", clickAndDisable);
+        
+        function clickAndDisable(e) {
+            console.log("test");
+            target.onclick = null;
+            $anchorScrolllink.removeEventListener("click", clickAndDisable);
+        }
+    
+    </script>
 
 </body>
 
 </html>
+
