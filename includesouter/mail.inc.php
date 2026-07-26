@@ -56,7 +56,12 @@ if ($letter['anon'] == 1) {
 }
 
 if ($letter['picture']) {
-    echo '<img src="resources/' . $letter['picture'] . '.png" style="width: 200px;">';
+    if ($letter['picture'] == "postmanNPC") {
+        echo '<a href="profile?id=5"><img src="resources/' . $letter['picture'] . '.png" style="width: 200px;"></a>';
+    } else {
+        echo '<img src="resources/' . $letter['picture'] . '.png" style="width: 200px;">';
+    }
+    
 } else if ($letter['anon'] == 1) {
     echo '<img src="resources/Anon.png" style="width: 200px;">';
 } else {

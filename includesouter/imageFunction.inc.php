@@ -4,11 +4,11 @@ function resetImage($snooze, $pdo) {
     
     //Hair Layering
     $attached = ['Floof'];
-    $bang = ['Braid','Forelock','Holiday','Knitted','LizardSpikes','Mane','Mohawk','Wave'];
+    $bang = ['Braid','Forelock','Holiday','Knitted','LizardSpikes','Mane','Mohawk','Wave','Curly','Messy'];
     $back = ['Braid','Forelock','Holiday','Wave','Mohawk'];
     $front = ['Braid','Holiday','Knitted'];
-    $spine = ['LizardSpikes'];
-    $chest = ['Mane'];
+    $spine = ['LizardSpikes','Messy'];
+    $chest = ['Mane','Curly'];
 
     //Get Pet Info For Testing
     $id = $snooze;
@@ -324,8 +324,8 @@ function resetImage($snooze, $pdo) {
     
 
     //Back Moth Piece
-    $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluff'];
-    $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluff'];
+    $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluffDisabilityPride','MothFluff'];
+    $mothArray = ['MothFluffRed','MothFluffOrange','MothFluffYellow','MothFluffGreen','MothFluffPurple','MothFluffBlack','MothFluffBrown','MothFluffPink','MothFluffGold','MothFluffSilver','MothFluffPastelPink','MothFluffPastelBrown','MothFluffPastelPurple','MothFluffPastelBlue','MothFluffTeal','MothFluffBlueberry','MothFluffGooseberry','MothFluffAceLove','MothFluffAnyLove','MothFluffAroLove','MothFluffDoubleLove','MothFluffFemaleLove','MothFluffFluidSelf','MothFluffMaleLove','MothFluffNewSelf','MothFluffRainbowLove','MothFluffUniqueSelf','MothFluffSpooky','MothFluffBlue','MothFluffDisabilityPride','MothFluff'];
          foreach ($mothArray as $moth) {
               if (strpos($pet["specials"], $moth) !== false) {
                   $mothtype = $moth;
@@ -392,6 +392,13 @@ function resetImage($snooze, $pdo) {
     //Chest Hair Piece
     if (!$hoodie && in_array($pet['hairType'],$chest)) {
         $url = '../Layers/Hair/' . $pet['hairType'] . '/Chest/' . $pet['hairColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    }
+    
+    //Spine Hair Piece
+    if (!$hoodie && in_array($pet['hairType'],$spine)) {
+        $url = '../Layers/Hair/' . $pet['hairType'] . '/Spine/' . $pet['hairColor'] . '.png';
         $image = imagecreatefrompng($url);
         imagecopy($outputImage,$image,0,0,0,0, $x, $y);
     }

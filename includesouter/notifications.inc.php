@@ -226,7 +226,7 @@ if ($tutorial < 4) {
             $count++;
         }
     }
-
+    
     //Finished Craft
     $query = 'SELECT * FROM craftingtables WHERE user_id = :id';
     $stmt = $pdo->prepare($query);
@@ -239,6 +239,12 @@ if ($tutorial < 4) {
             echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Finish Craft</a></div>';
             $count++;
         }
+    }
+    
+    //Start Craft
+    if ($user['craftNotify'] == 1 && $crafting['recipe_id'] == 0 ) {
+        echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Craft Item</a></div>';
+            $count++;
     }
 
     //Finished Dye

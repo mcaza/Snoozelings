@@ -18,7 +18,7 @@ $stmt->bindParam(":id", $id);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-//Grab USer Info from Database
+//Grab User Info from Database
 $query = "SELECT * FROM users WHERE id = :id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
@@ -202,7 +202,16 @@ echo '<select  class="input" name="status" id="status"><br>';
 echo '<option value="Closed"' . $closed . '>Closed</option>';
 echo '<option value="Open"' . $open . '>Open</option>';
 echo '<option value="Friends"' . $friends . '>Friends Only</option>';
-echo '</select><br>';
+echo '</select>';
+
+//Breeding Status Javascript
+if ($closed === "selected") {
+    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Only you can use this pet as inspiration.</p></div><br>';
+} elseif ($open === "selected") {
+    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any users can use this pet as inspiration.</p></div><br>';
+} elseif ($open === "Friends") {
+    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any friends can use this pet as inspiration.</p></div><br>';
+} 
 
 //List of Current Clothes (Adding Later)
 echo '<hr>';
@@ -249,7 +258,11 @@ echo '<option value=""></option>';
                     echo '<option value="' . $clothe['id'] . '">' . $clothe['display'] . '</option>';
                     //echo '<input type="checkbox" id="' . $clothe['id'] . '" name="' . $clothe['id'] . '" value="' . $clothe['id'] . $clothe['name'] . '"><label style="font-size: 1.7rem;" for="' . $clothe['id'] . '">   ' . $clothe['display'] . '</label><br><br>';
                 } }
+    //Remove All Clothes
+    echo '<option value="ALLCLOTHING">~~All Clothing~~</option>';
     echo '</select><br>';
+    
+    
 
 
 } else {
@@ -257,12 +270,7 @@ echo '<option value=""></option>';
 }
 
 
-//Breeding Status Javascript
-if ($closed === "selected") {
-    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Only you can use this pet as inspiration.</p></div>';
-} elseif ($open === "selected") {
-    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any users can use this pet as inspiration.</p></div>';
-}
+
 
 echo '<hr>';
 echo '<label for="bio"  class="form">Pet Bio:</label><br>';

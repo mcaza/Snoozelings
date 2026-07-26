@@ -61,9 +61,9 @@ if ($reply) {
 
 //Show Image. Change Later
 if ($month == 6) {
-    echo '<img src="resources/melodyPride.png" style="width: 25%;">';
+    echo '<a href="profile?id=8"><img src="resources/melodyPride.png" style="width: 35%;"></a>';
 } else {
-    echo '<img src="resources/kindnessNPC.png" style="width: 35%;">';
+    echo '<a href="profile?id=8"><img src="resources/kindnessNPC.png" style="width: 35%;"></a>';
 }
 
 

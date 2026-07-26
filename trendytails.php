@@ -105,6 +105,10 @@ require_once '../includes/verifySinglePet.inc.php';
              document.getElementById('HairLayer').src = "resources/Trendymane.png";
          }   else if (inputText === "Braid") {
              document.getElementById('HairLayer').src = "resources/Trendybraidhair.png";
+         } else if (inputText === "Curly") {
+             document.getElementById('HairLayer').src = "resources/Trendycurlyhair.png";
+         }   else if (inputText === "Messy") {
+             document.getElementById('HairLayer').src = "resources/Trendymessy.png";
          }
      }
      
@@ -120,6 +124,10 @@ require_once '../includes/verifySinglePet.inc.php';
              document.getElementById('TailLayer').src = "resources/Trendypom.png";
          }  else if (inputText === "Braid") {
              document.getElementById('TailLayer').src = "resources/Trendybraidtail.png";
+         }  else if (inputText === "Cropped") {
+             document.getElementById('TailLayer').src = "resources/Trendycropped.png";
+         }  else if (inputText === "Curly") {
+             document.getElementById('TailLayer').src = "resources/Trendycurlytail.png";
          }  
      }
     

@@ -8,12 +8,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $one = $_POST['petone'];
     $two = $_POST['pettwo'];
     
+    
     //Pet Info
     $query = "SELECT * FROM snoozelings WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $one);
     $stmt->execute();
     $pet = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    
     
     //Check Pet Confirmation
     if (!($one == $two)) {
@@ -65,8 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     $pets = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($pets as $pet) {
-        if ($one == $pet['id']) {
+    foreach ($pets as $x) {
+        if ($one == $x['id']) {
             $check = 1;
         }
     }
@@ -131,28 +134,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":name", $color);
         $stmt->execute();
         $rarity = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($rarity['rarity'] === "Common") {
-            $coins += 3;
-        } elseif ($rarity['rarity'] === "Uncommon") {
-            $coins += 5;
-        } elseif ($rarity['rarity'] === "Rare") {
-            $coins += 10;
+        if ($rarity['rarity'] == "Common") {
+            $coins = $coins + 3;
+        } elseif ($rarity['rarity'] == "Uncommon") {
+            $coins = $coins + 5;
+        } elseif ($rarity['rarity'] == "Rare") {
+            $coins = $coins + 10;
         } else {
-            $coins += 6;
+            $coins  = $coins + 6;
         }
     }
+    
+    
+    
     if ($pet['specials']) {
         $specials = explode(" ", $pet['specials']);
         $add = count($specials) * 5;
-        $coins += $add;
+        $coins = $coins + $add;
     }
+    
     
     //Add to Adoption
     $zero = 0;
     $query = 'INSERT INTO adopts (pet_id, owner_id, cost, datetime, name, available) VALUES (:pet, :owner, :cost, :date, :name, :available)';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":pet", $pet['id']);
-    $stmt->bindParam(":owner", $pet['owner_id']);
+    $stmt->bindParam(":pet", $one);
+    $stmt->bindParam(":owner", $userId);
     $stmt->bindParam(":cost", $coins);
     $stmt->bindParam(":date", $formatted);
     $stmt->bindParam(":name", $pet['name']);

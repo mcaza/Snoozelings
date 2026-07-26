@@ -24,19 +24,31 @@ $stmt->execute();
 $coins = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
+
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="snoozevillage"><<</a>';
 echo '</div>';
 
 if ($reply) {
+    //Image
+    $test = $reply['message'];
+    $test = str_replace("You drop your old coin into the well.<br><br>Stain: ","",$test);
+    $test = str_replace(" appears magically at your paws.","",$test);
+    $test = str_replace(" ","",$test);
+    $test = 'Stain' . $test;
+    
+    
     echo '<div class="returnBar" style="margin-top: 2rem;margin-bottom:1rem;">';
     echo '<p>' . $reply['message'] . '</p>';
+    echo '<img src="items/' . $test . '.png" style="width:75px">'; 
     echo '</div>';
     $query = "DELETE FROM replies WHERE user_id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
+    
+    
 }
 
 //Show Image. Change Later

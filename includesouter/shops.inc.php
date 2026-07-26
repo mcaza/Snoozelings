@@ -20,9 +20,9 @@ echo '<div class="shopRows">';
 echo '<a href="seedshop" class="shopBox">';
 echo '<div>';
 if ($month == 6) {
-    echo '<img src="resources/sproutPride.png" class="shopImg" >';
+    echo '<img src="resources/sproutPride.png" class="shopImg"  style="width: 100%";">';
 } else {
-    echo '<img src="resources/seedshopNPC.png" class="shopImg" >';
+    echo '<img src="resources/seedshopNPC.png" class="shopImg"  style="width: 100%";">';
 }
 echo '<h4>Sprout\'s Seeds</h4>';
 echo '</div>';
@@ -79,7 +79,7 @@ echo '<div >';
 if ($month == 6) {
     echo '<img src="resources/minkyPride.png" class="shopImg" style="width: 100%";">';
 } else {
-    echo '<img src="resources/sewingNPC.png" class="shopImg" style="width: 100%";">';
+    echo '<img src="resources/sewingprofileNPC.png" class="shopImg" style="width: 100%";">';
 }
 echo '<h4>Snoozeling Stitcher</h4>';
 echo '</div>';
@@ -107,14 +107,8 @@ $winter = new DateTime('December 21');
 
 if ($month == 6) {
     echo '<img src="resources/codePride.png" class="shopImg" style="width: 100%";">';
-} else if ($today >= $spring && $today < $summer) {
-    echo '<img src="resources/snowsummerNPC.png" class="shopImg" style="width: 100%";">';
-} else if ($today >= $summer && $today < $fall) {
-    echo '<img src="resources/snowsummerNPC.png" class="shopImg" style="width: 100%";">';
-} else if ($today >= $fall && $today < $winter) {
-    echo '<img src="resources/snowshopsummerNPC.png" class="shopImg" style="width: 100%";">';
 } else {
-    echo '<img src="resources/snowshopsummerNPC.png" class="shopImg" style="width: 100%";">';
+    echo '<img src="resources/CodeNPC.png" class="shopImg" style="width: 100%";">';
 }
 echo '<h4>Code Redemption</h4>';
 echo '</div>';

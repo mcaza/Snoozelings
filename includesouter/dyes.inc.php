@@ -39,7 +39,7 @@ $stmt->execute();
 $dyes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Select All Dyable Items
-$query = 'SELECT * FROM items WHERE user_id = :id AND dye IS NULL AND (type = "clothesHoodie" OR type = "clothesTop" OR type = "clothesBottom" OR type = "clothesBoth" OR name = "DesignMothFeathers")';
+$query = 'SELECT * FROM items WHERE user_id = :id AND dye IS NULL AND (type = "clothes")';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();

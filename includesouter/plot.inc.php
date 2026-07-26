@@ -4,6 +4,13 @@ $userId = $_COOKIE['user_id'];
 $seed = "seed";
 $plot = $_GET['id'];
 date_default_timezone_set('UTC');
+
+//Replies
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
     
 //Get All Seeds
 $query = "SELECT * FROM items WHERE user_id = :id AND type = :seed ORDER BY display";
@@ -43,6 +50,20 @@ if ($user['farmer']) {
 echo '<div class="leftRightButtons">';
 echo '<a href="farm"><<</a>';
 echo '</div>';
+
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
+    $itemPics = explode(" ",$reply['items']);
+    foreach ($itemPics as $pic) {
+        echo '<img src="items/' . $pic . '.png" style="width:35px">'; 
+    }
+    echo '</div>';
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+}
 
 //Div for Farm
 echo '<div class="itemPageRow" id="plottop">';

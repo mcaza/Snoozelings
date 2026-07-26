@@ -58,9 +58,9 @@ if ($reply) {
 //Title & Photo
 echo '<div>';
 if ($month == 6) {
-    echo '<img src="resources/missluluPride.png" style="width: 35%;">';
+    echo '<a href="profile?id=3"><img src="resources/missluluPride.png" style="width: 35%;"></a>';
 } else {
-    echo '<img style="width: 35%;" src="resources/adoptshopNPC.png">';
+    echo '<a href="profile?id=3"><img style="width: 35%;" src="resources/adoptshopNPC.png"></a>';
 }
 echo '</div>';
 

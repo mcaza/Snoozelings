@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $houseName = $_POST['house'];
     $backpackName = $_POST['backpack'];
     $mailbox = $_POST['mailbox'];
+    $craft = $_POST['craftingNotif'];
     $shortcutArray = "";
     $bio = $_POST['bio'];
     
@@ -160,6 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
         }
     }
+    
     //Mailbox Color
     if ($mailbox) {
         if (!($mailbox === 'blue' || $mailbox === 'cyan' || $mailbox === 'orange' || $mailbox === 'purple' || $mailbox === 'red')) {
@@ -167,6 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
         }
     }
+    
     //Allow Friend Requests
     if ($friends) {
         if (!($friends === "0" || $friends === "1")) {
@@ -197,13 +200,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Update Pronouns, Friend Requests, and Message Requests
-    $query = "UPDATE users SET pronouns = :pronouns, blockRequests = :friends, blockMessages = :messages, birthdayOptOut = :gifts WHERE id = :id";
+    $query = "UPDATE users SET pronouns = :pronouns, blockRequests = :friends, blockMessages = :messages, birthdayOptOut = :gifts, craftNotify = :craft WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":pronouns", $pronouns);
     $stmt->bindParam(":messages", $messages);
     $stmt->bindParam(":friends", $friends);
     $stmt->bindParam(":gifts", $gifts);
+    $stmt->bindParam(":craft", $craft);
     $stmt->execute();
     
     

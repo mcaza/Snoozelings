@@ -10,6 +10,7 @@ $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
+$itemPic = "";
 
 
 $number = intval($result['dailyPrize']);
@@ -28,7 +29,7 @@ $randomNum = rand(0, $count - 1);
     
 //Select Color if Bandana
 if ($items[$randomNum]['name'] == "Bandana") {
-    $colors = ['Basic', 'Yellow', 'Orange', 'Red', 'Green', 'Purple', 'Blue', 'Brown', 'Black', 'Pink', 'PastelBrown', 'PastelPink', 'PastelBlue', 'PastelPurple', 'Gooseberry', 'Blueberry', 'Teal'];
+    $colors = ['Basic', 'Yellow', 'Orange', 'Red', 'Green', 'Purple', 'Blue', 'Brown', 'Black', 'Pink', 'PastelBrown', 'PastelPink', 'PastelBlue', 'PastelPurple', 'Gooseberry', 'Blueberry', 'Teal', 'Grey', 'White'];
     $colcount = count($colors);
     $colnum = rand(0, $colcount - 1);
     $color = $colors[$colnum];
@@ -61,7 +62,7 @@ if ($items[$randomNum]['name'] == "Bandana") {
     $stmt->bindParam(":canDonate", $items[$randomNum]['canDonate']);
     $stmt->bindParam(":dye", $color);
     $stmt->execute(); 
-    
+    $itemPic = $itemname;
 } else {
     $itemdisplay = $items[$randomNum]['display'];
     
@@ -77,6 +78,8 @@ if ($items[$randomNum]['name'] == "Bandana") {
     $stmt->bindParam(":rarity", $items[$randomNum]['rarity']);
     $stmt->bindParam(":canDonate", $items[$randomNum]['canDonate']);
     $stmt->execute(); 
+    
+    $itemPic = $items[$randomNum]['name'];
 }
 
 
@@ -91,10 +94,11 @@ $stmt->execute();
 //Redirect
     $greeting = "You have received the following item: " . $itemdisplay;
     $reply = $greeting;
-    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $query = 'INSERT INTO replies (user_id, message, items) VALUES (:user_id, :message, :items)';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id", $userId);
     $stmt->bindParam(":message", $reply);
+    $stmt->bindParam(":items", $itemPic);
     $stmt->execute();
     header("Location: ../randomitem");
 } else {

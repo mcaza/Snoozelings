@@ -28,11 +28,11 @@ $userId = $_COOKIE['user_id'];
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Snoozeling Info
-            $query = 'SELECT * FROM snoozelings WHERE id = :id';
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":id", $id);
-            $stmt->execute();
-            $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+        $query = 'SELECT * FROM snoozelings WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
     
     //Snoozeling Own Check
     if (!($snooze['owner_id'] == $userId)) {
@@ -40,8 +40,82 @@ $userId = $_COOKIE['user_id'];
         die();
     }
     
+
     if ($clothing) {
     //Remove Clothing
+        
+        if ($clothing == "ALLCLOTHING") {
+            
+             $query = 'SELECT * FROM snoozelings WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+            $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+            $list = explode(" ", $snooze["clothes"]);
+            
+            //Check if Dyed
+            $query = "SELECT * FROM dyes";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+            $colors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            //Clothing Array
+            $query = 'SELECT * FROM snoozelings WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+            $snooze = $stmt->fetch(PDO::FETCH_ASSOC);
+            $list = explode(" ", $snooze["clothes"]);
+
+            foreach ($list as $item) {
+                
+                //Dye Check
+                $tempDye = null;
+                $itemName = $item;
+                foreach ($colors as $x) {
+                    if (str_ends_with($item, $x['name'])) {
+                        $tempDye = $x['name'];
+                        $itemName = str_replace($x['name'],"",$item);
+                    }
+                }
+                
+                //Return Item
+                //Get Name of Item
+                $query = 'SELECT * FROM itemList WHERE name = :name';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":name", $itemName);
+                $stmt->execute();
+                $item = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                    if ($tempDye == true) {
+                        $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate, dye) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate, :dye);";
+                    } else {
+                        $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
+                    }
+                   $stmt = $pdo->prepare($query);
+                   $stmt->bindParam(":list", $item['id']);
+                   $stmt->bindParam(":user", $userId);
+                   $stmt->bindParam(":name", $item['name']);
+                   $stmt->bindParam(":display", $item['display']);
+                   $stmt->bindParam(":description", $item['description']);
+                    $stmt->bindParam(":type", $item['type']);
+                    $stmt->bindParam(":rarity", $item['rarity']);
+                    $stmt->bindParam(":canDonate", $item['canDonate']);
+                    if ($tempDye == true) {
+                        $stmt->bindParam(":dye", $tempDye);
+                    }
+                    $stmt->execute(); 
+            }
+            
+            //Update Snoozeling
+            $new = "";
+            $query = 'UPDATE snoozelings SET clothes = :clothes WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":clothes", $new);
+            $stmt->execute();
+
+        } else {
     
     //Clothing Array
     $query = 'SELECT * FROM snoozelings WHERE id = :id';
@@ -127,7 +201,7 @@ $userId = $_COOKIE['user_id'];
     $stmt->execute(); 
     
     
-    }
+    } }
         
     
 

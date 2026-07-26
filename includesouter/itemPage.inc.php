@@ -18,7 +18,12 @@ $stmt->bindParam(":item", $id);
 $stmt->execute();
 $item = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
+//Replies Check
+$query = "SELECT * FROM replies WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$reply = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Get Snoozelings
 $query = "SELECT * FROM snoozelings WHERE owner_id = :id";
@@ -91,27 +96,27 @@ if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
 
 //Type Edit
 $type = ucfirst($item['type']);
-if ($item['type'] === 'clothesBottom') {
-    $type = "Clothes [Bottom]";
-}
-if ($item['type'] === 'clothesTop') {
-    $type = "Clothes [Top]";
-}
-if ($item['type'] === 'clothesHoodie') {
-    $type = "Clothes [Hoodie]";
-}
-if ($item['type'] === 'clothesBoth') {
-    $type = "Clothes [Both]";
-}
+
 
 //Back to Pack Arrows
  echo '<div class="leftRightButtons">';
 echo '<a href="pack"><<</a>';
 echo '</div>';
 
+if ($reply) {
+    echo '<div class="returnBar" style="margin-top: 2rem;margin-bottom:1rem;">';
+    echo '<p>' . $reply['message'] . '</p>';
+    echo '</div>';
+    
+    $query = "DELETE FROM replies WHERE user_id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+}
+
 echo '<div class="itemPageRow">';
 echo '<div class="itemPage">';
-if ($dyefix || $item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
+if ($dyefix || $item['type'] === 'clothes') {
     if ($dyefix[0] == "Basic") {
         echo '<img id="itemicon" src="items/' . $item['name'] . '.png" style="width: 150px;">';
         echo '<h4 id="colortitle">' . $item['display'] . /* ' [' . $dyedisplays[0] . ']' . */ '</h4>';
@@ -185,6 +190,7 @@ if ($results) {
         echo "<form method='POST' action='includes/useStain.inc.php' onsubmit=\"return confirm('Are you sure you want to apply this stain? This action cannot be reversed.');\">"; 
         echo '<label style="margin-top: 2rem;" for="pet" class="form">Apply to which Snoozeling?</label><br>';
         echo '<select class="input"  name="pet">';
+        echo '<option value=""></option>';
         foreach ($pets as $pet) {
             echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
         }
@@ -322,11 +328,12 @@ if ($results) {
         echo '<input type="hidden" name="item" value="' . $id . '">';
         echo '<button class="fancyButton">Add Bed Cover</button>';
         echo '</form>';
-    } else if ($item['type'] === 'clothesBottom' || $item['type'] === 'clothesTop' || $item['type'] === 'clothesHoodie' || $item['type'] === 'clothesBoth') {
+    } else if ($item['type'] === 'clothes') {
         echo '<form method="post" action="includes/wearClothes.inc.php">';
         echo '<input type="hidden" name="item" value="' . $id . '">';
         echo '<label for="pet"  class="form">Choose A Pet:</label><br>';
         echo '<select  class="input" name="pet" id="pet"><br>';
+        echo '<option value=""></option>';
         foreach ($snoozelings as $pet) {
             echo '<option value="' . $pet['id'] . '">' . htmlspecialchars($pet['name']) . '</option>';
         }
@@ -405,6 +412,7 @@ if ($results) {
         echo '<form method="post" action="includes/useBleach.inc.php">';
         echo '<label for="item"  class="form">Choose An Item:</label><br>';
         echo '<select  class="input" name="item" id="item"><br>';
+        echo '<option value=""></option>';
         foreach ($items as $item) {
             if (!str_contains($item['name'], "Bandana")) {
                 foreach ($dyes as $dye) {
@@ -420,6 +428,24 @@ if ($results) {
         echo '</select>';
         echo '<div><button class="fancyButton">Use Bleach</button></div>';
         echo '</form>';
+    }
+    
+    if ($item['type'] === 'fabric') {
+        echo '<hr>';
+        echo '<a href="/stitcher?page=fabric"><h1>Use at Minky\'s Shop</h1></a>';
+        echo '<a href="/stitcher?page=fabric"><img src="/resources/ProfileMinky.png" style="width:200px;"></a>';
+    }
+    
+    if ($item['type'] === 'design') {
+        echo '<hr>';
+        echo '<a href="/stitcher?page=design"><h1>Use at Minky\'s Shop</h1></a>';
+        echo '<a href="/stitcher?page=design"><img src="/resources/ProfileMinky.png" style="width:200px;"></a>';
+    }
+    
+    if ($item['name'] === 'SewingKit') {
+        echo '<hr>';
+        echo '<a href="/stitcher?page=new"><h1>Use at Minky\'s Shop</h1></a>';
+        echo '<a href="/stitcher?page=new"><img src="/resources/ProfileMinky.png" style="width:200px;"></a>';
     }
 }
 

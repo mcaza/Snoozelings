@@ -24,6 +24,7 @@ echo '</div>';
 if ($reply) {
     echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
     echo '<p>' . $reply['message'] . '</p>';
+    echo '<img src="items/' . $reply['items'] . '.png" style="width:75px">'; 
     echo '</div>';
     $query = "DELETE FROM replies WHERE user_id = :id;";
     $stmt = $pdo->prepare($query);
@@ -45,3 +46,12 @@ if ($number === 0) {
     echo '<p><i>You have already taken an item today.</i></p>';
     echo '<p><i>Please come back tomorrow.</i></p>';
 }
+
+//Exclusive Items
+echo '<hr><h2>Simon Exclusive Items</h2>';
+$items = ['BandanaBasic','BandanaBlack','BandanaBlue','BandanaBlueberry','BandanaBrown','BandanaGooseberry','BandanaGreen','BandanaGrey','BandanaOrange','BandanaPastelBlue','BandanaPastelBrown','BandanaPastelPink','BandanaPastelPurple','BandanaPink','BandanaPurple','BandanaRed','BandanaTeal','BandanaWhite','BandanaYellow'];
+echo '<div style="width:60%;margin-left:auto;margin-right:auto;">';
+foreach ($items as $item) {
+    echo '<img src="items/' . $item . '.png" style="width:60px;border-radius:5px;margin: 5px;" title="' . $item . '">';
+}
+echo '</div>';

@@ -1124,12 +1124,41 @@ a.selected {
     flex-wrap: wrap;
     row-gap: 2rem;
     column-gap: 2rem;
-    width: 70%;
+    width: 80%;
     margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
 }
+
+.stitcherDivs {
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    margin-left:auto;
+    margin-right:auto;
+    align-items:center;
+}
+
+.stitcherBoxes {
+    border:2px dashed #827188;
+    width:23%;
+    border-radius:10px;
+}
+
+.stitcherBoxes img {
+    width:65%
+}
+
+.stitcherBoxes img:hover {
+    width:70%;
+}
+
+.stitcherBoxes.centerBox {
+        margin-left:20px;
+        margin-right:20px;
+    }
+
 
 /* Farm Styles */
 .farmBoxes {
@@ -1224,6 +1253,11 @@ a.selected {
     transform: none;
     width: 90%;
 }
+
+.arttwo:hover {
+    
+}
+
 
 /* Item Page Styles */
 .itemPageRow {
@@ -1873,6 +1907,35 @@ select {
 }
 
 @media only screen and (max-width: 1081px) {
+    
+       .fabricItems {
+        width:95%;
+        column-gap: 0;
+    }
+    
+    .stitcherDivs {
+       flex-wrap: wrap; 
+    }
+    
+        .stitcherBoxes {
+    border:2px dashed #827188;
+    width:42%;
+        justify-content: center;
+    border-radius:10px;
+    margin-bottom:20px;
+        margin-left: 0px;
+        margin-right:0px;
+}
+
+.stitcherBoxes img {
+    width:65%
+}
+    
+    
+    .craftbuttons {
+
+        flex-wrap: wrap;
+}
     
     .invItem {
         width: 75px;

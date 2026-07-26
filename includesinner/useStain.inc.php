@@ -6,9 +6,24 @@ require_once '../../includes/log.inc.php';
 require_once '../../includes/imageFunction.inc.php';
 
 //Get Values
-$pet = $_POST['pet'];
 $part = $_POST['part'];
 $item = $_POST['item'];
+
+//Check for Pet
+    if ($_POST["pet"]) {
+        $pet = $_POST["pet"];
+    } else {
+        $greeting = "Please select a pet to use this stain on.";
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+        $return = "Location: ../item?id=" . $item;
+        header($return);
+        die();
+    }
 
 //Check if Snoozeling is Owned by Player
 $query = 'SELECT * FROM snoozelings WHERE id = :id AND owner_id = :owner';

@@ -236,6 +236,22 @@ echo '</select><br>';
 $yes = "";
 $no = "";
 
+//Crafting Notifications
+echo '<label for="craftingNotif" class="form">Crafting Notification:</label><br>';
+switch ($result['craftNotify']) {
+    case "1":
+        $yes = "selected";
+        break;
+    case "0":
+        $no = "selected";
+        break;
+}
+echo '<select class="input" name="craftingNotif">';
+echo '<option value="0"' . $no . '>No</option>';
+echo '<option value="1"' . $yes . '>Yes</option>';
+echo '</select><br>';
+$yes = "";
+$no = "";
 
 //Bonded Snoozeling
 echo '<label for="bonded" class="form">Change Bonded Snoozeling:</label><br>';

@@ -67,11 +67,17 @@ if ($temp === "Farmland") {
 }
 echo '<div class="returnItems">';
 
+echo $itemListTests;
 
 if ($reply) {
     echo '<div class="returnBar" style="margin-top: 2rem;margin-bottom:1rem;">';
     echo '<p>' . $reply['message'] . '</p>';
+    $itemPics = explode(" ",$reply['items']);
+    foreach ($itemPics as $pic) {
+        echo '<img src="items/' . $pic . '.png" style="width:35px">'; 
+    }
     echo '</div>';
+    
     $query = "DELETE FROM replies WHERE user_id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);

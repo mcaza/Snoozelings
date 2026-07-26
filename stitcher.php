@@ -95,12 +95,38 @@ require_once '../includes/verifySinglePet.inc.php';
         var value = document.getElementById('second').value;
                     
         if (value == "other") {
-            console.log('test');
-            document.getElementById('idbox').style.display = "block";
+            
         }  else {
-            document.getElementById('idbox').style.display = "none";
+            
         }
+        
+        
     }
+        
+        document.getElementById('second').onchange = (event) => {
+     var inputText = event.target.value;
+            if (inputText == "other") {
+                document.getElementById('secondImage').src = "resources/ProfileEmpty.png";
+                document.getElementById('idbox').style.display = "block";
+            } else {
+                document.getElementById('secondImage').src = "snoozeImages/" + inputText + ".png";
+                document.getElementById('idbox').style.display = "none";
+            }
+     
+            
+        }
+        
+        document.getElementById('hidden1').onchange = (event) => {
+     var inputText = event.target.value;
+     document.getElementById('secondImage').src = "snoozeImages/" + inputText + ".png";
+     
+ }
+        
+        document.getElementById('firstSelect').onchange = (event) => {
+     var inputText = event.target.value;
+     document.getElementById('firstPet').src = "snoozeImages/" + inputText + ".png";
+     
+ }
     </script>
 
 </body>

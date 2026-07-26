@@ -6,7 +6,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     //Get Values
     $userId = $_COOKIE['user_id'];
-    $id = $_POST['item'];
+    
+    //Check for Item
+    if ($_POST['item']) {
+        $id = $_POST["item"];
+    } else {
+        $greeting = "Please select an item to use the bleach on.";
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+        $return = "Location: ../item?id=263";
+        header($return);
+        die();
+    }
 
     //Check if Owner Owns that Item
     $query = "SELECT * FROM items WHERE id = :id";

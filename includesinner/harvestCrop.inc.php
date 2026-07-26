@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     $plot = $_POST['plot'];
     $farmer = $_POST['farmer'];
+    $longString = "";
     
     //Get Job + EXP
     $query = "SELECT job, farmEXP, name FROM snoozelings WHERE id = :farmer";
@@ -99,6 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":rarity", $itemInfo['rarity']);
     $stmt->bindParam(":canDonate", $itemInfo['canDonate']);
     $stmt->execute();
+        $longString = $longString . $itemInfo['name'] . ' ';
     }
     } else {
             $reply = "There was a small glitch in the snoozeling internet, but we promise your plant was harvested.";
@@ -136,10 +138,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":rarity", $itemInfo['rarity']);
         $stmt->bindParam(":canDonate", $itemInfo['canDonate']);
         $stmt->execute();
+        
+         $longString = $longString . $itemInfo['name'] . ' ';
     } else {
         $seed = 0;
     }
-    
+    $longString = trim($longString);
     
     //Update +1 to User Records
     $query = 'UPDATE users SET cropsHarvested = cropsHarvested + 1 WHERE id = :id';
@@ -159,6 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":plot", $plot);
     $stmt->execute(); 
     
+    
     if ($amount === 1 ) {
             $greeting = htmlspecialchars($snooze['name']) . ' harvested a single ' . $farm['plantName'] . '.';
         } elseif ($amount === 2 && ($name === "Cocoa Beans" || $name === "Black Beans")) {
@@ -173,15 +178,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Set Session Variables
     $reply = $greeting;
-    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":user_id", $userId);
-    $stmt->bindParam(":message", $reply);
-    $stmt->execute();
+        if($longString) {
+            $query = 'INSERT INTO replies (user_id, message, items) VALUES (:user_id, :message, :items)';
+        } else {
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        }
+        
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        if ($longString) {
+            $stmt->bindParam(":items", $longString);
+        }
+        $stmt->execute();
 
-                   
+    $location = "Location: ../plot?id=" . $plot;
     //Return
-    header("Location: ../farm");
+    header($location);
     
 } else {
 header("Location: ../farm.php");

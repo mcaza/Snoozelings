@@ -127,6 +127,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute(); */
 
         $itemNames = [];
+        
+        
        //Insert Items Into Player's Table
         foreach ($itemsWon as $item) {
             $query = 'SELECT * FROM itemList WHERE id = :id';
@@ -134,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":id", $item);
             $stmt->execute();
             $iteminfo = $stmt->fetch(PDO::FETCH_ASSOC);
-
+            
             $query = "INSERT INTO items (list_id, user_id, name, display, description, type, rarity, canDonate) VALUES (:list, :user, :name, :display, :description, :type, :rarity, :canDonate);";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":list", $item);
@@ -146,10 +148,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":rarity", $iteminfo['rarity']);
             $stmt->bindParam(":canDonate", $iteminfo['canDonate']);
             $stmt->execute();
-
+            
             array_push($itemNames, $iteminfo['display']);
         } 
-
+        
         if ($coinsWon) {
             //Add Coins to User
             $query = "UPDATE users SET coinCount = coinCount + :coins WHERE id = :id";
@@ -160,13 +162,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
 
+        
         //Get Update
         $now = new DateTime("now", new DateTimezone('UTC'));
         $hours = 2;
         $modified = (clone $now)->add(new DateInterval("PT{$hours}H")); 
         $formatted = $modified->format('Y-m-d H:i:s');
-
-
+        
+        
         //Update +1 to User Records
         $query = 'UPDATE users SET explores = explores + 1 WHERE id = :id';
         $stmt = $pdo->prepare($query);
@@ -180,6 +183,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":id", $pet);
             $stmt->execute();
         }
+        
+        
         
         //Update Party
         $query = "SELECT * FROM exploringParties WHERE user_id = :id";
@@ -240,12 +245,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute(); 
         }
         
+        
 
         $count = count($itemsWon);
         $i = 1;
 
         $itemString = implode(", ",$itemNames);
-
+        
+        $longString = "";
+        foreach ($itemNames as $displayImage) {
+            $tempIMG = str_replace(" ","",$displayImage);
+            $tempIMG = str_replace(":","",$tempIMG);
+            $longString = $longString . $tempIMG . ' ';
+        }
+        $longString = trim($longString);
 
 
         if ($itemString || $coinsWon > 0) {
@@ -272,10 +285,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
         $reply = $greeting;
-        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        if($longString) {
+            $query = 'INSERT INTO replies (user_id, message, items) VALUES (:user_id, :message, :items)';
+        } else {
+            $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        }
+        
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id", $userId);
         $stmt->bindParam(":message", $reply);
+        if ($longString) {
+            $stmt->bindParam(":items", $longString);
+        }
         $stmt->execute();
 
         header("Location: ../explore"); 

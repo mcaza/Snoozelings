@@ -119,9 +119,9 @@ if ($reply) {
 
 //Show Image. Change Later
 if ($month == 6) {
-    echo '<img src="resources/sleepyPride.png" style="width: 45%;">';
+    echo '<a href="profile?id=9"><img src="resources/sleepyPride.png" style="width: 45%;"></a>';
 } else {
-    echo '<img src="resources/bedNPC.png" style="width: 45%;">';
+    echo '<a href="profile?id=9"><img src="resources/bedNPC.png" style="width: 45%;"></a>';
 }
 
 

@@ -8,9 +8,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Grab Form Variables
     $userId = $_COOKIE['user_id'];
     $id = $_POST["item"];
-    $petid = $_POST["pet"];
     if ($_POST["color"]) {
         $color = $_POST["color"];
+    }
+    
+    //Check for Pet
+    if ($_POST["pet"]) {
+        $petid = $_POST["pet"];
+    } else {
+        $greeting = "Please select a pet to wear this item of clothing.";
+        $reply = $greeting;
+    $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId);
+    $stmt->bindParam(":message", $reply);
+    $stmt->execute();
+        $return = "Location: ../item?id=" . $id;
+        header($return);
+        die();
     }
     
     //Fetch Color

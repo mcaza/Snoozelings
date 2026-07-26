@@ -37,15 +37,9 @@ $fall = new DateTime('September 22');
 $winter = new DateTime('December 21');
 
 if ($month == 6) {
-    echo '<img src="resources/codePride.png" class="shopImg" style="width: 45%";">';
-} else if ($today >= $spring && $today < $summer) {
-    echo '<img src="resources/snowsummerNPC.png" class="shopImg" style="width: 50%";">';
-} else if ($today >= $summer && $today < $fall) {
-    echo '<img src="resources/snowsummerNPC.png" class="shopImg" style="width: 50%";">';
-} else if ($today >= $fall && $today < $winter) {
-    echo '<img src="resources/snowshopsummerNPC.png" class="shopImg" style="width: 50%";">';
-} else {
-    echo '<img src="resources/snowshopsummerNPC.png" class="shopImg" style="width: 50%";">';
+    echo '<a href="profile?id=6"><img src="resources/codePride.png" class="shopImg" style="width: 45%";"></a>';
+}  else {
+    echo '<a href="profile?id=6"><img src="resources/CodeNPC.png" class="shopImg" style="width: 45%";"></a>';
 }
 echo '<p><i>So many packages!!! I\'ll need your code to find the right one.</i></p><br>';
 

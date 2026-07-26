@@ -74,9 +74,9 @@ if ($reply) {
 
 //Show Image. Change Later
 if ($month == 6) {
-    echo '<img src="resources/sproutPride.png" style="width: 25%;">';
+    echo '<a href="profile?id=4"><img src="resources/sproutShopPride.png" style="width: 40%;"></a>';
 } else {
-    echo '<img src="resources/seedshop2NPC.png" style="width: 35%;">';
+    echo '<a href="profile?id=4"><img src="resources/sproutShop.png" style="width: 40%;"></a>';
 }
 
 //Get Plant Puns (Auto Set Valentine's Day or Birthday)
