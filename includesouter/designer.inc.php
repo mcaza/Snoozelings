@@ -105,21 +105,7 @@ if (strpos($pet["specials"], "Foxy") !== false) {
 }
 echo "</div>";  
 
-echo "<div class='artdesigner'>";
-if (strpos($pet["specials"], "Scales") !== false) {
-    echo "<img src='Layers/Markings/Scales/" . $pet["mainColor"] . ".png' id = 'Scalesdesigner'>";
-} else {
-    echo "<img src='' id = 'Scalesdesigner'>";
-}
-echo "</div>"; 
 
-echo "<div class='artdesigner'>";
-if (strpos($pet["specials"], "EarTip") !== false) {
-    echo "<img src='Layers/Other/EarTip.png' id = 'Eartipdesigner'>";
-} else {
-    echo "<img src='' id = 'Eartipdesigner'>";
-}
-echo "</div>";
 
 echo "<div class='artdesigner'>";
 if ($pet) {
@@ -139,6 +125,30 @@ if (strpos($pet["specials"], "Skeleton") !== false) {
     echo "<img src='Layers/Skeleton.png' id = 'Skeletondesigner'>";
 } else {
     echo "<img src='' id = 'Skeletondesigner'>";
+}
+echo "</div>";
+
+echo "<div class='artdesigner'>";
+if (strpos($pet["specials"], "Flurry") !== false) {
+    echo "<img src='Layers/Markings/Flurry/" . $pet["mainColor"] . ".png' id = 'Flurrydesigner'>";
+} else {
+    echo "<img src='' id = 'Flurrydesigner'>";
+}
+echo "</div>";
+
+echo "<div class='artdesigner'>";
+if (strpos($pet["specials"], "Scales") !== false) {
+    echo "<img src='Layers/Markings/Scales/" . $pet["mainColor"] . ".png' id = 'Scalesdesigner'>";
+} else {
+    echo "<img src='' id = 'Scalesdesigner'>";
+}
+echo "</div>"; 
+
+echo "<div class='artdesigner'>";
+if (strpos($pet["specials"], "EarTip") !== false) {
+    echo "<img src='Layers/Other/EarTip.png' id = 'Eartipdesigner'>";
+} else {
+    echo "<img src='' id = 'Eartipdesigner'>";
 }
 echo "</div>";
 
@@ -571,18 +581,34 @@ echo '<div>';
 echo '<label style="margin-bottom: 1rem;" class="form">Other Designs:</label><br>';
 
 echo '<div class="checkBoxDes">';
-if (strpos($pet["specials"], "Skeleton") !== false) {
-    echo '<input type="checkbox" id="skeleton" checked><label class="designerCheck" for="skeleton">Skeleton</label><br>';
-} else {
-    echo '<input type="checkbox" id="skeleton"><label class="designerCheck" for="skeleton">Skeleton</label><br>';
-}
-echo '</div>';
-
-echo '<div class="checkBoxDes">';
 if (strpos($pet["specials"], "Collie") !== false) {
     echo '<input type="checkbox" id="collie" checked><label class="designerCheck" for="collie">Collie</label><br>';
 } else {
     echo '<input type="checkbox" id="collie"><label class="designerCheck" for="collie">Collie</label><br>';
+}
+echo '</div>';
+
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "DualNose") !== false) {
+    echo '<input type="checkbox" id="dualnose" checked><label class="designerCheck" for="dualnose">Dual Nose</label><br>';
+} else {
+    echo '<input type="checkbox" id="dualnose"><label class="designerCheck" for="dualnose">Dual Nose</label><br>';
+}
+echo '</div>';
+
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "EarBands") !== false) {
+    echo '<input type="checkbox" id="earbands" checked><label class="designerCheck" for="earbands">Ear Bands</label><br>';
+} else {
+    echo '<input type="checkbox" id="earbands"><label class="designerCheck" for="earbands">Ear Bands</label><br>';
+}
+echo '</div>';
+
+echo '<div class="checkBoxDes">';
+if (strpos($pet["specials"], "Flurry") !== false) {
+    echo '<input type="checkbox" id="flurry" checked><label class="designerCheck" for="flurry">Flurry</label><br>';
+} else {
+    echo '<input type="checkbox" id="flurry"><label class="designerCheck" for="flurry">Flurry</label><br>';
 }
 echo '</div>';
 
@@ -603,20 +629,24 @@ if (strpos($pet["specials"], "Scales") !== false) {
 echo '</div>';
 
 echo '<div class="checkBoxDes">';
-if (strpos($pet["specials"], "DualNose") !== false) {
-    echo '<input type="checkbox" id="dualnose" checked><label class="designerCheck" for="dualnose">Dual Nose</label><br>';
+if (strpos($pet["specials"], "Skeleton") !== false) {
+    echo '<input type="checkbox" id="skeleton" checked><label class="designerCheck" for="skeleton">Skeleton</label><br>';
 } else {
-    echo '<input type="checkbox" id="dualnose"><label class="designerCheck" for="dualnose">Dual Nose</label><br>';
+    echo '<input type="checkbox" id="skeleton"><label class="designerCheck" for="skeleton">Skeleton</label><br>';
 }
 echo '</div>';
 
-echo '<div class="checkBoxDes">';
-if (strpos($pet["specials"], "EarBands") !== false) {
-    echo '<input type="checkbox" id="earbands" checked><label class="designerCheck" for="earbands">Ear Bands</label><br>';
-} else {
-    echo '<input type="checkbox" id="earbands"><label class="designerCheck" for="earbands">Ear Bands</label><br>';
-}
-echo '</div>';
+
+
+
+
+
+
+
+
+
+
+
 
 
 echo '</div>';

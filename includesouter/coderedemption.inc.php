@@ -1,6 +1,10 @@
 <?php
 
 $userId = $_COOKIE['user_id'];
+if ( $_GET['code']) {
+    $code = $_GET['code'];
+}
+
 
 $query = "SELECT * FROM replies WHERE user_id = :id;";
 $stmt = $pdo->prepare($query);
@@ -46,6 +50,10 @@ echo '<p><i>So many packages!!! I\'ll need your code to find the right one.</i><
 //Redeem Merch Code
 echo '<h1>Enter Your Code:</h1>';
 echo '<form method="post" action="includes/merchcode.inc.php">';
-echo '<input type="text" id="code" name="code"><br><br>';
+if ($code) {
+    echo '<input type="text" id="code" name="code" value="' . $code . '"><br><br>';
+} else {
+    echo '<input type="text" id="code" name="code"><br><br>';
+}
 echo "<button class='fancyButton'>Submit Code</button>";
 echo '</form>';

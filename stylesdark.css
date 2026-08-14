@@ -1270,6 +1270,20 @@ a.selected {
     
 }
 
+/* Flea Market Tables */
+
+.imageTwo {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+    z-index: 1;
+}
+
+.imageTwo img {
+    -webkit-transform: none;
+    transform: none;
+    width: 80%;
+}
+
 /* Item Page Styles */
 .itemPageRow {
     border: 2px dashed #888888;

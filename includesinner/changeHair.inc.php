@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Check Selection
-    if ($hair == "Braid" || $hair == "Mane" || $hair == "Floof" || $hair == "Forelock" || $hair == "Mohawk" || $hair == "Wave") {
+    if ($hair == "Braid" || $hair == "Mane" || $hair == "Floof" || $hair == "Forelock" || $hair == "Mohawk" || $hair == "Wave" || $hair == "Curly" || $hair == "Messy") {
         
     } else {
         header("Location: ../");

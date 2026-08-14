@@ -56,6 +56,21 @@ $exp = $pet['craftEXP'];
         $craftname =    "Hooked on Crafts";
     }
 
+$exp = $pet['sellingEXP'];
+    if ($exp < 50) {
+        $merchname = "   Level 1 Merchant";
+    } elseif ($exp < 150) {
+        $merchname = "   Level 2 Merchant";
+    } elseif ($exp < 325) {
+        $merchname = "   Level 3 Merchant";
+    } elseif ($exp < 600) {
+        $merchname = "   Level 4 Merchant";
+    } elseif ($exp < 1000) {
+        $merchname = "   Level 5 Merchant";
+    } else {
+        $merchname =    "   Rolling in Riches";
+    }
+
 //Back Arrow 
 echo '<div class="leftRightButtons">';
 echo '<a href="pet?id=' . $id . '"><<</a>';
@@ -128,6 +143,27 @@ echo '<label for="Crafter" class="jobtitle">' . $craftname . '</label><br>';
 echo '<p>Higher Level Unlocks More Recipes</p>';
 //Calculate Values for Each Job. Display Radio Button then Job
 echo '<div class="progressbar"title="' . ceil($pet['craftEXP']) . '/1000" style="overflow:hidden">';
+echo '<div class="innerbar" style="width:' . $percent . '%;border-radius: 0;"title="' . $num . '/1000">' . $input . '</div>';
+echo '</div>';
+
+//Merchant Job
+$input = "";
+$percent = ceil($pet['sellingEXP'] / 10);
+if ($percent > 5) {
+    $input = $percent . '%';
+}
+if ($percent > 100) {
+    $input = 100 . '%';
+}
+if ($pet['craftEXP'] > 1000) {
+    $num = 1000;
+} else {
+    $num = ceil($pet['sellingEXP']);
+}
+echo '<label for="Crafter" class="jobtitle">' . $merchname . '</label><br>';
+echo '<p>Earn More Coins at the Flea Market</p>';
+//Calculate Values for Each Job. Display Radio Button then Job
+echo '<div class="progressbar"title="' . ceil($pet['sellingEXP']) . '/1000" style="overflow:hidden">';
 echo '<div class="innerbar" style="width:' . $percent . '%;border-radius: 0;"title="' . $num . '/1000">' . $input . '</div>';
 echo '</div>';
 

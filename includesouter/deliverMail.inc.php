@@ -20,7 +20,7 @@ $stmt->bindParam(":one", $one);
 $stmt->execute();
 
 //Mark Deliveries
-$query = 'UPDATE breedings SET status = :one WHERE status = :zero';
+$query = 'UPDATE breedings SET status = :one WHERE status = :zero AND blueprint IS NOT NULL';
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":zero", $one);
 $stmt->bindParam(":one", $two);

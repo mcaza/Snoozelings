@@ -133,7 +133,7 @@ if (!($pet['gotchaDate'] === null)) {
     echo '<p class="snoozelinginfo"><strong>Gotcha Day: </strong>' . $monthArray[$joinMonth -1] . " " . $joinDay;
 }
 echo '<p class="snoozelinginfo"><strong>Current Job: </strong>' . $pet['work'];
-echo '<p class="snoozelinginfo"><strong>Total Experience: </strong>' . $experience . ' / 3000'; 
+echo '<p class="snoozelinginfo"><strong>Total Experience: </strong>' . $experience . ' / 4000'; 
 if ($pet['breedStatus'] == "Friends") {
     echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>Friends Only';
 } else if ($block == 1) {

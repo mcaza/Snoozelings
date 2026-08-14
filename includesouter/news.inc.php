@@ -1,3 +1,3 @@
 <?php
 
-echo '<div id="newsBox">If you experience any bugs with our new Image system, be sure to send in a <a href="/moderatormail" target="_blank">Moderator Mail</a> ticket.</div>';
+echo '<div id="newsBox">Check out our <a href="https://discord.gg/dsRJbU4st">Discord Server</a> to join our NPC Naming Contest!!</div>';

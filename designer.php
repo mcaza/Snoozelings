@@ -139,6 +139,10 @@ require_once '../includes/verifySinglePet.inc.php';
         if (checkBox.checked == true) {
             document.getElementById('Scalesdesigner').src = "Layers/Markings/Scales/" + inputText + ".png";
         }
+     var checkBox = document.getElementById("flurry");
+        if (checkBox.checked == true) {
+            document.getElementById('Flurrydesigner').src = "Layers/Markings/Flurry/" + inputText + ".png";
+        }
  }
  
  document.getElementById('skinColor').onchange = (event) => {
@@ -244,6 +248,16 @@ require_once '../includes/verifySinglePet.inc.php';
             document.getElementById('Bellydesigner').src = "Layers/Markings/Belly/" + mainColor + ".png";
         } else {
             document.getElementById('Bellydesigner').src = "";
+        }
+ }
+    
+    document.getElementById('flurry').onchange = (event) => {
+        var mainColor = document.getElementById('mainColor').value;
+        var checkBox = document.getElementById("flurry");
+        if (checkBox.checked == true) {
+            document.getElementById('Flurrydesigner').src = "Layers/Markings/Flurry/" + mainColor + ".png";
+        } else {
+            document.getElementById('Flurrydesigner').src = "";
         }
  }
     

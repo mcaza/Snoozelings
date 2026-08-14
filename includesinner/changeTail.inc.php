@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Check Selection
-    if ($tail == "Braid" || $tail == "Pom" || $tail == "Dragon" || $tail == "Long" || $tail == "Nub") {
+    if ($tail == "Braid" || $tail == "Pom" || $tail == "Dragon" || $tail == "Long" || $tail == "Nub" || $tail == "Curly" || $tail == "Cropped") {
         
     } else {
         header("Location: ../");
