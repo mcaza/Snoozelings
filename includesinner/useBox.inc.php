@@ -1,8 +1,10 @@
 <?php
+
 require_once '../../includes/dbh-inc.php';
 require_once '../../includes/config_session.inc.php';
 
-$userId = $_COOKIE['user_id'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") { 
+    $userId = $_COOKIE['user_id'];
 
 //Check How Many Boxes. Max is Currently 9
 $query = 'SELECT * FROM farms WHERE user_id = :id';
@@ -45,4 +47,9 @@ if ($count < 9) {
     $stmt->bindParam(":message", $reply);
     $stmt->execute();
     header("Location: ../pack");
+}
+
+     //Redirect
+    } else {
+     header("Location: ../index");
 }

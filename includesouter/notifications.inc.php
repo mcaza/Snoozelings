@@ -246,6 +246,18 @@ if ($tutorial < 4) {
         echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Craft Item</a></div>';
             $count++;
     }
+    
+    //Check For Flea Market Coins
+    $query = 'SELECT * FROM marketTables WHERE user_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $marketTable = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($marketTable['itemOne'] == "Coins" || $marketTable['itemTwo'] == "Coins"  || $marketTable['itemThree'] == "Coins"  || $marketTable['itemFour'] == "Coins" ) {
+        echo '<div class="notificationbox"><a href="fleaMarket" class="notif">' . $count . '. Collect Coins</a></div>';
+        $count++;
+    }
 
     //Finished Dye
     $query = 'SELECT * FROM dyebatches WHERE user_id = :id AND finished = 0';

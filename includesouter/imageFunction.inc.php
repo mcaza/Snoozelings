@@ -70,7 +70,6 @@ function resetImage($snooze, $pdo) {
         array_push($clothingInfo,$temp);
     }
     
-
     //Hoodie Check
     $hoodie = false;
     foreach ($clothingInfo as $check) {
@@ -78,6 +77,16 @@ function resetImage($snooze, $pdo) {
             $hoodie = true;
         }
     }
+    
+
+    //Prosthetic Check
+    $backLeg = false;
+    foreach ($clothingInfo as $check) {
+        if (str_contains($check['name'], "ProstheticLeg")) {
+            $backLeg = true;
+        }
+    }
+
 
     //Image Start
     $bg = '../Layers/transparentSquare.png';
@@ -180,15 +189,27 @@ function resetImage($snooze, $pdo) {
 
 
     //Primary Color
-    $url = '../Layers/Primary/' . $pet['mainColor'] . '.png';
-    $image = imagecreatefrompng($url);
-    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    if ($backLeg) {
+        $url = '../Layers/Prosthetics/BackLeg/Primary/' . $pet['mainColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    } else {
+        $url = '../Layers/Primary/' . $pet['mainColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    }
 
     //Cupid Marking
     if (strpos($pet["specials"], "Cupid") !== false) {
-        $url = '../Layers/Markings/Cupid/' . $pet['mainColor'] . '.png';
-        $image = imagecreatefrompng($url);
-        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        if ($backLeg) {
+            $url = '../Layers/Prosthetics/BackLeg/Markings/Cupid/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else {
+            $url = '../Layers/Markings/Cupid/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } 
     }
 
     //Spots Marking
@@ -200,30 +221,54 @@ function resetImage($snooze, $pdo) {
 
     //Boots Marking
     if (strpos($pet["specials"], "Boots") !== false) {
-        $url = '../Layers/Markings/Boots/' . $pet['mainColor'] . '.png';
-        $image = imagecreatefrompng($url);
-        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        if ($backLeg) {
+            $url = '../Layers/Prosthetics/BackLeg/Markings/Boots/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else {
+            $url = '../Layers/Markings/Boots/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
     }
 
     //Sublimation Marking
     if (strpos($pet["specials"], "Sublimation") !== false) {
-        $url = '../Layers/Markings/Sublimation/' . $pet['mainColor'] . '.png';
-        $image = imagecreatefrompng($url);
-        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        if ($backleg) {
+            $url = '../Layers/Prosthetics/BackLeg/Markings/Sublimation/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else {
+            $url = '../Layers/Markings/Sublimation/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
     }
 
     //Collie Marking
     if (strpos($pet["specials"], "Collie") !== false) {
-        $url = '../Layers/Other/Collie.png';
-        $image = imagecreatefrompng($url);
-        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        if ($backleg) {
+            $url = '../Layers/Prosthetics/BackLeg/Markings/Collie.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else {
+            $url = '../Layers/Other/Collie.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
     }
 
     //Foxy Marking
     if (strpos($pet["specials"], "Foxy") !== false) {
-        $url = '../Layers/Markings/Foxy/' . $pet['mainColor'] . '.png';
-        $image = imagecreatefrompng($url);
-        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        if ($backLeg) {
+            $url = '../Layers/Prosthetics/BackLeg/Markings/Foxy/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else {
+            $url = '../Layers/Markings/Foxy/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
     }
 
     //Scales Marking
@@ -240,16 +285,29 @@ function resetImage($snooze, $pdo) {
         imagecopy($outputImage,$image,0,0,0,0, $x, $y);
     }
 
-    //Scales Marking
-    if (strpos($pet["specials"], "Scales") !== false) {
-        $url = '../Layers/Markings/Scales/' . $pet['mainColor'] . '.png';
-        $image = imagecreatefrompng($url);
-        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
-    }
-
     //Skeleton Marking
     if (strpos($pet["specials"], "Skeleton") !== false) {
         $url = '../Layers/Other/Skeleton.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    }
+    
+    //Flurry Marking
+    if (strpos($pet["specials"], "Flurry") !== false) {
+        if ($backLeg) {
+            $url = '../Layers/Prosthetics/BackLeg/Markings/Flurry/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        } else {
+            $url = '../Layers/Markings/Flurry/' . $pet['mainColor'] . '.png';
+            $image = imagecreatefrompng($url);
+            imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+        }
+    }
+    
+    //Scales Marking
+    if (strpos($pet["specials"], "Scales") !== false) {
+        $url = '../Layers/Markings/Scales/' . $pet['mainColor'] . '.png';
         $image = imagecreatefrompng($url);
         imagecopy($outputImage,$image,0,0,0,0, $x, $y);
     }
@@ -300,9 +358,16 @@ function resetImage($snooze, $pdo) {
     }
 
     //Main Lines
-    $url = '../Layers/MainLines/' . $pet['mainColor'] . '.png';
-    $image = imagecreatefrompng($url);
-    imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    if ($backLeg) {
+        $url = '../Layers/Prosthetics/BackLeg/MainLines/' . $pet['mainColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    } else {
+        $url = '../Layers/MainLines/' . $pet['mainColor'] . '.png';
+        $image = imagecreatefrompng($url);
+        imagecopy($outputImage,$image,0,0,0,0, $x, $y);
+    }
+
 
     //Floof Hair
     if ($hoodie == false && in_array($pet['hairType'],$attached)) {

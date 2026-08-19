@@ -38,11 +38,17 @@ if ($reply) {
 }
 
 //Farm Name
-echo '<h3 style="margin-bottom: 2rem;">Flea Market Table #' . $id . '</h3>';
+echo '<h3 style="margin-bottom: 2rem;">Flea Market Table #' . $id + 1 . '</h3>';
 
 //Display Tables
 $items = ['itemOne', 'itemTwo', 'itemThree', 'itemFour'];
 $num = ['quantityOne', 'quantityTwo', 'quantityThree', 'quantityFour'];
+
+//Check if Coins
+$coinCheck = 0;
+if ($table[$items[$id]] == "Coins") {
+    $coinCheck = 1;
+}
 
 //Grab Display for item
 echo '<div class="farmBoxes">';
@@ -63,21 +69,35 @@ echo '<div class="farmBoxes">';
     echo "<img src='resources/marketOne.png'>";
     echo "</div>";
     echo "<div class='imageTwo' style='width:45%;margin-left:auto;margin-right:auto;margin-top:20px;'>";
-    echo "<img src='items/" . $table[$items[$id]] . ".png'>";
+    if ($table[$items[$id]]) {
+        echo "<img src='items/" . $table[$items[$id]] . ".png'>";
+    } 
+    
     echo "</div>";
     echo "</div>";
     
     //echo '<img src="resources/marketOne.png" class="farmBox">';
-    if ($table[$num[$x]] > 1) {
+    if ($table[$items[$id]] == "Coins") {
+        echo '<h4  style="margin-top:0;">Ready for Pickup</h4>';
+    } else if ($table[$num[$id]] > 1) {
         echo '<h4  style="margin-top:0;">' . $table[$num[$id]] . 'x ' . $item['multiples'] . '</h4>';
-    } else {
+    } else if ( $table[$num[$id]] == 1) {
         echo '<h4  style="margin-top:0;">' . $table[$num[$id]] . 'x ' . $item['display'] . '</h4>';
+    } else {
+        echo '<h4  style="margin-top:0;">Empty Table</h4>';
     }
-    echo '<p><b>Sell Price:</b> ' . $worth . ' Snooze Coins</p><br>';
+    if ($table[$items[$id]] == "Coins") {
+        echo '<p>' . $table[$num[$id]] . ' Snooze Coins</p><br>';
+        
+    } else {
+        echo '<p><b>Sell Price:</b> ' . $worth . ' Snooze Coins</p><br>';
+    }
+    
     
     echo '</div>';
 echo '</div><hr>';
 
+if ($coinCheck == 0) {
 //Change and Place Items
 $query = "SELECT * FROM items WHERE user_id = :id ORDER BY name";
 $stmt = $pdo->prepare($query);
@@ -103,7 +123,7 @@ foreach ($itemPrices as $y) {
 echo '<div><h3 style="margin-bottom: 1rem;">Change Item</div>';
 echo '<form method="POST" action="includes/tableItem.inc.php">';
 echo '<label for="status"  class="form">Choose Item:</label><br>';
-echo '<select  class="input" name="snoozeling" id="snoozeling"><br>';
+echo '<select  class="input" name="item" id="item"><br>';
 echo '<option value=""></option>';
 foreach ($items as $x) {
     $sellPrice = "";
@@ -122,7 +142,7 @@ foreach ($items as $x) {
                     }
                 }
                 
-                echo '<option value="' . $x['id'] . '">' . $x['display'] . ' - ' . $sellPrice . ' Each</option>';
+                echo '<option value="' . $x['list_id'] . '">' . $x['display'] . ' - ' . $sellPrice . ' Each</option>';
                 array_push($itemsList,$x['name']);
         } else {
                 array_push($itemsList,$x['name']);
@@ -132,21 +152,36 @@ foreach ($items as $x) {
 }
 echo '</select><br>';
 echo '<label for="status"  class="form">Choose Quantity:</label><br>';
-echo '<select  class="input" name="snoozeling" id="snoozeling"><br>';
-$nums = [1,2,3,5,10,15];
+echo '<select  class="input" name="quantity" id="quantity"><br>';
+$numbers = [1,2,3,5,10,15];
 echo '<option value=""></option>';
-foreach ($nums as $num) {
-    echo '<option value="' . $num . '">' . $num . '</option>';
+foreach ($numbers as $number) {
+    echo '<option value="' . $number . '">' . $number . '</option>';
 }
 echo '</select><br>';
+echo ' <input type="hidden" id="table" name="table" value="' . $id . '">';
 echo '<button  class="fancyButton">Change Item</button>';
 echo '</form>';
 
 
+if ($table[$num[$id]]) {
+    echo '<hr>';
+    echo '<div><h3 style="margin-bottom: 1rem;">Remove Item</div>';
+    echo '<form method="POST" action="includes/tableRemoveItem.inc.php" onsubmit="return confirm(\'Are you sure you want to remove this item?\');">';
+    echo ' <input type="hidden" id="table" name="table" value="' . $id . '">';
+    echo '<button  class="redButton">Remove Item</button>';
+    echo '</form>';
+    
+}
 
 
-
-
+} else {
+    echo '<div><h3 style="margin-bottom: 1rem;">Coins Available</div>';
+    echo '<form method="POST" action="includes/coinReturn.inc.php" >';
+    echo ' <input type="hidden" id="table" name="table" value="' . $id . '">';
+    echo '<button  class="fancyButton">Collect Coins</button>';
+    echo '</form>';
+}
 
 
 

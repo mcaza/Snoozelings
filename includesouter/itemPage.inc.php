@@ -147,6 +147,13 @@ if ($results) {
         echo '</form>';
     }
     
+    //Market Table - Add Farm Plot
+    if ($item['name'] === "MarketTable") {
+        echo '<form method="post" action="includes/useTable.inc.php">';
+        echo '<button class="fancyButton">Set Up Table</button>';
+        echo '</form>';
+    }
+    
     if ($item['name'] === "PetBed") {
         echo '<form method="post" action="includes/usePetBed.inc.php">';
         echo '<button class="fancyButton">Add Pet Bed</button>';

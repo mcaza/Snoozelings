@@ -74,17 +74,28 @@ for($x = 0; $x < $table['unlocked'];$x++) {
     echo "<img src='resources/marketOne.png'>";
     echo "</div>";
     echo "<div class='imageTwo' style='width:45%;margin-left:auto;margin-right:auto;margin-top:20px;'>";
-    echo "<img src='items/" . $table[$items[$x]] . ".png'>";
+    if ($table[$items[$x]]) {
+        echo "<img src='items/" . $table[$items[$x]] . ".png'>";
+    }
     echo "</div>";
     echo "</div>";
     
     //echo '<img src="resources/marketOne.png" class="farmBox">';
-    if ($table[$num[$x]] > 1) {
+    if ($table[$items[$x]] == "Coins") {
+        echo '<h4  style="margin-top:0;">Ready for Pickup</h4>';
+    } else if ($table[$num[$x]] > 1) {
         echo '<h4  style="margin-top:0;">' . $table[$num[$x]] . 'x ' . $item['multiples'] . '</h4>';
-    } else {
+    } else if ($table[$num[$x]] == 1) {
         echo '<h4  style="margin-top:0;">' . $table[$num[$x]] . 'x ' . $item['display'] . '</h4>';
+    } else {
+        echo '<h4  style="margin-top:0;">Empty Table</h4>';
     }
-    echo '<p><b>Sell Price:</b> ' . $worth . ' Snooze Coins</p><br>';
+    if ($table[$items[$x]] == "Coins") {
+        echo '<p>' . $table[$num[$x]] . ' Snooze Coins</p><br>';
+    } else {
+        echo '<p><b>Sell Price:</b> ' . $worth . ' Snooze Coins</p><br>';
+    }
+    
     
     echo '</div></a>';
 }
