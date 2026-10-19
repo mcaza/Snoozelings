@@ -224,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     Click on the link below to choose your next snoozeling.
     
     <strong style="font-size: 2.5rem"><a href="blueprints?id=' . $breedingId . '">Click Here to View Your Blueprint' . $s . '</a></strong>';
-    $from = 6;
+    $from = 2;
     $zero = 0;
     $picture = "sewingNPC";
     $now = new DateTime();

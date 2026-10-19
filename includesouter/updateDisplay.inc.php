@@ -66,6 +66,11 @@ if ($reply) {
     $stmt->execute();
 }
 
+//Tutorial
+if ($user['tutorial'] == 12) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><br><p style="width:90%">Below are a bunch of customization options.<br><br>Most of these don\'t have any gameplay value.<br><Br>You can change the <b>Pet Inspiration</b> option to <b><i>Open</i></b> if you want others to use your snoozeling to make new snoozelings. It can be changed at any time.<br><br>To remove your <b>Welcome Bandana</b>, you use the <b>Remove Clothing Item</b> section below.<br><br>Try removing the <b>Welcome Bandana</b> now.</p></div></div><br><Br>';
+}
+
 echo '<h3 style="margin-bottom: 2rem">Edit ' . htmlspecialchars($result['name']) . "'s Information</h3>";
 echo '<form action="../includes/editPet.inc.php" method="post">';
 echo '<input type="hidden" name="id" value="' . $id . '">';
@@ -130,6 +135,9 @@ if ($result['exploreEXP'] > 999.5) {
 if ($result['craftEXP'] > 999.5) {
     echo '<option value="Hooked on Crafts">Hooked on Crafts</option>';
 }
+if ($result['sellingEXP'] > 999.5) {
+    echo '<option value="Trade Goblin">Trade Goblin</option>';
+}
 echo "</select><br>";
 
 //Job
@@ -145,11 +153,12 @@ echo '</select><br>';
 echo '<label for="mood"  class="form">Snoozeling\'s Mood:</label><br>';
 echo '<select  class="input" name="mood"><br>';
 echo '<option value=""></option>';
-echo '<option value="Happy">Happy</option>';
 echo '<option value="Anxious">Anxious</option>';
+echo '<option value="Cheeky">Cheeky</option>';
+echo '<option value="Happy">Happy</option>';
 echo '<option value="Overwhelmed">Overwhelmed</option>';
 echo '<option value="Sleepy">Sleepy</option>';
-echo '<option value="Cheeky">Cheeky</option>';
+echo '<option value="Smug">Smug</option>';
 echo '</select><br>';
 
 
@@ -209,8 +218,8 @@ if ($closed === "selected") {
     echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Only you can use this pet as inspiration.</p></div><br>';
 } elseif ($open === "selected") {
     echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any users can use this pet as inspiration.</p></div><br>';
-} elseif ($open === "Friends") {
-    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any friends can use this pet as inspiration.</p></div><br>';
+} elseif ($friends === "selected") {
+    echo '<div id="breedingInfoDiv"><p id="breedingInfo" style="margin-top: 0" >Any users on your Friends List can use this pet as inspiration.</p></div><br>';
 } 
 
 //List of Current Clothes (Adding Later)

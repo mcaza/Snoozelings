@@ -234,7 +234,7 @@ function resetImage($snooze, $pdo) {
 
     //Sublimation Marking
     if (strpos($pet["specials"], "Sublimation") !== false) {
-        if ($backleg) {
+        if ($backLeg) {
             $url = '../Layers/Prosthetics/BackLeg/Markings/Sublimation/' . $pet['mainColor'] . '.png';
             $image = imagecreatefrompng($url);
             imagecopy($outputImage,$image,0,0,0,0, $x, $y);
@@ -247,16 +247,17 @@ function resetImage($snooze, $pdo) {
 
     //Collie Marking
     if (strpos($pet["specials"], "Collie") !== false) {
-        if ($backleg) {
+        if ($backLeg) {
             $url = '../Layers/Prosthetics/BackLeg/Markings/Collie.png';
             $image = imagecreatefrompng($url);
             imagecopy($outputImage,$image,0,0,0,0, $x, $y);
-        } else {
+        }  else {
             $url = '../Layers/Other/Collie.png';
             $image = imagecreatefrompng($url);
             imagecopy($outputImage,$image,0,0,0,0, $x, $y);
-        }
+        } 
     }
+
 
     //Foxy Marking
     if (strpos($pet["specials"], "Foxy") !== false) {

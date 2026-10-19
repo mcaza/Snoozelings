@@ -80,7 +80,7 @@ require_once '../includes/loginRedirect.inc.php';
                 echo '</p></div>';
 
             }
-           echo ' <div style="margin-bottom:2rem;"><img class="wideImage" src="resources/wideBarPlaceholder.png"></div>
+           echo ' <div style="margin-bottom:2rem;"><img class="wideImage" src="resources/WelcomeBanner.png"></div>
             <h3 style="margin-bottom:1.5rem">🎉 Welcome Early Access Players 🎉</h3>
             <form action="includes/login.inc.php" method="post">
                 <label class="form" for="usernamelogin">Username:</label><br>

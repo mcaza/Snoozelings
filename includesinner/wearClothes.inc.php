@@ -165,6 +165,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //Update Image
     resetImage($petid, $pdo);
     
+    //Update Tutorial
+    $query = "SELECT * FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($user['tutorial'] == 11) { 
+        $query = 'UPDATE users SET tutorial = 12 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
     //Message & Reroute to Items
     if ($color) {
         $query = 'SELECT * FROM dyes WHERE name = :name';

@@ -6,7 +6,7 @@ $reset = $_GET['reset'];
 
 
 
-echo '<img class="wideImage" src="resources/wideBarPlaceholder.png">';
+echo '<img class="wideImage" src="resources/WelcomeBanner.png">';
 
 //Notification
 if ($error || $reset) {

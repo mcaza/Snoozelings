@@ -90,9 +90,22 @@ for ($i=0; $i < $amount; $i++) {
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="profile?id=' . $userId . '"><<</a>';
-echo '<img src="resources/ShortcutBackpack' . $backpackColor . '.png" style="width:100px;" id="backpackImage">';
+if ($bonded['tutorial'] == 3) { } else {
+echo '<img src="resources/ShortcutBackpack' . $backpackColor . '.png" style="width:100px;" id="backpackImage">'; }
 echo '</div>';
 
+//Tutorial Pop Up
+if ($bonded['tutorial'] == 3) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%">This is your in game <b>Pack [Inventory]</b>.<br><br>It holds all the items you\'ve collected while playing Snoozelings. Like seeds and clothing.<br><Br>On Desktop, you can find this in the dropdown menu under <b>' . $bonded['username'] . '\'s Abode</b>.<br><br>On Mobile, you\'ll need to click <b>' . $bonded['username'] . '\'s Abode</b>. Then click the Backpack image.<br><Br>To continue, click the <b>Welcome Package</b> below.<br><br></p></div></div><br><Br>';
+} else if ($bonded['tutorial'] == 4) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%">Wow! So many cool new items!<br><br>I think the next most important thing is the <b>Pet Bed</b>.<br><br>Each snoozeling needs a soft, warm bed of their own to rest their fuzzy head at night.<br><Br>The more <b>Pet Beds</b> you have on your account, the more snoozelings you can collect.<br><br>To continue, click the <b>Pet Bed</b> below.<br><br></p></div></div><br><Br>';
+} else if ($bonded['tutorial'] == 5) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%">The next thing a snoozeling needs is a proper farm area to grow crops and flowers in.<br><br>Did you know that studies show farming is super good for our mental health?<br><br>It\'s true. I read it in a book at the library.<br><br>There\'s nothing like the feeling of dirty paws. Working to grow carrots and pumpkins and kale.<br><br>To start farming, click the <b>Planter Box</b> below.<br><br></p></div></div><br><Br>';
+} else if ($bonded['tutorial'] == 11) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%">You\'re doing so great ' . $bonded['username'] . '!<br><br>I promise we are almost finished learning the basics.<br><br>The final thing I\'m going to show you is how to add and remove clothing from your snoozeling.<br><br>There\'s a wide variety of accessories on Snoozelings. With more being added with every update.<br><br>Your imagination really is the limit.<br><br>To continue, click the <b>Welcome Bandana</b> below.<br><br></p></div></div><br><Br>';
+} else if ($bonded['tutorial'] == 12) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%">For the final step of the tutorial, I will show you how to remove the clothing items from snoozelings.<br><br>On Desktop or mobile, you can find navigate to your profile page by clicking <b>' . $bonded['username'] . '\'s Abode</b>.<br><br>Then you click on the snoozeling image.<br><br>You can also click your snoozeling in the left sidebar as a shortcut. Scroll down to find them on mobile.<br><br>To continue, open either your Profile page or Snoozeling\'s information page.<br><br></p></div></div><br><Br>';
+}
 
 //Notification
 if ($reply) {

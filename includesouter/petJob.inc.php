@@ -68,8 +68,22 @@ $exp = $pet['sellingEXP'];
     } elseif ($exp < 1000) {
         $merchname = "   Level 5 Merchant";
     } else {
-        $merchname =    "   Rolling in Riches";
+        $merchname =    "   Trade Goblin";
     }
+
+if ($exp < 100) {
+    $level = "Level 1 Merchant";
+} elseif ($exp < 225) {
+    $level = "Level 2 Merchant";
+} elseif ($exp < 450) {
+    $level = "Level 3 Merchant";
+} elseif ($exp < 700) {
+    $level = "Level 4 Merchant";
+} elseif ($exp < 1000) {
+    $level = "Level 5 Merchant";
+} else {
+    $level = "Trade Goblin";
+}
 
 //Back Arrow 
 echo '<div class="leftRightButtons">';

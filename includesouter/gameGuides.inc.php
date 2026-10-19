@@ -29,4 +29,10 @@ echo '<li><a href="dyedPreviews"  class="notif">Dyed Clothing Previews</a></li>'
 echo '<li><a href="clothingPreviews"  class="notif">Regular Clothing Previews</a></li>';
 echo '</ul>';
 
+echo '<br><br><h2 style="text-align:left;margin-left:30px;">Game Guides</h2>';
+echo '<ul style="text-align:left;">';
+echo '<li><a href="https://docs.google.com/document/d/1sTOB5jIW8NR-sJn23Jxd3IPkNiUbuLsnnpjpbAG3OeI/edit?usp=sharing"  class="notif" target="_blank">Journal Types</a></li>';
+echo '<li><a href="https://docs.google.com/document/d/1LujJac4BeNheYP6YpVCU6WI0NJaMVD3L7qrRgu7ABkQ/edit?usp=sharing"  class="notif" target="_blank">New Player Tutorial</a></li>';
+echo '</ul>';
+
 echo '</div>';

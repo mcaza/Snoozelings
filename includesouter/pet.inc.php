@@ -32,8 +32,6 @@ if ($id > 1) {
     echo '<a id="leftArrow" href="pet?id=' . ($id - 1) . '"><<</a>';
 }
 echo '<a href="pet?id=' . ($id + 1) . '">>></a>';
-
-
 echo '</div>';
 
 /*
@@ -58,6 +56,11 @@ if ($_COOKIE["user_id"] == $result["owner_id"]) {
                 
                
     echo '</div>';
+    
+    //Tutorial
+    if ($user['tutorial'] == 12) {
+    echo '<br><Br><div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%">Below you can see all the information about me, including my <b>Plushie Build</b> statistics.<br><br>That\'s pretty much my genetic snoozeling information.<br><br>Another thing to notice is my <i>Closed Inspiration Status</i> in the <b>Pet Info</b> section of my profile.<br><br>This means other users <b><i>CANNOT</i></b> use your snoozeling to create other snoozelings. Only you can.<br><br>To continue, click the <b>Edit Pet</b> button above this box.</p></div></div><br><Br>';
+}
 } elseif ($result['owner_id'] === "0") {
      echo '<div class="button-bar"><p style="font-size: 2rem;" >Up for Adoption</p></div>';
 } else {
@@ -141,6 +144,9 @@ if ($pet['breedStatus'] == "Friends") {
 } else {
     echo '<p class="snoozelinginfo"><strong>Inspiration Status: </strong>' . $pet['breedStatus'];
 }
+/* 
+echo '<hr>';
+echo '<p class="snoozelinginfo"><b>Achievements:</b></p>'; */
 
 
 echo '</div>';
@@ -319,7 +325,7 @@ if ($pet['parents']) {
         $stmt->bindParam(":id", $parent);
         $stmt->execute();
         $listitem = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<li style="font-size:1.6rem;text-align: left;"><a href="pet?id=' . $parent . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
+        echo '<li style="font-size:1.6rem;text-align: left;"><a href="pet?id=' . $parent . '" target="_blank">' . htmlspecialchars($listitem['name']) . '</a></li>';
     }
     echo '</ul>';
 }
@@ -339,7 +345,7 @@ if ($pet['inspire']) {
         $stmt->bindParam(":id", $inspire);
         $stmt->execute();
         $listitem = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<li style="font-size:1.6rem;text-align: left"><a href="pet?id=' . $inspire . '">' . htmlspecialchars($listitem['name']) . '</a></li>';
+        echo '<li style="font-size:1.6rem;text-align: left"><a href="pet?id=' . $inspire . '" target="_blank">' . htmlspecialchars($listitem['name']) . '</a></li>';
     }
     echo '</ul>';
 }
@@ -363,7 +369,7 @@ if ($pet['clothes']) {
     
     }
 echo '<div style="display: flex; flex-direction: row; flex-wrap: wrap; column-gap: .5rem; row-gap: .5rem; justify-content: center;">';
-foreach ($clothes as $item) {    
+foreach ($clothes as $item) {
     //Color Check
     $query = "SELECT * FROM dyes";
     $stmt = $pdo->prepare($query);
@@ -395,7 +401,7 @@ foreach ($clothes as $item) {
         $stmt->execute();
         $displayName = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        echo '<img src="items/' . $item . '.png" style="width: 25%;border-radius:20px;border: 2px solid silver;" title="' . $displayName['display'] . ' [' . $ending . '] ' . '">';
+        echo '<a href="item?id=' . $displayName['id'] . '" style="width: 25%;border-radius:20px;border: 2px solid silver;"><img src="items/' . $item . '.png" style="width: 100%;height: 100%; border-radius:15px;" title="' . $displayName['display'] . ' [' . $ending . '] ' . '"></a>';
     } else {
         //Item Display Name
         $query = "SELECT * FROM itemList WHERE name = :name;";
@@ -404,7 +410,7 @@ foreach ($clothes as $item) {
         $stmt->execute();
         $displayName = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        echo '<img src="items/' . $item . '.png" style="width: 25%;border-radius:20px;border: 2px solid silver;" title="' . $displayName['display'] . '">';
+        echo '<a href="item?id=' . $displayName['id'] . '" style="width: 25%;border-radius:20px;border: 2px solid silver;"><img src="items/' . $item . '.png" style="width: 100%;height: 100%; border-radius:15px;" title="' . $displayName['display'] . '"></a>';
     }
     
 }

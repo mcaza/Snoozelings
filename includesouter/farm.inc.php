@@ -27,7 +27,7 @@ $query = "SELECT * FROM farms WHERE user_id = :id;";
     $farms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Get Last Water
-$query = "SELECT lastWater FROM users WHERE id = :id";
+$query = "SELECT * FROM users WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
@@ -68,21 +68,26 @@ if ($reply) {
     $stmt->execute();
 }
 
-//Water Pop Up
-if ($result > $water['lastWater']) {
-        echo '<div class="returnBar" style="margin-bottom: 2rem;">';
-    echo '<h4 style=" margin-top: 0;">Time to Hydrate</h4>';
-    if ($petName['pronouns'] == "She/Her") {
-        echo '<p>' . $petName['name'] . ' would like you to drink some water while she waters the plants.</p>';
-    } else if ($petName['pronouns'] == "He/Him") {
-        echo '<p>' . $petName['name'] . ' would like you to drink some water while he waters the plants.</p>';
-    } else {
-        echo '<p>' . $petName['name'] . ' would like you to drink some water while they water the plants.</p>';
+//Water Pop Up + Tutorial
+if ($water['tutorial'] == 6) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%"><br>Look at that beautiful dirt.<br><Br>It\'s dirty and muddy and so very beautiful.<br><Br>I\'m pretty sure we have a single <b>Carrot Seed</b>.<br><br>Let\'s plant it and try to grow <b>Carrot(s)</b>.<br><br>Click the <b>Empty Plot</b> to continue.<br><br></p></div></div><br><Br>';
+} else {
+    if ($result > $water['lastWater']) {
+            echo '<div class="returnBar" style="margin-bottom: 2rem;">';
+        echo '<h4 style=" margin-top: 0;">Time to Hydrate</h4>';
+        if ($petName['pronouns'] == "She/Her") {
+            echo '<p>' . $petName['name'] . ' would like you to drink some water while she waters the plants.</p>';
+        } else if ($petName['pronouns'] == "He/Him") {
+            echo '<p>' . $petName['name'] . ' would like you to drink some water while he waters the plants.</p>';
+        } else {
+            echo '<p>' . $petName['name'] . ' would like you to drink some water while they water the plants.</p>';
+        }
+
+        echo '<button class="fancyButton" onClick="window.location.href=\'includes/waterPlants.inc.php\'">Click Here After You Drink</button>';
+        echo '</div>';
     }
-    
-    echo '<button class="fancyButton" onClick="window.location.href=\'includes/waterPlants.inc.php\'">Click Here After You Drink</button>';
-    echo '</div>';
 }
+
 
 //Display Farm Boxes
 echo '<div class="farmBoxes">';

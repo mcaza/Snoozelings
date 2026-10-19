@@ -191,6 +191,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":id", $seedId['id']);
     $stmt->execute();  
     
+    //Update Tutorial to 7
+    $query = "SELECT * FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($user['tutorial'] == 6) { 
+        $query = 'UPDATE users SET tutorial = 7 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
+    
     //Reply
     if ($seedId['list_id'] == 14) {
         $reply = $snooze['name'] . ' has planted a single Mystery Seed.';

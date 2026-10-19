@@ -10,6 +10,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $table = $_POST['table'];
     
     //Check for Item
+    if ($item) {
+        
+    } else {
+        $reply = "You need to select an item to be sold.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
+        
+        $location = "Location: ../table?id=" . $table;
+        header($location);
+        die();
+    }
+    
+    //Check for Quantity
+    if ($quantity) {
+        
+    } else {
+        $reply = "You need to select a quantity of items.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
+        
+        $location = "Location: ../table?id=" . $table;
+        header($location);
+        die();
+    }
+    
+    //Check for Item
     $query = 'SELECT * FROM items WHERE list_id = :id AND user_id = :user';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $item);

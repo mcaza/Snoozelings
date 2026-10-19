@@ -3,7 +3,6 @@ require_once '../includes/dbh-inc.php';
 require_once '../includes/config_session.inc.php';
 require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
-require_once '../includes/verifySinglePet.inc.php'; 
 require_once '../includes/ownerRedirect.inc.php'; 
 
 
@@ -98,7 +97,9 @@ require_once '../includes/ownerRedirect.inc.php';
         var inputText = event.target.value;
          if (inputText == "Closed") {
              document.getElementById('breedingInfo').innerHTML = "Only you can use this pet as inspiration.";
-         } else {
+         } else if (inputText == "Friends") {
+                    document.getElementById('breedingInfo').innerHTML = "Any users on your Friends List can use this pet as inspiration.";
+        } else {
             document.getElementById('breedingInfo').innerHTML = "Any users can use this pet as inspiration.";
 
          }

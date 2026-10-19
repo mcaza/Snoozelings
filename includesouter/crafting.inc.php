@@ -100,6 +100,10 @@ if ($reply) {
     $stmt->execute();
 }
 
+if ($user['tutorial'] == 8) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><br><p style="width:90%; margin-left:auto;margin-right:auto;">This is your <b>Crafting Table</b>.<br><br>The more items you craft, the more recipes you\'ll unlock with time. Like new clothes and dyes.<br><br>That means you should be crafting whenever possible.<br><br>Today we are going to craft <b>Lumber</b> using 2x <b>Wood Logs</b>. It should take about fifteen minutes.<br><br>You can also try clicking all the crafting tabs below to learn about all the <b>Level 1 Crafting Recipes</b>.<br><br></p></div></div><br><Br>';
+}
+
 //Desk and Snoozeling
 echo '<div class="craftimages">';
 echo '<div class="craftingDeskContainer">';
@@ -154,7 +158,9 @@ echo '<div class="craftbuttons">';
 echo '<a href="crafting?type=ingredient" class="craftbutton">Ingredients</a>';
 echo '<a href="crafting?type=clothes" class="craftbutton">Clothing</a>';
 echo '<a href="crafting?type=dye" class="craftbutton">Dyes</a>';
-echo '<a href="crafting?type=design" class="craftbutton">Designs</a>';
+if ($level > 1) {
+    echo '<a href="crafting?type=design" class="craftbutton">Designs</a>';
+}
 echo '<a href="crafting?type=special" class="craftbutton">Special</a>';
 echo '<a href="crafting?type=event" class="craftbutton">Event</a>';
 echo '</div>';

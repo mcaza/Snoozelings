@@ -1270,6 +1270,26 @@ a.selected {
     
 }
 
+/* Tutorial Styles */
+.tutorialHeader {
+    width:80%;
+    border: 2px dashed #827188;
+    border-radius: 15px;
+    margin-left:auto;
+    margin-right:auto;
+    display:flex;
+}
+
+.tutorialImage {
+    width:100%;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.tutorialDiv {
+    width:450px;
+}
+
 /* Flea Market Tables */
 
 .imageTwo {
@@ -1946,6 +1966,18 @@ select {
 }
 
 @media only screen and (max-width: 1081px) {
+    
+    .tutorialHeader {
+        flex-direction: column;
+    }
+    
+    .tutorialImage {
+        width: 150px;
+    }
+    
+    .tutorialDiv {
+    width:100%;
+    }
     
     .fabricItems {
         width:95%;

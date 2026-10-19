@@ -3,7 +3,6 @@ require_once '../includes/dbh-inc.php';
 require_once '../includes/config_session.inc.php';
 require_once '../includes/logincheck.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
-require_once '../includes/verifySinglePet.inc.php'; 
 
 $userId = $_COOKIE['user_id'];
 
@@ -14,6 +13,12 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($result['farmName']) {
+    $farm = $result['farmName'];
+} else {
+    $farm = "Fresh Farm";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +27,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $result['farmName'] ?></title>
+    <title><?= $farm ?></title>
     <?php require_once '../includes/css.inc.php'; ?>
     <?php require_once '../includes/favicon.inc.php'; ?>
 </head>

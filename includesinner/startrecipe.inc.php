@@ -22,6 +22,12 @@ $stmt = $pdo->prepare($query);
 $stmt->bindParam(":id", $id);
 $stmt->execute();
 $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$query = "SELECT * FROM users WHERE id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
     
 //Check if User is Crafting    
 if ($result['display']) {
@@ -111,6 +117,17 @@ $stmt->bindParam(":name", $recipe['name']);
 $stmt->bindParam(":time", $formatted);
 $stmt->execute();
 
+//Update Tutorial
+if ($user['tutorial'] == 8) { 
+            
+////Update Tutorial to 9
+$query = 'UPDATE users SET tutorial = 9 WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+
+}
+
 //Remove Items
 foreach ($items as $item) {
     $key = array_search($item, $items);
@@ -123,7 +140,11 @@ foreach ($items as $item) {
     }
 }
 
-
+//Plus 1 Crafting EXP
+$query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $pet);
+$stmt->execute();
 
 //Reroute
 header("Location: ../crafting");

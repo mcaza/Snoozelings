@@ -15,7 +15,7 @@ $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Get Items In Money Order By Cost
-$query = "SELECT * FROM clothingShop ORDER BY price";
+$query = "SELECT * FROM clothingShop WHERE daily = 1 ORDER BY price";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -59,14 +59,14 @@ if ($reply) {
 
 //Show Image. Change Later
 if ($month == 6) {
-    echo '<img src="resources/cocoaPride.png" style="width: 35%;">';
+    echo '<img src="resources/SugarStitch.png" style="width: 35%;">';
 } else {
-    echo '<img src="resources/clothingShopCocoa.png" style="width: 35%;">';
+    echo '<img src="resources/SugarStitch.png" style="width: 35%;">';
 }
 
 
 //Get Plant Puns (Auto Set Valentine's Day or Birthday)
-echo '<p><i>"Part time mayor. Part time clothing model. Full time busy."</i></p>';
+echo '<p><i>"Be sure to speak slowly, darling. I\'m a little bit hard of hearing."</i></p>';
 
 //Show All Items
 echo '<div class="seedRows">';

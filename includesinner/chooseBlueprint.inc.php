@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //Send Mail
     $title = 'Your Snoozeling Delivery';
-    $sender = 6;
+    $sender = 2;
     $zero = 0;
     $picture = "sewingNPC";
     $now = new DateTime();

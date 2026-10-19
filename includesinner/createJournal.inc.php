@@ -25,8 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":premium", $premium);
     $stmt->execute();
     
-        //Update Tutorial
-    $query = 'UPDATE users SET tutorial = 4 WHERE id = :id';
+    //Delete Journal Item
+    $query = 'DELETE FROM items WHERE user_id = :id AND list_id = 500 LIMIT 1';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    
+    //Update Tutorial
+    $query = 'UPDATE users SET tutorial = 10 WHERE id = :id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();

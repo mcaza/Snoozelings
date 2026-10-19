@@ -10,6 +10,9 @@
     if ($mode['mode'] == "Dark") {
         echo '<link rel="stylesheet" href="stylesdark.css">';
         
+    } else if ($mode['mode'] == "Light") {
+
+        echo '<link rel="stylesheet" href="styles.css">';
     } else if ($_COOKIE['MODE'] == "Dark") {
 
         echo '<link rel="stylesheet" href="stylesdark.css">';

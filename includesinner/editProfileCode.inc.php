@@ -16,8 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $farmName = $_POST['farm'];
     $houseName = $_POST['house'];
     $backpackName = $_POST['backpack'];
+    $shopName = $_POST['market'];
     $mailbox = $_POST['mailbox'];
     $craft = $_POST['craftingNotif'];
+    $market = $_POST['marketNotif'];
+    $dark = $_POST['darkMode'];
     $shortcutArray = "";
     $bio = $_POST['bio'];
     
@@ -40,14 +43,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $shortCount++;
         $shortcutArray = $shortcutArray . $_POST['Garden'] . " ";
     }
+    
+    if (isset($_POST['FleaMarket'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['FleaMarket'] . " ";
+    }
+    
     if (isset($_POST['Journal'])) {
         $shortCount++;
         $shortcutArray = $shortcutArray . $_POST['Journal'] . " ";
     }
-    if (isset($_POST['Penpals'])) {
+    
+    if (isset($_POST['Mailbox'])) {
         $shortCount++;
-        $shortcutArray = $shortcutArray . $_POST['Penpals'] . " ";
+        $shortcutArray = $shortcutArray . $_POST['Mailbox'] . " ";
     }
+
     if (isset($_POST['Snoozeling'])) {
         $shortCount++;
         $shortcutArray = $shortcutArray . $_POST['Snoozeling'] . " ";
@@ -63,8 +74,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $shortcutArray = $shortcutArray . $_POST['Collection'] . " ";
     }
     
-    if ($shortCount > 5) {
-            $reply = "You Cannot Have More Than 5 Shortcuts.";
+    if (isset($_POST['colorMode'])) {
+        $shortCount++;
+        $shortcutArray = $shortcutArray . $_POST['colorMode'] . " ";
+    }
+    
+    
+    if ($shortCount > 6) {
+            $reply = "You Cannot Have More Than 6 Shortcuts.";
         $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id", $userId);
@@ -162,6 +179,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     
+    //Shop Name
+    if ($shopName) {
+        $query = 'SELECT * FROM shopNames';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $farms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $check = 0;
+        foreach ($farms as $farm) {
+            if ($shopName === $farm['name']) {
+                $check = 1;
+            }
+        }
+        if ($check === 0) {
+            header("Location: ../editprofile?id=" . $userId);
+            die();
+        } else {
+            $query = "UPDATE marketTables SET name = :name WHERE user_id = :user";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":name", $shopName);
+            $stmt->bindParam(":user", $userId);
+            $stmt->execute();
+        }
+    }
+    
     //Mailbox Color
     if ($mailbox) {
         if (!($mailbox === 'blue' || $mailbox === 'cyan' || $mailbox === 'orange' || $mailbox === 'purple' || $mailbox === 'red')) {
@@ -200,7 +241,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     
     //Update Pronouns, Friend Requests, and Message Requests
-    $query = "UPDATE users SET pronouns = :pronouns, blockRequests = :friends, blockMessages = :messages, birthdayOptOut = :gifts, craftNotify = :craft WHERE id = :id";
+    $query = "UPDATE users SET pronouns = :pronouns, blockRequests = :friends, blockMessages = :messages, birthdayOptOut = :gifts, craftNotify = :craft, marketNotify = :market, mode = :darkMode WHERE id = :id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->bindParam(":pronouns", $pronouns);
@@ -208,6 +249,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(":friends", $friends);
     $stmt->bindParam(":gifts", $gifts);
     $stmt->bindParam(":craft", $craft);
+    $stmt->bindParam(":market", $market);
+    $stmt->bindParam(":darkMode", $dark);
     $stmt->execute();
     
     

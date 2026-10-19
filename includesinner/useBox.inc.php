@@ -13,6 +13,8 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $count = count($results);
+    
+    
 
 //If Below, Add New Farm Plot
 if ($count < 9) {
@@ -28,6 +30,20 @@ if ($count < 9) {
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
     
+    //Update Tutorial if 1st Farm
+    $query = 'SELECT * FROM users WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($result['tutorial'] == 5) {
+        $query = 'UPDATE users SET tutorial = 6 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
     //Variables
         $reply = "You have successfully installed a new farm plot.";
     $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
@@ -37,7 +53,12 @@ if ($count < 9) {
     $stmt->execute();
 
     //Reroute to Pack
-    header("Location: ../pack");
+    if ($result['tutorial'] == 5) {
+        header("Location: ../farm");
+    } else {
+        header("Location: ../pack");
+    }
+    
     
 } else {
         $reply = "You already have the maximum amount of farm plots.";

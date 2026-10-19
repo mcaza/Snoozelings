@@ -19,6 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     $userId = $_COOKIE['user_id'];
     
+    //Get Bonded ID
+    $query = "SELECT * FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
     if(!array_unique($snoozes)) {
         header("Location: ../index");
         die(); 
@@ -46,9 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $now = new DateTime('now', new DateTimezone('UTC'));
         $firstDate = $now->format('m');
         if ($firstDate == 10) {
-            array_push($farmRare,'236','237','238','239');
-            array_push($woodsRare,'236','237','238','239');
-            array_push($oceanRare,'236','237','238','239');
+            array_push($farmRare,'236','237','238','239','501','502','503','504','505','506','507','432');
+            array_push($woodsRare,'236','237','238','239','501','502','503','504','505','506','507','432');
+            array_push($oceanRare,'236','237','238','239','501','502','503','504','505','506','507','432');
         }
         
         //Add snoozes to array and check if owned by player
@@ -92,10 +99,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $temp = howMany($exp);
             $rolls = $rolls + $temp;
         }
-
-        for($i = 0; $i < $rolls; $i++) {
-            $rarity = rollRarity();
-            pickItem($rarity, $area);
+        
+        //Tutorial + Regular Roll
+        if ($user['tutorial'] == 7) { 
+            $itemsWon = [40,40,40];
+            
+            //Set Up Crafting Table
+            $query = 'INSERT INTO craftingtables (pet_id, user_id) VALUES (:pet, :id)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $userId);
+            $stmt->bindParam(":pet", $user['bonded']);
+            $stmt->execute();
+            
+            ////Update Tutorial to 8
+            $query = 'UPDATE users SET tutorial = 8 WHERE id = :id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $userId);
+            $stmt->execute();
+        } else {
+            for($i = 0; $i < $rolls; $i++) {
+                $rarity = rollRarity();
+                pickItem($rarity, $area);
+            } 
         }
 
         /* //Insert into exploredrops
@@ -129,7 +154,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $itemNames = [];
         
         
+        
        //Insert Items Into Player's Table
+        
         foreach ($itemsWon as $item) {
             $query = 'SELECT * FROM itemList WHERE id = :id';
             $stmt = $pdo->prepare($query);
@@ -178,7 +205,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         //Update +1 to Snoozeling EXP Records. EXP no matter role
         foreach ($snoozes as $pet) {
-            $query = 'UPDATE snoozelings SET exploreEXP = exploreEXP + 1 WHERE id = :id';
+            $query = 'UPDATE snoozelings SET exploreEXP = exploreEXP + 2 WHERE id = :id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $pet);
             $stmt->execute();

@@ -68,6 +68,9 @@ echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestam
 echo '</div>';
 echo '<hr>';
 
+//Link to Dye Previews
+echo '<p><a href="dyedPreviews"><i>Click Here to Preview Dyed Clothing Items</i></a></p><br>';
+
 //Display Current Dye
 if ($dyebatch) {
     //Get ItemName

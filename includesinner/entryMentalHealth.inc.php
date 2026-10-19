@@ -14,6 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $closed = 0;
     
+    $query = "SELECT * FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
         //Get Date
     $query = 'SELECT * FROM times';
     $stmt = $pdo->prepare($query);
@@ -171,6 +177,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $userId);
     $stmt->execute();
+    
+    //Update Tutorial
+    if ($user['tutorial'] == 10) { 
+        $query = 'UPDATE users SET tutorial = 11 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
     
     //Set Session for Coins
     //Set Session for Coins

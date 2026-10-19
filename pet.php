@@ -2,7 +2,6 @@
 require_once '../includes/dbh-inc.php';
 require_once '../includes/config_session.inc.php';
 require_once '../includes/verifyCheck.inc.php'; 
-require_once '../includes/verifySinglePet.inc.php'; 
 
 
 $id = $_GET['id'];

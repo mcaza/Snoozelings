@@ -111,6 +111,11 @@ if ($id == $userId) {
         $stmt->execute();
     }
     
+    //Tutorial
+    else if ($result['tutorial'] == 12) {
+    echo '<br><Br><div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%">You\'re such a great listener ' . $result['username'] . '.<br><br>This is your <b>User Profile</b> page. It keeps track of all your game stats. Like your pronouns.<br><br>Other users can also see your profile information.<br><br>See that image that looks just like me?<br><br>Yeah. That\'s the one!!!<br><br>You\'ll need to click that next to open my information.<br><br></p></div></div><br><Br>';
+}
+    
     //Left Side Profile Info + Right Side Active Pet
     echo '<div class="profilerow">';
     echo '<div class="profilecontainerleft">';
@@ -201,7 +206,7 @@ if ($id == $userId) {
         echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/artist.png" style="width:20px;margin-left:10px;" title="Site Artist"></h4>';
     } else if ($result['staff'] == "moderator") {
         echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/moderator.png" style="width:20px;margin-left:10px;" title="Moderator"></h4>';
-    } else if ($id > 2 && $id < 10) {
+    } else if ($id > 1 && $id < 10) {
         echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info<img src="resources/NPC.png" style="width:20px;margin-left:10px;" title="NPC Account"></h4>';
     } else {
         echo '<h4 class="profileh4" >&nbsp;&nbsp;&nbsp;Profile Info</h4>';
@@ -302,12 +307,11 @@ if ($id == $userId) {
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To find that pin he dropped almost three years ago.</p>';
               echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> When Minky isn\'t working, he spends time stitching teddy bears for the adoption house.</p>';
         } elseif ($id === "7") {
-            echo '<p class="snoozelinginfo">More Info Coming Soon...</p>';
-              /* echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Dog Treats</p>';
-            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Playful & Friendly</p>';
-              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Swimming Long Distances</p>';
-             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To find joy in simple things.</p>';
-              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Simon is not a hoarder. He is a collector. But when his many piles begin to overflow, he\'s always happy to share his knick knacks with the community.</p>'; */
+              echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Sugar Cookies</p>';
+            echo '<p class="snoozelinginfo"><strong>Personality: </strong>Elegant & Generous</p>';
+              echo '<p class="snoozelinginfo"><strong>Special Skill: </strong>Singing Bird Songs</p>';
+             echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To Help Others Express Their Style Through Unique Clothing Items</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Sugar Stitch works hard daily to share her love of style with the town\'s many snoozelings, often reading magazines for new inspirations.</p>'; 
         } elseif ($id === "8") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Kindness Shopkeeper</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Cream Cheese Bagels</p>';
@@ -320,7 +324,7 @@ if ($id == $userId) {
             echo '<p class="snoozelinginfo"><strong>Personality: </strong>Determined & Optimistic</p>';
               echo '<p class="snoozelinginfo"><strong>Special Skill:</strong> Non-Dizzy Spinning</p>';
              echo '<p class="snoozelinginfo"><strong>Life\'s Mission: </strong>To Become a Famous Inventor Who Helps Other Snoozelings</p>';
-              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> ?????? has a collection of cool looking pebbles and rocks that he\'s collected on his mail routes.</p>';
+              echo '<p class="snoozelinginfo" style="line-height: 20px;"><strong>Fun Fact:</strong> Peter has a collection of cool looking pebbles and rocks that he\'s collected on his mail routes.</p>';
         } elseif ($id === "9") {
             echo '<p class="snoozelinginfo"><strong>Job: </strong>Expert Bed Tester</p>';
               echo '<p class="snoozelinginfo"><strong>Favorite Food: </strong>Grilled Cheeses</p>';
@@ -346,7 +350,7 @@ if ($id === "4") {
     echo '<img src="resources/ProfileMinky.png" class="artlarge">';
     echo "<p><strong>Character's Pronouns:</strong> " . $result['pronouns'] . "</p>";
 } elseif ($id === "7") {
-    echo '<img src="resources/ProfileEmpty.png" class="artlarge">';
+    echo '<img src="resources/SugarStitch.png" class="artlarge">';
     echo "<p><strong>Character's Pronouns:</strong> " . $result['pronouns'] . "</p>";
 } elseif ($id === "8") {
     echo '<img src="resources/ProfileMelody.png" class="artlarge">';
@@ -360,7 +364,7 @@ if ($id === "4") {
 } else if (!$pet) {
     echo '<img src="Layers/transparentSquare.png" style="height: 40rem;margin-left: 1rem;margin-bottom: 2rem;">';
 } else {
-    echo '<img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '"   class="artlarge">';
+    echo '<a href="pet?id=' . $pet['id'] . '"><img src="snoozeImages/' . $pet['id'] . '.png?timestamp=' . $pet['timestamp'] . '"   class="artlarge"></a>';
     echo "<p><strong>Bonded Snoozeling:</strong> " . "<a href='pet?id=" . $pet['id'] . "'>" . htmlspecialchars($pet["name"]) . "</a></p>";
 }
     

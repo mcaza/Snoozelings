@@ -65,10 +65,22 @@ if ($userId) {
                 break;
                 case "Collection":
                 $link = "collection?id=" . $userId;
+                break;
+                case "FleaMarket":
+                $link = "fleaMarket";
+                break;
             }
-            echo '<li><a href="' . $link . '" ><img src="resources/Icon' . $short . '.png"></a></li>';
+            if ($short == "colorMode") {
+                echo '<li><a href="includes/darkmode.inc.php"><img src="resources/darkmode.png"></a></li>';
+            } else {
+                echo '<li><a href="' . $link . '" ><img src="resources/Icon' . $short . '.png"></a></li>';
+            }
+            
         }
-        echo '<li><a href="includes/darkmode.inc.php" ><img src="resources/darkmode.png"></a></li>';
+        if (count($shortcutArray) < 6) {
+            echo '<li><a href="includes/darkmode.inc.php"><img src="resources/darkmode.png"></a></li>';
+        }
+        
     }
 } else {
      echo '<li id="homeshortcut"><a href="/" ><img src="resources/IconHome.png"></a></li>';

@@ -19,16 +19,37 @@ $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 $tutorial = intval($user['tutorial']);
 
-if ($tutorial < 4) {
+if ($tutorial < 14) {
     if ($tutorial < 3) {
          //Pick Starter Snoozeling
         if (!$user['bonded']) {
             echo '<div class="notificationbox"><a href="welcome" class="notif">' . $count . '. Pick 1st Snoozeling</a></div>';
             $count++;
         }
-    } if ($tutorial == 3) {
-        echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Create Journal</a></div>';
+    } else if ($tutorial == 3) {
+        echo '<div class="notificationbox"><a href="pack" class="notif">' . $count . '. Open Welcome Package</a></div>';
+    } else if ($tutorial == 4) {
+        echo '<div class="notificationbox"><a href="pack" class="notif">' . $count . '. Install Pet Bed</a></div>';
+    } else if ($tutorial == 5) {
+        echo '<div class="notificationbox"><a href="pack" class="notif">' . $count . '. Set Up Farm Planter</a></div>';
+    } else if ($tutorial == 6) {
+        echo '<div class="notificationbox"><a href="farm" class="notif">' . $count . '. Plant Carrot Seed</a></div>';
+    } else if ($tutorial == 7) {
+        echo '<div class="notificationbox"><a href="explore" class="notif">' . $count . '. Go Exploring</a></div>';
+    } else if ($tutorial == 8) {
+        echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Craft a Single Lumber</a></div>';
+    } else if ($tutorial == 9) {
+        echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. Set Up Journal</a></div>';
+    } else if ($tutorial == 10) {
+        echo '<div class="notificationbox"><a href="journal" class="notif">' . $count . '. First Journal Entry</a></div>';
+    } else if ($tutorial == 11) {
+        echo '<div class="notificationbox"><a href="pack" class="notif">' . $count . '. Dress Snoozeling</a></div>';
+    } else if ($tutorial == 12) {
+        echo '<div class="notificationbox"><a href="profile?id=' . $userId . '" class="notif">' . $count . '. Remove Clothing Item</a></div>';
+    } else if ($tutorial == 13) {
+        echo '<div class="notificationbox"><a href="enterGame" class="notif">' . $count . '. Enter Snooze Village</a></div>';
     }
+    
 } else {
     //Check for New Mod Tickets
     if ($userId == 1) {
@@ -63,6 +84,7 @@ if ($tutorial < 4) {
         
     }
 
+    
    
 
     //Unopened Mail Check
@@ -176,6 +198,69 @@ if ($tutorial < 4) {
         echo '<div class="notificationbox"><a href="farm" class="notif">' . $count . '. Water Plants</a></div>';
         $count++;
     }
+    
+     //Check For Flea Market Coins
+    $query = 'SELECT * FROM marketTables WHERE user_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $marketTable = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($marketTable['itemOne'] == "Coins" || $marketTable['itemTwo'] == "Coins"  || $marketTable['itemThree'] == "Coins"  || $marketTable['itemFour'] == "Coins" ) {
+        echo '<div class="notificationbox"><a href="fleaMarket" class="notif">' . $count . '. Collect Coins</a></div>';
+        $count++;
+    }
+    
+    //Check for Empty Flea Market Tables
+    if ($user['marketNotify'] == 1 ) {
+        $query = 'SELECT * FROM marketTables WHERE user_id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+        $tables = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($tables) {
+            $tableCheck = 0;
+            $list = ['itemOne', 'itemTwo', 'itemThree', 'itemFour'];
+            for ($i=0; $i < $tables['unlocked']; $i++) {
+                if ($tables[$list[$i]] == 0) {
+                    $tableCheck = 1;
+                }
+            }
+            
+            if ($tableCheck == 1) {
+                if ($tables['name']) {
+                    $name = $tables['name'];
+                } else {
+                    $name = "Flea Market Table";
+                }
+            echo '<div class="notificationbox"><a href="fleaMarket" class="notif">' . $count . '. ' . $name . '</a></div>';
+            $count++;
+        }
+            
+        }
+        
+    }
+    
+    //Finished Craft
+    $query = 'SELECT * FROM craftingtables WHERE user_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $crafting = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($crafting['display']) {
+        if ($result > $crafting['finishtime']) {
+            echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Finish Craft</a></div>';
+            $count++;
+        }
+    }
+    
+    //Start Craft
+    if ($user['craftNotify'] == 1 && $crafting['recipe_id'] == 0 ) {
+        echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Craft Item</a></div>';
+            $count++;
+    }
 
     //Daily Raffle
     $query = 'SELECT entries FROM rafflecount ORDER BY id DESC LIMIT 1';
@@ -227,37 +312,7 @@ if ($tutorial < 4) {
         }
     }
     
-    //Finished Craft
-    $query = 'SELECT * FROM craftingtables WHERE user_id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $crafting = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($crafting['display']) {
-        if ($result > $crafting['finishtime']) {
-            echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Finish Craft</a></div>';
-            $count++;
-        }
-    }
     
-    //Start Craft
-    if ($user['craftNotify'] == 1 && $crafting['recipe_id'] == 0 ) {
-        echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Craft Item</a></div>';
-            $count++;
-    }
-    
-    //Check For Flea Market Coins
-    $query = 'SELECT * FROM marketTables WHERE user_id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $marketTable = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($marketTable['itemOne'] == "Coins" || $marketTable['itemTwo'] == "Coins"  || $marketTable['itemThree'] == "Coins"  || $marketTable['itemFour'] == "Coins" ) {
-        echo '<div class="notificationbox"><a href="fleaMarket" class="notif">' . $count . '. Collect Coins</a></div>';
-        $count++;
-    }
 
     //Finished Dye
     $query = 'SELECT * FROM dyebatches WHERE user_id = :id AND finished = 0';
@@ -271,6 +326,55 @@ if ($tutorial < 4) {
             echo '<div class="notificationbox"><a href="dyes" class="notif">' . $count . '. Check Dye Pot</a></div>';
             $count++;
         }
+    }
+    
+    //Bed Count. Notif if 1
+    if ($user['petBeds'] == 1 ) {
+        echo '<div class="notificationbox"><a href="pack" class="notif">' . $count . '. Place Pet Bed</a></div>';
+        $count++;
+    }
+    
+    //Farm Count. Notif if 1
+    if (count($plants) == 1) {
+        echo '<div class="notificationbox"><a href="pack" class="notif">' . $count . '. Set Up Farm Plot</a></div>';
+        $count++;
+    }
+    
+    //Notif if Only 1 Snoozeling
+    $query = 'SELECT * FROM snoozelings WHERE owner_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if (count($snoozelings) == 1) {
+        echo '<div class="notificationbox"><a href="adoption" class="notif">' . $count . '. Adopt Snoozeling</a></div>';
+        $count++;
+    }
+    
+    //Check Plushie Trade
+    $query = 'SELECT * FROM plushieTrades WHERE user_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $plushTrades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $plushCheck = 0;
+    foreach ($plushTrades as $plush) {
+        $query = 'SELECT * FROM plushieOffers WHERE trade_id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $plush['id']);
+        $stmt->execute();
+        $plushYes = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($plushYes) {
+            $plushCheck = 1;
+            $plushLink = $plush['id'];
+        }
+    }
+    
+    if ($plushCheck) {
+        echo '<div class="notificationbox"><a href="plushPost?id=' . $plushLink . '" class="notif">' . $count . '. Check Offer</a></div>';
+        $count++;
     }
 
     //Check ModMail

@@ -20,10 +20,10 @@ echo '<h4>Critter Web</h4>';
 echo '</div>';
 echo '</a>';
 
-echo '<a href="penpals" class="shopBox">';
-echo '<div >';
-echo '<img src="resources/penpalBoard.png" class="shopImg" style="width:90%">';
-echo '<h4>Penpal Requests</h4>';
+echo '<a href="plushMarket" class="shopBox">';
+echo '<div>';
+echo '<img src="resources/plushieMarket.png" class="shopImg" style="width:90%">';
+echo '<h4>Plush Market</h4>';
 echo '</div>';
 echo '</a>';
   

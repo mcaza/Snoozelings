@@ -43,6 +43,7 @@ echo '<h3 style="margin-bottom: 2rem;">Flea Market Table #' . $id + 1 . '</h3>';
 //Display Tables
 $items = ['itemOne', 'itemTwo', 'itemThree', 'itemFour'];
 $num = ['quantityOne', 'quantityTwo', 'quantityThree', 'quantityFour'];
+$amt = ['coinsOne','coinsTwo','coinsThree','coinsFour'];
 
 //Check if Coins
 $coinCheck = 0;
@@ -87,10 +88,12 @@ echo '<div class="farmBoxes">';
         echo '<h4  style="margin-top:0;">Empty Table</h4>';
     }
     if ($table[$items[$id]] == "Coins") {
-        echo '<p>' . $table[$num[$id]] . ' Snooze Coins</p><br>';
+        echo '<p>' . $table[$amt[$id]] . ' Snooze Coins</p><br>';
         
-    } else {
+    } else if ($table[$num[$x]] > 0) {
         echo '<p><b>Sell Price:</b> ' . $worth . ' Snooze Coins</p><br>';
+    } else {
+        echo '<p><i>Select Item Below</i><br>';
     }
     
     
@@ -119,8 +122,11 @@ foreach ($itemPrices as $y) {
     array_push($sellCheck,$y['id']);
 }
 
-
-echo '<div><h3 style="margin-bottom: 1rem;">Change Item</div>';
+if ($table[$num[$id]]) {
+    echo '<div><h3 style="margin-bottom: 1rem;">Change Item</div>';
+} else {
+    echo '<div><h3 style="margin-bottom: 1rem;">Add Item</div>';
+}
 echo '<form method="POST" action="includes/tableItem.inc.php">';
 echo '<label for="status"  class="form">Choose Item:</label><br>';
 echo '<select  class="input" name="item" id="item"><br>';

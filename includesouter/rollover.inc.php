@@ -61,7 +61,7 @@
     foreach ($users as $user) {
         //Assign Affirmations & Reset lastLog & DailyItem & Reset Requests
         $randomNum = rand(1, $affirmlength);
-        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0, penpalRequests = 0, dailyWish = 0 WHERE id = :id AND lastLog = 1";
+        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0, penpalRequests = 0, dailyWish = 0, plushTrades = 0 WHERE id = :id AND lastLog = 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":affirmation", $affirmresults[$randomNum]["affirmation"]);
         $stmt->bindParam(":id", $user["id"]);
@@ -120,6 +120,28 @@ foreach ($requests as $request) {
 
 echo $requestcount . ' Trades Cancelled. \n';
 
+//Expire Old Plushie Trades
+$query = 'SELECT * FROM plushieTrades';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$now = new DateTime('now', new DateTimezone('UTC'));
+$result = $now->format('Y-m-d H:i:s');
+
+$requestcount = 0;
+foreach ($requests as $request) {
+    if ($result > $request['expiry']) {
+        $query = 'DELETE FROM plushieTrades WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $request['id']);
+        $stmt->execute();
+        $requestcount++;
+    }
+}
+
+echo $requestcount . ' Trades Cancelled. \n';
+
 //Expire Old Penpals
 $query = 'SELECT * FROM penpalRequests WHERE expired = 0';
 $stmt = $pdo->prepare($query);
@@ -152,8 +174,6 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
-
 foreach ($items as $kind) {
     $query = 'UPDATE kindnessShop SET daily = 1 WHERE id = :id';
     $stmt = $pdo->prepare($query);
@@ -165,6 +185,28 @@ $query = 'UPDATE kindnessShop SET daily = 1 WHERE name = "SewingKit"';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 
+//Set Clothing Store Items
+$query = 'UPDATE clothingShop SET daily = 0';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+
+$query = 'SELECT * FROM clothingShop WHERE name != "Bleach" ORDER BY rand() LIMIT 7';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($items as $kind) {
+    $query = 'UPDATE clothingShop SET daily = 1 WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $kind['id']);
+    $stmt->execute();
+}
+
+$query = 'UPDATE clothingShop SET daily = 1 WHERE name = "Bleach"';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
+//Other Stuff
 $query = 'DELETE FROM requests WHERE fulfilled = 1';
     $stmt = $pdo->prepare($query);
     $stmt->execute();

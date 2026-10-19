@@ -92,7 +92,7 @@ $stmt->bindParam(":num", $num);
 $stmt->execute(); 
 
 //Redirect
-    $greeting = "You have received the following item: " . $itemdisplay;
+    $greeting = "Simon reaches into his bandana and pulls out the following item: " . $itemdisplay;
     $reply = $greeting;
     $query = 'INSERT INTO replies (user_id, message, items) VALUES (:user_id, :message, :items)';
     $stmt = $pdo->prepare($query);

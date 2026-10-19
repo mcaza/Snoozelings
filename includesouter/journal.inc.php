@@ -77,24 +77,35 @@ echo '<div class="journalDisplay">';
 if (!$journal) {
     //Journal Creation Title & Information
     echo '<h4  style="margin-top: 2rem;">Creating Your First Journal</h4>';
-    echo '<p style="margin-top: 2rem;">One of the best things you can do for your health is keep a journal. This gives doctors a better understanding of your condition. This makes appointments much less stressful. <br><br>Here in Snooze Village, we want you to take care of yourself. Therefore, everytime you fill out your journal you\'ll recieve 5 snooze coins and help contribute to our daily records.</p>';
-    echo '<p style="margin-top: 2rem; width: 90%;margin-right: auto;margin-left: auto;margin-bottom: 1rem;"><i>"It\'s easy. And I\'ll be here to help you every step of the way. Let\'s start by choosing a journal type. Then click Create Journal."</i></p>';
+    echo '<p style="margin-top: 2rem;">One of the best things you can do for your health is keep a journal. This gives doctors a better understanding of your condition and makes appointments much less stressful. <br><br>Here in Snooze Village, we want you to take care of yourself. Therefore, every time you fill out your journal you\'ll receive 5 snooze coins. You may also obtain special surprise items.</p>';
+    echo '<p style="margin-top: 2rem; width: 90%;margin-right: auto;margin-left: auto;margin-bottom: 1rem;"><i>"It\'s easy. And I\'ll be here to help you every step of the way. Let\'s start by choosing a journal type. Then click Start Journal."</i></p>';
     
     //Form to Create Journal
     echo "<form method='POST' action='../includes/createJournal.inc.php' onsubmit=\"return confirm('Are you sure this is the journal type you want? Once chosen, it cannot be changed without erasing all past journal data.');\">";
     echo '<label for="type" class="form">Journal Type:</label><br>';
     echo '<select class="input"  name="type">';
+    echo '<option value=""></option>';
     echo '<option value="mentalHealth">Mental Health</option>';
     echo '<option value="pain">Chronic Pain</option>';
     echo '<option value="productivity">Productivity</option>';
     echo '<option value="generic">Generic</option>';
     echo '</select><br>';
-    echo '<button  class="fancyButton">Create Journal</button>';
+    echo '<button  class="fancyButton">Start Journal</button>';
     echo '</form>';
     
-    echo '<br><p><a href="https://snoozelings.fandom.com/wiki/Journal_Types">More Journal Information</a></p>';
+    echo '<br><p><a href="https://docs.google.com/document/d/1sTOB5jIW8NR-sJn23Jxd3IPkNiUbuLsnnpjpbAG3OeI/edit?usp=sharing" target="_blank">More Journal Information</a></p>';
     
-} elseif (!$latestEntry || $latestEntry['closed'] == 1) {
+} else if (!$latestEntry) {
+    echo '<h4  style="margin-top: 2rem;">Snoozeling\'s First Journal Entry</h4>';
+    
+    //Journal Image
+    echo '<img src="resources/JournalPastel.png" style="width: 225px;"><br>';
+    
+    echo '<p style="width:90%">Filling out your journal daily is very important.<br><br>You\'ll receive <b>5 Snooze Coins</b> when you complete each day\'s entry. That\'s 35 weekly Snooze Coins.<br><Br>Snooze Coins are very important for building new <b>Pet Beds</b>, buying seeds, and entering daily raffles.<br><br></p>';
+    
+    //Journal Button
+    echo '<button class="fancyButton" onClick="window.location.href=\'/journalentry\'" style="margin-right: 2rem;">Write Journal</button>';
+} elseif ( $latestEntry['closed'] == 1) {
     //Journal Display if there's no active entry
 
     //Get Journal Messages
@@ -112,7 +123,7 @@ if (!$journal) {
     echo '<p  style="margin-top: 2rem; width: 90%;"><i>"' . $messages[$randomNum]['message'] . '"</i></p>';
     
     //Journal Image
-    echo '<img src="resources/journal.png" style="width: 300px;"><br>';
+    echo '<img src="resources/JournalPastel.png" style="width: 225px;"><br>';
     
     //Journal Button
     echo '<button class="fancyButton" onClick="window.location.href=\'/journalentry\'" style="margin-right: 2rem;">Write Journal</button>';
@@ -121,6 +132,7 @@ if (!$journal) {
     echo '<button class="fancyButton" onClick="hideFunctions()">Past Journals</button>';
     
 } elseif ($latestEntry['closed'] == "0") {
+    
     //Check if Any Messages (Earn Coins OR Journal Edit)
     if ($reply) {
         echo '<div class="returnBar" style="margin-top: 1rem;margin-bottom:2rem;">';
@@ -142,7 +154,7 @@ if (!$journal) {
         echo '<p>You have filled out your journal 1 time.</p>';
     }
     echo '<p>' . htmlspecialchars($pet['name']) . ' is super proud of you!</p>';
-    echo '<img src="resources/journal.png" style="width: 300px;"><br>';
+    echo '<img src="resources/JournalPastel.png" style="width: 225px;"><br>';
     
     //Edit Journal Button
     echo '<button class="fancyButton" onClick="window.location.href=\'/journaledit\'" style="margin-right: 2rem;">Edit Journal</button>';

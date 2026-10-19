@@ -32,6 +32,13 @@ $stmt->bindParam(":id", $userId);
 $stmt->execute();
 $snoozelings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Get Bonded ID
+$query = "SELECT * FROM users WHERE id = :id";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$bonded = $stmt->fetch(PDO::FETCH_ASSOC);
+
 //Get Dyes
 if ($item['canDye'] == 1 || $item['name'] == "Bandana") {
     $dyelist = [];
@@ -103,6 +110,18 @@ $type = ucfirst($item['type']);
 echo '<a href="pack"><<</a>';
 echo '</div>';
 
+//Tutorial Pop Up (Welcome Package)
+
+if ($bonded['tutorial'] == 3) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><p style="width:90%">Amazing work ' . $bonded['username'] . '!!!<br><br>It\'s such a pretty package.<br><Br>I wonder what could be inside.<br><br><i>Cookies? Pasta? Marshmallows?</i><br><Br>I can\'t wait any longer!!!!!<br><br>Please please please click the <b>Open Package</b> button.<br><br></p></div></div><br><Br>';
+} else if ($bonded['tutorial'] == 4) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><Br><br><br><Br><br><p style="width:90%">This bed looks super soft and warm.<br><br>My favorite type of bed!!!<br><br>Please click the <b>Add Pet Bed</b> button.<br><br></p></div></div><br><Br>';
+} else if ($bonded['tutorial'] == 5) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><br><br><Br><p style="width:90%">You\'re so good at this tutorial stuff.<br><br>I\'m so impressed by how quick you\'re learning everything. It took me forever.<br><Br>Once we set up this <b>Farm Plot</b>, we can start the really fun activities like <b>Exploring</b> and <b>Crafting</b>.<br><br>Please click the <b>Add Farm Plot</b> button.<br><br></p></div></div><br><Br>';
+} else if ($bonded['tutorial'] == 11) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><br><Br><p style="width:90%">As part of your welcome to Snooze Village, all new players are given this special <b>Welcome Bandana</b>.<br><br>Bandanas and Plushies are some of the rarest items in the game, as they cannot be crafted or purchased.<br><br>Other items like Hoodies, Bandages, Stickers, Harnesses, and Jewelry are more common.<br><br>To equip the bandana, select your pet in the drop down box and click <b>Wear Item</b>.<br><br></p></div></div><br><Br>';
+}
+
 if ($reply) {
     echo '<div class="returnBar" style="margin-top: 2rem;margin-bottom:1rem;">';
     echo '<p>' . $reply['message'] . '</p>';
@@ -141,7 +160,7 @@ echo '</div>';
 if ($results) {
 
     //Planter Box - Add Farm Plot
-    if ($item['name'] === "PlanterBox") {
+    if ($item['name'] === "PlanterBox" && $bonded['tutorial'] > 4) {
         echo '<form method="post" action="includes/useBox.inc.php">';
         echo '<button class="fancyButton">Add Farm Plot</button>';
         echo '</form>';
@@ -404,6 +423,12 @@ if ($results) {
 
     }
     
+    if ($item['name'] === "WelcomePackage") {
+        echo '<form method="post" action="includes/openWelcomePackage.inc.php">';
+        echo '<button class="fancyButton">Open Package</button>';
+        echo '</form>';
+    } 
+    
     if ($item['name'] === "Bleach") {
         $query = 'SELECT * FROM items WHERE user_id = :id AND dye IS NOT NULL';
         $stmt = $pdo->prepare($query);
@@ -454,6 +479,9 @@ if ($results) {
         echo '<a href="/stitcher?page=new"><h1>Use at Minky\'s Shop</h1></a>';
         echo '<a href="/stitcher?page=new"><img src="/resources/ProfileMinky.png" style="width:200px;"></a>';
     }
+} else {
+    echo '<hr><p><b>How To Get Item</b></p>';
+    echo '<p>' . $item['tooltip'] . '</p>';
 }
 
 echo '</div>';

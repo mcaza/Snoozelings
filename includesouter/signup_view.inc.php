@@ -24,7 +24,9 @@ function signupInputs() {
     $username = $_GET['username'];
     $email = $_GET['email'];
     $birthday = $_GET['birthday'];
-    echo "<label for='code'  class='form'>Early Access Code:</label><br>";
+    
+    echo '<p>Registration is Temorarily Disabled</p>';
+     echo "<label for='code'  class='form'>Early Access Code:</label><br>";
     if ($EACode) {
         echo '<input class="input" type="text" name="code" placeholder="From Your Email" value="' . $EACode . '" required><br>';
     } else if (isset($_COOKIE["signupData"]["code"]) && !isset($_COOKIE["errors_signup"]["code_not_found"]) && !isset($_COOKIE["errors_signup"]["code_used"])) {
@@ -66,6 +68,6 @@ function signupInputs() {
     echo '</select><br>';
     echo '<input  type="checkbox" class="checkBox" name="terms" required>';
     echo '<label class="conditions" for="terms" >I agree to the <a href="terms" target="_blank">Terms and Conditions</a> and <a href="conduct" target="_blank">Code of Conduct</a><label><br>';
-    setcookie("signupData", "", time()-3600);
+    setcookie("signupData", "", time()-3600); 
      
 }

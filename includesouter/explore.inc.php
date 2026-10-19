@@ -55,7 +55,13 @@ echo '<div class="leftRightButtons">';
 echo '<a href="snoozevillage"><<</a>';
 echo '</div>';
 
-if ($temp === "Farmland") {
+//Tutorial Pop Up
+if ($user['tutorial'] == 7) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><br><br><Br><p style="width:90%">Next, we\'re going to go <b>Exploring</b>.<br><br>Different locations have different items, but we will be searching for <b>Wood Logs</b> in <b>Wistful Woods</b>.<br><br><img src="items/WoodLog.png" style="width:65px"><img src="items/WoodLog.png" style="width:65px"><img src="items/WoodLog.png" style="width:65px"><br><br></p></div></div><br><Br>';
+    
+    echo '<div><img id="exploreImage" class="wideImage" src="resources/Forest.png"></div>';
+} else {
+    if ($temp === "Farmland") {
     echo '<div><img id="exploreImage" class="wideImage" src="resources/Farmland.png"></div>';
     $optionone = "selected";
 } elseif ($temp === "Forest") {
@@ -66,6 +72,9 @@ if ($temp === "Farmland") {
     $optionthree = "selected";
 }
 echo '<div class="returnItems">';
+}
+
+
 
 echo $itemListTests;
 
@@ -262,11 +271,17 @@ if ($reply) {
 
         echo '<label for="area"  class="form">Choose An Area:</label><br>';
         echo '<select  class="input" name="area" id="exploreArea"><br>';
-        echo '<option value="Farmland" ' . $optionone . '>Snoozeling Ranch</option>';
-        echo '<option value="Forest" ' . $optiontwo . '>Wistful Woods</option>';
-        echo '<option value="Beach" ' . $optionthree . '>Dazzling Coast</option>';
+        if ($user['tutorial'] == 7) { 
+            echo '<option value="Forest" ' . $optiontwo . '>Wistful Woods</option>';
+        } else {
+            echo '<option value="Farmland" ' . $optionone . '>Snoozeling Ranch</option>';
+            echo '<option value="Forest" ' . $optiontwo . '>Wistful Woods</option>';
+            echo '<option value="Beach" ' . $optionthree . '>Dazzling Coast</option>';
+        }
+        
+        
         echo '</select></br>';
-        echo '<button  class="fancyButton editButton">Send Exploring</button>';
+        echo '<button  class="fancyButton editButton">Go Exploring</button>';
         echo '</form>';
     } else {
         echo '<h1 style="margin-top:25px;"><b>Explorer Countdown:</b></h1><br>';
@@ -285,54 +300,54 @@ echo '<br><br><hr><br>';
 
 //if ($temp === "Farmland") {
 echo '<div id="Farmland">';
-echo '<h6>Snoozeling Ranch Items</h6>';
+echo '<h6>Snoozeling Ranch Drops</h6>';
 echo '<h6></h6>';
 echo '<table class="exploretable">';
 echo '<tr><th colspan="4">Common Items</th></tr>';
 echo '<tr>';
-echo '<td>Eggshells</td>';
-echo '<td>Tiny Feather</td>';
-echo '<td>Dirt</td>';
-echo '<td>Manure</td>';
+echo '<td>Eggshells<br><img src="items/Eggshells.png" style="width:20%"></td>';
+echo '<td>Tiny Feather<br><img src="items/TinyFeather.png" style="width:20%"></td>';
+echo '<td>Dirt<br><img src="items/Dirt.png" style="width:20%"></td>';
+echo '<td>Manure<br><img src="items/Manure.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Honey</td>';
-echo '<td>Egg Carton</td>';
-echo '<td>Empty Jug</td>';
-echo '<td>Old Can</td>';
+echo '<td>Honey<br><img src="items/Honey.png" style="width:20%"></td>';
+echo '<td>Egg Carton<br><img src="items/EggCarton.png" style="width:20%"></td>';
+echo '<td>Empty Jug<br><img src="items/EmptyJug.png" style="width:20%"></td>';
+echo '<td>Old Can<br><img src="items/OldCan.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<tr><th colspan="4">Uncommon Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Ram Horn</td>';
-echo '<td>Horse Hair</td>';
-echo '<td>Cowbell</td>';
-echo '<td>Mystery Seed</td>';
+echo '<td>Ram Horn<br><img src="items/RamHorn.png" style="width:20%"></td>';
+echo '<td>Horse Hair<br><img src="items/HorseHair.png" style="width:20%"></td>';
+echo '<td>Cowbell<br><img src="items/Cowbell.png" style="width:20%"></td>';
+echo '<td>Mystery Seed<br><img src="items/MysterySeed.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Old Coin</td>';
-echo '<td>Farm Chest</td>';
-echo '<td>Key</td>';
-echo '<td>Button</td>';
+echo '<td>Old Coin<br><img src="items/OldCoin.png" style="width:20%"></td>';
+echo '<td>Farm Chest<br><img src="items/FarmChest.png" style="width:20%"></td>';
+echo '<td>Key<br><img src="items/Key.png" style="width:20%"></td>';
+echo '<td>Button<br><img src="items/Button.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<tr><th colspan="4">Rare Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Wooly Pattern</td>';
-echo '<td>Collie Pattern</td>';
-echo '<td>Duck Hoodie</td>';
-echo '<td>Horse Hoodie</td>';
+echo '<td>Wooly Tail Design<br><img src="items/DesignWoolyTail.png" style="width:20%"></td>';
+echo '<td>Collie Marking Design<br><img src="items/DesignCollie.png" style="width:20%"></td>';
+echo '<td>Duck Hoodie<br><img src="items/DuckHoodie.png" style="width:20%"></td>';
+echo '<td>Horse Hoodie<br><img src="items/HorseHoodie.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Cow Hoodie</td>';
-echo '<td>Blue Cow Fabric</td>';
-echo '<td>Brown Cow Fabric</td>';
-echo '<td>Pink Cow Fabric</td>';
+echo '<td>Cow Hoodie<br><img src="items/CowHoodie.png" style="width:20%"></td>';
+echo '<td>Blue Cow Fabric<br><img src="items/FabricCowBlue.png" style="width:20%"></td>';
+echo '<td>Brown Cow Fabric<br><img src="items/FabricCowBrown.png" style="width:20%"></td>';
+echo '<td>Pink Cow Fabric<br><img src="items/FabricCowPink.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Grey Cow Fabric</td>';
+echo '<td>Grey Cow Fabric<br><img src="items/FabricCowGrey.png" style="width:20%"></td>';
 echo '<td></td>';
 echo '<td></td>';
 echo '<td></td>';
@@ -341,128 +356,128 @@ echo '<tr>';
 echo '<tr><th colspan="4">Special Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Blueprint</td>';
-echo '<td>Sewing Kit</td>';
+echo '<td>Blueprint<br><img src="items/Blueprint.png" style="width:20%"></td>';
+echo '<td>Sewing Kit<br><img src="items/SewingKit.png" style="width:20%"></td>';
 echo '<td></td>';
 echo '<td></td>';
 echo '</tr>';
-echo '</table><br><br>';
+echo '</table>';
 echo '</div>';
 //} elseif ($temp === "Forest") {
 echo '<div id="Forest">';
-echo '<h6>Wistful Woods Items</h6>';
+echo '<h6>Wistful Woods Drops</h6>';
 echo '<h6></h6>';
 echo '<table class="exploretable">';
 echo '<tr><th colspan="4">Common Items</th></tr>';
 echo '<tr>';
-echo '<td>Wood Log</td>';
-echo '<td>Colorful Feather</td>';
-echo '<td>Gooseberry</td>';
-echo '<td>Blueberry</td>';
+echo '<td>Wood Log<br><img src="items/WoodLog.png" style="width:20%"></td>';
+echo '<td>Colorful Feather<br><img src="items/ColorfulFeather.png" style="width:20%"></td>';
+echo '<td>Gooseberry<br><img src="items/Gooseberry.png" style="width:20%"></td>';
+echo '<td>Blueberry<br><img src="items/Blueberry.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Leaf</td>';
-echo '<td>Tree Sap</td>';
-echo '<td>Plant Fiber</td>';
-echo '<td>Flower</td>';
+echo '<td>Leaf<br><img src="items/Leaf.png" style="width:20%"></td>';
+echo '<td>Tree Sap<br><img src="items/TreeSap.png" style="width:20%"></td>';
+echo '<td>Plant Fiber<br><img src="items/PlantFiber.png" style="width:20%"></td>';
+echo '<td>Flower<br><img src="items/Flower.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<tr><th colspan="4">Uncommon Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Lizard Tail</td>';
-echo '<td>Bug Wings</td>';
-echo '<td>Mushroom</td>';
-echo '<td>Mystery Seed</td>';
+echo '<td>Lizard Tail<br><img src="items/LizardTail.png" style="width:25%"></td>';
+echo '<td>Bug Wings<br><img src="items/BugWings.png" style="width:20%"></td>';
+echo '<td>Mushroom<br><img src="items/Mushroom.png" style="width:20%"></td>';
+echo '<td>Mystery Seed<br><img src="items/MysterySeed.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Old Coin</td>';
-echo '<td>Woods Chest</td>';
-echo '<td>Key</td>';
-echo '<td>Button</td>';
+echo '<td>Old Coin<br><img src="items/OldCoin.png" style="width:20%"></td>';
+echo '<td>Woods Chest<br><img src="items/WoodsChest.png" style="width:20%"></td>';
+echo '<td>Key<br><img src="items/Key.png" style="width:20%"></td>';
+echo '<td>Button<br><img src="items/Button.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<tr><th colspan="4">Rare Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Panther Pattern</td>';
-echo '<td>Foxy Pattern</td>';
-echo '<td>Deer Hoodie</td>';
-echo '<td>Doe Hoodie</td>';
+echo '<td>Panther Tail Design<br><img src="items/DesignPantherTail.png" style="width:20%"></td>';
+echo '<td>Foxy Marking Design<br><img src="items/DesignFoxy.png" style="width:20%"></td>';
+echo '<td>Deer Hoodie<br><img src="items/DeerHoodie.png" style="width:20%"></td>';
+echo '<td>Doe Hoodie<br><img src="items/DoeHoodie.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Fairy Horns</td>';
-echo '<td>Acorns Fabric</td>';
-echo '<td>Leaves Fabric</td>';
-echo '<td>Forest Fabric</td>';
+echo '<td>Fairy Horns<br><img src="items/FairyHorns.png" style="width:20%"></td>';
+echo '<td>Acorns Fabric<br><img src="items/FabricAcorns.png" style="width:20%"></td>';
+echo '<td>Leaves Fabric<br><img src="items/FabricLeaves.png" style="width:20%"></td>';
+echo '<td>Forest Fabric<br><img src="items/FabricForest.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Acorn Bag</td>';
-echo '<td>Squirrel Hoodie</td>';
-echo '<td>Deer Antlers</td>';
+echo '<td>Acorn Bag<br><img src="items/AcornBag.png" style="width:20%"></td>';
+echo '<td>Squirrel Hoodie<br><img src="items/SquirrelHoodie.png" style="width:20%"></td>';
+echo '<td>Deer Antlers<br><img src="items/DeerAntlers.png" style="width:20%"></td>';
 echo '<td></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<tr><th colspan="4">Special Item</th></tr>';
+echo '<tr><th colspan="4">Special Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Blueprint</td>';
-echo '<td>Sewing Kit</td>';
+echo '<td>Blueprint<br><img src="items/Blueprint.png" style="width:20%"></td>';
+echo '<td>Sewing Kit<br><img src="items/SewingKit.png" style="width:20%"></td>';
 echo '<td></td>';
 echo '<td></td>';
 echo '</tr>';
 echo '</table>';
-echo '</div><br><br>';
+echo '</div>';
 //} elseif ($temp === "Beach") {
 echo '<div id="Beach">';
-echo '<h6>Dazzling Coast Items</h6>';
+echo '<h6>Dazzling Coast Drops</h6>';
 echo '<h6></h6>';
 echo '<table class="exploretable">';
 echo '<tr><th colspan="4">Common Items</th></tr>';
 echo '<tr>';
-echo '<td>Copper Wire</td>';
-echo '<td>Silver Earring</td>';
-echo '<td>Gold Ring</td>';
-echo '<td>Seagull Feather</td>';
+echo '<td>Copper Wire<br><img src="items/CopperWire.png" style="width:20%"></td>';
+echo '<td>Silver Earring<br><img src="items/SilverEarring.png" style="width:20%"></td>';
+echo '<td>Gold Ring<br><img src="items/GoldRing.png" style="width:20%"></td>';
+echo '<td>Seagull Feather<br><img src="items/SeagullFeather.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Sand</td>';
-echo '<td>Water</td>';
-echo '<td>Nail</td>';
-echo '<td>Moss</td>';
+echo '<td>Sand<br><img src="items/Sand.png" style="width:20%"></td>';
+echo '<td>Water<br><img src="items/Water.png" style="width:20%"></td>';
+echo '<td>Nail<br><img src="items/Nail.png" style="width:20%"></td>';
+echo '<td>Moss<br><img src="items/Moss.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<tr><th colspan="4">Uncommon Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Sewing Needle</td>';
-echo '<td>Shark Fang</td>';
-echo '<td>Old Lock</td>';
-echo '<td>Mystery Seed</td>';
+echo '<td>Sewing Needle<br><img src="items/SewingNeedle.png" style="width:20%"></td>';
+echo '<td>Shark Fang<br><img src="items/SharkFang.png" style="width:20%"></td>';
+echo '<td>Old Lock<br><img src="items/OldLock.png" style="width:20%"></td>';
+echo '<td>Mystery Seed<br><img src="items/MysterySeed.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Old Coin</td>';
-echo '<td>Beach Chest</td>';
-echo '<td>Key</td>';
-echo '<td>Button</td>';
+echo '<td>Old Coin<br><img src="items/OldCoin.png" style="width:20%"></td>';
+echo '<td>Beach Chest<br><img src="items/BeachChest.png" style="width:20%"></td>';
+echo '<td>Key<br><img src="items/Key.png" style="width:20%"></td>';
+echo '<td>Button<br><img src="items/Button.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<tr><th colspan="4">Rare Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Mermaid Pattern</td>';
-echo '<td>Scales Pattern</td>';
-echo '<td>Beach Hat</td>';
-echo '<td>Sunscreen</td>';
+echo '<td>Mermaid Tail Design<br><img src="items/DesignMermaidTail.png" style="width:20%"></td>';
+echo '<td>Scales Marking Design<br><img src="items/DesignScales.png" style="width:20%"></td>';
+echo '<td>Beach Hat<br><img src="items/BeachHat.png" style="width:20%"></td>';
+echo '<td>Sunscreen<br><img src="items/Sunscreen.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Shark Towel</td>';
-echo '<td>Frog Towel</td>';
-echo '<td>Fox Towel</td>';
-echo '<td>Wetsuit</td>';
+echo '<td>Shark Towel<br><img src="items/SharkTowel.png" style="width:20%"></td>';
+echo '<td>Frog Towel<br><img src="items/FrogTowel.png" style="width:20%"></td>';
+echo '<td>Fox Towel<br><img src="items/FoxTowel.png" style="width:20%"></td>';
+echo '<td>Wetsuit<br><img src="items/Wetsuit.png" style="width:20%"></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Ocean Fabric</td>';
+echo '<td>Ocean Fabric<br><img src="items/FabricOcean.png" style="width:20%"></td>';
 echo '<td></td>';
 echo '<td></td>';
 echo '<td></td>';
@@ -471,13 +486,65 @@ echo '<tr>';
 echo '<tr><th colspan="4">Special Items</th></tr>';
 echo '</tr>';
 echo '<tr>';
-echo '<td>Blueprint</td>';
-echo '<td>Sewing Kit</td>';
+echo '<td>Blueprint<br><img src="items/Blueprint.png" style="width:20%"></td>';
+echo '<td>Sewing Kit<br><img src="items/SewingKit.png" style="width:20%"></td>';
 echo '<td></td>';
 echo '<td></td>';
 echo '</tr>';
 echo '</table>';
 echo '</div>';
-//}
-echo '<p>**All biomes can also drop currency and seeds</p>';
+echo '<p><i>**All biomes can also drop currency and seeds**</i></p>';
 echo '</div>';
+
+$now = new DateTime('now', new DateTimezone('UTC'));
+$firstDate = $now->format('m');
+if ($firstDate == 10) {
+    echo '<br><hr><br><div id="October">';
+    echo '<h6>&#127875; Festival of Treats Drops &#127875;</h6>';
+    echo '<h6></h6>';
+    echo '<table class="exploretable">';
+    echo '<tr><th colspan="4">Special Items</th></tr>';
+    echo '<tr>';
+    echo '<td>Skeleton Design<br><img src="items/DesignSkeleton.png" style="width:20%"></td>';
+    echo '<td>Tailless Design<br><img src="items/DesignTailless.png" style="width:20%"></td>';
+    echo '<td></td>';
+    echo '<td></td>';
+    echo '</tr>';
+    echo '<tr><th colspan="4">Decor Items</th></tr>'; 
+    echo '<tr>';
+    echo '<td>Spooky Striped Bandana<br><img src="items/SpookyStripedBandana.png" style="width:20%"></td>';
+    echo '<td>Spooky Layered Bandana<br><img src="items/SpookyLayeredBandana.png" style="width:20%"></td>';
+    echo '<td>Imp Horns<br><img src="items/ImpHorns.png" style="width:20%"></td>'; 
+    echo '<td></td>';
+    echo '</tr>'; 
+    echo '<tr><th colspan="4">Plushies</th></tr>';
+    echo '<tr>';
+    echo '<td>Haunted Plushie<br><img src="items/HauntedPlushie.png" style="width:20%"></td>'; 
+    echo '<td>Candy Corn Plushie<br><img src="items/CandyCornPlushie.png" style="width:20%"></td>'; 
+    echo '<td>Zombie Puppy Plushie<br><img src="items/ZombiePuppyPlushie.png" style="width:20%"></td>'; 
+    echo '<td></td>';
+    echo '</tr>';
+    echo '<tr><th colspan="4">Stains</th></tr>';
+    echo '<tr>';
+    echo '<td>Stain: Fright<br><img src="items/StainFright.png" style="width:20%"></td>';
+    echo '<td>Stain: Haunt<br><img src="items/StainHaunt.png" style="width:20%"></td>';
+    echo '<td>Stain: Night<br><img src="items/StainNight.png" style="width:20%"></td>';
+    echo '<td>Stain: Zombie<br><img src="items/StainZombie.png" style="width:20%"></td>';
+    echo '</tr>'; 
+    echo '</table>';
+    echo '</div><br><br>';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

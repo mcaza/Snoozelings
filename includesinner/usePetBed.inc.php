@@ -42,6 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":user_id", $userId);
             $stmt->bindParam(":message", $reply);
             $stmt->execute();
+            
+            //Update Tutorial if 1st Bed
+            
+            if ($result['tutorial'] == 4) {
+                $query = 'UPDATE users SET tutorial = 5 WHERE id = :id';
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":id", $userId);
+                $stmt->execute();
+            }
 
             //Reroute to Pack
             header("Location: ../pack");

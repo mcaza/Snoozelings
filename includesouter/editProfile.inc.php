@@ -54,6 +54,12 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $backpackNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//Get Backpack Names
+$query = "SELECT * FROM shopNames ORDER BY name";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$shopNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 //Top Bar. Back Error Left. Request Button Right
 echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
@@ -202,6 +208,23 @@ foreach ($backpackNames as $name) {
 }
 echo '</select><br>';
 
+//Market Name
+$query = "SELECT * FROM marketTables WHERE user_id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$table = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($table) {
+    echo '<label for="market" class="form" style="margin-bottom:0px">Change Market Name:</label><br>';
+    echo '<p ><i>Snoozeling\'s</i></p><select class="input" name="market">';
+    echo '<option value=""></option>';
+    foreach ($shopNames as $name) {
+        echo "<option value='" . $name['name'] . "'>" . $name['name'] . "</option>";
+    }
+    echo '</select><br>';
+}
+
 //Allow Friend Requests
 echo '<label for="friends" class="form">Allow Friend Requests:</label><br>';
 switch ($result['blockRequests']) {
@@ -238,7 +261,7 @@ $no = "";
 
 //Crafting Notifications
 echo '<label for="craftingNotif" class="form">Crafting Notification:</label><br>';
-switch ($result['craftNotify']) {
+switch ($result['mode']) {
     case "1":
         $yes = "selected";
         break;
@@ -249,6 +272,39 @@ switch ($result['craftNotify']) {
 echo '<select class="input" name="craftingNotif">';
 echo '<option value="0"' . $no . '>No</option>';
 echo '<option value="1"' . $yes . '>Yes</option>';
+echo '</select><br>';
+$yes = "";
+$no = "";
+
+//Flea Market Notifications
+if ($table) {
+    echo '<label for="marketNotif" class="form">Flea Market Notification:</label><br>';
+    switch ($result['marketNotify']) {
+        case "1":
+            $yes = "selected";
+            break;
+        case "0":
+            $no = "selected";
+            break;
+    }
+    echo '<select class="input" name="marketNotif">';
+    echo '<option value="0"' . $no . '>No</option>';
+    echo '<option value="1"' . $yes . '>Yes</option>';
+    echo '</select><br>';
+    $yes = "";
+    $no = ""; 
+}
+
+//Dark Mode
+echo '<label for="darkMode" class="form">Dark Mode:</label><br>';
+if ($result['mode'] == "Dark") {
+    $yes = "selected";
+} else {
+    $no = "selected";
+}
+echo '<select class="input" name="darkMode">';
+echo '<option value="Light"' . $no . '>No</option>';
+echo '<option value="Dark"' . $yes . '>Yes</option>';
 echo '</select><br>';
 $yes = "";
 $no = "";
@@ -280,10 +336,12 @@ echo '<input type="checkbox" id="Journal" name="Journal" value="Journal">';
 echo '<label style="font-size: 1.7rem;" for="Journal">Health Journal</label><br><br>';
 echo '<input type="checkbox" id="Mailbox" name="Mailbox" value="Mailbox">';
 echo '<label style="font-size: 1.7rem;" for="Mailbox">Mailbox</label><br><br>';
-echo '<input type="checkbox" id="Penpals" name="Penpals" value="Penpals">';
-echo '<label style="font-size: 1.7rem;" for="Penpals">Find Penpal</label><br><br>';
 echo '<input type="checkbox" id="Snoozeling" name="Snoozeling" value="Snoozeling">';
 echo '<label style="font-size: 1.7rem;" for="Snoozeling">Bonded Snoozeling</label><br><br>';
+echo '<input type="checkbox" id="FleaMarket" name="FleaMarket" value="FleaMarket">';
+echo '<label style="font-size: 1.7rem;" for="darkMode">Flea Market</label><br><br>';
+echo '<input type="checkbox" id="colorMode" name="colorMode" value="colorMode">';
+echo '<label style="font-size: 1.7rem;" for="colorMode">Dark Mode</label><br><br>';
 
 
 echo '<hr>';

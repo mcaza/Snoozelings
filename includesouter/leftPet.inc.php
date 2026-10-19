@@ -33,11 +33,14 @@ require_once '../includes/displayPet.inc.php';
         echo '<form id="moodForm" method="POST" action="includes/changeMood.inc.php">';
         echo '<label class="form" for="mood">Choose a Mood:</label><br>';
         echo '<select class="input" id="moodSelect" name="mood">';
+            echo '<option value="Anxious">Anxious</option>';
+            echo '<option value="Cheeky">Cheeky</option>';
         echo '<option value="Happy">Happy</option>';
-        echo '<option value="Anxious">Anxious</option>';
+        
         echo '<option value="Overwhelmed">Overwhelmed</option>';
         echo '<option value="Sleepy">Sleepy</option>';
-        echo '<option value="Cheeky">Cheeky</option>';
+        echo '<option value="Smug">Smug</option>';
+        
         //echo '<option value="Naughty">Naughty</option>';
         echo '</select><br>';
         echo '<button class="fancyButton" style="font-size: 2rem; margin-bottom: 1rem;">Change Mood</button>';

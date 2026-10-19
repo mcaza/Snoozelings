@@ -88,9 +88,9 @@ echo '</a>';
 echo '<a href="clothingshop" class="shopBox">';
 echo '<div >';
 if ($month == 6) {
-    echo '<img src="resources/cocoaPride.png" class="shopImg" style="width: 100%";">';
+    echo '<img src="resources/SugarStitch.png" class="shopImg" style="width: 100%";">';
 } else {
-    echo '<img src="resources/clothingShopCocoa.png" class="shopImg" style="width: 100%";">';
+    echo '<img src="resources/SugarStitch.png" class="shopImg" style="width: 100%";">';
 }
 echo '<h4>Clothing Shop</h4>';
 echo '</div>';

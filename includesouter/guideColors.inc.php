@@ -1,5 +1,10 @@
 <?php
 
+//Get Values
+if (isset($_GET['type'])) {
+    $type = $_GET['type'];
+}
+
 //Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="gameGuides"><<</a>';
@@ -13,14 +18,35 @@ echo '<p style="text-align:center;margin: 0px 40px 15px 30px;">The Colors System
 
 echo '<h2 style="text-align:center;margin-bottom:10px;">Color Traits</h2>';
 
-echo '<p style="text-align:center;margin: 0px 40px 15px 30px;">Each color has three traits that are used in the calculation of creating new snoozelings.<br><br><b>Color -</b> This is the prime coloration from the color scheme.<br><br><i>Black, Blue, Brown, Green, Grey, Orange, Pink, Purple, Red, White, or Yellow</i><br><br><b>Category -</b> This is the general activity or item family that it belongs to.</b><br><br><i>Animal, Festival, Healthy, Hobbies, Natural, Treats, or Underground</i><br><br><b>Hue -</b> This is the shade or intensity of the color.</b><br><br><i>Dark, Eyeburner, Matte, Monochrome, Pastel, Primary, or Secondary</i></p>';
+echo '<p style="text-align:center;margin: 0px 40px 15px 30px;">Each color has three traits that are used in the calculation of creating new snoozelings.<br><br><b>Color -</b> This is the prime coloration from the color scheme.<br><br><i>Black, Blue, Brown, Green, Grey, Orange, Pink, Purple, Red, White, or Yellow</i><br><br><b>Category -</b> This is the general activity or item family that it belongs to.</b><br><br><i>Animal, Festival, Healthy, Hobbies, Natural, Treats, or Underground</i><br><br><b>Hue -</b> This is the shade or intensity of the color.</b><br><br><i>Dark, Eyeburner, Matte, Monochrome, Pastel, Primary, or Secondary</i></p><hr>';
+
+echo '<h1>Filter Colors:</h1>';
+echo '<form action="/guideColors.php" method="get">';
+echo '<select name="type" id="type">';
+echo '<option value=""></option>';
+echo '<option value="Common">Common</option>';
+echo '<option value="Uncommon">Festival</option>';
+echo '<option value="Rare">Sewing Kit Only</option>';
+echo '</select>';
+
+echo "<br><br><button class='fancyButton'>Filter</button>";
+
+echo '</form><hr>';
 
 echo '<h2 style="text-align:center;margin-bottom:10px;">List of Colors</h2>';
 
 echo '<div style="display:flex;flex-wrap:wrap;justify-content:space-evenly;gap:10px;">';
 
-$query = 'SELECT * FROM colors ORDER BY name ASC';
+if ($type) {
+    $query = 'SELECT * FROM colors WHERE rarity = :type ORDER BY name ASC';
+} else {
+    $query = 'SELECT * FROM colors ORDER BY name ASC';
+}
+
 $stmt = $pdo->prepare($query);
+if ($type) {
+    $stmt->bindParam(":type", $type);
+}
 $stmt->execute();
 $colorList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

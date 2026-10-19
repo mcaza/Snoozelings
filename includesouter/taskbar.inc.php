@@ -22,7 +22,7 @@ $month = ltrim(date('m'), "0");
         if ($id['homeName']) {
             $home = $id['homeName'];
         } else {
-            $home = "Abode";
+            $home = "Profile";
         }
         
         echo '<div class="dropdown">
@@ -68,8 +68,8 @@ $month = ltrim(date('m'), "0");
             <button class="menu dropdown dropbtn" id="drop"><a href="community">Community</a></button>
             <div class="dropdown-content">
                 <a href="mailbox">Mailbox</a>
-                <a href="penpals">Penpal Board</a>
                 <a href="critterweb">Critter Web</a>
+                <a href="plushMarket">Plush Market</a>
             </div>
         </div>
         <div class="dropdown">

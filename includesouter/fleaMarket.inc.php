@@ -13,6 +13,16 @@ $reply = $stmt->fetch(PDO::FETCH_ASSOC);
 $now = new DateTime("now", new DateTimezone('UTC'));
 $result = $now->format('Y-m-d H:i:s');
 
+//Rollover Time Stuff
+$query = 'SELECT * FROM times';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$times = $stmt->fetch(PDO::FETCH_ASSOC);
+
+//Sales Time Diff
+$future_date2 = new DateTime($times['fleaMarkets']);
+$interval2 = $future_date2->diff($now);
+
 //Get Market Info
 $query = "SELECT * FROM marketTables WHERE user_id = :id;";
 $stmt = $pdo->prepare($query);
@@ -27,9 +37,25 @@ $stmt->bindParam(":id", $table['pet_id']);
 $stmt->execute();
 $pet = $stmt->fetch(PDO::FETCH_ASSOC);
 
+$exp = $pet['sellingEXP'];
+if ($exp < 50) {
+    $level = "Level 1 Merchant";
+} elseif ($exp < 150) {
+    $level = "Level 2 Merchant";
+} elseif ($exp < 325) {
+    $level = "Level 3 Merchant";
+} elseif ($exp < 600) {
+    $level = "Level 4 Merchant";
+} elseif ($exp < 1000) {
+    $level = "Level 5 Merchant";
+} else {
+    $level = "Trade Goblin";
+}
+
 //Go Back Arrow
 echo '<div class="leftRightButtons">';
 echo '<a href="snoozevillage"><<</a>';
+echo '<p><strong>Next Sale: </strong>' . $interval2->format("%h hours, %i minutes, %s seconds") . '</p>';
 echo '</div>';
 
 //Reply Box
@@ -44,10 +70,16 @@ if ($reply) {
 }
 
 //Market Name
-echo '<h3 style="margin-bottom: 2rem;">Flea Market</h3>';
+if ($table['name']) {
+    echo '<h3 style="margin-bottom: 2rem;">'. $pet['name'] . '\'s ' . $table['name'] . '</h3>';
+} else {
+    echo '<h3 style="margin-bottom: 2rem;">Flea Market</h3>';
+}
+
 
 //Snoozeling Image
 echo '<img src="snoozeImages/' . $table['pet_id'] . '.png?timestamp=' . $pet['timestamp'] . '" style="width:35%">';
+echo '<h4 style="margin-top:-20px;margin-bottom:10px;">' . $level . '</h4>';
 
 //Display Table Boxes
 echo '<div class="farmBoxes">';
@@ -55,6 +87,7 @@ echo '<div class="farmBoxes">';
 //Display Tables
 $items = ['itemOne', 'itemTwo', 'itemThree', 'itemFour'];
 $num = ['quantityOne', 'quantityTwo', 'quantityThree', 'quantityFour'];
+$amt = ['coinsOne','coinsTwo','coinsThree','coinsFour'];
 for($x = 0; $x < $table['unlocked'];$x++) {
     //Grab Display for item
     $query = "SELECT * FROM itemList WHERE name = :name;";
@@ -91,13 +124,19 @@ for($x = 0; $x < $table['unlocked'];$x++) {
         echo '<h4  style="margin-top:0;">Empty Table</h4>';
     }
     if ($table[$items[$x]] == "Coins") {
-        echo '<p>' . $table[$num[$x]] . ' Snooze Coins</p><br>';
-    } else {
+        echo '<p>' . $table[$amt[$x]] . ' Snooze Coins</p><br>';
+    } else if ($table[$num[$x]] > 0) {
         echo '<p><b>Sell Price:</b> ' . $worth . ' Snooze Coins</p><br>';
+    } else {
+        echo '<p><i>Click to Add Item</i><br>';
     }
     
     
     echo '</div></a>';
+    
+    if ($x == 1) {
+        echo '</div><br><Br><div class="farmBoxes">';
+    }
 }
 echo '</div>';
 

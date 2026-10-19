@@ -201,7 +201,17 @@ $userId = $_COOKIE['user_id'];
     $stmt->execute(); 
     
     
-    } }
+    } 
+    
+        //Tutorial Check
+    if ($user['tutorial'] == 12) { 
+        $query = 'UPDATE users SET tutorial = 13 WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $userId);
+        $stmt->execute();
+    }
+    
+    }
         
     
 
@@ -239,6 +249,9 @@ $userId = $_COOKIE['user_id'];
             $check = 1;
         }
         if ($title == "Grand Adventurer" && $snooze['exploreEXP'] > 999.5) {
+            $check = 1;
+        }
+        if ($title == "Trade Goblin" && $snooze['sellingEXP'] > 999.5) {
             $check = 1;
         }
         if ($check == 0) {
@@ -279,7 +292,7 @@ $userId = $_COOKIE['user_id'];
     
     //Pet's Mood
     if ($mood) {
-        if(!($mood === "Happy" || $mood === "Sleepy" || $mood === "Overwhelmed" || $mood === "Anxious" || $mood === "Cheeky")) {
+        if(!($mood === "Happy" || $mood === "Sleepy" || $mood === "Overwhelmed" || $mood === "Anxious" || $mood === "Cheeky" || $mood === "Smug")) {
             header("Location: ../index");
             die();
         }

@@ -65,6 +65,11 @@ if ($reply) {
     $stmt->execute();
 }
 
+//Tutorial
+if ($user['tutorial'] == 6) {
+    echo '<div class="tutorialHeader"><div class="tutorialDiv"><img src="snoozeImages/' . $bondedNumber . '.png?timestamp=' . $ts['timestamp'] . '" class="tutorialImage"></div><div style="text-align:center;width:100%"><br><br><br><Br><p style="width:90%">Trust me. This step is super easy.<br><Br>All you need to do is click <b>Plant Seed</b> below.<br><br><img src="items/CarrotSeed.png" style="width:100px"><br><br></p></div></div><br><Br>';
+}
+
 //Div for Farm
 echo '<div class="itemPageRow" id="plottop">';
 echo '<div class="itemPage">';
@@ -91,6 +96,8 @@ $diff = round(abs($to_time - $from_time) / 60,0);
 $now = new DateTime("now", new DateTimezone('UTC'));
 $future_date = new DateTime($farm['stg3']);
 $interval = $future_date->diff($now);
+
+
 
 
 //Post Plant Name & Info
