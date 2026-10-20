@@ -61,12 +61,22 @@
     foreach ($users as $user) {
         //Assign Affirmations & Reset lastLog & DailyItem & Reset Requests
         $randomNum = rand(1, $affirmlength);
-        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0, penpalRequests = 0, dailyWish = 0, plushTrades = 0 WHERE id = :id AND lastLog = 1";
+        $query = "UPDATE users SET affirmation = :affirmation, lastLog = 0, dailyPrize = 0, requests = 0, penpalRequests = 0, dailyWish = 0, plushTrades = 0 WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":affirmation", $affirmresults[$randomNum]["affirmation"]);
         $stmt->bindParam(":id", $user["id"]);
         $stmt->execute();
         $loopcount++;
+        
+        //Market Stall Check
+        if ($user['marketSetup'] == 0) {
+            if ($user['journalEntries'] > 4 && $user['cropsHarvested'] > 9 && $user['itemsCrafted'] > 9) {
+                $query = "UPDATE users SET marketSetup = 1 WHERE id = :id";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":id", $user["id"]);
+                $stmt->execute();
+            }
+        }
     }
     echo "Affirmations Set: " . $loopcount . "\n";
 
@@ -132,11 +142,51 @@ $result = $now->format('Y-m-d H:i:s');
 $requestcount = 0;
 foreach ($requests as $request) {
     if ($result > $request['expiry']) {
+        //Letter to all Offers
+        $query = "SELECT * FROM plushieOffers WHERE trade_id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $request['id']);
+        $stmt->execute();
+        $offers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $title = 'Plushie Trade Expiry';
+        $sender = 5;
+        $zero = 0;
+        $one = 1;
+        $picture = "ProfileMail";
+        $now = new DateTime();
+        $date = $now->format('Y-m-d H:i:s');
+        foreach ($offers as $offer) {
+
+            $message = 'Your plushie trade offer of <b>1x ' . $offer['displayName'] . '</b> on Trade #' . $tradeCheck['id'] . ' (<b>1x ' . $tradeCheck['displayName'] . '</b>) has been removed as the trade has expired.
+
+            Please don\'t let this discourage you from Plushie Trading in the future.';
+            $query = 'INSERT INTO mail (sender, reciever, title, message, sent, opened, sendtime, picture) VALUES (:sender, :reciever, :title, :message, :sent, :opened, :sendtime, :picture)';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":sender", $sender);
+            $stmt->bindParam(":reciever", $offer['user_id']);
+            $stmt->bindParam(":title", $title);
+            $stmt->bindParam(":message", $message);
+            $stmt->bindParam(":sent", $one);
+            $stmt->bindParam(":opened", $zero);
+            $stmt->bindParam(":sendtime", $date);
+            $stmt->bindParam(":picture", $picture);
+            $stmt->execute();
+        }
+        
+        //Delete Trade
         $query = 'DELETE FROM plushieTrades WHERE id = :id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":id", $request['id']);
         $stmt->execute();
+        
+        //Delete all Offers
+        $query = 'DELETE FROM plushieOffers WHERE trade_id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $request['id']);
+        $stmt->execute();
         $requestcount++;
+
     }
 }
 

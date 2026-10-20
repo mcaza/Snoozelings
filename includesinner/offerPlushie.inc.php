@@ -70,7 +70,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Check for Block
-
+    $query = "SELECT * FROM users WHERE id = :id;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $blockCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+    $blockList = explode(" ", $blockCheck["blockList"]);
+    $blockedBy = explode(" ", $blockCheck["blockedBy"]);
+    $block = 0;
+     if (in_array($note['user_id'],$blockList)) {
+         $block = 1;
+     }
+     if (in_array($note['user_id'],$blockedBy)) {
+         $block = 1;
+     }
+    
+    if ($block == 1) {
+        $reply = "You are unable to make an offer on this plushie.";
+        $query = 'INSERT INTO replies (user_id, message) VALUES (:user_id, :message)';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->bindParam(":message", $reply);
+        $stmt->execute();
+        header("Location: ../plushMarket");
+        die();
+    }
+    
     
     //Item Info
     $query = "SELECT * FROM itemList WHERE name = :name";

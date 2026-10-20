@@ -1159,8 +1159,27 @@ a.selected {
         margin-right:20px;
     }
 
+/* Flea Market Tables */
 
-/* Farm Styles */
+.imageTwo {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+    z-index: 1;
+}
+
+.imageTwo img {
+    -webkit-transform: none;
+    transform: none;
+    width: 80%;
+}
+
+#marketTitle {
+    margin-top:-20px;
+    margin-bottom:10px;
+}
+
+
+/* FarmStyles */
 .farmBoxes {
     display: flex;
     flex-direction: row;
@@ -1927,6 +1946,11 @@ select {
 }
 
 @media only screen and (max-width: 1081px) {
+    
+    #marketTitle {
+    margin-top:0px;
+    margin-bottom:0px;
+}
     
         .tutorialHeader {
         flex-direction: column;

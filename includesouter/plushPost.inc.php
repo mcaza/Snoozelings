@@ -29,6 +29,23 @@ $now = new DateTime('now', new DateTimezone('UTC'));
 $future_date = new DateTime($request['expiry']);
 $interval = $future_date->diff($now);
 
+//Block Check
+$query = "SELECT * FROM users WHERE id = :id;";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":id", $userId);
+$stmt->execute();
+$blockCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+$blockList = explode(" ", $blockCheck["blockList"]);
+$blockedBy = explode(" ", $blockCheck["blockedBy"]);
+
+$block = 0;
+if (in_array($request['user_id'],$blockList)) {
+    $block = 1;
+}
+if (in_array($request['user_id'],$blockedBy)) {
+    $block = 1;
+}
+
 //Back to Pack Arrows
 echo '<div class="leftRightButtons">';
 echo '<a href="plushMarket"><<</a>';
@@ -119,64 +136,69 @@ if ($request['user_id'] == $userId) {
     echo '<input type="hidden" id="trade" name="trade" value="' . $_GET['id'] . '">';
     echo "<button class='redButton'>Cancel Trade</button>";
 } else {
-    //Make an Offer
-    $query = "SELECT * FROM items WHERE name LIKE '%Plushie' AND user_id = :user ORDER BY name";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":user", $userId);
-    $stmt->execute();
-    $plushies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    
-    echo '<h4>Make an Offer</h4>';
-    echo '<form method="post" action="includes/offerPlushie.inc.php" onsubmit="return confirm(\'Are you sure you want to OFFER this plushie?\');">';
-    echo '<label for="status" class="form">Select Plushie:</label><br>';
-    echo '<select class="input" name="plushieOffer">';
-    echo '<option value=""></option>';
-    
-    $list = [];
-    foreach ($plushies as $plush) {
-        if (in_array($plush['name'],$list)) {
-            
-        } else {
-            $query = "SELECT * FROM plushies WHERE name = :name";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":name", $plush['name']);
-            $stmt->execute();
-            $plushCheck = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if ($request['type'] <= $plushCheck['rarity']) {
-                echo '<option value="' . $plush['name'] . '">' . $plush['display'] . '</option>';
+    if ($block == 1) {
+        echo '<p><i>You are unable to make an offer on this plushie.</i></p>';
+    } else {
+        //Make an Offer
+        $query = "SELECT * FROM items WHERE name LIKE '%Plushie' AND user_id = :user ORDER BY name";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user", $userId);
+        $stmt->execute();
+        $plushies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        echo '<h4>Make an Offer</h4>';
+        echo '<form method="post" action="includes/offerPlushie.inc.php" onsubmit="return confirm(\'Are you sure you want to OFFER this plushie?\');">';
+        echo '<label for="status" class="form">Select Plushie:</label><br>';
+        echo '<select class="input" name="plushieOffer">';
+        echo '<option value=""></option>';
+
+        $list = [];
+        foreach ($plushies as $plush) {
+            if (in_array($plush['name'],$list)) {
+
+            } else {
+                $query = "SELECT * FROM plushies WHERE name = :name";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":name", $plush['name']);
+                $stmt->execute();
+                $plushCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($request['type'] <= $plushCheck['rarity']) {
+                    echo '<option value="' . $plush['name'] . '">' . $plush['display'] . '</option>';
+                }
+
+
+                array_push($list,$plush['name']);
             }
-            
-            
-            array_push($list,$plush['name']);
         }
+        echo '</select><br>';
+        echo '<input type="hidden" id="trade" name="trade" value="' . $_GET['id'] . '">';
+        echo "<button class='fancyButton'>Submit Offer</button>";
+        echo '</form>';
+        echo '<hr>';
+
+        //Delete Offer
+        $query = "SELECT * FROM plushieOffers WHERE trade_id = :id AND user_id = :user";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":user", $userId);
+        $stmt->execute();
+        $userOffers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        echo '<h4>Delete Offer</h4>';
+        echo '<form method="post" action="includes/offerPlushieRemove.inc.php" onsubmit="return confirm(\'Are you sure you want to REMOVE this plushie offer?\');">';
+        echo '<label for="status" class="form">Select Plushie:</label><br>';
+        echo '<select class="input" name="plushieOffer">';
+        echo '<option value=""></option>';
+        foreach ($userOffers as $offer) {
+            echo '<option value="' . $offer['id'] . '">' . $offer['displayName'] . '</option>';
+        }
+        echo '</select><br>';
+        echo '<input type="hidden" id="trade" name="trade" value="' . $_GET['id'] . '">';
+        echo "<button class='redButton'>Remove Offer</button>";
     }
-    echo '</select><br>';
-    echo '<input type="hidden" id="trade" name="trade" value="' . $_GET['id'] . '">';
-    echo "<button class='fancyButton'>Submit Offer</button>";
-    echo '</form>';
-    echo '<hr>';
     
-    //Delete Offer
-    $query = "SELECT * FROM plushieOffers WHERE trade_id = :id AND user_id = :user";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->bindParam(":user", $userId);
-    $stmt->execute();
-    $userOffers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    echo '<h4>Delete Offer</h4>';
-    echo '<form method="post" action="includes/offerPlushieRemove.inc.php" onsubmit="return confirm(\'Are you sure you want to REMOVE this plushie offer?\');">';
-    echo '<label for="status" class="form">Select Plushie:</label><br>';
-    echo '<select class="input" name="plushieOffer">';
-    echo '<option value=""></option>';
-    foreach ($userOffers as $offer) {
-        echo '<option value="' . $offer['id'] . '">' . $offer['displayName'] . '</option>';
-    }
-    echo '</select><br>';
-    echo '<input type="hidden" id="trade" name="trade" value="' . $_GET['id'] . '">';
-    echo "<button class='redButton'>Remove Offer</button>";
 }
 
 

@@ -54,7 +54,7 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $backpackNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//Get Backpack Names
+//Get Shop Names
 $query = "SELECT * FROM shopNames ORDER BY name";
 $stmt = $pdo->prepare($query);
 $stmt->execute();

@@ -9,7 +9,6 @@ $query = "SELECT owner_id, name FROM snoozelings WHERE id = :id;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id);
     $stmt->execute();
-    
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
              

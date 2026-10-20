@@ -199,6 +199,32 @@ if ($tutorial < 14) {
         $count++;
     }
     
+    //Finished Craft
+    $query = 'SELECT * FROM craftingtables WHERE user_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $userId);
+    $stmt->execute();
+    $crafting = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($crafting['display']) {
+        if ($result > $crafting['finishtime']) {
+            echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Finish Craft</a></div>';
+            $count++;
+        }
+    }
+    
+    //Start Craft
+    if ($user['craftNotify'] == 1 && $crafting['recipe_id'] == 0 ) {
+        echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Craft Item</a></div>';
+            $count++;
+    }
+    
+    //Open Flea Market Table
+    if ($user['marketSetup'] == 1) {
+        echo '<div class="notificationbox"><a href="fleaMarket" class="notif">' . $count . '. Setup Market Table</a></div>';
+        $count++;
+    }
+    
      //Check For Flea Market Coins
     $query = 'SELECT * FROM marketTables WHERE user_id = :id';
     $stmt = $pdo->prepare($query);
@@ -234,7 +260,7 @@ if ($tutorial < 14) {
                 } else {
                     $name = "Flea Market Table";
                 }
-            echo '<div class="notificationbox"><a href="fleaMarket" class="notif">' . $count . '. ' . $name . '</a></div>';
+            echo '<div class="notificationbox"><a href="fleaMarket" class="notif">' . $count . '. Empty Market Table</a></div>';
             $count++;
         }
             
@@ -242,25 +268,7 @@ if ($tutorial < 14) {
         
     }
     
-    //Finished Craft
-    $query = 'SELECT * FROM craftingtables WHERE user_id = :id';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $userId);
-    $stmt->execute();
-    $crafting = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($crafting['display']) {
-        if ($result > $crafting['finishtime']) {
-            echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Finish Craft</a></div>';
-            $count++;
-        }
-    }
     
-    //Start Craft
-    if ($user['craftNotify'] == 1 && $crafting['recipe_id'] == 0 ) {
-        echo '<div class="notificationbox"><a href="crafting" class="notif">' . $count . '. Craft Item</a></div>';
-            $count++;
-    }
 
     //Daily Raffle
     $query = 'SELECT entries FROM rafflecount ORDER BY id DESC LIMIT 1';

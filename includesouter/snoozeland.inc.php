@@ -19,7 +19,7 @@ echo '</a>';
 echo '<a href="fleaMarket" class="shopBox">';
 echo '<div>';
 echo '<img src="resources/fleaMarket.png" class="shopImg" style="width: 90%;">';
-echo '<h4>Farmer\'s Market</h4>';
+echo '<h4>Flea Market</h4>';
 echo '</div>';
 echo '</a>';
 

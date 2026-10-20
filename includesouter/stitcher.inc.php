@@ -312,9 +312,9 @@ if ($page === "questions") {
             }
         
         if ($bedCount > 0) {
-                echo '<div class="stitcherBoxes centerBox"><img src="items/PetBed.png"><h1>1x Empty Bed</h1><p style="font-size:20px;margin-top:-5px;">✅</p></div>';
+                echo '<div class="stitcherBoxes"><img src="items/PetBed.png"><h1>1x Empty Bed</h1><p style="font-size:20px;margin-top:-5px;">✅</p></div>';
             } else {
-                echo '<div class="stitcherBoxes centerBox"><img src="items/PetBed.png"><h1>1x Empty Bed</h1><p style="font-size:20px;margin-top:-5px;">❌</p></div>';
+                echo '<div class="stitcherBoxes"><img src="items/PetBed.png"><h1>1x Empty Bed</h1><p style="font-size:20px;margin-top:-5px;">❌</p></div>';
             }
         echo '</div>';
         
