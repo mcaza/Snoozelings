@@ -36,7 +36,6 @@ if ($result['display']) {
 } 
 
 
-
 //Check if Pet is High Enough Level for Recipe
 $query = 'SELECT * FROM snoozelings WHERE id = :id';
 $stmt = $pdo->prepare($query);
@@ -76,6 +75,7 @@ $exp = $pet['craftEXP'];
     }
 
 
+
 //Check if Has Items
 $items = explode(" ", $recipe['items']);
 $numbers = explode(" ", $recipe['numbers']);
@@ -101,6 +101,8 @@ foreach ($items as $item) {
     }
 }
 
+
+
 //Set Time
 $now = new DateTime("now", new DateTimezone('UTC'));
 $minutes = 15;
@@ -116,6 +118,8 @@ $stmt->bindParam(":display", $recipe['display']);
 $stmt->bindParam(":name", $recipe['name']);
 $stmt->bindParam(":time", $formatted);
 $stmt->execute();
+
+
 
 //Update Tutorial
 if ($user['tutorial'] == 8) { 
@@ -140,10 +144,12 @@ foreach ($items as $item) {
     }
 }
 
+
+
 //Plus 1 Crafting EXP
 $query = 'UPDATE snoozelings SET craftEXP = craftEXP + 1 WHERE id = :id';
 $stmt = $pdo->prepare($query);
-$stmt->bindParam(":id", $pet);
+$stmt->bindParam(":id", $result['pet_id']);
 $stmt->execute();
 
 //Reroute

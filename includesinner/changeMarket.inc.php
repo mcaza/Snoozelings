@@ -30,9 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     //Change Vendor
-    $query = 'UPDATE marketTables SET pet_id = :id WHERE id = :user';
+    $query = 'UPDATE marketTables SET pet_id = :id WHERE user_id = :user';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":id", $pet['id']);
     $stmt->bindParam(":user", $userId);
     $stmt->execute();
     

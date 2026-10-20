@@ -54,12 +54,6 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $backpackNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//Get Shop Names
-$query = "SELECT * FROM shopNames ORDER BY name";
-$stmt = $pdo->prepare($query);
-$stmt->execute();
-$shopNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 
 //Top Bar. Back Error Left. Request Button Right
 echo '<div style="display: flex;justify-content:space-between;flex-direction: row;">';
@@ -216,6 +210,12 @@ $stmt->execute();
 $table = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($table) {
+    //Get Shop Names
+    $query = "SELECT * FROM shopNames ORDER BY name";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $shopNames = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
     echo '<label for="market" class="form" style="margin-bottom:0px">Change Market Name:</label><br>';
     echo '<p ><i>Snoozeling\'s</i></p><select class="input" name="market">';
     echo '<option value=""></option>';
